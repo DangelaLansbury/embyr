@@ -337,41 +337,7 @@ a {
   opacity: 1;
 }
 
-/* divider */
-
-.divider {
-  display: flex;
-  flex-direction: row;
-  gap: 4px;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.divider-handle {
-  display: flex;
-  width: 48px;
-  height: 5px;
-  background-color: transparent;
-  box-sizing: border-box;
-  border-width: 2px 4px;
-  border-style: solid;
-  border-radius: 6px;
-  border-color: #cac3c1;
-  transition: 0.2s;
-}
-
-.divider-handle:hover {
-  border-color: #b09f9a;
-}
-
-.divider-rule {
-  display: flex;
-  width: 100%;
-  height: 1px;
-  border: none;
-  background-color: #cac3c1;
-}
+/* considerations */
 
 .considerations-panel {
   display: flex;
