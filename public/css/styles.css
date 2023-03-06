@@ -1,0 +1,399 @@
+/* --- GLOBAL --- */
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  scroll-margin-bottom: 4rem;
+}
+
+@font-face {
+  font-family: "gelica-black";
+  src: url("gelica-black-webfont.woff2") format("woff2"),
+    url("gelica-black-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  margin: 0;
+  font-family: "Source Code Pro", monospace;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.5rem;
+  color: #ebdbb2;
+  background-color: #32302f;
+}
+
+h1 {
+  margin: 0;
+  padding: 0;
+  font-size: 2.5rem;
+  line-height: 4rem;
+  font-family: "gelica-black";
+  font-weight: 400;
+}
+
+h4 {
+  margin: 0;
+  padding: 0;
+  font-size: 1.25rem;
+  line-height: 2rem;
+  font-weight: 800;
+}
+
+button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* ---- NAVIGATION ---- */
+
+.navbar {
+  display: flex;
+  flex-direction: row;
+  position: sticky;
+  top: 0;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 100%;
+  padding: 8px 32px;
+  /* background-color: #2E221B; */
+}
+
+/* stamp */
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+/* ---- WORKBOOK ---- */
+
+/* layout */
+
+.workbook-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  margin-top: 10%;
+  /* box-shadow: 0px 0px 24px rgba(54, 57, 59, 0.08); */
+}
+
+.workbook {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: left;
+  width: 80%;
+  max-width: 600px;
+  /* flex-direction: column;
+  align-self: stretch;
+  flex: 100%;
+  overflow: scroll; */
+}
+
+/* header */
+
+.workbook-header {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+}
+
+.header-text {
+  display: flex;
+  /* margin-bottom: 0.5rem; */
+}
+
+.subheader-text {
+  display: flex;
+}
+
+/* workbook content */
+
+.workbook-content {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 4rem;
+}
+
+/* command line */
+
+.cli {
+  display: inline-flex;
+  flex-direction: column;
+  flex: 40%;
+  margin: 0;
+}
+
+.cli-block {
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.cli-prompt {
+  display: block;
+}
+
+.command-line {
+  display: flex;
+  flex-direction: row;
+  align-items: top;
+  justify-content: left;
+}
+
+.cli-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.25rem;
+  /* width: 10%; */
+}
+
+.cli-input {
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  transition: 0.2s;
+  margin-top: 0.25rem;
+  width: 100%;
+}
+
+.cli-input:focus {
+  border: none;
+  outline: none;
+}
+
+/* considerations */
+
+.considerations-container {
+  display: flex;
+  width: 90%;
+  max-width: 50rem;
+  margin: 0 auto;
+  flex-direction: column;
+}
+
+.consideration {
+  display: block;
+  height: 2.5rem;
+  margin: 0 0 0.5rem;
+  padding: 0.5rem 0.5rem;
+  background-color: #fdfcfc;
+}
+
+/* testing */
+
+.hidden {
+  display: none !important;
+}
+
+.template-area {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: transparent;
+  border-radius: 4px;
+  transition: 0.2s;
+}
+
+.template {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.25rem;
+  width: 100%;
+  /* background-color: gray; */
+}
+
+.template-block-selectors {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 80%;
+  margin: 2rem;
+  /* background-color: burlywood; */
+}
+
+.template-block-selector-item {
+  display: inline-flex;
+  width: 100px;
+  height: 200px;
+  background-color: #8ec07c;
+}
+
+.template-header {
+  display: flex;
+  background-color: #dd6634;
+}
+
+.template-subheader {
+  display: flex;
+  flex-direction: column;
+  background-color: transparent;
+}
+
+.template-subheader-text {
+  display: flex;
+  background-color: pink;
+}
+
+.goal-editor {
+  padding: 0.5rem 0.5rem;
+  background-color: #fdfcfc;
+  border-radius: 4px;
+  transition: 0.2s;
+  min-height: 6rem;
+  /* text */
+  font-family: "Inter", sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5rem;
+  color: #2e221b;
+}
+
+.goal-editor:hover {
+  background-color: #f6f2ef;
+}
+
+.goal-editor:focus {
+  background-color: #fdfcfc;
+  border: none;
+  outline: none;
+}
+
+/* --- BITS & PIECES --- */
+
+/* buttons */
+
+.btn-primary {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0.5rem;
+  padding: 6px 12px 6px;
+  gap: 4px;
+  border: 1px solid #e4e6eb;
+  border-radius: 8px;
+  cursor: pointer;
+  /* font */
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: #dd6634;
+  transition: 0.2s;
+}
+
+.btn-primary:hover {
+  box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.06);
+  color: #595e66;
+}
+
+.btn-secondary {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 6px 12px 6px;
+  gap: 6px;
+  border-radius: 8px;
+  cursor: pointer;
+  /* font */
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: #979fa9;
+  transition: 0.2s;
+}
+
+.btn-secondary:hover {
+  background-color: #f2f4f6;
+  color: #595e66;
+}
+
+.btn-action {
+  border: 1px solid #e4e6eb;
+}
+
+.btn-how {
+  opacity: 0;
+  transition: 0.2s;
+}
+
+.workbook-header:hover > .btn-how {
+  opacity: 1;
+}
+
+/* divider */
+
+.divider {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.divider-handle {
+  display: flex;
+  width: 48px;
+  height: 5px;
+  background-color: transparent;
+  box-sizing: border-box;
+  border-width: 2px 4px;
+  border-style: solid;
+  border-radius: 6px;
+  border-color: #cac3c1;
+  transition: 0.2s;
+}
+
+.divider-handle:hover {
+  border-color: #b09f9a;
+}
+
+.divider-rule {
+  display: flex;
+  width: 100%;
+  height: 1px;
+  border: none;
+  background-color: #cac3c1;
+}
+
+.considerations-panel {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  align-self: stretch;
+  padding-top: 4rem;
+  /* height: 100%; */
+  /* background-color: #fff; */
+  border-left: 1px solid #ebdbb2;
+  overflow: scroll;
+}
+
+.considerations-toggle {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 0.75rem;
+  width: 0.75rem;
+  border-radius: 8px;
+  transition: 0.2s;
+  background-color: #fd6d5c;
+  cursor: pointer;
+}

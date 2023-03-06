@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zetsu</title>
+    <link rel="icon" type="image/x-icon" href="public/images/favicon.svg" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="public/css/styles.css" />
+  </head>
+  <body>
+    <div class="workbook-container">
+      <div class="workbook">
+        <!-- <div class="navbar">
+                <div class="logo"></div>
+                <div class="considerations-toggle" id="viewConsiderations"></div>
+            </div> -->
+        <div class="workbook-header">
+          <!-- <div class="btn-secondary btn-how">
+                    <img src="public/images/edit.svg" alt="edit icon">
+                    <span>How to use this page</span>
+                </div> -->
+          <div class="header-text">
+            <h1>Zetsu</h1>
+          </div>
+          <!-- <div class="subheader-text">
+            <h4>
+              Your <span style="color: #d3869b">terminal</span> for
+              <span style="color: #fabd2f">living</span>.
+            </h4>
+          </div> -->
+        </div>
+        <div class="workbook-content">
+          <div class="cli">
+            <div class="cli-block" id="cliBlockWelcome">
+              <div class="cli-prompt">Welcome. What can I call you?</div>
+              <div class="command-line">
+                <div class="cli-arrow">
+                  <img src="public/images/arrow.svg" alt="arrow icon" />
+                </div>
+                <div
+                  class="cli-input"
+                  contenteditable="true"
+                  id="cliWelcome"
+                ></div>
+              </div>
+            </div>
+            <div class="intention-block hidden" id="intentionBlockTouch">
+              <div class="intention-prompt">Touch prompt...</div>
+              <div class="cli-input" contenteditable="true" id="intTouch"></div>
+            </div>
+            <div class="intention-block hidden" id="intentionBlockTime">
+              <div class="intention-prompt">Time prompt...</div>
+              <div
+                class="intention-editor"
+                contenteditable="true"
+                id="intTime"
+              ></div>
+            </div>
+          </div>
+          <div class="template-area" id="content">
+            <div class="template-block hidden" id="templateBlock2">2</div>
+            <div class="template-block hidden" id="templateBlock3">3</div>
+            <div class="template-block-selectors hidden" id="selectorGroup">
+              <div
+                class="template-block-selector-item"
+                id="templateExpSelector"
+              >
+                Experience
+              </div>
+              <div
+                class="template-block-selector-item"
+                id="templateBlock2Selector"
+              >
+                2
+              </div>
+              <div
+                class="template-block-selector-item"
+                id="templateBlock3Selector"
+              >
+                3
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="considerations-panel hidden" id="considerationsPanel">
+        <div class="considerations-container" id="considerations">
+          <button type="submit" class="btn-primary">
+            <img src="public/images/play.svg" alt="play icon" />
+            <span>Run</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    !-- Javascript -->
+    <script src="src/app.js" type="application/javascript"></script>
+  </body>
+</html>
