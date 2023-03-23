@@ -41,7 +41,9 @@
         <div class="workbook-content">
           <div class="cli">
             <div class="cli-block" id="cliBlockWelcome">
-              <div class="cli-prompt">Welcome. What can I call you?</div>
+              <div class="cli-prompt">
+                Welcome. What would you like to do? Type help for info.
+              </div>
               <div class="command-line">
                 <div class="cli-arrow">
                   <img src="public/images/arrow.svg" alt="arrow icon" />
@@ -53,17 +55,33 @@
                 ></div>
               </div>
             </div>
-            <div class="intention-block hidden" id="intentionBlockTouch">
-              <div class="intention-prompt">Touch prompt...</div>
-              <div class="cli-input" contenteditable="true" id="intTouch"></div>
+            <div class="cli-block hidden" id="cliBlockHelp">
+              <div class="cli-prompt">Here are some commands you can run.</div>
+              <div class="command-line">
+                <div class="cli-arrow">
+                  <img src="public/images/arrow.svg" alt="arrow icon" />
+                </div>
+                <div
+                  class="cli-input"
+                  contenteditable="true"
+                  id="cliHelp"
+                ></div>
+              </div>
             </div>
-            <div class="intention-block hidden" id="intentionBlockTime">
-              <div class="intention-prompt">Time prompt...</div>
-              <div
-                class="intention-editor"
-                contenteditable="true"
-                id="intTime"
-              ></div>
+            <div class="cli-block hidden" id="cliBlockDemo">
+              <div class="cli-prompt">
+                This is the result of the command you just ran.
+              </div>
+              <div class="command-line">
+                <div class="cli-arrow">
+                  <img src="public/images/arrow.svg" alt="arrow icon" />
+                </div>
+                <div
+                  class="cli-input"
+                  contenteditable="true"
+                  id="cliDemo"
+                ></div>
+              </div>
             </div>
           </div>
           <div class="template-area" id="content">

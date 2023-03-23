@@ -1,7 +1,9 @@
 let cliBlockWelcome = document.getElementById('cliBlockWelcome');
 let cliWelcome = document.getElementById('cliWelcome');
-let editorTouchBlock = document.getElementById('intentionBlockTouch');
-let editorTouch = document.getElementById('intTouch');
+let cliBlockHelp = document.getElementById('cliBlockHelp');
+let cliHelp = document.getElementById('cliHelp');
+let cliBlockDemo = document.getElementById('cliBlockDemo');
+let cliDemo = document.getElementById('cliDemo');
 let editorTimeBlock = document.getElementById('intentionBlockTime');
 let editorTime = document.getElementById('intTime');
 let truthInput = document.querySelector('input[name="truth"]');
@@ -55,15 +57,25 @@ function revealCommands(elem) {
 function listenForEnter(elem) {
   elem.addEventListener('keydown', function (e) {
     let editorID = this.id;
-    let goalEditor = document.getElementById(editorID);
+    let editor = document.getElementById(editorID);
     if (e.keyCode === 13) {
       e.preventDefault();
-      editorTouchBlock.classList.toggle('hidden');
-      editorTouch.focus();
-      cliBlockWelcome.classList.toggle('hidden');
-      selectorGroup.classList.toggle('hidden');
-    } else {
-      return;
+      if (editor.innerText === 'help') {
+        cliBlockHelp.classList.toggle('hidden');
+        cliHelp.focus();
+        cliBlockWelcome.classList.toggle('hidden');
+        selectorGroup.classList.toggle('hidden');
+      } else if (editor.innerText === 'clear') {
+        cliWelcome.innerText = '';
+        cliWelcome.focus();
+      } else if (editor.innerText === 'command') {
+        cliBlockDemo.classList.toggle('hidden');
+        cliDemo.focus();
+        cliBlockWelcome.classList.toggle('hidden');
+        selectorGroup.classList.toggle('hidden');
+      } else {
+        return;
+      }
     }
   });
 }
