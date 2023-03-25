@@ -60,15 +60,15 @@ function listenForEnter(elem) {
     let editor = document.getElementById(editorID);
     if (e.keyCode === 13) {
       e.preventDefault();
-      if (editor.innerText === 'help') {
+      if (editor.value === 'help') {
         cliBlockHelp.classList.toggle('hidden');
         cliHelp.focus();
         cliBlockWelcome.classList.toggle('hidden');
         selectorGroup.classList.toggle('hidden');
-      } else if (editor.innerText === 'clear') {
-        cliWelcome.innerText = '';
+      } else if (editor.value === 'clear') {
+        cliWelcome.value = '';
         cliWelcome.focus();
-      } else if (editor.innerText === 'command') {
+      } else if (editor.value === 'command') {
         cliBlockDemo.classList.toggle('hidden');
         cliDemo.focus();
         cliBlockWelcome.classList.toggle('hidden');
