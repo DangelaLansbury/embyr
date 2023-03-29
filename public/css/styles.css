@@ -178,7 +178,7 @@ input[type='text']:focus {
   justify-content: left;
 }
 
-.cli-arrow {
+.cli-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
