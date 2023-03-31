@@ -10,6 +10,19 @@ let truthInput = document.querySelector('input[name="truth"]');
 let touchInput = document.querySelector('input[name="touch"]');
 let timeInput = document.querySelector('input[name="time"]');
 
+// command booleans
+
+const commands = {
+  help: false,
+  clear: false,
+  achieve: false,
+  learn: false,
+  innovate: false,
+  explore: false,
+  connect: false,
+  fulfill: false,
+};
+
 // focus on truth editor at start
 
 cliWelcome.focus();
@@ -40,20 +53,6 @@ function addInputEventListener(elem) {
   });
 }
 
-function revealCommands(elem) {
-  elem.addEventListener('input', function () {
-    let editorID = this.id;
-    let goalEditor = document.getElementById(editorID);
-    let goal = goalEditor.innerText;
-    console.log(goal);
-    if (goal === '/') {
-      selectorGroup.style.display = 'flex';
-    } else {
-      selectorGroup.style.display = 'none';
-    }
-  });
-}
-
 function listenForEnter(elem) {
   elem.addEventListener('keydown', function (e) {
     let editorID = this.id;
@@ -68,7 +67,8 @@ function listenForEnter(elem) {
       } else if (editor.value === 'clear') {
         cliWelcome.value = '';
         cliWelcome.focus();
-      } else if (editor.value === 'command') {
+      } else if (editor.value === 'achieve') {
+        commands.achieve = true;
         cliBlockDemo.classList.toggle('hidden');
         cliDemo.focus();
         cliBlockWelcome.classList.toggle('hidden');
