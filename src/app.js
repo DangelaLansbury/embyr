@@ -57,17 +57,18 @@ function listenForEnter(elem) {
   elem.addEventListener('keydown', function (e) {
     let editorID = this.id;
     let editor = document.getElementById(editorID);
+    let editorContent = editor.value.toLowerCase();
     if (e.keyCode === 13) {
       e.preventDefault();
-      if (editor.value === 'help') {
+      if (editorContent === 'help') {
         cliBlockHelp.classList.toggle('hidden');
         cliHelp.focus();
         cliBlockWelcome.classList.toggle('hidden');
         selectorGroup.classList.toggle('hidden');
-      } else if (editor.value === 'clear') {
+      } else if (editorContent === 'clear') {
         cliWelcome.value = '';
         cliWelcome.focus();
-      } else if (editor.value === 'achieve') {
+      } else if (editorContent.includes('achieve')) {
         commands.achieve = true;
         cliBlockDemo.classList.toggle('hidden');
         cliDemo.focus();

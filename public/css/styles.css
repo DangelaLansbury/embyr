@@ -86,7 +86,7 @@ input[type='text']:focus {
   align-items: center;
   justify-content: space-between;
   max-width: 100%;
-  padding: 8px 32px;
+  padding: 2rem 3rem;
   /* background-color: #2E221B; */
 }
 
@@ -122,18 +122,14 @@ input[type='text']:focus {
   justify-content: left;
   width: 80%;
   max-width: 600px;
-  /* flex-direction: column;
-  align-self: stretch;
-  flex: 100%;
-  overflow: scroll; */
 }
 
 /* header */
 
 .workbook-header {
   display: flex;
-  flex-direction: column;
-  margin-bottom: 2rem;
+  flex-direction: row;
+  /* margin-bottom: 2rem; */
 }
 
 .header-text {
@@ -273,30 +269,6 @@ input[type='text']:focus {
   background-color: pink;
 }
 
-.goal-editor {
-  padding: 0.5rem 0.5rem;
-  background-color: #fdfcfc;
-  border-radius: 4px;
-  transition: 0.2s;
-  min-height: 6rem;
-  /* text */
-  font-family: 'Inter', sans-serif;
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5rem;
-  color: #2e221b;
-}
-
-.goal-editor:hover {
-  background-color: #f6f2ef;
-}
-
-.goal-editor:focus {
-  background-color: #fdfcfc;
-  border: none;
-  outline: none;
-}
-
 /* --- BITS & PIECES --- */
 
 /* buttons */
@@ -354,31 +326,4 @@ input[type='text']:focus {
 
 .workbook-header:hover > .btn-how {
   opacity: 1;
-}
-
-/* considerations */
-
-.considerations-panel {
-  display: flex;
-  flex-direction: column;
-  width: 400px;
-  align-self: stretch;
-  padding-top: 4rem;
-  /* height: 100%; */
-  /* background-color: #fff; */
-  border-left: 1px solid #ebdbb2;
-  overflow: scroll;
-}
-
-.considerations-toggle {
-  display: inline-flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  height: 0.75rem;
-  width: 0.75rem;
-  border-radius: 8px;
-  transition: 0.2s;
-  background-color: #fd6d5c;
-  cursor: pointer;
 }
