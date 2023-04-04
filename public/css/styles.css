@@ -179,7 +179,6 @@ input[type='text']:focus {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  margin-top: 0.25rem;
 }
 
 .cli-dot-one {
@@ -190,6 +189,7 @@ input[type='text']:focus {
   width: 0.5rem;
   height: 0.5rem;
   margin-right: 0.125rem;
+  margin-top: 0.5rem;
 }
 
 .cli-dot-two {
@@ -200,6 +200,7 @@ input[type='text']:focus {
   width: 0.5rem;
   height: 0.5rem;
   margin-right: 0.125rem;
+  margin-top: 0.5rem;
 }
 
 .cli-dot-three {
@@ -209,6 +210,7 @@ input[type='text']:focus {
   border-radius: 50%;
   width: 0.5rem;
   height: 0.5rem;
+  margin-top: 0.5rem;
 }
 
 @keyframes dot-bounce {
