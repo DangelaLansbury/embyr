@@ -16,9 +16,8 @@ const commands = {
   help: false,
   clear: false,
   achieve: false,
-  learn: false,
-  innovate: false,
   explore: false,
+  innovate: false,
   connect: false,
   fulfill: false,
 };
