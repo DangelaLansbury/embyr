@@ -88,14 +88,33 @@ input[type='text']:focus {
   padding: 1rem 2rem;
 }
 
-/* stamp */
+/* header */
+
+.logo-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
 
 .logo {
-  display: inline-flex;
+  display: inline-block;
   align-items: center;
   justify-content: center;
   width: 2.5rem;
   height: 2.5rem;
+  margin-right: 0.5rem;
+}
+
+.logo-header-text {
+  display: inline-block;
+  opacity: 0;
+  transition: 0.6s;
+}
+
+.logo-header:hover > .logo-header-text {
+  opacity: 1;
 }
 
 /* ---- WORKBOOK ---- */
@@ -120,22 +139,6 @@ input[type='text']:focus {
   justify-content: flex-start;
   width: 80%;
   max-width: 600px;
-}
-
-/* header */
-
-.workbook-header {
-  display: flex;
-  flex-direction: row;
-}
-
-.header-text {
-  display: flex;
-  /* margin-bottom: 0.5rem; */
-}
-
-.subheader-text {
-  display: flex;
 }
 
 /* workbook content */
@@ -239,7 +242,6 @@ input[type='text']:focus {
   justify-content: space-between;
   width: 80%;
   margin: 2rem;
-  /* background-color: burlywood; */
 }
 
 .template-block-selector-item {
