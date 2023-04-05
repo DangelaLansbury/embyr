@@ -28,94 +28,60 @@
         </div>
       </div>
     </div>
-    <div class="workbook-container">
-      <div class="workbook">
-        <div class="workbook-content">
-          <div class="cli">
-            <div class="cli-block" id="cliBlockWelcome">
-              <div class="cli-prompt">
-                Welcome. What would you like to do? Type help for info.
-              </div>
-              <div class="command-line">
-                <div class="cli-icon">
-                  <div class="cli-dot-one"></div>
-                  <div class="cli-dot-two"></div>
-                  <div class="cli-dot-three"></div>
-                </div>
-                <label for="welcome"></label>
-                <input
-                  type="text"
-                  class="cli-input"
-                  id="cliWelcome"
-                  name="welcome"
-                />
-              </div>
+    <div class="workbook">
+      <div class="workbook-content">
+        <div class="cli">
+          <div class="cli-block" id="cliBlockWelcome">
+            <div class="cli-prompt">
+              Welcome. What would you like to do? Type help for info.
             </div>
-            <div class="cli-block hidden" id="cliBlockHelp">
-              <div class="cli-prompt">Here are some commands you can run.</div>
-              <div class="command-line">
-                <div class="cli-icon">
-                  <img src="public/images/sparkles.svg" alt="sparkles icon" />
-                </div>
-                <div
-                  class="cli-input"
-                  contenteditable="true"
-                  id="cliHelp"
-                ></div>
+            <div class="command-line">
+              <div class="cli-icon">
+                <div class="cli-dot" id="dot1"></div>
+                <div class="cli-dot" id="dot2"></div>
+                <div class="cli-dot" id="dot3"></div>
               </div>
-            </div>
-            <div class="cli-block hidden" id="cliBlockDemo">
-              <div class="cli-prompt">
-                Can you tell me your diagnosis? Type help for info.
-              </div>
-              <div class="command-line">
-                <div class="cli-icon">
-                  <img src="public/images/sparkles.svg" alt="sparkles icon" />
-                </div>
-                <div
-                  class="cli-input"
-                  contenteditable="true"
-                  id="cliDemo"
-                ></div>
-              </div>
+              <label for="welcome"></label>
+              <input
+                type="text"
+                class="cli-input"
+                id="cliWelcome"
+                name="welcome"
+              />
             </div>
           </div>
-          <div class="template-area" id="content">
-            <div class="template-block hidden" id="templateBlock2">2</div>
-            <div class="template-block hidden" id="templateBlock3">3</div>
-            <div class="template-block-selectors hidden" id="selectorGroup">
-              <div
-                class="template-block-selector-item"
-                id="templateExpSelector"
-              >
-                Experience
+          <!-- <div class="command-list">
+            <div class="command-list-item" style="color: #d3869b">achieve</div>
+            <div class="command-list-item" style="color: #b8bb26">explore</div>
+            <div class="command-list-item" style="color: #fd6d5c">innovate</div>
+            <div class="command-list-item" style="color: #fabd2f">connect</div>
+            <div class="command-list-item" style="color: #8ec07c">fulfill</div>
+            <div class="command-list-item">--help</div>
+            <div class="command-list-item">clear</div>
+          </div> -->
+          <div class="cli-block hidden" id="cliBlockHelp">
+            <div class="cli-prompt">Here are some commands you can run.</div>
+            <div class="command-line">
+              <div class="cli-icon">
+                <img src="public/images/sparkles.svg" alt="sparkles icon" />
               </div>
-              <div
-                class="template-block-selector-item"
-                id="templateBlock2Selector"
-              >
-                2
-              </div>
-              <div
-                class="template-block-selector-item"
-                id="templateBlock3Selector"
-              >
-                3
-              </div>
+              <div class="cli-input" contenteditable="true" id="cliHelp"></div>
             </div>
           </div>
-        </div>
-      </div>
-      <div class="considerations-panel hidden" id="considerationsPanel">
-        <div class="considerations-container" id="considerations">
-          <button type="submit" class="btn-primary">
-            <img src="public/images/play.svg" alt="play icon" />
-            <span>Run</span>
-          </button>
+          <div class="cli-block hidden" id="cliBlockDemo">
+            <div class="cli-prompt">
+              Can you tell me your diagnosis? Type help for info.
+            </div>
+            <div class="command-line">
+              <div class="cli-icon">
+                <img src="public/images/sparkles.svg" alt="sparkles icon" />
+              </div>
+              <div class="cli-input" contenteditable="true" id="cliDemo"></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    !-- Javascript -->
     <script src="src/app.js" type="application/javascript"></script>
   </body>
 </html>

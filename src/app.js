@@ -80,30 +80,15 @@ function listenForEnter(elem) {
   });
 }
 
-function hidePlaceholder(elem) {
-  elem.addEventListener('focus', function () {
-    let editorID = this.id;
-    let goalEditor = document.getElementById(editorID);
-    if (goalEditor.innerText == experiencePlaceholder) {
-      goalEditor.innerText = '';
-      goalEditor.style.color = '#E38A57';
-    }
-  });
-}
-
-function showPlaceholder(elem) {
+function keepFocus(elem) {
   elem.addEventListener('blur', function () {
-    let editorID = this.id;
-    let goalEditor = document.getElementById(editorID);
-    if (goalEditor.innerText == '') {
-      goalEditor.innerText = experiencePlaceholder;
-      goalEditor.style.color = 'grey';
-    }
+    this.focus();
   });
 }
 
 listenForEnter(cliWelcome);
 addInputEventListener(cliWelcome);
+keepFocus(cliWelcome);
 
 // ------------------------------
 
