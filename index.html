@@ -31,9 +31,9 @@
     <div class="workbook">
       <div class="workbook-content">
         <div class="cli">
-          <div class="cli-block" id="cliBlockWelcome">
-            <div class="cli-prompt">
-              Welcome. What would you like to do? Type help for info.
+          <div class="cli-block" id="cliBlock">
+            <div class="cli-prompt" id="cliPrompt">
+              Namaste. Welcome to Zetsu. What would you like to do?
             </div>
             <div class="command-line">
               <div class="cli-icon">
@@ -41,42 +41,17 @@
                 <div class="cli-dot" id="dot2"></div>
                 <div class="cli-dot" id="dot3"></div>
               </div>
-              <label for="welcome"></label>
+              <label for="editor"></label>
               <input
                 type="text"
                 class="cli-input"
-                id="cliWelcome"
-                name="welcome"
+                id="cliEditor"
+                name="editor"
+                autocomplete="off"
+                autofocus
+                onblur="this.focus()"
+                placeholder="Start with a command..."
               />
-            </div>
-          </div>
-          <!-- <div class="command-list">
-            <div class="command-list-item" style="color: #d3869b">achieve</div>
-            <div class="command-list-item" style="color: #b8bb26">explore</div>
-            <div class="command-list-item" style="color: #fd6d5c">innovate</div>
-            <div class="command-list-item" style="color: #fabd2f">connect</div>
-            <div class="command-list-item" style="color: #8ec07c">fulfill</div>
-            <div class="command-list-item">--help</div>
-            <div class="command-list-item">clear</div>
-          </div> -->
-          <div class="cli-block hidden" id="cliBlockHelp">
-            <div class="cli-prompt">Here are some commands you can run.</div>
-            <div class="command-line">
-              <div class="cli-icon">
-                <img src="public/images/sparkles.svg" alt="sparkles icon" />
-              </div>
-              <div class="cli-input" contenteditable="true" id="cliHelp"></div>
-            </div>
-          </div>
-          <div class="cli-block hidden" id="cliBlockDemo">
-            <div class="cli-prompt">
-              Can you tell me your diagnosis? Type help for info.
-            </div>
-            <div class="command-line">
-              <div class="cli-icon">
-                <img src="public/images/sparkles.svg" alt="sparkles icon" />
-              </div>
-              <div class="cli-input" contenteditable="true" id="cliDemo"></div>
             </div>
           </div>
         </div>

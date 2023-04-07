@@ -75,6 +75,12 @@ input[type='text']:focus {
   outline: none;
 }
 
+::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #a79c8f;
+  opacity: 1; /* Firefox */
+}
+
 /* ---- NAVIGATION ---- */
 
 .navbar {
@@ -166,7 +172,6 @@ input[type='text']:focus {
 .command-line {
   display: flex;
   flex-direction: row;
-  align-items: top;
   justify-content: left;
 }
 
