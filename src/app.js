@@ -3,8 +3,6 @@ let prompt = document.getElementById('cliPrompt');
 let cliEditor = document.getElementById('cliEditor');
 let cliBlockHelp = document.getElementById('cliBlockHelp');
 let cliHelp = document.getElementById('cliHelp');
-let cliBlockDemo = document.getElementById('cliBlockDemo');
-let cliDemo = document.getElementById('cliDemo');
 
 // command booleans
 
@@ -118,22 +116,27 @@ function listenForEnter(elem) {
       } else if (commands[1].active) {
         prompt.innerText = 'You wrote achieve';
         editor.value = '';
+        editor.placeholder = 'Achieve follow up';
         editor.style.color = '#ebdbb2';
       } else if (commands[2].active) {
         prompt.innerText = 'You wrote explore';
         editor.value = '';
+        editor.placeholder = 'Explore follow up';
         editor.style.color = '#ebdbb2';
       } else if (commands[3].active) {
         prompt.innerText = 'You wrote innovate';
         editor.value = '';
+        editor.placeholder = 'Innovate follow up';
         editor.style.color = '#ebdbb2';
       } else if (commands[4].active) {
         prompt.innerText = 'You wrote connect';
         editor.value = '';
+        editor.placeholder = 'Connect follow up';
         editor.style.color = '#ebdbb2';
       } else if (commands[5].active) {
         prompt.innerText = 'You wrote fulfill';
         editor.value = '';
+        editor.placeholder = 'Fulfill follow up';
         editor.style.color = '#ebdbb2';
       } else if (editorContent === 'restart') {
         prompt.innerText =
@@ -151,15 +154,8 @@ function listenForEnter(elem) {
   });
 }
 
-// function keepFocus(elem) {
-//   elem.addEventListener('blur', function () {
-//     this.focus();
-//   });
-// }
-
 listenForEnter(cliEditor);
 listenForCommand(cliEditor);
-// keepFocus(cliEditor);
 
 // ------------------------------
 
