@@ -69,7 +69,8 @@ cliEditor.focus();
 //   });
 // }
 
-// Listening for command and changing color of only the first word
+// Listening for command and changing color of text
+
 function listenForCommand(elem) {
   elem.addEventListener('input', function () {
     let editorID = this.id;
@@ -158,13 +159,6 @@ listenForEnter(cliEditor);
 listenForCommand(cliEditor);
 
 // ------------------------------
-
-// Goal placeholders
-let experiencePlaceholder =
-  'I want to… swim in the Pacific… see Springsteen in concert with my daughter… try chocolate-covered chapulines in Mexico City… read the works of Shakespeare in their original text…';
-
-// Building the archetype string
-let archetypeString = '';
 
 const artisanWords = [
   'work',
