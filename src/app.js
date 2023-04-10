@@ -1,10 +1,13 @@
-let cliBlock = document.getElementById('cliBlock');
-let prompt = document.getElementById('cliPrompt');
-let cliEditor = document.getElementById('cliEditor');
-let cliBlockHelp = document.getElementById('cliBlockHelp');
-let cliHelp = document.getElementById('cliHelp');
+let cliBlock = document.querySelector('#cliBlock');
+let prompt = document.querySelector('#cliPrompt');
+let cliEditor = document.querySelector('#cliEditor');
+let cliBlockHelp = document.querySelector('#cliBlockHelp');
+let cliHelp = document.querySelector('#cliHelp');
 
 // command booleans
+
+let init = true;
+let user = '';
 
 const commands = [
   {
@@ -110,7 +113,14 @@ function listenForEnter(elem) {
     let editorContent = editor.value.toLowerCase();
     if (e.keyCode === 13) {
       e.preventDefault();
-      if (commands[0].active) {
+      if (init) {
+        user = editor.value;
+        prompt.innerText = `Hello, ${user}. What would you like to do?`;
+        editor.value = '';
+        editor.placeholder = 'Start with a command...';
+        editor.style.color = '#ebdbb2';
+        init = false;
+      } else if (commands[0].active) {
         cliBlockHelp.classList.toggle('hidden');
         cliHelp.focus();
         editor.style.color = '#ebdbb2';
