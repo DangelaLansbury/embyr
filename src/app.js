@@ -13,12 +13,12 @@ const commands = [
   {
     name: 'help',
     active: false,
-    color: '#FD6D5C',
+    color: '#83A598',
   },
   {
     name: 'achieve',
     active: false,
-    color: '#83A598',
+    color: '#B8BB26',
   },
   {
     name: 'connect',
@@ -33,7 +33,7 @@ const commands = [
   {
     name: 'explore',
     active: false,
-    color: '#B8BB26',
+    color: '#FD6D5C',
   },
   {
     name: 'learn',
@@ -119,7 +119,7 @@ function listenForEnter(elem) {
       e.preventDefault();
       if (init) {
         user = editor.value;
-        prompt.innerText = `Hello, ${user}. What would you like to do?`;
+        prompt.innerHTML = `Hello, <span style="color: #83A598">${user}</span>. What would you like to do?`;
         editor.value = '';
         editor.placeholder = 'Start with a command...';
         editor.style.color = '#ebdbb2';
@@ -156,9 +156,11 @@ function listenForEnter(elem) {
           editor.style.color = '#ebdbb2';
         } else if (editorContent === 'restart') {
           init = true;
-          prompt.innerText = 'Namaste. Welcome to Zetsu. What can I call you?';
-          editor.value = '';
+          prompt.innerHTML = `Namaste. Welcome to <span style="color: #8ec07c">Zetsu</span>.
+              What can I call you?`;
           editor.style.color = '#ebdbb2';
+          editor.value = '';
+          editor.placeholder = 'Write your preferred name...';
           commands.forEach((command) => (command.active = false));
         } else {
           prompt.innerText =
