@@ -18,7 +18,17 @@ const commands = [
   {
     name: 'achieve',
     active: false,
+    color: '#83A598',
+  },
+  {
+    name: 'connect',
+    active: false,
     color: '#D3869B',
+  },
+  {
+    name: 'contribute',
+    active: false,
+    color: '#8EC07C',
   },
   {
     name: 'explore',
@@ -26,17 +36,7 @@ const commands = [
     color: '#B8BB26',
   },
   {
-    name: 'innovate',
-    active: false,
-    color: '#83A598',
-  },
-  {
-    name: 'connect',
-    active: false,
-    color: '#8EC07C',
-  },
-  {
-    name: 'fulfill',
+    name: 'learn',
     active: false,
     color: '#FABD2F',
   },
@@ -79,29 +79,33 @@ function listenForCommand(elem) {
     let editorID = this.id;
     let editor = document.getElementById(editorID);
     let editorContent = editor.value.toLowerCase();
-    if (editorContent === 'help') {
-      editor.style.color = commands[0].color;
-      commands[0].active = true;
-    } else if (editorContent.includes('achieve')) {
-      editor.style.color = commands[1].color;
-      commands[1].active = true;
-    } else if (editorContent.includes('explore')) {
-      editor.style.color = commands[2].color;
-      commands[2].active = true;
-    } else if (editorContent.includes('innovate')) {
-      editor.style.color = commands[3].color;
-      commands[3].active = true;
-    } else if (editorContent.includes('connect')) {
-      editor.style.color = commands[4].color;
-      commands[4].active = true;
-    } else if (editorContent.includes('fulfill')) {
-      editor.style.color = commands[5].color;
-      commands[5].active = true;
+    if (!init) {
+      if (editorContent === commands[0].name) {
+        editor.style.color = commands[0].color;
+        commands[0].active = true;
+      } else if (editorContent.includes(commands[1].name)) {
+        editor.style.color = commands[1].color;
+        commands[1].active = true;
+      } else if (editorContent.includes(commands[2].name)) {
+        editor.style.color = commands[2].color;
+        commands[2].active = true;
+      } else if (editorContent.includes(commands[3].name)) {
+        editor.style.color = commands[3].color;
+        commands[3].active = true;
+      } else if (editorContent.includes(commands[4].name)) {
+        editor.style.color = commands[4].color;
+        commands[4].active = true;
+      } else if (editorContent.includes(commands[5].name)) {
+        editor.style.color = commands[5].color;
+        commands[5].active = true;
+      } else {
+        editor.style.color = '#ebdbb2';
+        commands.forEach((command) => (command.active = false));
+      }
+      return commands;
     } else {
-      editor.style.color = '#ebdbb2';
-      commands.forEach((command) => (command.active = false));
+      return;
     }
-    return commands;
   });
 }
 
@@ -111,7 +115,7 @@ function listenForEnter(elem) {
     let editorID = this.id;
     let editor = document.getElementById(editorID);
     let editorContent = editor.value.toLowerCase();
-    if (e.keyCode === 13) {
+    if (e.keyCode === 13 && editorContent !== '') {
       e.preventDefault();
       if (init) {
         user = editor.value;
@@ -120,47 +124,51 @@ function listenForEnter(elem) {
         editor.placeholder = 'Start with a command...';
         editor.style.color = '#ebdbb2';
         init = false;
-      } else if (commands[0].active) {
-        cliBlockHelp.classList.toggle('hidden');
-        cliHelp.focus();
-        editor.style.color = '#ebdbb2';
-      } else if (commands[1].active) {
-        prompt.innerText = 'You wrote achieve';
-        editor.value = '';
-        editor.placeholder = 'Achieve follow up';
-        editor.style.color = '#ebdbb2';
-      } else if (commands[2].active) {
-        prompt.innerText = 'You wrote explore';
-        editor.value = '';
-        editor.placeholder = 'Explore follow up';
-        editor.style.color = '#ebdbb2';
-      } else if (commands[3].active) {
-        prompt.innerText = 'You wrote innovate';
-        editor.value = '';
-        editor.placeholder = 'Innovate follow up';
-        editor.style.color = '#ebdbb2';
-      } else if (commands[4].active) {
-        prompt.innerText = 'You wrote connect';
-        editor.value = '';
-        editor.placeholder = 'Connect follow up';
-        editor.style.color = '#ebdbb2';
-      } else if (commands[5].active) {
-        prompt.innerText = 'You wrote fulfill';
-        editor.value = '';
-        editor.placeholder = 'Fulfill follow up';
-        editor.style.color = '#ebdbb2';
-      } else if (editorContent === 'restart') {
-        prompt.innerText =
-          'Namaste. Welcome to Zetsu. What would you like to do?';
-        editor.value = '';
-        editor.style.color = '#ebdbb2';
-        commands.forEach((command) => (command.active = false));
       } else {
-        prompt.innerText =
-          "Hmm I don't understand. Write help for a list of commands.";
-        editor.value = '';
-        editor.style.color = '#ebdbb2';
+        if (commands[0].active) {
+          cliBlockHelp.classList.toggle('hidden');
+          cliHelp.focus();
+          editor.style.color = '#ebdbb2';
+        } else if (commands[1].active) {
+          prompt.innerText = `You wrote ${commands[1].name}`;
+          editor.value = '';
+          editor.placeholder = `${commands[1].name} follow up`;
+          editor.style.color = '#ebdbb2';
+        } else if (commands[2].active) {
+          prompt.innerText = `You wrote ${commands[2].name}`;
+          editor.value = '';
+          editor.placeholder = `${commands[2].name} follow up`;
+          editor.style.color = '#ebdbb2';
+        } else if (commands[3].active) {
+          prompt.innerText = `You wrote ${commands[3].name}`;
+          editor.value = '';
+          editor.placeholder = `${commands[3].name} follow up`;
+          editor.style.color = '#ebdbb2';
+        } else if (commands[4].active) {
+          prompt.innerText = `You wrote ${commands[4].name}`;
+          editor.value = '';
+          editor.placeholder = `${commands[4].name} follow up`;
+          editor.style.color = '#ebdbb2';
+        } else if (commands[5].active) {
+          prompt.innerText = `You wrote ${commands[5].name}`;
+          editor.value = '';
+          editor.placeholder = `${commands[5].name} follow up`;
+          editor.style.color = '#ebdbb2';
+        } else if (editorContent === 'restart') {
+          init = true;
+          prompt.innerText = 'Namaste. Welcome to Zetsu. What can I call you?';
+          editor.value = '';
+          editor.style.color = '#ebdbb2';
+          commands.forEach((command) => (command.active = false));
+        } else {
+          prompt.innerText =
+            "Hmm I don't understand. Write help for a list of commands.";
+          editor.value = '';
+          editor.style.color = '#ebdbb2';
+        }
       }
+    } else {
+      return;
     }
   });
 }
