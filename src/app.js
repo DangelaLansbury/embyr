@@ -94,7 +94,7 @@ function listenForEnter(elem) {
       e.preventDefault();
       if (init) {
         user = editor.value;
-        prompt.innerHTML = `Hello, <span style="color: #83A598">${user}</span>. Can you describe your diagnosis?`;
+        prompt.innerHTML = `Hello, <span style="color: #83A598">${user}</span>. Please describe your diagnosis.`;
         editor.value = '';
         editor.placeholder = 'Cancer type and stage...';
         editor.style.color = '#ebdbb2';
