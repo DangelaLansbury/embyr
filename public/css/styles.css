@@ -90,8 +90,9 @@ input[type='text']:focus {
   top: 0;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
   max-width: 100%;
-  padding: 1rem 2rem;
+  padding: 1rem 0;
 }
 
 /* header */
@@ -102,6 +103,7 @@ input[type='text']:focus {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  margin-left: 2rem;
 }
 
 .logo {
