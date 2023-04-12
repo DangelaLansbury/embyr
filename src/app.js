@@ -64,19 +64,14 @@ function listenForCommand(elem) {
         editor.style.color = commands[0].color;
         commands[0].active = true;
       } else if (editorContent.includes(commands[1].name)) {
-        editor.style.color = commands[1].color;
         commands[1].active = true;
       } else if (editorContent.includes(commands[2].name)) {
-        editor.style.color = commands[2].color;
         commands[2].active = true;
       } else if (editorContent.includes(commands[3].name)) {
-        editor.style.color = commands[3].color;
         commands[3].active = true;
       } else if (editorContent.includes(commands[4].name)) {
-        editor.style.color = commands[4].color;
         commands[4].active = true;
       } else if (editorContent.includes(commands[5].name)) {
-        editor.style.color = commands[5].color;
         commands[5].active = true;
       } else {
         editor.style.color = '#ebdbb2';
