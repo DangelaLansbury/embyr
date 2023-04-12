@@ -4,10 +4,14 @@ let cliEditor = document.querySelector('#cliEditor');
 let cliBlockHelp = document.querySelector('#cliBlockHelp');
 let cliHelp = document.querySelector('#cliHelp');
 
-// command booleans
+// state management
 
 let init = true;
 let user = '';
+let diagnosis = false;
+let disease = '';
+
+// commands
 
 const commands = [
   {
@@ -79,7 +83,7 @@ function listenForCommand(elem) {
     let editorID = this.id;
     let editor = document.getElementById(editorID);
     let editorContent = editor.value.toLowerCase();
-    if (!init) {
+    if (!init && !diagnosis) {
       if (editorContent === commands[0].name) {
         editor.style.color = commands[0].color;
         commands[0].active = true;
@@ -119,11 +123,19 @@ function listenForEnter(elem) {
       e.preventDefault();
       if (init) {
         user = editor.value;
-        prompt.innerHTML = `Hello, <span style="color: #83A598">${user}</span>. What would you like to do?`;
+        prompt.innerHTML = `Hello, <span style="color: #83A598">${user}</span>. Can you describe your diagnosis?`;
+        editor.value = '';
+        editor.placeholder = 'Write your cancer type and stage...';
+        editor.style.color = '#ebdbb2';
+        init = false;
+        diagnosis = true;
+      } else if (diagnosis) {
+        disease = editorContent;
+        prompt.innerHTML = `With the time you have, what do you want to do?`;
         editor.value = '';
         editor.placeholder = 'Start with a command...';
         editor.style.color = '#ebdbb2';
-        init = false;
+        diagnosis = false;
       } else {
         if (commands[0].active) {
           cliBlockHelp.classList.toggle('hidden');
