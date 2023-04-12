@@ -4,7 +4,7 @@ let cliEditor = document.querySelector('#cliEditor');
 let cliBlockHelp = document.querySelector('#cliBlockHelp');
 let cliHelp = document.querySelector('#cliHelp');
 
-// state management
+// --- STATE MANAGEMENT ---
 
 let init = true;
 let user = '';
@@ -50,31 +50,7 @@ const commands = [
 
 cliEditor.focus();
 
-// Adding event listeners
-
-// function addInputEventListener(elem) {
-//   elem.addEventListener('input', function () {
-//     let editorID = this.id;
-//     let goalEditor = document.getElementById(editorID);
-//     let goal = goalEditor.innerText;
-//     console.log(goal);
-//     if (artisanWords.some((word) => goal.toLowerCase().includes(word))) {
-//       templateExpSelector.style.backgroundColor = '#D3869B';
-//     } else {
-//       templateExpSelector.style.backgroundColor = '#8EC07C';
-//     }
-//     if (sentimentalistWords.some((word) => goal.toLowerCase().includes(word))) {
-//       block2Selector.style.backgroundColor = '#FABD2F';
-//     } else {
-//       block2Selector.style.backgroundColor = '#8EC07C';
-//     }
-//     if (adventurerWords.some((word) => goal.toLowerCase().includes(word))) {
-//       block3Selector.style.backgroundColor = '#FD6D5C';
-//     } else {
-//       block3Selector.style.backgroundColor = '#8EC07C';
-//     }
-//   });
-// }
+// --- ADDING EVENT LISTENERS ---
 
 // Listening for command and changing color of text
 
@@ -125,7 +101,7 @@ function listenForEnter(elem) {
         user = editor.value;
         prompt.innerHTML = `Hello, <span style="color: #83A598">${user}</span>. Can you describe your diagnosis?`;
         editor.value = '';
-        editor.placeholder = 'Write your cancer type and stage...';
+        editor.placeholder = 'Cancer type and stage...';
         editor.style.color = '#ebdbb2';
         init = false;
         diagnosis = true;
@@ -168,6 +144,8 @@ function listenForEnter(elem) {
           editor.style.color = '#ebdbb2';
         } else if (editorContent === 'restart') {
           init = true;
+          diagnosis = false;
+          disease = '';
           prompt.innerHTML = `Namaste. Welcome to <span style="color: #8ec07c">Zetsu</span>.
               What can I call you?`;
           editor.style.color = '#ebdbb2';
@@ -238,153 +216,3 @@ const adventurerWords = [
 ];
 
 // Path: zetsu-00/public/src/book.js
-
-// ------------------------------
-
-// let templateCounter = 0;
-
-// function convertCounter(n) {
-//   n = String(templateCounter);
-//   if (n.length < 2) {
-//     n = '0' + n;
-//   }
-//   return n;
-// }
-
-// let parentSection = document.getElementById('content');
-// let selectorGroup = document.getElementById('selectorGroup');
-
-// let templateExp = document.getElementById('experienceTemplate');
-// let templateExpSelector = document.getElementById('templateExpSelector');
-
-// let block2 = document.getElementById('templateBlock2');
-// let block2Selector = document.getElementById('templateBlock2Selector');
-// let block3 = document.getElementById('templateBlock3');
-// let block3Selector = document.getElementById('templateBlock3Selector');
-
-// templateExpSelector.addEventListener('click', function () {
-//   let newTemplate = templateExp.cloneNode(true);
-//   let newTemplateHeader = newTemplate.children[0];
-//   let newTemplateSubheader = newTemplate.children[1];
-//   let newTemplateExample = newTemplateSubheader.children[1];
-//   let newID = convertCounter(templateCounter);
-//   newTemplate.id = 'experienceTemplate' + newID;
-//   newTemplateHeader.id = 'experienceTemplateHeader' + newID;
-//   newTemplateExample.id = 'experienceTemplateExample' + newID;
-//   parentSection.insertBefore(newTemplate, selectorGroup);
-//   newTemplate.classList.toggle('hidden');
-//   addInputEventListener(newTemplateExample);
-//   hidePlaceholder(newTemplateExample);
-//   showPlaceholder(newTemplateExample);
-//   revealCommands(newTemplateExample);
-//   templateCounter++;
-//   selectorGroup.style.display = 'none';
-// });
-
-// ------------------------------
-
-let viewConsiderations = document.querySelector('.considerations-toggle');
-let considerations = document.getElementById('considerationsPanel');
-
-// viewConsiderations.addEventListener('click', function () {
-//   considerations.classList.toggle('hidden');
-//   console.log('considerations toggled');
-// });
-
-// ------------------------------
-
-// block2Selector.addEventListener('click', function() {
-//     let newBlock = block2.cloneNode(true);
-//     let newID = convertCounter(templateBlockCounter);
-//     newBlock.id = 'newBlock' + newID;
-//     parentBlock.insertBefore(newBlock, selectorGroup);
-//     newBlock.classList.toggle('hidden');
-//     templateBlockCounter++;
-//     console.log(newBlock.id);
-// });
-
-// block3Selector.addEventListener('click', function() {
-//     let newBlock = block3.cloneNode(true);
-//     let newID = convertCounter(templateBlockCounter);
-//     newBlock.id = 'newBlock' + newID;
-//     parentBlock.insertBefore(newBlock, selectorGroup);
-//     newBlock.classList.toggle('hidden');
-//     templateBlockCounter++;
-//     console.log(newBlock.id);
-// });
-
-// ------------------------------
-
-// TESTING
-
-// // Get all the desired elements into a node list
-// let testBlocks = document.querySelectorAll(".work-block-test");
-// let testBlockSelectors = document.querySelectorAll(".work-block-test-selector");
-
-// // Convert the node list into an Array so we can
-// // safely use Array methods with it
-// let testBlocksArray = Array.prototype.slice.call(testBlocks);
-// let testBlockSelectorsArray = Array.prototype.slice.call(testBlockSelectors);
-
-// // Loop over the array of elements
-// testBlocksArray.forEach(function(elem){
-//   // Assign an event handler
-//   elem.addEventListener("click", function(){
-//     console.log(this.id);
-//     let blockID = this.id;
-//     let BlockSelectorID = blockID + 'Selector';
-//     let blockToToggle = document.getElementById(blockID);
-//     let blockToToggleSelector = document.getElementById(BlockSelectorID);
-//     blockToToggle.classList.toggle('hidden');
-//     blockToToggleSelector.classList.toggle('hidden');
-//   });
-// });
-
-// testBlockSelectorsArray.forEach(function(elem){
-//     // Assign an event handler
-//     elem.addEventListener("click", function(){
-//         console.log(this.id);
-//         let blockSelectorID = this.id;
-//         let blockID = blockSelectorID.toString().slice(0, -8);
-//         let blockToToggle = document.getElementById(blockID);
-//         let blockToToggleSelector = document.getElementById(blockSelectorID);
-//         blockToToggle.classList.toggle('hidden');
-//         blockToToggleSelector.classList.toggle('hidden');
-//     });
-// });
-
-// ------------------------------
-
-// // Get all the desired elements into a node list
-// let experienceGoals = document.querySelectorAll('.goal-editor');
-// // Convert the node list into an Array so we can safely use Array methods with it
-// let experienceGoalsArray = Array.prototype.slice.call(experienceGoals);
-// // Loop over the array of elements
-// experienceGoalsArray.forEach(function(elem){
-//     // Assign an event handler
-//     elem.addEventListener("input", function(){
-//         console.log(this.id);
-//         let editorID = this.id;
-//         let inputID = editorID.toString().slice(3);
-//         let experienceGoalID = document.getElementById(inputID);
-//         console.log(experienceGoal);
-//     });
-// });
-
-// ------------------------------
-
-// if (artisanWords.some(word => goals.toLowerCase().includes(word))) {
-//     document.getElementById('templateBlock1Selector').style.backgroundColor = 'green'
-// } else {
-//     document.getElementById('templateBlock1Selector').style.backgroundColor = 'red'
-// }
-// if (sentimentalistWords.some(word => goals.toLowerCase().includes(word))) {
-//     document.getElementById('templateBlock2Selector').style.backgroundColor = 'green'
-// } else {
-//     document.getElementById('templateBlock2Selector').style.backgroundColor = 'red'
-// }
-// if (adventurerWords.some(word => experienceText.toLowerCase().includes(word))) {
-//     document.getElementById('templateBlock3Selector').style.backgroundColor = 'green'
-// } else {
-//     document.getElementById('templateBlock3Selector').style.backgroundColor = 'red'
-// }
