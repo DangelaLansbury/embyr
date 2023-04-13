@@ -10,8 +10,12 @@ let init = true;
 let user = '';
 let diagnosis = false;
 let disease = '';
+let sideEffects = [];
+let treatments = [];
 
 // commands
+
+let command = '';
 
 const commands = [
   {
@@ -108,6 +112,7 @@ function listenForEnter(elem) {
         editor.style.color = '#ebdbb2';
         diagnosis = false;
       } else {
+        command = editorContent;
         if (commands[0].active) {
           cliBlockHelp.classList.toggle('hidden');
           cliHelp.focus();
@@ -152,6 +157,7 @@ function listenForEnter(elem) {
             "Hmm I don't understand. Write help for a list of commands.";
           editor.value = '';
           editor.style.color = '#ebdbb2';
+          command = '';
         }
       }
     } else {
