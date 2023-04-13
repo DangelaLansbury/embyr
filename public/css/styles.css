@@ -177,6 +177,7 @@ input[type='text']:focus {
 
 .cli-prompt {
   display: block;
+  /* text-wrap: balance; */
 }
 
 .command-line {
