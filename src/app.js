@@ -103,7 +103,7 @@ function listenForEnter(elem) {
     if (e.keyCode === 13 && editorContent !== '') {
       e.preventDefault();
       if (init) {
-        user = editor.value;
+        user = editor.value.trim();
         prompt.innerHTML = `Hello, <span style="color: #83A598">${user}</span>. Please describe your diagnosis.`;
         editor.value = '';
         editor.placeholder = 'Cancer type and stage...';
@@ -112,7 +112,7 @@ function listenForEnter(elem) {
         diagnosis = true;
       } else if (diagnosis) {
         disease = editorContent;
-        prompt.innerHTML = `<span style="color: #83A598">Thank you.</span> <br> So ${user}, with the time you have, what do you want to do?`;
+        prompt.innerHTML = `<span style="color: #83A598">Thank you</span>. <br> So ${user}, with the time you have, what do you want to do?`;
         editor.value = '';
         editor.placeholder = '"help" to see commands...';
         editor.style.color = '#ebdbb2';
