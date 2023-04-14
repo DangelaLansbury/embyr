@@ -120,8 +120,8 @@ function listenForEnter(elem) {
       } else {
         command = editorContent;
         if (commands[0].active) {
-          cliBlockHelp.classList.toggle('hidden');
-          cliHelp.focus();
+          window.open('#cmdModal', '_self');
+          editor.value = '';
           editor.style.color = '#ebdbb2';
         } else if (commands[1].active) {
           prompt.innerText = `You wrote ${commands[1].name}`;
