@@ -112,9 +112,9 @@ function listenForEnter(elem) {
         diagnosis = true;
       } else if (diagnosis) {
         disease = editorContent;
-        prompt.innerHTML = `With the time you have, what do you want to do?`;
+        prompt.innerHTML = `<span style="color: #83A598">Thank you.</span> <br> So ${user}, with the time you have, what do you want to do?`;
         editor.value = '';
-        editor.placeholder = 'Start with a command...';
+        editor.placeholder = '"help" to see commands...';
         editor.style.color = '#ebdbb2';
         diagnosis = false;
       } else {
