@@ -16,6 +16,7 @@ body {
 }
 
 body {
+  cursor: text;
   margin: 0;
   font-family: 'Source Code Pro', monospace;
   font-size: 16px;
@@ -84,6 +85,7 @@ input[type='text']:focus {
 /* ---- NAVIGATION ---- */
 
 .navbar {
+  cursor: default;
   display: flex;
   flex-direction: row;
   position: absolute;

@@ -56,6 +56,12 @@ cliEditor.focus();
 
 // --- ADDING EVENT LISTENERS ---
 
+// Listening for click and focusing on editor in firefox and safari
+
+document.body.addEventListener('click', function (e) {
+  cliEditor.focus();
+});
+
 // Listening for command and changing color of text
 
 function listenForCommand(elem) {
