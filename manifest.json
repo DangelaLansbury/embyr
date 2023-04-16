@@ -12,5 +12,11 @@
   "action": {
     "default_popup": "index.html",
     "default_icon": "public/icons/logo128.png"
-  }
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.mozilla.org/*"],
+      "js": ["src/app.js"]
+    }
+  ]
 }

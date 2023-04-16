@@ -150,7 +150,7 @@ function listenForEnter(elem) {
           editor.placeholder = `${commands[5].name} follow up`;
           editor.style.color = '#ebdbb2';
         } else if (editorContent === 'restart') {
-          init = true;
+          init = false;
           diagnosis = false;
           disease = '';
           prompt.innerHTML = `<span style="color: #8ec07c">&rsaquo;</span> Namaste. Welcome to
