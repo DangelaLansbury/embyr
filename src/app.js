@@ -104,7 +104,7 @@ function listenForEnter(elem) {
       e.preventDefault();
       if (init) {
         user = editor.value.trim();
-        prompt.innerHTML = `Hello, <span style="color: #83A598">${user}</span>. Please describe your diagnosis.`;
+        prompt.innerHTML = `<span style="color: #8ec07c">&rsaquo;</span> Hello, <span style="color: #83A598">${user}</span>. Please describe your diagnosis.`;
         editor.value = '';
         editor.placeholder = 'Cancer type and stage...';
         editor.style.color = '#ebdbb2';
@@ -112,7 +112,7 @@ function listenForEnter(elem) {
         diagnosis = true;
       } else if (diagnosis) {
         disease = editorContent;
-        prompt.innerHTML = `So <span style="color: #83A598">${user}</span>, what do you want to do with the time you have?`;
+        prompt.innerHTML = `<span style="color: #8ec07c">&rsaquo;</span> So <span style="color: #83A598">${user}</span>, what do you want to do with the time you have?`;
         editor.value = '';
         editor.placeholder = '"help" to see commands...';
         editor.style.color = '#ebdbb2';
@@ -124,27 +124,27 @@ function listenForEnter(elem) {
           editor.value = '';
           editor.style.color = '#ebdbb2';
         } else if (commands[1].active) {
-          prompt.innerText = `You wrote ${commands[1].name}`;
+          prompt.innerHTML = `<span style="color: #8ec07c">&rsaquo;</span> You wrote ${commands[1].name}`;
           editor.value = '';
           editor.placeholder = `${commands[1].name} follow up`;
           editor.style.color = '#ebdbb2';
         } else if (commands[2].active) {
-          prompt.innerText = `You wrote ${commands[2].name}`;
+          prompt.innerHTML = `<span style="color: #8ec07c">&rsaquo;</span> You wrote ${commands[2].name}`;
           editor.value = '';
           editor.placeholder = `${commands[2].name} follow up`;
           editor.style.color = '#ebdbb2';
         } else if (commands[3].active) {
-          prompt.innerText = `You wrote ${commands[3].name}`;
+          prompt.innerHTML = `<span style="color: #8ec07c">&rsaquo;</span> You wrote ${commands[3].name}`;
           editor.value = '';
           editor.placeholder = `${commands[3].name} follow up`;
           editor.style.color = '#ebdbb2';
         } else if (commands[4].active) {
-          prompt.innerText = `You wrote ${commands[4].name}`;
+          prompt.innerHTML = `<span style="color: #8ec07c">&rsaquo;</span> You wrote ${commands[4].name}`;
           editor.value = '';
           editor.placeholder = `${commands[4].name} follow up`;
           editor.style.color = '#ebdbb2';
         } else if (commands[5].active) {
-          prompt.innerText = `You wrote ${commands[5].name}`;
+          prompt.innerHTML = `<span style="color: #8ec07c">&rsaquo;</span> You wrote ${commands[5].name}`;
           editor.value = '';
           editor.placeholder = `${commands[5].name} follow up`;
           editor.style.color = '#ebdbb2';
@@ -152,8 +152,11 @@ function listenForEnter(elem) {
           init = true;
           diagnosis = false;
           disease = '';
-          prompt.innerHTML = `Namaste. Welcome to <span style="color: #8ec07c">Zetsu</span>.
-              What can I call you?`;
+          prompt.innerHTML = `<span style="color: #8ec07c">&rsaquo;</span> Namaste. Welcome to
+              <span style="color: #8ec07c">Zetsu</span>.
+              <br />
+              <span style="color: #8ec07c">&rsaquo;</span> With the time you
+              have left, what do you want to do?`;
           editor.style.color = '#ebdbb2';
           editor.value = '';
           editor.placeholder = 'Write your preferred name...';
