@@ -99,6 +99,7 @@ function listenForEnter(elem) {
   elem.addEventListener('keydown', function (e) {
     let editorID = this.id;
     let editor = document.getElementById(editorID);
+    let editorValue = editor.value;
     let editorContent = editor.value.toLowerCase().trim();
     if (e.keyCode === 13 && editorContent !== '') {
       e.preventDefault();
@@ -124,7 +125,7 @@ function listenForEnter(elem) {
           editor.value = '';
           editor.style.color = '#ebdbb2';
         } else if (commands[1].active) {
-          prompt.innerHTML = `<span style="color: #8ec07c">&rsaquo;</span> You wrote ${commands[1].name}`;
+          prompt.innerHTML = `<span style="color: #D3869B">&rsaquo; ${editorValue}</span><br><span style="color: #8ec07c">&rsaquo;</span> You wrote ${commands[1].name}`;
           editor.value = '';
           editor.placeholder = `${commands[1].name} follow up`;
           editor.style.color = '#ebdbb2';
@@ -159,7 +160,7 @@ function listenForEnter(elem) {
               have left, what do you want to do?`;
           editor.style.color = '#ebdbb2';
           editor.value = '';
-          editor.placeholder = 'Write your preferred name...';
+          editor.placeholder = "Start with a command. 'help' for command list.";
           commands.forEach((command) => (command.active = false));
         } else {
           prompt.innerText =
