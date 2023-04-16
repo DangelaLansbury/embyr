@@ -2,8 +2,8 @@
 
 html,
 body {
-  width: 50rem;
-  height: 30rem;
+  width: 44rem;
+  height: 28rem;
   overflow: -moz-hidden-unscrollable;
 }
 
@@ -85,7 +85,6 @@ input[type='text']:focus {
 /* ---- NAVIGATION ---- */
 
 .navbar {
-  cursor: default;
   display: flex;
   flex-direction: row;
   position: absolute;
@@ -162,7 +161,7 @@ input[type='text']:focus {
   justify-content: flex-start;
   width: 100%;
   height: 100%;
-  margin-top: 25%;
+  margin-top: 12.5%;
 }
 
 .cli-block {
