@@ -2,10 +2,9 @@
 
 html,
 body {
-  width: 800px;
-  height: 480px;
+  width: 50rem;
+  height: 30rem;
   overflow: -moz-hidden-unscrollable;
-  border-radius: 25%;
 }
 
 @font-face {
@@ -137,8 +136,8 @@ input[type='text']:focus {
   flex-direction: column;
   justify-content: center;
   vertical-align: middle;
-  max-width: 640px;
-  height: 480px;
+  max-width: 40rem;
+  height: 100%;
   margin: auto;
 }
 
@@ -149,8 +148,8 @@ input[type='text']:focus {
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  height: 480px;
-  width: 560px;
+  height: 100%;
+  width: 35rem;
   margin: auto;
 }
 

@@ -6,7 +6,7 @@ let cliHelp = document.querySelector('#cliHelp');
 
 // --- STATE MANAGEMENT ---
 
-let init = true;
+let init = false;
 let user = '';
 let diagnosis = false;
 let disease = '';
@@ -99,7 +99,7 @@ function listenForEnter(elem) {
   elem.addEventListener('keydown', function (e) {
     let editorID = this.id;
     let editor = document.getElementById(editorID);
-    let editorContent = editor.value.toLowerCase();
+    let editorContent = editor.value.toLowerCase().trim();
     if (e.keyCode === 13 && editorContent !== '') {
       e.preventDefault();
       if (init) {
