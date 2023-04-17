@@ -106,7 +106,7 @@ function listenForEnter(elem) {
               <span style="color: #8ec07c">Zetsu</span>.
               <br />
               <span style="color: #8ec07c">&rsaquo;</span> With the time you
-              have left, what do you want to do?`;
+              have, what do you want to do?`;
         editor.value = '';
         commands.forEach((command) => (command.active = false));
       } else if (commandsPresent.length == 0) {
