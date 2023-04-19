@@ -56,6 +56,20 @@ const defaultPrompt = `<span style="color: #8ec07c">&rsaquo;</span> Namaste. Wel
 <br />
 <span style="color: #8ec07c">&rsaquo;</span> With the time you have, what do you want to do?`;
 
+const commandList = `<span style="color: #8ec07c">&rsaquo;</span> Here are the commands you can use:
+<br />
+<span style="color: #8ec07c">&rsaquo;</span> <span style="color: #B8BB26">achieve</span> - Success, accomplishment, recognition
+<br />
+<span style="color: #8ec07c">&rsaquo;</span> <span style="color: #D3869B">connect</span> - Meaningful relationships and networks
+<br />
+<span style="color: #8ec07c">&rsaquo;</span> <span style="color: #8EC07C">contribute</span> - New ideas and a positive impact
+<br />
+<span style="color: #8ec07c">&rsaquo;</span> <span style="color: #FD6D5C">explore</span> - Discovery and adventure
+<br />
+<span style="color: #8ec07c">&rsaquo;</span> <span style="color: #FABD2F">learn</span> - Knowledge and personal growth
+<br />
+<span style="color: #8ec07c">&rsaquo;</span> So, with the time you have, what do you want to do?`;
+
 // --- ADDING EVENT LISTENERS ---
 
 // Listening for click and focusing on editor in firefox and safari
@@ -101,8 +115,9 @@ function listenForEnter(elem) {
           ))
       );
       if (editorContent == 'h') {
-        window.open('#infoModal', '_self');
+        prompt.innerHTML = commandList;
         editor.value = '';
+        editor.placeholder = `Start with a command. Write 'e' for examples.`;
       } else if (editorContent == 'restart') {
         prompt.innerHTML = defaultPrompt;
         editor.value = '';
@@ -113,7 +128,7 @@ function listenForEnter(elem) {
       } else {
         prompt.innerHTML = `<span style="color: #8ec07c">&rsaquo;</span> ${commandOutput}<br><span style="color: #8ec07c">&rsaquo;</span> Here are some things to think about`;
         editor.value = '';
-        editor.placeholder = `Write a new command. Write 'h' for help.`;
+        editor.placeholder = `Start a new command. Write 'h' for help.`;
       }
       return;
     } else {
