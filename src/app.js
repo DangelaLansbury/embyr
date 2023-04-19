@@ -23,11 +23,6 @@ let command = '';
 
 const commands = [
   {
-    name: 'help',
-    active: false,
-    color: '#83A598',
-  },
-  {
     name: 'achieve',
     active: false,
     color: '#B8BB26',
@@ -105,7 +100,7 @@ function listenForEnter(elem) {
             `<span style="color: ${command.color}">${command.name}</span>`
           ))
       );
-      if (commands[0].active) {
+      if (editorContent == 'h') {
         window.open('#infoModal', '_self');
         editor.value = '';
       } else if (editorContent == 'restart') {
@@ -118,7 +113,7 @@ function listenForEnter(elem) {
       } else {
         prompt.innerHTML = `<span style="color: #8ec07c">&rsaquo;</span> ${commandOutput}<br><span style="color: #8ec07c">&rsaquo;</span> Here are some things to think about`;
         editor.value = '';
-        editor.placeholder = `Write a new command. Write 'help' for info.`;
+        editor.placeholder = `Write a new command. Write 'h' for help.`;
       }
       return;
     } else {
