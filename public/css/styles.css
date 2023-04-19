@@ -279,18 +279,6 @@ input[type='text']:focus {
 
 /* command modal */
 
-.open-modal {
-  display: inline-block;
-  cursor: pointer;
-  margin-right: 2rem;
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
-  background-color: #a79c8f;
-  color: #fdfcfc;
-  font-size: 0.75rem;
-  text-decoration: none;
-}
-
 .modal {
   visibility: hidden;
   opacity: 0;
@@ -303,7 +291,7 @@ input[type='text']:focus {
   align-items: center;
   justify-content: center;
   background: rgba(40, 38, 37, 0.6);
-  transition: all 0.4s;
+  transition: all 0.2s;
 }
 
 .modal:target {
@@ -312,9 +300,9 @@ input[type='text']:focus {
 }
 
 .modal__content {
-  border-radius: 16px;
+  border-radius: 1rem;
   position: relative;
-  width: 360px;
+  width: 25rem;
   max-width: 90%;
   max-height: 60%;
   background: #32302f;

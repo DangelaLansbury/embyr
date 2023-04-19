@@ -4,6 +4,10 @@ let cliEditor = document.querySelector('#cliEditor');
 let cliBlockHelp = document.querySelector('#cliBlockHelp');
 let cliHelp = document.querySelector('#cliHelp');
 
+// focus on CLI editor at start
+
+cliEditor.focus();
+
 // --- STATE MANAGEMENT ---
 
 let init = false;
@@ -50,9 +54,12 @@ const commands = [
   },
 ];
 
-// focus on CLI editor at start
+// --- DEFAULT PROMPTS ---
 
-cliEditor.focus();
+const defaultPrompt = `<span style="color: #8ec07c">&rsaquo;</span> Namaste. Welcome to
+<span style="color: #8ec07c">Zetsu</span>.
+<br />
+<span style="color: #8ec07c">&rsaquo;</span> With the time you have, what do you want to do?`;
 
 // --- ADDING EVENT LISTENERS ---
 
@@ -99,14 +106,10 @@ function listenForEnter(elem) {
           ))
       );
       if (commands[0].active) {
-        window.open('#cmdModal', '_self');
+        window.open('#infoModal', '_self');
         editor.value = '';
       } else if (editorContent == 'restart') {
-        prompt.innerHTML = `<span style="color: #8ec07c">&rsaquo;</span> Namaste. Welcome to
-              <span style="color: #8ec07c">Zetsu</span>.
-              <br />
-              <span style="color: #8ec07c">&rsaquo;</span> With the time you
-              have, what do you want to do?`;
+        prompt.innerHTML = defaultPrompt;
         editor.value = '';
         commands.forEach((command) => (command.active = false));
       } else if (commandsPresent.length == 0) {
@@ -115,7 +118,7 @@ function listenForEnter(elem) {
       } else {
         prompt.innerHTML = `<span style="color: #8ec07c">&rsaquo;</span> ${commandOutput}<br><span style="color: #8ec07c">&rsaquo;</span> Here are some things to think about`;
         editor.value = '';
-        editor.placeholder = `Write a new command. 'help' to see command list.`;
+        editor.placeholder = `Write a new command. Write 'help' for info.`;
       }
       return;
     } else {
