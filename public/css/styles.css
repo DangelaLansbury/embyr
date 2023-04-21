@@ -293,6 +293,7 @@ input[type='text']:focus {
   justify-content: center;
   background: rgba(40, 38, 37, 0.6);
   transition: all 0.2s;
+  z-index: 1;
 }
 
 .modal:target {
@@ -303,14 +304,15 @@ input[type='text']:focus {
 .modal__content {
   border-radius: 1rem;
   position: relative;
-  width: 25rem;
+  width: 66%;
   max-width: 90%;
-  max-height: 60%;
+  max-height: 66%;
   background: #32302f;
-  padding: 1rem 2rem;
+  padding: 1.5rem 4rem 1.5rem 3rem;
   text-decoration: none;
   overflow-y: scroll;
   box-shadow: 0px 4px 24px #212121;
+  z-index: 2;
 }
 
 .modal__close {

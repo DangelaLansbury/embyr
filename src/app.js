@@ -74,7 +74,7 @@ const commandExamples = `<span style="color: #8ec07c">&rsaquo;</span> Some examp
 <br />
 <span style="color: #8ec07c">&rsaquo;</span> <span style="color: #B8BB26">achieve</span> finishing my novel 
 <br />
-<span style="color: #8ec07c">&rsaquo;</span> <span style="color: #D3869B">connect</span> with my granddaughter <span style="color: #FABD2F">learn</span> Chinese
+<span style="color: #8ec07c">&rsaquo;</span> <span style="color: #D3869B">connect</span> with my grandmother <span style="color: #FABD2F">learn</span> Chinese
 <br />
 <span style="color: #8ec07c">&rsaquo;</span> <span style="color: #8EC07C">contribute</span> to conservation <span style="color: #FD6D5C">explore</span> the outdoors
 <br />
