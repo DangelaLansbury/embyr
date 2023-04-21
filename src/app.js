@@ -56,7 +56,7 @@ const defaultPrompt = `<span style="color: #8ec07c">&rsaquo;</span> Namaste. Wel
 <br />
 <span style="color: #8ec07c">&rsaquo;</span> With the time you have, what do you want to do?`;
 
-const commandList = `<span style="color: #8ec07c">&rsaquo;</span> Here are some commands you can use...
+const commandList = `<span style="color: #8ec07c">&rsaquo;</span> Here are some commands you can use:
 <br />
 <span style="color: #8ec07c">&rsaquo;</span> <span style="color: #B8BB26">achieve</span> - Success, accomplishment, recognition
 <br />
@@ -70,11 +70,11 @@ const commandList = `<span style="color: #8ec07c">&rsaquo;</span> Here are some 
 <br />
 <span style="color: #8ec07c">&rsaquo;</span> So, with the time you have, what do you want to do?`;
 
-const commandExamples = `<span style="color: #8ec07c">&rsaquo;</span> Here are some examples. You may use multiple commands at once...
+const commandExamples = `<span style="color: #8ec07c">&rsaquo;</span> Some examples to inspire you:
 <br />
 <span style="color: #8ec07c">&rsaquo;</span> <span style="color: #B8BB26">achieve</span> finishing my novel
 <br />
-<span style="color: #8ec07c">&rsaquo;</span> <span style="color: #D3869B">connect</span> with my daughter at her father-daughter dance.
+<span style="color: #8ec07c">&rsaquo;</span> <span style="color: #D3869B">connect</span> with my daughter at her wedding
 <br />
 <span style="color: #8ec07c">&rsaquo;</span> <span style="color: #8EC07C">contribute</span> to conservation efforts
 <br />
@@ -157,52 +157,5 @@ function listenForEnter(elem) {
 
 listenForEnter(cliEditor);
 listenForCommand(cliEditor);
-
-// ------------------------------
-
-const artisanWords = [
-  'work',
-  'create',
-  'build',
-  'make',
-  'finish',
-  'develop',
-  'produce',
-  'engineer',
-  'craft',
-];
-const sentimentalistWords = [
-  'love',
-  'loved',
-  'care',
-  'help',
-  'support',
-  'serve',
-  'nurture',
-  'teach',
-  'mentor',
-  'coach',
-  'counsel',
-  'guide',
-  'protect',
-  'family',
-  'friend',
-  'community',
-  'money',
-];
-const adventurerWords = [
-  'explore',
-  'travel',
-  'visit',
-  'hike',
-  'world',
-  'mountain',
-  'fitness',
-  'workout',
-  'sports',
-  'play',
-  'taste',
-  'experience',
-];
 
 // Path: zetsu-00/public/src/book.js
