@@ -51,7 +51,7 @@ const commands = [
 
 // --- DEFAULT PROMPTS ---
 
-const defaultPrompt = `<span style="color: #8ec07c">&rsaquo;</span> Namaste. Welcome to
+const defaultPrompt = `<span style="color: #8ec07c">&rsaquo;</span> <span style="color: #fabd2f">Namaste</span>. Welcome to
 <span style="color: #8ec07c">Zetsu</span>.
 <br />
 <span style="color: #8ec07c">&rsaquo;</span> With the time you have, what do you want to do?`;
@@ -72,15 +72,11 @@ const commandList = `<span style="color: #8ec07c">&rsaquo;</span> Here are some 
 
 const commandExamples = `<span style="color: #8ec07c">&rsaquo;</span> Some examples to inspire you:
 <br />
-<span style="color: #8ec07c">&rsaquo;</span> <span style="color: #B8BB26">achieve</span> finishing my novel
+<span style="color: #8ec07c">&rsaquo;</span> <span style="color: #B8BB26">achieve</span> finishing my novel 
 <br />
-<span style="color: #8ec07c">&rsaquo;</span> <span style="color: #D3869B">connect</span> with my daughter at her wedding
+<span style="color: #8ec07c">&rsaquo;</span> <span style="color: #D3869B">connect</span> with my granddaughter <span style="color: #FABD2F">learn</span> Chinese
 <br />
-<span style="color: #8ec07c">&rsaquo;</span> <span style="color: #8EC07C">contribute</span> to conservation efforts
-<br />
-<span style="color: #8ec07c">&rsaquo;</span> <span style="color: #FD6D5C">explore</span> Yosemite
-<br />
-<span style="color: #8ec07c">&rsaquo;</span> <span style="color: #FABD2F">learn</span> Chinese
+<span style="color: #8ec07c">&rsaquo;</span> <span style="color: #8EC07C">contribute</span> to conservation <span style="color: #FD6D5C">explore</span> the outdoors
 <br />
 <span style="color: #8ec07c">&rsaquo;</span> So, with the time you have, what do you want to do?`;
 
