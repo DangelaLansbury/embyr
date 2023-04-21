@@ -56,7 +56,7 @@ const defaultPrompt = `<span style="color: #8ec07c">&rsaquo;</span> Namaste. Wel
 <br />
 <span style="color: #8ec07c">&rsaquo;</span> With the time you have, what do you want to do?`;
 
-const commandList = `<span style="color: #8ec07c">&rsaquo;</span> Here are the commands you can use:
+const commandList = `<span style="color: #8ec07c">&rsaquo;</span> Here are some commands you can use...
 <br />
 <span style="color: #8ec07c">&rsaquo;</span> <span style="color: #B8BB26">achieve</span> - Success, accomplishment, recognition
 <br />
@@ -67,6 +67,20 @@ const commandList = `<span style="color: #8ec07c">&rsaquo;</span> Here are the c
 <span style="color: #8ec07c">&rsaquo;</span> <span style="color: #FD6D5C">explore</span> - Discovery and adventure
 <br />
 <span style="color: #8ec07c">&rsaquo;</span> <span style="color: #FABD2F">learn</span> - Knowledge and personal growth
+<br />
+<span style="color: #8ec07c">&rsaquo;</span> So, with the time you have, what do you want to do?`;
+
+const commandExamples = `<span style="color: #8ec07c">&rsaquo;</span> Here are some examples. You may use multiple commands at once...
+<br />
+<span style="color: #8ec07c">&rsaquo;</span> <span style="color: #B8BB26">achieve</span> finishing my novel
+<br />
+<span style="color: #8ec07c">&rsaquo;</span> <span style="color: #D3869B">connect</span> with my daughter at her father-daughter dance.
+<br />
+<span style="color: #8ec07c">&rsaquo;</span> <span style="color: #8EC07C">contribute</span> to conservation efforts
+<br />
+<span style="color: #8ec07c">&rsaquo;</span> <span style="color: #FD6D5C">explore</span> Yosemite
+<br />
+<span style="color: #8ec07c">&rsaquo;</span> <span style="color: #FABD2F">learn</span> Chinese
 <br />
 <span style="color: #8ec07c">&rsaquo;</span> So, with the time you have, what do you want to do?`;
 
@@ -118,6 +132,10 @@ function listenForEnter(elem) {
         prompt.innerHTML = commandList;
         editor.value = '';
         editor.placeholder = `Start with a command. Write 'e' for examples.`;
+      } else if (editorContent == 'e') {
+        prompt.innerHTML = commandExamples;
+        editor.value = '';
+        editor.placeholder = `Start with a command. Write 'h' for help.`;
       } else if (editorContent == 'restart') {
         prompt.innerHTML = defaultPrompt;
         editor.value = '';
