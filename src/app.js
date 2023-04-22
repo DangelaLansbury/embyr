@@ -55,7 +55,6 @@ const defaultPrompt = `<span style="color: #8ec07c">&rsaquo;</span> <span style=
 <span style="color: #8ec07c">Zetsu</span>.
 <br />
 <span style="color: #8ec07c">&rsaquo;</span> With the time you have, what do you want to do?`;
-
 const commandList = `<span style="color: #8ec07c">&rsaquo;</span> Here are some commands you can use:
 <br />
 <span style="color: #8ec07c">&rsaquo;</span> <span style="color: #B8BB26">achieve</span> - Success, accomplishment, recognition
@@ -69,12 +68,11 @@ const commandList = `<span style="color: #8ec07c">&rsaquo;</span> Here are some 
 <span style="color: #8ec07c">&rsaquo;</span> <span style="color: #FABD2F">learn</span> - Knowledge and personal growth
 <br />
 <span style="color: #8ec07c">&rsaquo;</span> So, with the time you have, what do you want to do?`;
-
 const commandExamples = `<span style="color: #8ec07c">&rsaquo;</span> Some examples to inspire you:
 <br />
 <span style="color: #8ec07c">&rsaquo;</span> <span style="color: #B8BB26">achieve</span> finishing my novel 
 <br />
-<span style="color: #8ec07c">&rsaquo;</span> <span style="color: #D3869B">connect</span> with my grandmother <span style="color: #FABD2F">learn</span> Chinese
+<span style="color: #8ec07c">&rsaquo;</span> <span style="color: #D3869B">connect</span> with my granddaughter <span style="color: #FABD2F">learn</span> Chinese
 <br />
 <span style="color: #8ec07c">&rsaquo;</span> <span style="color: #8EC07C">contribute</span> to conservation <span style="color: #FD6D5C">explore</span> the outdoors
 <br />
