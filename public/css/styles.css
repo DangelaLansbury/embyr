@@ -130,6 +130,7 @@ input[type='text']:focus {
   width: 35rem;
   margin: auto;
 }
+/* ---- CLI ---- */
 /* command line */
 .cli {
   display: inline-flex;
@@ -151,6 +152,13 @@ input[type='text']:focus {
 .cli-prompt {
   display: block;
   /* text-wrap: balance; */
+}
+.examples {
+  display: block;
+  width: 100%;
+  padding-left: 1rem;
+  border-left: #a79c8f 4px solid;
+  margin: 0.75rem 0 0.75rem 1.5rem;
 }
 .command-line {
   display: flex;

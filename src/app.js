@@ -69,14 +69,17 @@ const commandList = `<span style="color: #8ec07c">&rsaquo;</span> Here are some 
 <br />
 <span style="color: #8ec07c">&rsaquo;</span> So, with the time you have, what do you want to do?`;
 const commandExamples = `<span style="color: #8ec07c">&rsaquo;</span> Some examples to inspire you:
-<br />
-<span style="color: #8ec07c">&rsaquo;</span> <span style="color: #B8BB26">achieve</span> finishing my novel 
-<br />
-<span style="color: #8ec07c">&rsaquo;</span> <span style="color: #D3869B">connect</span> with my granddaughter <span style="color: #FABD2F">learn</span> Chinese
-<br />
-<span style="color: #8ec07c">&rsaquo;</span> <span style="color: #8EC07C">contribute</span> to conservation <span style="color: #FD6D5C">explore</span> the outdoors
-<br />
-<span style="color: #8ec07c">&rsaquo;</span> So, with the time you have, what do you want to do?`;
+<div class="examples">
+              <span style="color: #b8bb26">achieve</span> finishing my novel
+              <br />
+              <span style="color: #d3869b">connect</span> with my granddaughter
+              <span style="color: #fabd2f">learn</span> Chinese
+              <br />
+              <span style="color: #8ec07c">contribute</span> to conservation
+              <span style="color: #fd6d5c">explore</span> the outdoors
+            </div>
+            <span style="color: #8ec07c">&rsaquo;</span> So, with the time you
+              have, what do you want to do?`;
 
 // --- ADDING EVENT LISTENERS ---
 
