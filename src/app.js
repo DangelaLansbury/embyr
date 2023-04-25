@@ -55,6 +55,7 @@ const defaultPrompt = `<span style="color: #8ec07c">&rsaquo;</span> <span style=
 <span style="color: #8ec07c">Zetsu</span>.
 <br />
 <span style="color: #8ec07c">&rsaquo;</span> With the time you have, what do you want to do?`;
+const defaultPlaceholder = `Run a command or write 'h' for help`;
 const commandList = `<span style="color: #8ec07c">&rsaquo;</span> Here are some commands you can use:
 <br />
 <span style="color: #8ec07c">&rsaquo;</span> <span style="color: #B8BB26">achieve</span> - Success, accomplishment, recognition
@@ -70,16 +71,15 @@ const commandList = `<span style="color: #8ec07c">&rsaquo;</span> Here are some 
 <span style="color: #8ec07c">&rsaquo;</span> So, with the time you have, what do you want to do?`;
 const commandExamples = `<span style="color: #8ec07c">&rsaquo;</span> Some examples to inspire you:
 <div class="examples">
-              <span style="color: #b8bb26">achieve</span> finishing my novel
-              <br />
-              <span style="color: #d3869b">connect</span> with my granddaughter
-              <span style="color: #fabd2f">learn</span> Chinese
-              <br />
-              <span style="color: #8ec07c">contribute</span> to conservation
-              <span style="color: #fd6d5c">explore</span> the outdoors
-            </div>
-            <span style="color: #8ec07c">&rsaquo;</span> So, with the time you
-              have, what do you want to do?`;
+  <span style="color: #d3869b">connect</span> with my granddaughter
+  <span style="color: #fabd2f">learn</span> Chinese
+  <br />
+  <span style="color: #b8bb26">achieve</span> finishing my novel
+  <br />
+  <span style="color: #8ec07c">contribute</span> to conservation
+  <span style="color: #fd6d5c">explore</span> the outdoors
+ </div>
+<span style="color: #8ec07c">&rsaquo;</span> So, with the time you have, what do you want to do?`;
 
 // --- ADDING EVENT LISTENERS ---
 
@@ -110,7 +110,7 @@ function listenForEnter(elem) {
     let editorID = this.id;
     let editor = document.getElementById(editorID);
     let editorValue = editor.value;
-    let editorContent = editor.value.toLowerCase().trim();
+    let editorContent = editorValue.toLowerCase().trim();
     if (e.keyCode === 13 && editorContent !== '') {
       e.preventDefault();
       command = editorContent;
@@ -128,14 +128,15 @@ function listenForEnter(elem) {
       if (editorContent == 'h') {
         prompt.innerHTML = commandList;
         editor.value = '';
-        editor.placeholder = `Start with a command. Write 'e' for examples.`;
+        editor.placeholder = `Run a command or write 'e' for examples`;
       } else if (editorContent == 'e') {
         prompt.innerHTML = commandExamples;
         editor.value = '';
-        editor.placeholder = `Start with a command. Write 'h' for help.`;
-      } else if (editorContent == 'restart') {
+        editor.placeholder = `Try running a command or write 'h' for help`;
+      } else if (editorContent == '~') {
         prompt.innerHTML = defaultPrompt;
         editor.value = '';
+        editor.placeholder = defaultPlaceholder;
         commands.forEach((command) => (command.active = false));
       } else if (commandsPresent.length == 0) {
         prompt.innerHTML = `<span style="color: #8ec07c">&rsaquo;</span> Hmm I'm not following. Did you try using a command?`;
@@ -154,5 +155,3 @@ function listenForEnter(elem) {
 
 listenForEnter(cliEditor);
 listenForCommand(cliEditor);
-
-// Path: zetsu-00/public/src/book.js
