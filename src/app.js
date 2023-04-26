@@ -52,7 +52,7 @@ const commands = [
 
 // --- DEFAULT PROMPTS ---
 
-const defaultPrompt = `<span style="color: #8ec07c">&rsaquo;</span> <span style="color: #fabd2f">Namaste</span>. Welcome to
+const defaultPrompt = `<span style="color: #8ec07c">&rsaquo;</span> Namaste. Welcome to
 <span style="color: #8ec07c">Zetsu</span>.
 <br />
 <span style="color: #8ec07c">&rsaquo;</span> With the time you have, what do you want to do?`;
