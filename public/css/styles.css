@@ -1,14 +1,13 @@
 /* --- GLOBAL --- */
 html,
 body {
-  width: 44rem;
-  height: 28rem;
+  width: 48rem;
+  height: 32rem;
   overflow: -moz-hidden-unscrollable;
 }
 @font-face {
   font-family: 'gelica-black';
-  src: url('gelica-black-webfont.woff2') format('woff2'),
-    url('gelica-black-webfont.woff') format('woff');
+  src: url('gelica-black-webfont.woff2') format('woff2'), url('gelica-black-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
@@ -116,7 +115,6 @@ input[type='text']:focus {
   flex-direction: column;
   justify-content: center;
   vertical-align: middle;
-  max-width: 40rem;
   height: 100%;
   margin: auto;
 }
@@ -127,7 +125,7 @@ input[type='text']:focus {
   justify-content: center;
   align-items: flex-start;
   height: 100%;
-  width: 35rem;
+  width: 40rem;
   margin: auto;
 }
 /* ---- CLI ---- */
@@ -139,10 +137,30 @@ input[type='text']:focus {
   justify-content: flex-start;
   width: 100%;
   height: 100%;
-  margin-top: 12.5%;
+  margin-top: 4rem;
 }
 .cli-prompt {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+}
+.cli-prompt-text {
   display: block;
+}
+.cli-prompt-text::before {
+  content: '>';
+  margin-right: 0.5rem;
+  color: #8ec07c;
+}
+.cli-user-input {
+  display: block;
+}
+.cli-user-input::before {
+  content: 'human@zetsu:~$';
+  margin-right: 0.5rem;
+  color: #8ec07c;
 }
 .examples {
   display: block;
@@ -155,7 +173,7 @@ input[type='text']:focus {
 .command-line {
   display: flex;
   flex-direction: row;
-  justify-content: left;
+  justify-content: flex-start;
   margin-top: 0.25rem;
   width: 100%;
 }

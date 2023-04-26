@@ -52,25 +52,23 @@ const commands = [
 
 // --- DEFAULT PROMPTS ---
 
-const defaultPrompt = `<span style="color: #8ec07c">&rsaquo;</span> Namaste. Welcome to
-<span style="color: #8ec07c">Zetsu</span>.
-<br />
-<span style="color: #8ec07c">&rsaquo;</span> With the time you have, what do you want to do?`;
+const defaultPrompt = `<div class="cli-prompt-text">Namaste. Welcome to Zetsu.</div>
+  <div class="cli-prompt-text">With the time you have, what do you want to do?</div>`;
 const defaultPlaceholder = `Run a command or write 'h' for help`;
-const commandList = `<span style="color: #8ec07c">&rsaquo;</span> Here are some commands you can use:
-<br />
-<span style="color: #8ec07c">&rsaquo;</span> <span style="color: #B8BB26">achieve</span> - Success, accomplishment, recognition
-<br />
-<span style="color: #8ec07c">&rsaquo;</span> <span style="color: #D3869B">connect</span> - Meaningful relationships and networks
-<br />
-<span style="color: #8ec07c">&rsaquo;</span> <span style="color: #8EC07C">contribute</span> - New ideas and a positive impact
-<br />
-<span style="color: #8ec07c">&rsaquo;</span> <span style="color: #FD6D5C">explore</span> - Discovery and adventure
-<br />
-<span style="color: #8ec07c">&rsaquo;</span> <span style="color: #FABD2F">learn</span> - Knowledge and personal growth
-<br />
-<span style="color: #8ec07c">&rsaquo;</span> So, with the time you have, what do you want to do?`;
-const commandExamples = `<span style="color: #8ec07c">&rsaquo;</span> Some examples to inspire you:
+const commandList = `<div class="cli-prompt-text">Here are some commands you can run:</div>
+  <div class="examples">
+    <span style="color: #b8bb26">achieve</span> - Success, accomplishment, recognition
+    <br />
+    <span style="color: #d3869b">connect</span> - Meaningful relationships and networks
+    <br />
+    <span style="color: #8ec07c">contribute</span> - New ideas and a positive impact
+    <br />
+    <span style="color: #fd6d5c">explore</span> - Discovery and adventure
+    <br />
+    <span style="color: #fabd2f">learn</span> - Knowledge and personal growth
+  </div>
+  <div class="cli-prompt-text">So, what do you want to do?</div>`;
+const commandExamples = `<div class="cli-prompt-text">Here are some examples to inspire you:</div>
 <div class="examples">
   <span style="color: #d3869b">connect</span> with my granddaughter
   <span style="color: #fabd2f">learn</span> Chinese
@@ -79,17 +77,17 @@ const commandExamples = `<span style="color: #8ec07c">&rsaquo;</span> Some examp
   <br />
   <span style="color: #8ec07c">contribute</span> to conservation
   <span style="color: #fd6d5c">explore</span> the outdoors
- </div>
-<span style="color: #8ec07c">&rsaquo;</span> So, with the time you have, what do you want to do?`;
+</div>
+<div class="cli-prompt-text">So, what do you want to do?</div>`;
 
 // --- OUTPUTS ---
 
 const output01 = document.createElement('div');
-output01.innerHTML = `<span style="color: #8ec07c">&rsaquo;</span> Output 01`;
+output01.innerHTML = `<span style="color: #8ec07c">&rsaquo;</span> Here's some info about <a href="https://www.dana-farber.org/health-library/articles/tips-for-managing-chemobrain/" target="_blank">managing "chemo brain"</a> symptoms.`;
 const output02 = document.createElement('div');
-output02.innerHTML = `<span style="color: #8ec07c">&rsaquo;</span> Output 02`;
+output02.innerHTML = `<span style="color: #8ec07c">&rsaquo;</span> Here's some relevant info about managing other treatment side effects.`;
 const output03 = document.createElement('div');
-output03.innerHTML = `<span style="color: #8ec07c">&rsaquo;</span> Output 03`;
+output03.innerHTML = `<span style="color: #8ec07c">&rsaquo;</span> Here's a link to a Coda template which may help you accomplish your goal.`;
 
 // --- ADDING EVENT LISTENERS ---
 
@@ -106,11 +104,7 @@ function listenForCommand(elem) {
     let editorID = this.id;
     let editor = document.getElementById(editorID);
     let editorContent = editor.value.toLowerCase();
-    commands.forEach((command) =>
-      editorContent.includes(command.name)
-        ? (command.active = true)
-        : (command.active = false)
-    );
+    commands.forEach((command) => (editorContent.includes(command.name) ? (command.active = true) : (command.active = false)));
   });
 }
 
@@ -128,13 +122,7 @@ function listenForEnter(elem) {
       let commandsPresent = commands.filter(function (command) {
         return command.active;
       });
-      commandsPresent.forEach(
-        (command) =>
-          (commandOutput = commandOutput.replace(
-            command.name,
-            `<span style="color: ${command.color}">${command.name}</span>`
-          ))
-      );
+      commandsPresent.forEach((command) => (commandOutput = commandOutput.replace(command.name, `<span style="color: ${command.color}">${command.name}</span>`)));
       if (editorContent == 'h') {
         prompt.innerHTML = commandList;
         editor.value = '';
@@ -153,20 +141,20 @@ function listenForEnter(elem) {
         editor.value = '';
       } else {
         commandLine.style.display = 'none';
-        prompt.innerHTML = `<span style="color: #8ec07c">&rsaquo;</span> ${commandOutput}`;
+        prompt.innerHTML = `<div class="cli-user-input">${commandOutput}</div>`;
         setTimeout(() => {
           prompt.appendChild(output01);
-        }, 500);
+        }, 300);
         setTimeout(() => {
           prompt.appendChild(output02);
-        }, 1000);
+        }, 600);
         setTimeout(() => {
           prompt.appendChild(output03);
-        }, 1500);
+        }, 900);
         setTimeout(() => {
           commandLine.style.display = 'flex';
           cliEditor.focus();
-        }, 1600);
+        }, 1000);
         editor.value = '';
         editor.placeholder = `Start a new command. Write 'h' for help.`;
       }
