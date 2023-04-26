@@ -82,12 +82,14 @@ const commandExamples = `<div class="cli-prompt-text">Here are some examples to 
 
 // --- OUTPUTS ---
 
+const output00 = document.createElement('div');
+output00.innerHTML = `<div class="cli-prompt-text">Fresh-brewed templates to help plan care & realize goals:</div>`;
 const output01 = document.createElement('div');
-output01.innerHTML = `<div class="cli-prompt-text">Here's a fresh-brewed <a href=''>Coda template</a> to help plan your care</div>`;
+output01.innerHTML = `<div class="cli-prompt-text">Savor this flavorful <a href=''>Coda</a> template</div>`;
 const output02 = document.createElement('div');
-output02.innerHTML = `<div class="cli-prompt-text">And <a href=''>here's one</a> to help manage side effects and realize goals</div>`;
+output02.innerHTML = `<div class="cli-prompt-text">Enjoy this rich and zesty <a href=''>Notion</a> template</div>`;
 const output03 = document.createElement('div');
-output03.innerHTML = `<div class="cli-prompt-text">Use sum --1 or sum --2 to summarize either template above</div>`;
+output03.innerHTML = `<div class="cli-prompt-text">Or give this silky smooth <a href=''>Markwhen</a> timeline a try</div>`;
 
 // --- ADDING EVENT LISTENERS ---
 
@@ -123,15 +125,20 @@ function listenForEnter(elem) {
         return command.active;
       });
       commandsPresent.forEach((command) => (commandOutput = commandOutput.replace(command.name, `<span style="color: ${command.color}">${command.name}</span>`)));
-      if (editorContent == '-h') {
+      if (editorContent == '-l') {
         prompt.innerHTML = `<div class="cli-user-input">${commandOutput}</div> ${commandList}`;
         editor.value = '';
-        editor.placeholder = `Run a command or write -e for examples`;
+        editor.placeholder = `Write -e for examples or -h for help`;
+      } else if (editorContent == '-h') {
+        // trigger link to open modal
+        document.querySelector('#stamp').click();
+        editor.value = '';
+        editor.placeholder = defaultPlaceholder;
       } else if (editorContent == '-e') {
         prompt.innerHTML = `<div class="cli-user-input">${commandOutput}</div> ${commandExamples}`;
         editor.value = '';
         editor.placeholder = `Try running a command or write -h for help`;
-      } else if (editorContent == '--') {
+      } else if (editorContent == '-r') {
         prompt.innerHTML = defaultPrompt;
         editor.value = '';
         editor.placeholder = defaultPlaceholder;
@@ -143,8 +150,11 @@ function listenForEnter(elem) {
         commandLine.style.display = 'none';
         prompt.innerHTML = `<div class="cli-user-input">${commandOutput}</div>`;
         setTimeout(() => {
-          prompt.appendChild(output01);
+          prompt.appendChild(output00);
         }, 300);
+        setTimeout(() => {
+          prompt.appendChild(output01);
+        }, 450);
         setTimeout(() => {
           prompt.appendChild(output02);
         }, 600);
@@ -156,7 +166,7 @@ function listenForEnter(elem) {
           cliEditor.focus();
         }, 1000);
         editor.value = '';
-        editor.placeholder = `Start a new command or write -h for help`;
+        editor.placeholder = `Run a new command or write -h for help`;
       }
       return;
     } else {
@@ -167,3 +177,5 @@ function listenForEnter(elem) {
 
 listenForEnter(cliEditor);
 listenForCommand(cliEditor);
+
+// -h -e -l -r -doc
