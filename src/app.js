@@ -1,5 +1,6 @@
-let cliBlock = document.querySelector('#cliBlock');
+let cli = document.querySelector('#cli');
 let prompt = document.querySelector('#cliPrompt');
+let commandLine = document.querySelector('#commandLine');
 let cliEditor = document.querySelector('#cliEditor');
 let cliBlockHelp = document.querySelector('#cliBlockHelp');
 let cliHelp = document.querySelector('#cliHelp');
@@ -81,6 +82,15 @@ const commandExamples = `<span style="color: #8ec07c">&rsaquo;</span> Some examp
  </div>
 <span style="color: #8ec07c">&rsaquo;</span> So, with the time you have, what do you want to do?`;
 
+// --- OUTPUTS ---
+
+const output01 = document.createElement('div');
+output01.innerHTML = `<span style="color: #8ec07c">&rsaquo;</span> Output 01`;
+const output02 = document.createElement('div');
+output02.innerHTML = `<span style="color: #8ec07c">&rsaquo;</span> Output 02`;
+const output03 = document.createElement('div');
+output03.innerHTML = `<span style="color: #8ec07c">&rsaquo;</span> Output 03`;
+
 // --- ADDING EVENT LISTENERS ---
 
 // Listening for click and focusing on editor in firefox and safari
@@ -142,7 +152,21 @@ function listenForEnter(elem) {
         prompt.innerHTML = `<span style="color: #8ec07c">&rsaquo;</span> Hmm I'm not following. Did you try using a command?`;
         editor.value = '';
       } else {
-        prompt.innerHTML = `<span style="color: #8ec07c">&rsaquo;</span> ${commandOutput}<br><span style="color: #8ec07c">&rsaquo;</span> Here are some things to think about`;
+        commandLine.style.display = 'none';
+        prompt.innerHTML = `<span style="color: #8ec07c">&rsaquo;</span> ${commandOutput}`;
+        setTimeout(() => {
+          prompt.appendChild(output01);
+        }, 500);
+        setTimeout(() => {
+          prompt.appendChild(output02);
+        }, 1000);
+        setTimeout(() => {
+          prompt.appendChild(output03);
+        }, 1500);
+        setTimeout(() => {
+          commandLine.style.display = 'flex';
+          cliEditor.focus();
+        }, 1600);
         editor.value = '';
         editor.placeholder = `Start a new command. Write 'h' for help.`;
       }

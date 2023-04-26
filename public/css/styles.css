@@ -141,39 +141,15 @@ input[type='text']:focus {
   height: 100%;
   margin-top: 12.5%;
 }
+.cli-prompt {
+  display: block;
+}
 .examples {
   display: block;
   width: 100%;
   padding-left: 1rem;
   border-left: #a79c8f 4px solid;
   margin: 0.75rem 0 0.75rem 1.5rem;
-}
-/* outputs appear after delay */
-.output {
-  visibility: hidden;
-  position: absolute;
-  width: 100%;
-}
-#output01 {
-  animation: appearAfterDelay 0.5s 0.5s forwards;
-}
-#output02 {
-  animation: appearAfterDelay 0.5s 1s forwards;
-}
-#output03 {
-  animation: appearAfterDelay 0.5s 1.5s forwards;
-}
-@keyframes appearAfterDelay {
-  0% {
-    visibility: hidden;
-  }
-  50% {
-    position: static;
-  }
-  100% {
-    position: static;
-    visibility: visible;
-  }
 }
 /* command line content */
 .command-line {
@@ -229,7 +205,7 @@ input[type='text']:focus {
   border: none;
   outline: none;
 }
-.command-list {
+/* .command-list {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -237,7 +213,7 @@ input[type='text']:focus {
   margin-top: 1rem;
   font-size: 0.75rem;
   color: #a79c8f;
-}
+} */
 .command-list-item {
   display: inline-flex;
   margin: 0 0.5rem 0 0;
