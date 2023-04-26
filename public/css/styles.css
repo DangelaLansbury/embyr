@@ -223,19 +223,6 @@ input[type='text']:focus {
   border: none;
   outline: none;
 }
-/* .command-list {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: flex-start;
-  margin-top: 1rem;
-  font-size: 0.75rem;
-  color: #a79c8f;
-} */
-.command-list-item {
-  display: inline-flex;
-  margin: 0 0.5rem 0 0;
-}
 /* considerations */
 .considerations-container {
   display: flex;

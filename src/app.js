@@ -52,9 +52,9 @@ const commands = [
 
 // --- DEFAULT PROMPTS ---
 
-const defaultPrompt = `<div class="cli-prompt-text">Namaste. Welcome to Zetsu.</div>
+const defaultPrompt = `<div class="cli-prompt-text">Namaste. Welcome to the Zetsu command line.</div>
   <div class="cli-prompt-text">With the time you have, what do you want to do?</div>`;
-const defaultPlaceholder = `Run a command or write 'h' for help`;
+const defaultPlaceholder = `Run a command or write -h for help`;
 const commandList = `<div class="cli-prompt-text">Here are some commands you can run:</div>
   <div class="examples">
     <span style="color: #b8bb26">achieve</span> - Success, accomplishment, recognition
@@ -73,7 +73,7 @@ const commandExamples = `<div class="cli-prompt-text">Here are some examples to 
   <span style="color: #d3869b">connect</span> with my granddaughter
   <span style="color: #fabd2f">learn</span> Chinese
   <br />
-  <span style="color: #b8bb26">achieve</span> finishing my novel
+  <span style="color: #b8bb26">achieve</span> finish my novel
   <br />
   <span style="color: #8ec07c">contribute</span> to conservation
   <span style="color: #fd6d5c">explore</span> the outdoors
@@ -83,11 +83,11 @@ const commandExamples = `<div class="cli-prompt-text">Here are some examples to 
 // --- OUTPUTS ---
 
 const output01 = document.createElement('div');
-output01.innerHTML = `<span style="color: #8ec07c">&rsaquo;</span> Here's some info about <a href="https://www.dana-farber.org/health-library/articles/tips-for-managing-chemobrain/" target="_blank">managing "chemo brain"</a> symptoms.`;
+output01.innerHTML = `<div class="cli-prompt-text">Here's a fresh-brewed <a href=''>Coda template</a> to help plan your care</div>`;
 const output02 = document.createElement('div');
-output02.innerHTML = `<span style="color: #8ec07c">&rsaquo;</span> Here's some relevant info about managing other treatment side effects.`;
+output02.innerHTML = `<div class="cli-prompt-text">And <a href=''>here's one</a> to help manage side effects and realize goals</div>`;
 const output03 = document.createElement('div');
-output03.innerHTML = `<span style="color: #8ec07c">&rsaquo;</span> Here's a link to a Coda template which may help you accomplish your goal.`;
+output03.innerHTML = `<div class="cli-prompt-text">Use sum --1 or sum --2 to summarize either template above</div>`;
 
 // --- ADDING EVENT LISTENERS ---
 
@@ -123,15 +123,15 @@ function listenForEnter(elem) {
         return command.active;
       });
       commandsPresent.forEach((command) => (commandOutput = commandOutput.replace(command.name, `<span style="color: ${command.color}">${command.name}</span>`)));
-      if (editorContent == 'h') {
-        prompt.innerHTML = commandList;
+      if (editorContent == '-h') {
+        prompt.innerHTML = `<div class="cli-user-input">${commandOutput}</div> ${commandList}`;
         editor.value = '';
-        editor.placeholder = `Run a command or write 'e' for examples`;
-      } else if (editorContent == 'e') {
-        prompt.innerHTML = commandExamples;
+        editor.placeholder = `Run a command or write -e for examples`;
+      } else if (editorContent == '-e') {
+        prompt.innerHTML = `<div class="cli-user-input">${commandOutput}</div> ${commandExamples}`;
         editor.value = '';
-        editor.placeholder = `Try running a command or write 'h' for help`;
-      } else if (editorContent == '~') {
+        editor.placeholder = `Try running a command or write -h for help`;
+      } else if (editorContent == '--') {
         prompt.innerHTML = defaultPrompt;
         editor.value = '';
         editor.placeholder = defaultPlaceholder;
@@ -156,7 +156,7 @@ function listenForEnter(elem) {
           cliEditor.focus();
         }, 1000);
         editor.value = '';
-        editor.placeholder = `Start a new command. Write 'h' for help.`;
+        editor.placeholder = `Start a new command or write -h for help`;
       }
       return;
     } else {
