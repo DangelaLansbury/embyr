@@ -54,7 +54,7 @@ const commands = [
 
 const defaultPrompt = `<div class="cli-prompt-text">Namaste. Welcome to the Zetsu command line.</div>
   <div class="cli-prompt-text">With the time you have, what do you want to do?</div>`;
-const defaultPlaceholder = `Run a command or write -h for help`;
+const defaultPlaceholder = `Run a command or use -h for help, -c for command list`;
 const commandList = `<div class="cli-prompt-text">Here are some commands you can run:</div>
   <div class="examples">
     <span style="color: #b8bb26">achieve</span> - Success, accomplishment, recognition
@@ -70,10 +70,10 @@ const commandList = `<div class="cli-prompt-text">Here are some commands you can
   <div class="cli-prompt-text">So, what do you want to do?</div>`;
 const commandExamples = `<div class="cli-prompt-text">Here are some examples to inspire you:</div>
 <div class="examples">
-  <span style="color: #d3869b">connect</span> with my granddaughter
+  <span style="color: #d3869b">connect</span> with granddaughter
   <span style="color: #fabd2f">learn</span> Chinese
   <br />
-  <span style="color: #b8bb26">achieve</span> finish my novel
+  <span style="color: #b8bb26">achieve</span> finish novel
   <br />
   <span style="color: #8ec07c">contribute</span> to conservation
   <span style="color: #fd6d5c">explore</span> the outdoors
@@ -125,10 +125,10 @@ function listenForEnter(elem) {
         return command.active;
       });
       commandsPresent.forEach((command) => (commandOutput = commandOutput.replace(command.name, `<span style="color: ${command.color}">${command.name}</span>`)));
-      if (editorContent == '-l') {
+      if (editorContent == '-c') {
         prompt.innerHTML = `<div class="cli-user-input">${commandOutput}</div> ${commandList}`;
         editor.value = '';
-        editor.placeholder = `Write -e for examples or -h for help`;
+        editor.placeholder = `Write -e for examples or -h for more help`;
       } else if (editorContent == '-h') {
         // trigger link to open modal
         document.querySelector('#stamp').click();
@@ -178,4 +178,4 @@ function listenForEnter(elem) {
 listenForEnter(cliEditor);
 listenForCommand(cliEditor);
 
-// -h -e -l -r -doc
+// -h -e -c -r -doc
