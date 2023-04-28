@@ -2,12 +2,11 @@ let cli = document.querySelector('#cli');
 let prompt = document.querySelector('#cliPrompt');
 let commandLine = document.querySelector('#commandLine');
 let cliEditor = document.querySelector('#cliEditor');
-let cliBlockHelp = document.querySelector('#cliBlockHelp');
-let cliHelp = document.querySelector('#cliHelp');
+let cliInput = document.querySelector('#cliInputText');
 
 // focus on CLI editor at start
 
-cliEditor.focus();
+cliInput.focus();
 
 // --- STATE MANAGEMENT ---
 
@@ -52,7 +51,7 @@ const commands = [
 
 // --- DEFAULT PROMPTS ---
 
-const defaultPrompt = `<div class="cli-prompt-text">Namaste. Welcome to Zetsu Chai.</div>
+const defaultPrompt = `<div class="cli-prompt-text">Namaste. Welcome to Zetsu.</div>
   <div class="cli-prompt-text">With the time you have, what do you want to do?</div>`;
 const defaultPlaceholder = `Run a command or use -h for help`;
 const commandList = `<div class="cli-prompt-text">Here are some commands you can run:</div>
@@ -97,7 +96,7 @@ output03.innerHTML = `<div class="cli-prompt-text">Or give this silky smooth <a 
 // Listening for click and focusing on editor in firefox and safari
 
 document.body.addEventListener('click', function (e) {
-  cliEditor.focus();
+  cliInput.focus();
 });
 
 // Listening for command and changing color of text
@@ -176,7 +175,7 @@ function listenForEnter(elem) {
   });
 }
 
-listenForEnter(cliEditor);
-listenForCommand(cliEditor);
+listenForEnter(cliInput);
+listenForCommand(cliInput);
 
 // -h -e -c -r -doc

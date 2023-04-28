@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Zetsu Chai</title>
+    <title>Zetsu</title>
     <link rel="icon" type="image/x-icon" href="public/images/favicon.svg" />
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -18,7 +18,7 @@
     <div class="navbar" id="navbar">
       <a href="#infoModal" class="logo-header" id="stamp">
         <div class="logo-header-text">
-          <h1>Zetsu Chai</h1>
+          <h1>Zetsu</h1>
         </div>
         <div class="logo">
           <img src="public/images/logo.svg" alt="logo" />
@@ -36,16 +36,19 @@
       <div class="workbook-content">
         <div class="cli" id="cli">
           <div class="cli-prompt" id="cliPrompt">
-            <div class="cli-prompt-text">Namaste. Welcome to Zetsu Chai.</div>
+            <div class="cli-prompt-text">Namaste. Welcome to Zetsu.</div>
             <div class="cli-prompt-text">With the time you have, what do you want to do?</div>
           </div>
           <div class="command-line" id="commandLine">
-            <div class="cli-icon">
+            <!-- <div class="cli-icon">
               <div class="cli-dot" id="dot1"></div>
               <div class="cli-dot" id="dot2"></div>
               <div class="cli-dot" id="dot3"></div>
+            </div> -->
+            <div class="cli-input" id="cliEditor">
+              <div class="cli-input-text" id="cliInputText" contenteditable="true" spellcheck="false" autocomplete="off" autofocus></div>
+              <div class="cli-input-cursor" id="cliInputCursor"></div>
             </div>
-            <div class="cli-input" id="cliEditor" contenteditable="true" spellcheck="false" autocomplete="off" autofocus></div>
           </div>
         </div>
       </div>
