@@ -129,6 +129,7 @@ function listenForEnter(elem) {
         prompt.innerHTML = `<div class="cli-user-input">${commandOutput}</div> ${commandList}`;
         editor.innerText = '';
         editor.placeholder = `Write -e for examples or -h for more help`;
+        cliInput.focus();
       } else if (editorContent == '-h') {
         // trigger link to open modal
         document.querySelector('#stamp').click();
@@ -138,14 +139,17 @@ function listenForEnter(elem) {
         prompt.innerHTML = `<div class="cli-user-input">${commandOutput}</div> ${commandExamples}`;
         editor.innerText = '';
         editor.placeholder = `Try running a command or write -h for help`;
+        cliInput.focus();
       } else if (editorContent == '-r') {
         prompt.innerHTML = defaultPrompt;
         editor.innerText = '';
         editor.placeholder = defaultPlaceholder;
         commands.forEach((command) => (command.active = false));
+        cliInput.focus();
       } else if (commandsPresent.length == 0) {
         prompt.innerHTML = nullPrompt;
         editor.innerText = '';
+        cliInput.focus();
       } else {
         commandLine.style.display = 'none';
         prompt.innerHTML = `<div class="cli-user-input">${commandOutput}</div>`;
@@ -163,7 +167,7 @@ function listenForEnter(elem) {
         }, 900);
         setTimeout(() => {
           commandLine.style.display = 'flex';
-          cliEditor.focus();
+          cliInput.focus();
         }, 1000);
         editor.innerText = '';
         editor.placeholder = `Run a new command or write -h for help`;
