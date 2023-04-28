@@ -49,7 +49,7 @@ a {
   padding: 0;
   color: #ebdbb2;
 }
-input[type='text'] {
+/* input[type='text'] {
   border: none;
   background-color: transparent;
   color: #ebdbb2;
@@ -67,10 +67,9 @@ input[type='text']:focus {
   outline: none;
 }
 ::placeholder {
-  /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: #a79c8f;
-  opacity: 1; /* Firefox */
-}
+  opacity: 1; 
+} */
 /* ---- NAVIGATION ---- */
 .navbar {
   display: flex;
@@ -218,6 +217,7 @@ input[type='text']:focus {
   transition: 0.2s;
   margin-top: 0.25rem;
   width: 100%;
+  height: 2.5rem;
 }
 .cli-input:focus {
   border: none;

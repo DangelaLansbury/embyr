@@ -54,7 +54,7 @@ const commands = [
 
 const defaultPrompt = `<div class="cli-prompt-text">Namaste. Welcome to the Zetsu command line.</div>
   <div class="cli-prompt-text">With the time you have, what do you want to do?</div>`;
-const defaultPlaceholder = `Run a command or use -h for help, -c for command list`;
+const defaultPlaceholder = `Run a command or use -h for help`;
 const commandList = `<div class="cli-prompt-text">Here are some commands you can run:</div>
   <div class="examples">
     <span style="color: #b8bb26">achieve</span> - Success, accomplishment, recognition
@@ -73,7 +73,7 @@ const commandExamples = `<div class="cli-prompt-text">Here are some examples to 
   <span style="color: #d3869b">connect</span> with granddaughter
   <span style="color: #fabd2f">learn</span> Chinese
   <br />
-  <span style="color: #b8bb26">achieve</span> finish novel
+  <span style="color: #b8bb26">achieve</span> finish my novel
   <br />
   <span style="color: #8ec07c">contribute</span> to conservation
   <span style="color: #fd6d5c">explore</span> the outdoors
@@ -105,7 +105,7 @@ function listenForCommand(elem) {
   elem.addEventListener('input', function () {
     let editorID = this.id;
     let editor = document.getElementById(editorID);
-    let editorContent = editor.value.toLowerCase();
+    let editorContent = editor.innerText.toLowerCase();
     commands.forEach((command) => (editorContent.includes(command.name) ? (command.active = true) : (command.active = false)));
   });
 }
@@ -115,7 +115,7 @@ function listenForEnter(elem) {
   elem.addEventListener('keydown', function (e) {
     let editorID = this.id;
     let editor = document.getElementById(editorID);
-    let editorValue = editor.value;
+    let editorValue = editor.innerText;
     let editorContent = editorValue.toLowerCase().trim();
     if (e.keyCode === 13 && editorContent !== '') {
       e.preventDefault();
@@ -127,25 +127,25 @@ function listenForEnter(elem) {
       commandsPresent.forEach((command) => (commandOutput = commandOutput.replace(command.name, `<span style="color: ${command.color}">${command.name}</span>`)));
       if (editorContent == '-c') {
         prompt.innerHTML = `<div class="cli-user-input">${commandOutput}</div> ${commandList}`;
-        editor.value = '';
+        editor.innerText = '';
         editor.placeholder = `Write -e for examples or -h for more help`;
       } else if (editorContent == '-h') {
         // trigger link to open modal
         document.querySelector('#stamp').click();
-        editor.value = '';
+        editor.innerText = '';
         editor.placeholder = defaultPlaceholder;
       } else if (editorContent == '-e') {
         prompt.innerHTML = `<div class="cli-user-input">${commandOutput}</div> ${commandExamples}`;
-        editor.value = '';
+        editor.innerText = '';
         editor.placeholder = `Try running a command or write -h for help`;
       } else if (editorContent == '-r') {
         prompt.innerHTML = defaultPrompt;
-        editor.value = '';
+        editor.innerText = '';
         editor.placeholder = defaultPlaceholder;
         commands.forEach((command) => (command.active = false));
       } else if (commandsPresent.length == 0) {
         prompt.innerHTML = `<span style="color: #8ec07c">&rsaquo;</span> Hmm I'm not following. Did you try using a command?`;
-        editor.value = '';
+        editor.innerText = '';
       } else {
         commandLine.style.display = 'none';
         prompt.innerHTML = `<div class="cli-user-input">${commandOutput}</div>`;
@@ -165,7 +165,7 @@ function listenForEnter(elem) {
           commandLine.style.display = 'flex';
           cliEditor.focus();
         }, 1000);
-        editor.value = '';
+        editor.innerText = '';
         editor.placeholder = `Run a new command or write -h for help`;
       }
       return;
