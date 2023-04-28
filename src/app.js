@@ -52,7 +52,7 @@ const commands = [
 
 // --- DEFAULT PROMPTS ---
 
-const defaultPrompt = `<div class="cli-prompt-text">Namaste. Welcome to the Zetsu command line.</div>
+const defaultPrompt = `<div class="cli-prompt-text">Namaste. Welcome to Zetsu Chai.</div>
   <div class="cli-prompt-text">With the time you have, what do you want to do?</div>`;
 const defaultPlaceholder = `Run a command or use -h for help`;
 const commandList = `<div class="cli-prompt-text">Here are some commands you can run:</div>
@@ -70,7 +70,7 @@ const commandList = `<div class="cli-prompt-text">Here are some commands you can
   <div class="cli-prompt-text">So, what do you want to do?</div>`;
 const commandExamples = `<div class="cli-prompt-text">Here are some examples to inspire you:</div>
 <div class="examples">
-  <span style="color: #d3869b">connect</span> with granddaughter
+  <span style="color: #d3869b">connect</span> with my granddaughter
   <span style="color: #fabd2f">learn</span> Chinese
   <br />
   <span style="color: #b8bb26">achieve</span> finish my novel
@@ -79,6 +79,7 @@ const commandExamples = `<div class="cli-prompt-text">Here are some examples to 
   <span style="color: #fd6d5c">explore</span> the outdoors
 </div>
 <div class="cli-prompt-text">So, what do you want to do?</div>`;
+const nullPrompt = `<div class="cli-prompt-text">Hmm I'm not following. Did you try using a command?</div>`;
 
 // --- OUTPUTS ---
 
@@ -144,7 +145,7 @@ function listenForEnter(elem) {
         editor.placeholder = defaultPlaceholder;
         commands.forEach((command) => (command.active = false));
       } else if (commandsPresent.length == 0) {
-        prompt.innerHTML = `<span style="color: #8ec07c">&rsaquo;</span> Hmm I'm not following. Did you try using a command?`;
+        prompt.innerHTML = nullPrompt;
         editor.innerText = '';
       } else {
         commandLine.style.display = 'none';

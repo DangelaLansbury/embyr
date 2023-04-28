@@ -148,11 +148,11 @@ input[type='text']:focus {
 .cli-prompt-text {
   display: block;
 }
-.cli-prompt-text::before {
+/* .cli-prompt-text::before {
   content: '>';
   margin-right: 0.5rem;
   color: #8ec07c;
-}
+} */
 .cli-user-input {
   display: block;
 }
@@ -166,7 +166,7 @@ input[type='text']:focus {
   width: 100%;
   padding-left: 1rem;
   border-left: #a79c8f 4px solid;
-  margin: 0.75rem 0 0.75rem 1.5rem;
+  margin: 0.5rem 0 0.5rem 1rem;
 }
 /* command line content */
 .command-line {
@@ -181,6 +181,7 @@ input[type='text']:focus {
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  margin-right: 0;
 }
 .cli-dot {
   display: inline-flex;
@@ -188,7 +189,7 @@ input[type='text']:focus {
   width: 0.5rem;
   height: 0.5rem;
   margin-right: 0.125rem;
-  margin-top: 0.5rem;
+  margin-top: 0.4rem;
 }
 #dot1 {
   animation: dot-bounce 0.5s infinite alternate;
@@ -201,7 +202,6 @@ input[type='text']:focus {
 #dot3 {
   animation: dot-bounce 0.5s 0.4s infinite alternate;
   background-color: #8ec07c;
-  margin-right: 0;
 }
 @keyframes dot-bounce {
   0% {
@@ -215,9 +215,8 @@ input[type='text']:focus {
   padding: 0.5rem 0.75rem;
   border-radius: 4px;
   transition: 0.2s;
-  margin-top: 0.25rem;
   width: 100%;
-  height: 2.5rem;
+  max-height: 2.75rem;
 }
 .cli-input:focus {
   border: none;
