@@ -107,6 +107,10 @@ function listenForCommand(elem) {
     let editor = document.getElementById(editorID);
     let editorContent = editor.innerText.toLowerCase();
     commands.forEach((command) => (editorContent.includes(command.name) ? (command.active = true) : (command.active = false)));
+    // let commandsPresent = commands.filter(function (command) {
+    //   return command.active;
+    // });
+    // commandsPresent.forEach((command) => (editor.innerHTML = editor.innerHTML.replace(command.name, `<span style="color: ${command.color}">${command.name}</span>`)));
   });
 }
 
@@ -128,22 +132,22 @@ function listenForEnter(elem) {
       if (editorContent == '-c') {
         prompt.innerHTML = `<div class="cli-user-input">${commandOutput}</div> ${commandList}`;
         editor.innerText = '';
-        editor.placeholder = `Write -e for examples or -h for more help`;
+        // editor.placeholder = `Write -e for examples or -h for more help`;
         cliInput.focus();
       } else if (editorContent == '-h') {
         // trigger link to open modal
         document.querySelector('#stamp').click();
         editor.innerText = '';
-        editor.placeholder = defaultPlaceholder;
+        // editor.placeholder = defaultPlaceholder;
       } else if (editorContent == '-e') {
         prompt.innerHTML = `<div class="cli-user-input">${commandOutput}</div> ${commandExamples}`;
         editor.innerText = '';
-        editor.placeholder = `Try running a command or write -h for help`;
+        // editor.placeholder = `Try running a command or write -h for help`;
         cliInput.focus();
       } else if (editorContent == '-r') {
         prompt.innerHTML = defaultPrompt;
         editor.innerText = '';
-        editor.placeholder = defaultPlaceholder;
+        // editor.placeholder = defaultPlaceholder;
         commands.forEach((command) => (command.active = false));
         cliInput.focus();
       } else if (commandsPresent.length == 0) {
@@ -170,7 +174,7 @@ function listenForEnter(elem) {
           cliInput.focus();
         }, 1000);
         editor.innerText = '';
-        editor.placeholder = `Run a new command or write -h for help`;
+        // editor.placeholder = `Run a new command or write -h for help`;
       }
       return;
     } else {
