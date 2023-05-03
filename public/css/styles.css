@@ -240,6 +240,7 @@ input[type='text']:focus {
   background-color: #8ec07c;
   animation: blink 1s infinite;
   margin: auto 0;
+  z-index: 1;
 }
 @keyframes blink {
   0% {
@@ -251,6 +252,19 @@ input[type='text']:focus {
   100% {
     opacity: 0;
   }
+}
+.cli-suggest {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  color: #a79c8f;
+}
+.cli-suggest-text {
+  position: relative;
+  left: -0.5rem;
+  display: inline-flex;
+  color: #a79c8f;
 }
 /* command modal */
 .modal {

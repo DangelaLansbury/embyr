@@ -3,6 +3,7 @@ let prompt = document.querySelector('#cliPrompt');
 let commandLine = document.querySelector('#commandLine');
 let cliEditor = document.querySelector('#cliEditor');
 let cliInput = document.querySelector('#cliInputText');
+let cliSuggest = document.querySelector('#cliSuggest');
 
 // focus on CLI editor at start
 
@@ -18,9 +19,7 @@ let sideEffects = [];
 let treatments = [];
 
 // commands
-
 let command = '';
-
 const commands = [
   {
     name: 'achieve',
@@ -93,29 +92,66 @@ output03.innerHTML = `<div class="cli-prompt-text">Or give this silky smooth <a 
 // --- ADDING EVENT LISTENERS ---
 
 // Listening for click and focusing on editor in firefox and safari
-
 document.body.addEventListener('click', function (e) {
   cliInput.focus();
 });
 
-// Listening for command and changing color of text
-
+// Listening for command and set to true if present
 function listenForCommand(elem) {
   elem.addEventListener('input', function () {
     let editorID = this.id;
     let editor = document.getElementById(editorID);
     let editorContent = editor.innerText.toLowerCase();
     commands.forEach((command) => (editorContent.includes(command.name) ? (command.active = true) : (command.active = false)));
-    // let commandsPresent = commands.filter(function (command) {
-    //   return command.active;
-    // });
-    // commandsPresent.forEach((command) => (editor.innerHTML = editor.innerHTML.replace(command.name, `<span style="color: ${command.color}">${command.name}</span>`)));
+  });
+}
+
+// Listening for input and suggesting commands
+function listenForInput(elem) {
+  elem.addEventListener('input', function (e) {
+    let editorID = this.id;
+    let editor = document.getElementById(editorID);
+    let editorValue = editor.innerText;
+    let editorContent = editorValue.toLowerCase();
+    if (editorContent.startsWith('a')) {
+      cliSuggest.innerHTML = `<div class="cli-suggest-text">chieve</div>`;
+    } else if (editorContent.startsWith('c')) {
+      cliSuggest.innerHTML = `<div class="cli-suggest-text">onnect</div>`;
+    } else if (editorContent.startsWith('cont')) {
+      cliSuggest.innerHTML = `<div class="cli-suggest-text">ribute</div>`;
+    } else if (editorContent.startsWith('e')) {
+      cliSuggest.innerHTML = `<div class="cli-suggest-text">xplore</div>`;
+    } else if (editorContent.startsWith('l')) {
+      cliSuggest.innerHTML = `<div class="cli-suggest-text">earn</div>`;
+    } else {
+      cliSuggest.innerHTML = '';
+    }
+  });
+}
+
+// Listening for tab key and accepting suggestion
+function listenForTab(elem) {
+  elem.addEventListener('keydown', function (e) {
+    let editorID = this.id;
+    let editor = document.getElementById(editorID);
+    let editorValue = editor.innerText;
+    let suggestion = cliSuggest.innerText;
+    if (e.keyCode === 9 && suggestion !== '') {
+      e.preventDefault();
+      editor.innerText = '';
+      editor.focus();
+      editor.innerText = editorValue + suggestion;
+      cliSuggest.innerHTML = '';
+      let editorContent = editor.innerText.toLowerCase();
+      commands.forEach((command) => (editorContent.includes(command.name) ? (command.active = true) : (command.active = false)));
+    }
   });
 }
 
 // Listening for enter key and executing commands
 function listenForEnter(elem) {
   elem.addEventListener('keydown', function (e) {
+    cliSuggest.innerHTML = '';
     let editorID = this.id;
     let editor = document.getElementById(editorID);
     let editorValue = editor.innerText;
@@ -124,6 +160,7 @@ function listenForEnter(elem) {
       e.preventDefault();
       command = editorContent;
       commandOutput = editorValue;
+      console.log(editorID, editorValue, editorContent);
       let commandsPresent = commands.filter(function (command) {
         return command.active;
       });
@@ -182,7 +219,9 @@ function listenForEnter(elem) {
   });
 }
 
+listenForTab(cliInput);
 listenForEnter(cliInput);
+listenForInput(cliInput);
 listenForCommand(cliInput);
 
 // -h -e -c -r -doc
