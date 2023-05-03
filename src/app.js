@@ -139,11 +139,18 @@ function listenForTab(elem) {
     if (e.keyCode === 9 && suggestion !== '') {
       e.preventDefault();
       editor.innerText = '';
-      editor.focus();
       editor.innerText = editorValue + suggestion;
       cliSuggest.innerHTML = '';
       let editorContent = editor.innerText.toLowerCase();
       commands.forEach((command) => (editorContent.includes(command.name) ? (command.active = true) : (command.active = false)));
+      // Add focus to end of editor after tab
+      let range = document.createRange();
+      let sel = window.getSelection();
+      range.setStart(editor.childNodes[0], editor.innerText.length);
+      range.collapse(true);
+      sel.removeAllRanges();
+      sel.addRange(range);
+      editor.focus();
     }
   });
 }
