@@ -22,72 +22,49 @@ let treatments = [];
 let command = '';
 const commands = [
   {
-    name: 'achieve',
+    name: '-i',
     active: false,
-    color: '#B8BB26',
+    color: '#FABD2F',
   },
   {
-    name: 'connect',
+    name: '-a',
     active: false,
     color: '#D3869B',
   },
   {
-    name: 'contribute',
-    active: false,
-    color: '#8EC07C',
-  },
-  {
-    name: 'explore',
+    name: '-p',
     active: false,
     color: '#FD6D5C',
-  },
-  {
-    name: 'learn',
-    active: false,
-    color: '#FABD2F',
   },
 ];
 
 // --- DEFAULT PROMPTS ---
 
-const defaultPrompt = `<div class="cli-prompt-text">Hi there. With the time you have, what do you want to do?</div>`;
+const defaultPrompt = `<div class="cli-prompt-text">Hi there. What would you like to do?</div>`;
 const defaultPlaceholder = `Run a command or use -h for help`;
 const commandList = `<div class="cli-prompt-text">Here are some commands you can run:</div>
   <div class="examples">
-    <span style="color: #b8bb26">achieve</span> - Success, accomplishment, recognition
+    <span style="color: #b8bb26">-i</span> - Access innate immune system tools
     <br />
-    <span style="color: #d3869b">connect</span> - Meaningful relationships and networks
+    <span style="color: #d3869b">-a</span> - Access adaptive immune system tools
     <br />
-    <span style="color: #8ec07c">contribute</span> - New ideas and a positive impact
+    <span style="color: #8ec07c">-p</span> - Access pathogen tools
     <br />
-    <span style="color: #fd6d5c">explore</span> - Discovery and adventure
-    <br />
-    <span style="color: #fabd2f">learn</span> - Knowledge and personal growth
   </div>
   <div class="cli-prompt-text">So, what do you want to do?</div>`;
-const commandExamples = `<div class="cli-prompt-text">Here are some examples to inspire you:</div>
-<div class="examples">
-  <span style="color: #d3869b">connect</span> with my granddaughter
-  <span style="color: #fabd2f">learn</span> Chinese
-  <br />
-  <span style="color: #b8bb26">achieve</span> finish my novel
-  <br />
-  <span style="color: #8ec07c">contribute</span> to conservation
-  <span style="color: #fd6d5c">explore</span> the outdoors
-</div>
-<div class="cli-prompt-text">So, what do you want to do?</div>`;
+const commandExamples = '';
 const nullPrompt = `<div class="cli-prompt-text">Hmm I'm not following. Did you try using a command?</div>`;
 
 // --- OUTPUTS ---
 
 const output00 = document.createElement('div');
-output00.innerHTML = `<div class="cli-prompt-text">Fresh-brewed templates to help plan care & realize goals:</div>`;
+output00.innerHTML = `<div class="cli-prompt-text">Immune system respone:</div>`;
 const output01 = document.createElement('div');
-output01.innerHTML = `<div class="cli-prompt-text">Savor this flavorful <a href=''>Coda</a> template</div>`;
+output01.innerHTML = `<div class="cli-prompt-text">Something happens</div>`;
 const output02 = document.createElement('div');
-output02.innerHTML = `<div class="cli-prompt-text">Enjoy this rich and zesty <a href=''>Notion</a> template</div>`;
+output02.innerHTML = `<div class="cli-prompt-text">Something else happens</div>`;
 const output03 = document.createElement('div');
-output03.innerHTML = `<div class="cli-prompt-text">Or give this silky smooth <a href=''>Markwhen</a> timeline a try</div>`;
+output03.innerHTML = `<div class="cli-prompt-text">This is the outcome of what happened</div>`;
 
 // --- ADDING EVENT LISTENERS ---
 
