@@ -157,7 +157,7 @@ input[type='text']:focus {
   display: block;
 }
 .cli-user-input::before {
-  content: 'human@zetsu:~$';
+  content: '>';
   margin-right: 0.5rem;
   color: #8ec07c;
 }
@@ -219,7 +219,7 @@ input[type='text']:focus {
   align-items: center;
 }
 .cli-input::before {
-  content: 'human@zetsu:~$';
+  content: '>';
   margin-right: 0.5rem;
   color: #8ec07c;
 }
