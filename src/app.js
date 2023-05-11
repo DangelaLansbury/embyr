@@ -22,17 +22,17 @@ let treatments = [];
 let command = '';
 const commands = [
   {
-    name: '-i',
+    name: 'innate',
     active: false,
     color: '#FABD2F',
   },
   {
-    name: '-a',
+    name: 'adapt',
     active: false,
     color: '#D3869B',
   },
   {
-    name: '-p',
+    name: 'path',
     active: false,
     color: '#FD6D5C',
   },
@@ -44,11 +44,11 @@ const defaultPrompt = `<div class="cli-prompt-text">Hi there. What would you lik
 const defaultPlaceholder = `Run a command or use -h for help`;
 const commandList = `<div class="cli-prompt-text">Here are some commands you can run:</div>
   <div class="examples">
-    <span style="color: #b8bb26">-i</span> - Access innate immune system tools
+    <span style="color: #b8bb26">innate</span> - Access innate immune system tools
     <br />
-    <span style="color: #d3869b">-a</span> - Access adaptive immune system tools
+    <span style="color: #d3869b">adapt</span> - Access adaptive immune system tools
     <br />
-    <span style="color: #8ec07c">-p</span> - Access pathogen tools
+    <span style="color: #FD6D5C">path</span> - Access pathogen tools
     <br />
   </div>
   <div class="cli-prompt-text">So, what do you want to do?</div>`;
@@ -84,53 +84,53 @@ function listenForCommand(elem) {
 }
 
 // Listening for input and suggesting commands
-function listenForInput(elem) {
-  elem.addEventListener('input', function (e) {
-    let editorID = this.id;
-    let editor = document.getElementById(editorID);
-    let editorValue = editor.innerText;
-    let editorContent = editorValue.toLowerCase();
-    if (editorContent.startsWith('a')) {
-      cliSuggest.innerHTML = `<div class="cli-suggest-text">chieve</div>`;
-    } else if (editorContent.startsWith('c')) {
-      cliSuggest.innerHTML = `<div class="cli-suggest-text">onnect</div>`;
-    } else if (editorContent.startsWith('cont')) {
-      cliSuggest.innerHTML = `<div class="cli-suggest-text">ribute</div>`;
-    } else if (editorContent.startsWith('e')) {
-      cliSuggest.innerHTML = `<div class="cli-suggest-text">xplore</div>`;
-    } else if (editorContent.startsWith('l')) {
-      cliSuggest.innerHTML = `<div class="cli-suggest-text">earn</div>`;
-    } else {
-      cliSuggest.innerHTML = '';
-    }
-  });
-}
+// function listenForInput(elem) {
+//   elem.addEventListener('input', function (e) {
+//     let editorID = this.id;
+//     let editor = document.getElementById(editorID);
+//     let editorValue = editor.innerText;
+//     let editorContent = editorValue.toLowerCase();
+//     if (editorContent.startsWith('a')) {
+//       cliSuggest.innerHTML = `<div class="cli-suggest-text">chieve</div>`;
+//     } else if (editorContent.startsWith('c')) {
+//       cliSuggest.innerHTML = `<div class="cli-suggest-text">onnect</div>`;
+//     } else if (editorContent.startsWith('cont')) {
+//       cliSuggest.innerHTML = `<div class="cli-suggest-text">ribute</div>`;
+//     } else if (editorContent.startsWith('e')) {
+//       cliSuggest.innerHTML = `<div class="cli-suggest-text">xplore</div>`;
+//     } else if (editorContent.startsWith('l')) {
+//       cliSuggest.innerHTML = `<div class="cli-suggest-text">earn</div>`;
+//     } else {
+//       cliSuggest.innerHTML = '';
+//     }
+//   });
+// }
 
 // Listening for tab key and accepting suggestion
-function listenForTab(elem) {
-  elem.addEventListener('keydown', function (e) {
-    let editorID = this.id;
-    let editor = document.getElementById(editorID);
-    let editorValue = editor.innerText;
-    let suggestion = cliSuggest.innerText;
-    if (e.keyCode === 9 && suggestion !== '') {
-      e.preventDefault();
-      editor.innerText = '';
-      editor.innerText = editorValue + suggestion;
-      cliSuggest.innerHTML = '';
-      let editorContent = editor.innerText.toLowerCase();
-      commands.forEach((command) => (editorContent.includes(command.name) ? (command.active = true) : (command.active = false)));
-      // Add focus to end of editor after tab
-      let range = document.createRange();
-      let sel = window.getSelection();
-      range.setStart(editor.childNodes[0], editor.innerText.length);
-      range.collapse(true);
-      sel.removeAllRanges();
-      sel.addRange(range);
-      editor.focus();
-    }
-  });
-}
+// function listenForTab(elem) {
+//   elem.addEventListener('keydown', function (e) {
+//     let editorID = this.id;
+//     let editor = document.getElementById(editorID);
+//     let editorValue = editor.innerText;
+//     let suggestion = cliSuggest.innerText;
+//     if (e.keyCode === 9 && suggestion !== '') {
+//       e.preventDefault();
+//       editor.innerText = '';
+//       editor.innerText = editorValue + suggestion;
+//       cliSuggest.innerHTML = '';
+//       let editorContent = editor.innerText.toLowerCase();
+//       commands.forEach((command) => (editorContent.includes(command.name) ? (command.active = true) : (command.active = false)));
+//       // Add focus to end of editor after tab
+//       let range = document.createRange();
+//       let sel = window.getSelection();
+//       range.setStart(editor.childNodes[0], editor.innerText.length);
+//       range.collapse(true);
+//       sel.removeAllRanges();
+//       sel.addRange(range);
+//       editor.focus();
+//     }
+//   });
+// }
 
 // Listening for enter key and executing commands
 function listenForEnter(elem) {
@@ -203,9 +203,9 @@ function listenForEnter(elem) {
   });
 }
 
-listenForTab(cliInput);
+// listenForTab(cliInput);
 listenForEnter(cliInput);
-listenForInput(cliInput);
+// listenForInput(cliInput);
 listenForCommand(cliInput);
 
 // -h -e -c -r -doc

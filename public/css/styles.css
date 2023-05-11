@@ -104,7 +104,8 @@ a {
   justify-content: center;
   align-items: flex-start;
   height: 100%;
-  width: 40rem;
+  width: 80%;
+  max-width: 90%;
   margin: auto;
 }
 /* ---- CLI ---- */
@@ -201,9 +202,9 @@ a {
 } */
 .cli-input-text {
   display: inline-flex;
-  caret-color: transparent;
   margin: auto 0;
   height: 1.75rem;
+  min-width: 0.25rem;
 }
 .cli-input-text:focus {
   border: none;
