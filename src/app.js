@@ -143,7 +143,7 @@ function listenForEnter(elem) {
     let editorContent = editorValue.toLowerCase().trim();
     if (e.keyCode === 13 && editorContent !== '') {
       e.preventDefault();
-      initExamples.classList.toggle('hidden');
+      initExamples.classList.add('hidden');
       command = editorContent;
       commandOutput = editorValue;
       console.log(editorID, editorValue, editorContent);
