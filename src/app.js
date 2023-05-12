@@ -4,6 +4,7 @@ let commandLine = document.querySelector('#commandLine');
 let cliEditor = document.querySelector('#cliEditor');
 let cliInput = document.querySelector('#cliInputText');
 let cliSuggest = document.querySelector('#cliSuggest');
+let initExamples = document.querySelector('#initExamples');
 
 // focus on CLI editor at start
 
@@ -142,6 +143,7 @@ function listenForEnter(elem) {
     let editorContent = editorValue.toLowerCase().trim();
     if (e.keyCode === 13 && editorContent !== '') {
       e.preventDefault();
+      initExamples.classList.toggle('hidden');
       command = editorContent;
       commandOutput = editorValue;
       console.log(editorID, editorValue, editorContent);
@@ -152,22 +154,18 @@ function listenForEnter(elem) {
       if (editorContent == '-c') {
         prompt.innerHTML = `<div class="cli-user-input">${commandOutput}</div> ${commandList}`;
         editor.innerText = '';
-        // editor.placeholder = `Write -e for examples or -h for more help`;
         cliInput.focus();
       } else if (editorContent == '-h') {
         // trigger link to open modal
         document.querySelector('#stamp').click();
         editor.innerText = '';
-        // editor.placeholder = defaultPlaceholder;
       } else if (editorContent == '-e') {
         prompt.innerHTML = `<div class="cli-user-input">${commandOutput}</div> ${commandExamples}`;
         editor.innerText = '';
-        // editor.placeholder = `Try running a command or write -h for help`;
         cliInput.focus();
       } else if (editorContent == '-r') {
         prompt.innerHTML = defaultPrompt;
         editor.innerText = '';
-        // editor.placeholder = defaultPlaceholder;
         commands.forEach((command) => (command.active = false));
         cliInput.focus();
       } else if (commandsPresent.length == 0) {
@@ -194,7 +192,6 @@ function listenForEnter(elem) {
           cliInput.focus();
         }, 1000);
         editor.innerText = '';
-        // editor.placeholder = `Run a new command or write -h for help`;
       }
       return;
     } else {
@@ -203,9 +200,8 @@ function listenForEnter(elem) {
   });
 }
 
-// listenForTab(cliInput);
+// --- RUNNING FUNCTIONS ---
 listenForEnter(cliInput);
-// listenForInput(cliInput);
 listenForCommand(cliInput);
 
 // -h -e -c -r -doc

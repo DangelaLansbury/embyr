@@ -150,6 +150,7 @@ a {
   flex-direction: row;
   justify-content: flex-start;
   margin-top: 1rem;
+  margin-bottom: 1rem;
   width: 100%;
 }
 .cli-icon {
@@ -293,4 +294,8 @@ a {
 .modal__close:hover {
   color: #8ec07c;
   background-color: #3c3a39;
+}
+
+.hidden {
+  display: none !important;
 }
