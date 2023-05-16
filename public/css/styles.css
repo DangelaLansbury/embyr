@@ -207,6 +207,7 @@ a {
   height: 1.75rem;
   min-height: 1.75rem;
   min-width: 0.25rem;
+  resize: both;
 }
 .cli-input-text:focus {
   border: none;

@@ -84,6 +84,13 @@ function listenForCommand(elem) {
   });
 }
 
+// Listen for empty input and add placeholder
+document.querySelector('.cli-input-text').addEventListener('input', function () {
+  if (this.innerText.toString().length == 0) {
+    this.innerHTML = '&nbsp;';
+  }
+});
+
 // Listening for input and suggesting commands
 // function listenForInput(elem) {
 //   elem.addEventListener('input', function (e) {
