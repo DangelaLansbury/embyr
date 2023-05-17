@@ -104,8 +104,7 @@ a {
   justify-content: center;
   align-items: flex-start;
   height: 100%;
-  width: 80%;
-  max-width: 90%;
+  width: 90%;
   margin: auto;
 }
 /* ---- CLI ---- */
@@ -117,7 +116,7 @@ a {
   justify-content: flex-start;
   width: 100%;
   height: 100%;
-  margin-top: 4rem;
+  margin-top: 5%;
 }
 .cli-prompt {
   display: flex;
