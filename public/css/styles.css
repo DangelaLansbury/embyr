@@ -207,13 +207,13 @@ a {
   height: 1.75rem;
   min-height: 1.75rem;
   min-width: 0.25rem;
-  resize: both;
+  width: 100%;
 }
 .cli-input-text:focus {
   border: none;
   outline: none;
 }
-.cli-input-cursor {
+.cli-cursor {
   display: inline-flex;
   width: 0.5rem;
   height: 1.25rem;

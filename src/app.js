@@ -71,6 +71,7 @@ output03.innerHTML = `<div class="cli-prompt-text">This is the outcome of what h
 
 // Listening for click and focusing on editor in firefox and safari
 document.body.addEventListener('click', function (e) {
+  e.preventDefault();
   cliInput.focus();
 });
 
@@ -84,12 +85,14 @@ function listenForCommand(elem) {
   });
 }
 
-// Listen for empty input and add placeholder
-document.querySelector('.cli-input-text').addEventListener('input', function () {
-  if (this.innerText.toString().length == 0) {
-    this.innerHTML = '&nbsp;';
-  }
-});
+// Listening for keydown and adding whitespace if backspace is pressed to empty editor
+function listenForBackspace(elem) {
+  elem.addEventListener('keydown', function (e) {
+    if (e.key === 'Backspace' && this.innerText.toString().trim().length == 1) {
+      this.innerHTML = '&nbsp;';
+    }
+  });
+}
 
 // Listening for input and suggesting commands
 // function listenForInput(elem) {
@@ -210,5 +213,6 @@ function listenForEnter(elem) {
 // --- RUNNING FUNCTIONS ---
 listenForCommand(cliInput);
 listenForEnter(cliInput);
+listenForBackspace(cliInput);
 
 // -h -e -c -r -doc
