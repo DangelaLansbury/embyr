@@ -32,11 +32,6 @@ const commands = [
     active: false,
     color: '#D3869B',
   },
-  {
-    name: 'path',
-    active: false,
-    color: '#FD6D5C',
-  },
 ];
 
 // --- DEFAULT PROMPTS ---
@@ -48,9 +43,6 @@ const commandList = `<div class="cli-prompt-text">Here are some commands you can
     <span style="color: #b8bb26">ii</span> - Access innate immune system tools
     <br />
     <span style="color: #d3869b">aa</span> - Access adaptive immune system tools
-    <br />
-    <span style="color: #FD6D5C">path</span> - Access pathogen tools
-    <br />
   </div>
   <div class="cli-prompt-text">So, what do you want to do?</div>`;
 const commandExamples = '';
@@ -160,7 +152,7 @@ function listenForEnter(elem) {
       let commandsPresent = commands.filter(function (command) {
         return command.active;
       });
-      // commandsPresent.forEach((command) => (commandOutput = commandOutput.replace(command.name, `<span style="color: ${command.color}">${command.name}</span>`)));
+      commandsPresent.forEach((command) => (commandOutput = commandOutput.replace(command.name, `<span style="color: ${command.color}">${command.name}</span>`)));
       if (editorContent == '-c') {
         prompt.innerHTML = `<div class="cli-user-input">${commandOutput}</div> ${commandList}`;
         editor.innerText = '';
