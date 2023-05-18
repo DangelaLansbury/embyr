@@ -51,13 +51,32 @@ const nullPrompt = `<div class="cli-prompt-text">Hmm I'm not following. Did you 
 // --- OUTPUTS ---
 
 const output00 = document.createElement('div');
-output00.innerHTML = `<div class="cli-prompt-text">Immune system respone:</div>`;
+
 const output01 = document.createElement('div');
 output01.innerHTML = `<div class="cli-prompt-text">Something happens</div>`;
 const output02 = document.createElement('div');
 output02.innerHTML = `<div class="cli-prompt-text">Something else happens</div>`;
 const output03 = document.createElement('div');
 output03.innerHTML = `<div class="cli-prompt-text">This is the outcome of what happened</div>`;
+
+function returnOutputs() {
+  setTimeout(() => {
+    prompt.appendChild(output00);
+  }, 300);
+  setTimeout(() => {
+    prompt.appendChild(output01);
+  }, 450);
+  setTimeout(() => {
+    prompt.appendChild(output02);
+  }, 600);
+  setTimeout(() => {
+    prompt.appendChild(output03);
+  }, 900);
+  setTimeout(() => {
+    commandLine.style.display = 'flex';
+    cliInput.focus();
+  }, 1000);
+}
 
 // --- ADDING EVENT LISTENERS ---
 
@@ -177,22 +196,11 @@ function listenForEnter(elem) {
       } else {
         commandLine.style.display = 'none';
         prompt.innerHTML = `<div class="cli-user-input">${commandOutput}</div>`;
-        setTimeout(() => {
-          prompt.appendChild(output00);
-        }, 300);
-        setTimeout(() => {
-          prompt.appendChild(output01);
-        }, 450);
-        setTimeout(() => {
-          prompt.appendChild(output02);
-        }, 600);
-        setTimeout(() => {
-          prompt.appendChild(output03);
-        }, 900);
-        setTimeout(() => {
-          commandLine.style.display = 'flex';
-          cliInput.focus();
-        }, 1000);
+        output00.innerHTML = `<div class="cli-prompt-text">Immune system respone:</div>`;
+        output01.innerHTML = `<div class="cli-prompt-text">Searching for ${commandOutput}...</div>`;
+        output02.innerHTML = `<div class="cli-prompt-text">Here's a relevant piece of info.</div>`;
+        output03.innerHTML = `<div class="cli-prompt-text">And here's what that means for the system.</div>`;
+        returnOutputs();
         editor.innerText = '';
       }
       return;
