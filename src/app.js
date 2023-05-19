@@ -23,12 +23,12 @@ let treatments = [];
 let command = '';
 const commands = [
   {
-    name: 'ii',
+    name: 'inn',
     active: false,
-    color: '#FABD2F',
+    color: '#83A598',
   },
   {
-    name: 'aa',
+    name: 'ada',
     active: false,
     color: '#D3869B',
   },
@@ -40,9 +40,9 @@ const defaultPrompt = `<div class="cli-prompt-text">Hi there. What would you lik
 const defaultPlaceholder = `Run a command or use -h for help`;
 const commandList = `<div class="cli-prompt-text">Here are some commands you can run:</div>
   <div class="examples">
-    <span style="color: #b8bb26">ii</span> - Access innate immune system tools
+    <span style="color: ${commands[0].color}">inn</span> - Access innate immune system tools
     <br />
-    <span style="color: #d3869b">aa</span> - Access adaptive immune system tools
+    <span style="color: ${commands[1].color}">ada</span> - Access adaptive immune system tools
   </div>
   <div class="cli-prompt-text">So, what do you want to do?</div>`;
 const commandExamples = '';
