@@ -82,7 +82,6 @@ function returnOutputs() {
 
 // Listening for click and focusing on editor in firefox and safari
 document.body.addEventListener('click', function (e) {
-  e.preventDefault();
   cliInput.focus();
 });
 
@@ -202,6 +201,7 @@ function listenForEnter(elem) {
         output03.innerHTML = `<div class="cli-prompt-text">And here's what that means for the system.</div>`;
         returnOutputs();
         editor.innerText = '';
+        cliInput.focus();
       }
       return;
     } else {

@@ -132,9 +132,9 @@ a {
   display: block;
 }
 .cli-user-input::before {
-  content: 'human@zetsu~$';
-  margin-right: 0.5rem;
+  content: '$';
   color: #8ec07c;
+  margin-right: 0.5rem;
 }
 .examples {
   display: block;
@@ -194,7 +194,7 @@ a {
   align-items: center;
 }
 .cli-input::before {
-  content: 'human@zetsu~$';
+  content: 'human@zetsu:~$';
   margin-right: 0.5rem;
   color: #8ec07c;
 }
@@ -257,7 +257,7 @@ a {
   justify-content: center;
   background: rgba(40, 38, 37, 0.6);
   transition: all 0.2s;
-  z-index: 1;
+  z-index: 2;
 }
 .modal:target {
   visibility: visible;
