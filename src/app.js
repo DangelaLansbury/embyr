@@ -23,12 +23,12 @@ let treatments = [];
 let command = '';
 const commands = [
   {
-    name: 'inn',
+    name: 'innate',
     active: false,
-    color: '#83A598',
+    color: '#FABD2F',
   },
   {
-    name: 'ada',
+    name: 'adapt',
     active: false,
     color: '#D3869B',
   },
@@ -163,7 +163,7 @@ function listenForEnter(elem) {
     let editorContent = editorValue.toLowerCase().trim();
     if (e.keyCode === 13 && editorContent !== '') {
       e.preventDefault();
-      initExamples.classList.add('hidden');
+      // initExamples.classList.add('hidden');
       command = editorContent;
       commandOutput = editorValue;
       console.log(editorID, editorValue, editorContent);
