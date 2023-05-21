@@ -109,7 +109,7 @@ a {
 }
 /* ---- CLI ---- */
 /* command line */
-.cli {
+.container {
   display: inline-flex;
   flex-direction: column;
   align-items: flex-start;
@@ -144,7 +144,7 @@ a {
   margin: 0.5rem 0 0.5rem 1rem;
 }
 /* command line content */
-.command-line {
+.cli-container {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
