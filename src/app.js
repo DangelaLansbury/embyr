@@ -3,6 +3,7 @@ let cliContainer = document.querySelector('#cliContainer');
 let prompt = document.querySelector('#cliPrompt');
 let cli = document.querySelector('#cli');
 let cliSuggest = document.querySelector('#cliSuggest');
+let cursor = document.querySelector('#cursor');
 
 // focus on CLI editor at start
 
@@ -78,7 +79,7 @@ function returnOutputs() {
 
 // --- ADDING EVENT LISTENERS ---
 
-// Listening for click and focusing on editor in firefox and safari
+// Listening for click and focusing on editor
 document.body.addEventListener('click', function (e) {
   cli.focus();
 });
@@ -93,13 +94,28 @@ function listenForCommand(elem) {
   });
 }
 
-// Listening for keydown and adding whitespace if backspace is pressed to empty editor
-function listenForBackspace(elem) {
-  elem.addEventListener('keydown', function (e) {
-    if (e.key === 'Backspace' && this.innerText.toString().trim().length == 1) {
-      this.innerHTML = '&nbsp;';
+// Hide fake cursor once user starts typing
+function hideCursor(elem) {
+  elem.addEventListener('input', function () {
+    if (this.innerText !== '') {
+      cursor.style.display = 'none';
+    } else {
+      cursor.style.display = 'inline-flex';
     }
   });
+  elem.addEventListener('keydown', function (e) {
+    if (e.key === 'Backspace' && this.innerText.toString().trim().length == 1) {
+      this.innerText = '';
+      cursor.style.display = 'inline-flex';
+    }
+  });
+}
+
+// Clear editor if user presses enter, refocus on editor, and show fake cursor
+function clearEditor(elem) {
+  elem.innerText = '';
+  elem.focus();
+  cursor.style.display = 'inline-flex';
 }
 
 // Listening for enter key and executing commands
@@ -148,8 +164,7 @@ function listenForEnter(elem) {
         output02.innerHTML = `<div class="cli-prompt-text">Here's a relevant piece of info.</div>`;
         output03.innerHTML = `<div class="cli-prompt-text">And here's what that means for the system.</div>`;
         returnOutputs();
-        editor.innerText = '';
-        cli.focus();
+        clearEditor(cli);
       }
       return;
     } else {
@@ -159,6 +174,7 @@ function listenForEnter(elem) {
 }
 
 // --- RUNNING FUNCTIONS ---
+hideCursor(cli);
 listenForCommand(cli);
 listenForEnter(cli);
 listenForBackspace(cli);

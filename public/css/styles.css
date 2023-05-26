@@ -198,7 +198,7 @@ a {
 }
 .cli-input::before {
   content: 'human@zetsu:~$';
-  margin-right: 0.75rem;
+  margin-right: 0.5rem;
   color: #8ec07c;
 }
 .cli-input-text {
@@ -207,14 +207,18 @@ a {
   height: 1.75rem;
   min-height: 1.75rem;
   min-width: 0.25rem;
-  width: 100%;
+  /* width: 100%; */
   white-space: pre-wrap;
+  caret-color: #8ec07c;
 }
 .cli-input-text:focus {
   border: none;
   outline: none;
 }
-.cli-cursor {
+.cli-input-text:empty {
+  caret-color: transparent;
+}
+#cursor {
   display: inline-flex;
   width: 0.5rem;
   height: 1.25rem;
@@ -222,6 +226,8 @@ a {
   animation: blink 1s infinite;
   margin: auto 0;
   z-index: 1;
+  position: relative;
+  left: -0.25rem;
 }
 @keyframes blink {
   0% {
