@@ -159,7 +159,7 @@ a {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  margin-right: 0;
+  margin-right: 0.5rem;
 }
 .cli-dot {
   display: inline-flex;
@@ -208,6 +208,7 @@ a {
   min-height: 1.75rem;
   min-width: 0.25rem;
   width: 100%;
+  white-space: pre-wrap;
 }
 .cli-input-text:focus {
   border: none;
