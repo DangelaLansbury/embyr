@@ -96,6 +96,9 @@ a {
   vertical-align: middle;
   height: 100%;
   margin: auto;
+  overflow-y: scroll;
+  overscroll-behavior: none;
+  -ms-overflow-style: none;
 }
 /* workbook content */
 .workbook-content {
@@ -195,7 +198,7 @@ a {
 }
 .cli-input::before {
   content: 'human@zetsu:~$';
-  margin-right: 0.5rem;
+  margin-right: 0.75rem;
   color: #8ec07c;
 }
 .cli-input-text {
