@@ -58,23 +58,10 @@ output02.innerHTML = `<div class="cli-prompt-text">Something else happens</div>`
 const output03 = document.createElement('div');
 output03.innerHTML = `<div class="cli-prompt-text">This is the outcome of what happened</div>`;
 
-function returnOutputs() {
+function returnOutput(output, time) {
   setTimeout(() => {
-    prompt.appendChild(output00);
-  }, 300);
-  setTimeout(() => {
-    prompt.appendChild(output01);
-  }, 450);
-  setTimeout(() => {
-    prompt.appendChild(output02);
-  }, 600);
-  setTimeout(() => {
-    prompt.appendChild(output03);
-  }, 900);
-  setTimeout(() => {
-    cliContainer.style.display = 'flex';
-    cli.focus();
-  }, 1000);
+    prompt.appendChild(output);
+  }, time);
 }
 
 // --- ADDING EVENT LISTENERS ---
@@ -137,25 +124,18 @@ function listenForEnter(elem) {
       commandsPresent.forEach((command) => (commandOutput = commandOutput.replace(command.name, `<span style="color: ${command.color}">${command.name}</span>`)));
       if (editorContent == '-c') {
         prompt.innerHTML = `<div class="cli-user-input">${commandOutput}</div> ${commandList}`;
-        editor.innerText = '';
-        cli.focus();
+        clearEditor(cli);
       } else if (editorContent == '-h') {
         // trigger link to open modal
         document.querySelector('#stamp').click();
-        editor.innerText = '';
-      } else if (editorContent == '-e') {
-        prompt.innerHTML = `<div class="cli-user-input">${commandOutput}</div> ${commandExamples}`;
-        editor.innerText = '';
-        cli.focus();
+        clearEditor(cli);
       } else if (editorContent == '-r') {
         prompt.innerHTML = defaultPrompt;
-        editor.innerText = '';
         commands.forEach((command) => (command.active = false));
-        cli.focus();
+        clearEditor(cli);
       } else if (commandsPresent.length == 0) {
         prompt.innerHTML = nullPrompt;
-        editor.innerText = '';
-        cli.focus();
+        clearEditor(cli);
       } else {
         cliContainer.style.display = 'none';
         prompt.innerHTML = `<div class="cli-user-input">${commandOutput}</div>`;
@@ -163,7 +143,14 @@ function listenForEnter(elem) {
         output01.innerHTML = `<div class="cli-prompt-text">Searching for ${commandOutput}...</div>`;
         output02.innerHTML = `<div class="cli-prompt-text">Here's a relevant piece of info.</div>`;
         output03.innerHTML = `<div class="cli-prompt-text">And here's what that means for the system.</div>`;
-        returnOutputs();
+        returnOutput(output00, 300);
+        returnOutput(output01, 450);
+        returnOutput(output02, 600);
+        returnOutput(output03, 900);
+        setTimeout(() => {
+          cliContainer.style.display = 'flex';
+          cli.focus();
+        }, 1000);
         clearEditor(cli);
       }
       return;
@@ -179,4 +166,4 @@ listenForCommand(cli);
 listenForEnter(cli);
 listenForBackspace(cli);
 
-// -h -e -c -r -doc
+// -h -c -r -doc
