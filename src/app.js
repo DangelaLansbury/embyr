@@ -24,7 +24,7 @@ const commands = [
   {
     name: 'innate',
     active: false,
-    color: '#FABD2F',
+    color: '#83A598',
   },
   {
     name: 'adapt',
