@@ -112,8 +112,7 @@ cli.addEventListener('keydown', function (e) {
   let editorContent = editorValue.toLowerCase().trim();
   if (e.keyCode === 13 && editorContent !== '') {
     e.preventDefault();
-    command = editorContent;
-    commandOutput = editorValue;
+    commandOutput = editorContent;
     console.log(editorID, editorValue, editorContent);
     let commandsPresent = commands.filter(function (command) {
       return command.active;
@@ -157,9 +156,6 @@ cli.addEventListener('keydown', function (e) {
 });
 
 // --- RUNNING FUNCTIONS ---
-// hideCursor(cli);
-// listenForCommand(cli);
-// listenForEnter(cli);
-// listenForBackspace(cli);
+hideCursor(cli);
 
-// -h -c -r -doc
+// -h -c -r

@@ -2,7 +2,6 @@
 html,
 body {
   width: 100%;
-  height: 100svh;
   overflow: -moz-hidden-unscrollable;
   overflow: hidden;
 }
@@ -49,6 +48,14 @@ a {
   margin: 0;
   padding: 0;
   color: #ebdbb2;
+}
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100svh;
+  width: 100%;
 }
 /* ---- NAVIGATION ---- */
 .navbar {
@@ -99,6 +106,7 @@ a {
   overflow-y: scroll;
   overscroll-behavior: none;
   -ms-overflow-style: none;
+  width: 90%;
 }
 /* workbook content */
 .workbook-content {
