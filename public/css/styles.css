@@ -55,7 +55,6 @@ main {
   align-items: center;
   justify-content: center;
   height: 100svh;
-  width: 100%;
 }
 /* ---- NAVIGATION ---- */
 .navbar {
@@ -102,11 +101,11 @@ main {
   justify-content: center;
   vertical-align: middle;
   height: 100%;
+  width: 100%;
   margin: auto;
   overflow-y: scroll;
   overscroll-behavior: none;
   -ms-overflow-style: none;
-  width: 90%;
 }
 /* workbook content */
 .workbook-content {
@@ -115,7 +114,7 @@ main {
   justify-content: center;
   align-items: flex-start;
   height: 100%;
-  width: 90%;
+  width: 92%;
   margin: auto;
 }
 /* ---- CLI ---- */
@@ -127,7 +126,7 @@ main {
   justify-content: flex-start;
   width: 100%;
   height: 100%;
-  margin-top: 5%;
+  margin-top: 4%;
 }
 .cli-prompt {
   display: flex;
