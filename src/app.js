@@ -11,13 +11,6 @@ cli.focus();
 
 // --- STATE MANAGEMENT ---
 
-let init = false;
-let user = '';
-let diagnosis = false;
-let disease = '';
-let sideEffects = [];
-let treatments = [];
-
 // commands
 let command = '';
 const commands = [
@@ -34,7 +27,19 @@ const commands = [
   {
     name: 'trauma',
     active: 'false',
-    color: '#ffffff',
+    color: '#FABD2F',
+  },
+];
+
+// arguments
+const args = [
+  {
+    name: 'new',
+    active: false,
+  },
+  {
+    name: 'recreate',
+    active: false,
   },
 ];
 
@@ -129,7 +134,7 @@ cli.addEventListener('keydown', function (e) {
     commandsPresent.forEach((command) => (commandOutput = commandOutput.replace(command.name, `<span style="color: ${command.color}">${command.name}</span>`)));
     if (editorContent == '-c') {
       prompt.innerHTML = `<div class="cli-user-input">${commandOutput}</div> ${commandList}`;
-      clearEditor(cli);
+      clearCLI();
     } else if (editorContent == '-h') {
       // trigger link to open modal
       document.querySelector('#stamp').click();
