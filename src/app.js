@@ -22,14 +22,19 @@ let treatments = [];
 let command = '';
 const commands = [
   {
-    name: 'innate',
+    name: 'antigen',
     active: false,
     color: '#83A598',
   },
   {
-    name: 'adapt',
+    name: 'mutate',
     active: false,
     color: '#D3869B',
+  },
+  {
+    name: 'trauma',
+    active: 'false',
+    color: '#ffffff',
   },
 ];
 
@@ -79,6 +84,15 @@ cli.addEventListener('input', function () {
   commands.forEach((command) => (editorContent.includes(command.name) ? (command.active = true) : (command.active = false)));
 });
 
+// Clear editor if user presses enter, refocus on editor, and show fake cursor
+function clearCLI() {
+  cli.innerText = '';
+  cli.focus();
+  cursor.style.display = 'inline-flex';
+}
+
+// --- MANAGING FALSE CURSOR ---
+
 // Hide fake cursor once user starts typing
 function hideCursor(elem) {
   elem.addEventListener('input', function () {
@@ -96,12 +110,7 @@ function hideCursor(elem) {
   });
 }
 
-// Clear editor if user presses enter, refocus on editor, and show fake cursor
-function clearCLI() {
-  cli.innerText = '';
-  cli.focus();
-  cursor.style.display = 'inline-flex';
-}
+// --- EXECUTING COMMANDS ---
 
 // Listening for enter key and executing commands
 cli.addEventListener('keydown', function (e) {
