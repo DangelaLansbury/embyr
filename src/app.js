@@ -29,6 +29,11 @@ const commands = [
     active: 'false',
     color: '#FABD2F',
   },
+  {
+    name: 'status',
+    active: false,
+    color: '#ebdbb2',
+  },
 ];
 
 // arguments
