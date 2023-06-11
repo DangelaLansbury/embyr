@@ -15,19 +15,9 @@ cli.focus();
 let command = '';
 const commands = [
   {
-    name: 'pathogen',
+    name: 'make',
     active: false,
     color: '#83A598',
-  },
-  {
-    name: 'mutate',
-    active: false,
-    color: '#D3869B',
-  },
-  {
-    name: 'trauma',
-    active: 'false',
-    color: '#FABD2F',
   },
   {
     name: 'status',
@@ -37,25 +27,25 @@ const commands = [
 ];
 
 // arguments
+let arg = '';
 const args = [
   {
-    type: 'pathogen',
+    type: 'make',
     arg: ['virus', 'bacteria', 'fungus', 'parasite'],
   },
+];
+
+// modifiers
+let modifier = '';
+const modifiers = [
   {
-    type: 'mutate',
-    arg: ['virus', 'bacteria', 'fungus', 'parasite'],
-  },
-  {
-    type: 'trauma',
-    arg: ['cut', 'radiation', 'chemical', 'cold', 'heat'],
+    type: 'make',
+    modifier: ['--infectious', '--noninfectious'],
   },
 ];
 
 // --- DEFAULT PROMPTS ---
 
-const defaultPrompt = `<div class="cli-prompt-text">Hi there. What would you like to do?</div>`;
-const defaultPlaceholder = `Run a command or use -h for help`;
 const commandList = `<div class="cli-prompt-text">Here are some commands you can run:</div>
   <div class="examples">
     <span style="color: ${commands[0].color}">innate</span> - Access innate immune system tools
