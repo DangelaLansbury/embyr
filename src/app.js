@@ -15,7 +15,7 @@ cli.focus();
 let command = '';
 const commands = [
   {
-    name: 'antigen',
+    name: 'pathogen',
     active: false,
     color: '#83A598',
   },
@@ -39,12 +39,16 @@ const commands = [
 // arguments
 const args = [
   {
-    name: 'new',
-    active: false,
+    type: 'pathogen',
+    arg: ['virus', 'bacteria', 'fungus', 'parasite'],
   },
   {
-    name: 'recreate',
-    active: false,
+    type: 'mutate',
+    arg: ['virus', 'bacteria', 'fungus', 'parasite'],
+  },
+  {
+    type: 'trauma',
+    arg: ['cut', 'radiation', 'chemical', 'cold', 'heat'],
   },
 ];
 
