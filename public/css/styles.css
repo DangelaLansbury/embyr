@@ -161,7 +161,7 @@ main {
   margin: 0.25rem 0 1rem 0;
   width: 100%;
 }
-.cli-icon {
+.cli-dot-group {
   display: inline-flex;
   flex-direction: row;
   align-items: center;

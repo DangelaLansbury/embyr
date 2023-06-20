@@ -139,7 +139,7 @@ cli.addEventListener('keydown', function (e) {
       document.querySelector('#stamp').click();
       clearCLI();
     } else if (editorContent == '-r') {
-      prompt.innerHTML = defaultPrompt;
+      prompt.innerHTML = `<div class="cli-prompt-text">Hi there. Run a command or use -h for help.</div>`;
       commands.forEach((command) => (command.active = false));
       clearCLI();
     } else if (commandsPresent.length == 0) {
