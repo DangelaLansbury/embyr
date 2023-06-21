@@ -282,9 +282,9 @@ main {
 .modal__content {
   border-radius: 1rem;
   position: relative;
-  width: 66%;
+  width: 60%;
   max-width: 90%;
-  max-height: 66%;
+  max-height: 60%;
   background: #32302f;
   padding: 1.5rem 4rem 1.5rem 3rem;
   text-decoration: none;
