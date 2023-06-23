@@ -1,0 +1,14 @@
+{
+  "commands": [
+    {
+      "name": "make",
+      "active": false,
+      "color": "#83A598"
+    },
+    {
+      "name": "status",
+      "active": false,
+      "color": "#ebdbb2"
+    }
+  ]
+}
