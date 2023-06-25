@@ -20,7 +20,7 @@ const commands = [
     color: '#83A598',
   },
   {
-    name: 'add',
+    name: 'env',
     active: false,
     color: '#FD6D5C',
   },
@@ -44,7 +44,7 @@ const args = [
 let modifier = '';
 const modifiers = [
   {
-    type: 'make',
+    type: 'new',
     modifier: ['--infectious', '--noninfectious'],
   },
 ];
