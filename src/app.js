@@ -15,14 +15,19 @@ cli.focus();
 let command = '';
 const commands = [
   {
-    name: 'make',
+    name: 'new',
     active: false,
     color: '#83A598',
   },
   {
+    name: 'add',
+    active: false,
+    color: '#FD6D5C',
+  },
+  {
     name: 'status',
     active: false,
-    color: '#ebdbb2',
+    color: '#FABD2F',
   },
 ];
 
@@ -30,7 +35,7 @@ const commands = [
 let arg = '';
 const args = [
   {
-    type: 'make',
+    type: 'new',
     arg: ['virus', 'bacteria', 'fungus', 'parasite'],
   },
 ];
@@ -83,9 +88,17 @@ document.body.addEventListener('click', function (e) {
 // Listening for command and set to true if present
 cli.addEventListener('input', function () {
   let editorID = this.id;
-  let editor = document.getElementById(editorID);
-  let editorContent = editor.innerText.toLowerCase();
-  commands.forEach((command) => (editorContent.includes(command.name) ? (command.active = true) : (command.active = false)));
+  let editorContent = document.getElementById(editorID).innerText.toLowerCase();
+  // remove first word from editor string and check if it matches a command
+  let editorFirstWord = editorContent.split(' ')[0];
+  let commandsPresent = commands.filter(function (command) {
+    return command.name == editorFirstWord;
+  });
+  if (commandsPresent.length > 0) {
+    commandsPresent.forEach((command) => (command.active = true));
+  } else {
+    commands.forEach((command) => (command.active = false));
+  }
 });
 
 // Clear editor if user presses enter, refocus on editor, and show fake cursor
