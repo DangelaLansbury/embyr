@@ -38,6 +38,10 @@ const args = [
     type: 'new',
     arg: ['virus', 'bacteria', 'fungus', 'parasite'],
   },
+  {
+    type: 'env',
+    arg: ['radiation', 'stress', 'injury', 'heat', 'cold'],
+  },
 ];
 
 // modifiers
