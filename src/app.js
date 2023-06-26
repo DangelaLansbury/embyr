@@ -42,6 +42,10 @@ const args = [
     type: 'env',
     arg: ['radiation', 'stress', 'injury', 'heat', 'cold'],
   },
+  {
+    type: 'status',
+    arg: ['innate', 'adaptive'],
+  },
 ];
 
 // modifiers
@@ -50,6 +54,10 @@ const modifiers = [
   {
     type: 'new',
     modifier: ['--infectious', '--noninfectious'],
+  },
+  {
+    type: 'env',
+    modifier: ['--acute', '--chronic'],
   },
 ];
 
