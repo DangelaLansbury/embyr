@@ -11,66 +11,34 @@ cli.focus();
 
 // --- STATE MANAGEMENT ---
 
-// commands
-let command = '';
-const commands = [
-  {
-    name: 'new',
-    active: false,
-    color: '#83A598',
+const commands = {
+  innate: () => {
+    // code to handle the "innate" command
   },
-  {
-    name: 'env',
-    active: false,
-    color: '#FD6D5C',
+  adapt: () => {
+    // code to handle the "adapt" command
   },
-  {
-    name: 'status',
-    active: false,
-    color: '#FABD2F',
+  memory: () => {
+    // code to handle the "memory" command
   },
-];
+  help: () => {
+    // code to handle the "help" command
+  },
+  clear: () => {
+    // code to handle the "clear" command
+  },
+  new: () => {
+    // code to handle the "new" command
+  },
+};
 
-// arguments
-let arg = '';
-const args = [
-  {
-    type: 'new',
-    arg: ['virus', 'bacteria', 'fungus', 'parasite'],
-  },
-  {
-    type: 'env',
-    arg: ['radiation', 'stress', 'injury', 'heat', 'cold'],
-  },
-  {
-    type: 'status',
-    arg: ['innate', 'adaptive'],
-  },
-];
-
-// modifiers
-let modifier = '';
-const modifiers = [
-  {
-    type: 'new',
-    modifier: ['--infectious', '--noninfectious'],
-  },
-  {
-    type: 'env',
-    modifier: ['--acute', '--chronic'],
-  },
-];
+let input = '';
+let parts = input.split(' ');
+let command = parts[0];
+let args = parts.slice(1);
 
 // --- DEFAULT PROMPTS ---
 
-const commandList = `<div class="cli-prompt-text">Here are some commands you can run:</div>
-  <div class="examples">
-    <span style="color: ${commands[0].color}">innate</span> - Access innate immune system tools
-    <br />
-    <span style="color: ${commands[1].color}">adapt</span> - Access adaptive immune system tools
-  </div>
-  <div class="cli-prompt-text">So, what do you want to do?</div>`;
-const commandExamples = '';
 const nullPrompt = `<div class="cli-prompt-text">Hmm I'm not following. Did you try using a command?</div>`;
 
 // --- OUTPUTS ---
@@ -197,3 +165,55 @@ cli.addEventListener('keydown', function (e) {
 hideCursor(cli);
 
 // -h -c -r
+
+// --- Old Code ---
+
+// // commands
+// let command = '';
+// const commands = [
+//   {
+//     name: 'new',
+//     active: false,
+//     color: '#83A598',
+//   },
+//   {
+//     name: 'env',
+//     active: false,
+//     color: '#FD6D5C',
+//   },
+//   {
+//     name: 'status',
+//     active: false,
+//     color: '#FABD2F',
+//   },
+// ];
+
+// // arguments
+// let arg = '';
+// const args = [
+//   {
+//     type: 'new',
+//     arg: ['virus', 'bacteria', 'fungus', 'parasite'],
+//   },
+//   {
+//     type: 'env',
+//     arg: ['radiation', 'stress', 'injury', 'heat', 'cold'],
+//   },
+//   {
+//     type: 'status',
+//     arg: ['innate', 'adaptive'],
+//   },
+// ];
+
+// // modifiers
+// let modifier = '';
+// const modifiers = [
+//   {
+//     type: 'new',
+//     modifier: ['--infectious', '--noninfectious'],
+//   },
+//   {
+//     type: 'env',
+//     modifier: ['--acute', '--chronic'],
+//   },
+// ];
