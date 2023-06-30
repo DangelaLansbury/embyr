@@ -1,11 +1,11 @@
 // --- DOM VARIABLES ---
 
-let container = document.querySelector('#container');
-let cliContainer = document.querySelector('#cliContainer');
-let prompt = document.querySelector('#cliPrompt');
-let cli = document.querySelector('#cli');
-let cliSuggest = document.querySelector('#cliSuggest');
-let cursor = document.querySelector('#cursor');
+let container = document.querySelector('.container');
+let cliContainer = document.querySelector('.cli-container');
+let thread = document.querySelector('.thread');
+let cli = document.querySelector('.cli-input-text');
+let suggestion = document.querySelector('.suggestion');
+let cursor = document.querySelector('.cursor');
 
 // --- FOCUS ON EDITOR ---
 
@@ -46,7 +46,7 @@ const commands = {
     let modifier = args.filter((arg) => arg.startsWith('--'));
     let objectArray = args.filter((arg) => !arg.startsWith('--'));
     let object = objectArray.join(' ');
-    prompt.innerHTML = 'you wrote innate ' + object + ' ' + modifier;
+    thread.innerHTML = 'you wrote innate ' + object + ' ' + modifier;
   },
   adapt: (args) => {
     // code to handle the "adapt" command
@@ -54,44 +54,44 @@ const commands = {
     let modifier = args.filter((arg) => arg.startsWith('--'));
     let objectArray = args.filter((arg) => !arg.startsWith('--'));
     let object = objectArray.join(' ');
-    prompt.innerHTML = 'you wrote adapt ' + object + ' ' + modifier;
+    thread.innerHTML = 'you wrote adapt ' + object + ' ' + modifier;
   },
   mem: (args) => {
     // code to handle the "memory" command
-    prompt.innerHTML = 'you wrote mem ' + args;
+    thread.innerHTML = 'you wrote mem ' + args;
   },
   help: () => {
     // code to handle the "help" command
-    prompt.innerHTML = 'you wrote help';
+    thread.innerHTML = 'you wrote help';
   },
   clear: () => {
     // code to handle the "clear" command
-    prompt.innerHTML = 'Hi there. Run a command or use -h for help.';
+    thread.innerHTML = 'Hi there. Run a command or use -h for help.';
   },
   new: (args) => {
     // code to handle the "new" command
-    prompt.innerHTML = 'you wrote new ' + args;
+    thread.innerHTML = 'you wrote new ' + args;
   },
 };
 
-// --- DEFAULT PROMPTS ---
+// --- DEFAULT threadS ---
 
-const nullPrompt = `<div class="cli-prompt-text">Hmm I'm not following. Did you try using a command?</div>`;
+const nullthread = `<div class="cli-thread-text">Hmm I'm not following. Did you try using a command?</div>`;
 
 // --- OUTPUTS ---
 
 const output00 = document.createElement('div');
 
 const output01 = document.createElement('div');
-output01.innerHTML = `<div class="cli-prompt-text">Something happens</div>`;
+output01.innerHTML = `<div class="thread-text">Something happens</div>`;
 const output02 = document.createElement('div');
-output02.innerHTML = `<div class="cli-prompt-text">Something else happens</div>`;
+output02.innerHTML = `<div class="thread-text">Something else happens</div>`;
 const output03 = document.createElement('div');
-output03.innerHTML = `<div class="cli-prompt-text">This is the outcome of what happened</div>`;
+output03.innerHTML = `<div class="thread-text">This is the outcome of what happened</div>`;
 
 function returnOutput(output, time) {
   setTimeout(() => {
-    prompt.appendChild(output);
+    thread.appendChild(output);
   }, time);
 }
 
@@ -124,7 +124,7 @@ cli.addEventListener('keydown', function (e) {
         commands[command](args);
         clearCLI();
       } else {
-        prompt.innerHTML = nullPrompt;
+        thread.innerHTML = nullthread;
         clearCLI();
       }
     }

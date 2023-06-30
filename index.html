@@ -18,7 +18,7 @@
     <div class="navbar" id="navbar">
       <a href="#infoModal" class="logo-header" id="stamp">
         <div class="logo-header-text">
-          <h1>Zetsu</h1>
+          <h1>Zetsu Chai</h1>
         </div>
         <div class="logo">
           <img src="public/images/logo.svg" alt="logo" />
@@ -29,19 +29,14 @@
       <div class="workbook">
         <div class="workbook-content">
           <div class="container" id="container">
-            <div class="cli-prompt" id="cliPrompt">
-              <div class="cli-prompt-text">Hi there. Run a command or use -h for help.</div>
+            <div class="thread">
+              <div class="thread-text">Hi there. Run a command or use -h for help.</div>
             </div>
-            <div class="cli-container" id="cliContainer">
-              <!-- <div class="cli-dot-group">
-                <div class="cli-dot" id="dot1"></div>
-                <div class="cli-dot" id="dot2"></div>
-                <div class="cli-dot" id="dot3"></div>
-              </div> -->
+            <div class="cli-container">
               <div class="cli-input">
-                <div class="cli-input-text" id="cli" contenteditable="true" spellcheck="false" autocomplete="off"></div>
-                <div class="cli-cursor" id="cursor"></div>
-                <div class="cli-suggest" id="cliSuggest" contenteditable="false" tabindex="-1"></div>
+                <div class="cli-input-text" contenteditable="true" spellcheck="false" autocomplete="off"></div>
+                <div class="cursor"></div>
+                <div class="suggestion" contenteditable="false" tabindex="-1"></div>
               </div>
             </div>
           </div>

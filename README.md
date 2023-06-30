@@ -1,5 +1,7 @@
 # Zetsu Chai
-Your command line for living.
+
+Your command line for immunity.
 
 ## User Guide
+
 Documentation

@@ -128,14 +128,14 @@ main {
   height: 100%;
   margin-top: 4%;
 }
-.cli-prompt {
+.thread {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
   width: 100%;
 }
-.cli-prompt-text {
+.thread-text {
   display: block;
 }
 .cli-user-input {
@@ -224,7 +224,7 @@ main {
 .cli-input-text:empty {
   caret-color: transparent;
 }
-#cursor {
+.cursor {
   display: inline-flex;
   width: 0.5rem;
   height: 1.25rem;
@@ -246,14 +246,14 @@ main {
     opacity: 0;
   }
 }
-.cli-suggest {
+.suggestion {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
   color: #a79c8f;
 }
-.cli-suggest-text {
+.suggestion-text {
   position: relative;
   left: -0.5rem;
   display: inline-flex;
@@ -311,7 +311,6 @@ main {
   color: #8ec07c;
   background-color: #3c3a39;
 }
-
 .hidden {
   display: none !important;
 }
