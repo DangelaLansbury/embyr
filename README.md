@@ -1,4 +1,4 @@
-# Zetsu Chai
+# Zetsu
 
 Your command line for immunity.
 
