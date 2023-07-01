@@ -188,7 +188,6 @@ const adaptive = {
 const commands = {
   innate: (obj, mod) => {
     // code to handle the "innate" command
-    obj.toLowerCase();
     let output = creatOutputDiv(innate[obj].description);
     returnOutput(output, outputDelay[0]);
     output = creatOutputDiv(innate[obj].action);
@@ -197,7 +196,6 @@ const commands = {
   },
   adapt: (obj, mod) => {
     // code to handle the "adapt" command
-    obj.toLowerCase();
     let output = creatOutputDiv(adaptive[obj].description);
     returnOutput(output, outputDelay[0]);
     output = creatOutputDiv(adaptive[obj].action);
@@ -297,6 +295,8 @@ cli.addEventListener('keydown', function (e) {
       output.innerHTML = input;
       // put output at top of thread
       thread.insertBefore(output, thread.firstChild);
+      // split input into command and args
+      input = input.toLowerCase().trim();
       let parts = input.split(' ');
       let command = parts[0];
       let args = parts.slice(1);
