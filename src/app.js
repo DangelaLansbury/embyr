@@ -37,43 +37,6 @@ function hideCursor(elem) {
 
 hideCursor(cli);
 
-// --- COMMANDS ---
-
-const commands = {
-  innate: (args) => {
-    // code to handle the "innate" command
-    // split args into object and modifier where modifier is anything that starts with "--"
-    let modifier = args.filter((arg) => arg.startsWith('--'));
-    let objectArray = args.filter((arg) => !arg.startsWith('--'));
-    let object = objectArray.join(' ');
-    thread.innerHTML = 'you wrote innate ' + object + ' ' + modifier;
-  },
-  adapt: (args) => {
-    // code to handle the "adapt" command
-    // split args into object and modifier where modifier is anything that starts with "--"
-    let modifier = args.filter((arg) => arg.startsWith('--'));
-    let objectArray = args.filter((arg) => !arg.startsWith('--'));
-    let object = objectArray.join(' ');
-    thread.innerHTML = 'you wrote adapt ' + object + ' ' + modifier;
-  },
-  mem: (args) => {
-    // code to handle the "memory" command
-    thread.innerHTML = 'you wrote mem ' + args;
-  },
-  help: () => {
-    // code to handle the "help" command
-    thread.innerHTML = 'you wrote help';
-  },
-  clear: () => {
-    // code to handle the "clear" command
-    thread.innerHTML = 'Hi there. Run a command or use -h for help.';
-  },
-  new: (args) => {
-    // code to handle the "new" command
-    thread.innerHTML = 'you wrote new ' + args;
-  },
-};
-
 // --- PATHOGENS ---
 
 const pathogens = {
@@ -131,6 +94,49 @@ const pathogens = {
       'Prions can be transmitted in a variety of ways. Some prions can spread through touch, saliva, or even the air. Other prions can be transmitted through sexual contact or by sharing contaminated needles. Insects including ticks and mosquitoes can act as "vectors," transmitting a prion from one host to another.',
     treatment: 'Treatment of prion infections focuses on supportive care, such as getting enough rest and drinking plenty of fluids. Antiprion medications that inhibit prion reproduction are available for some prion infections.',
     prevention: 'The best way to prevent a prion infection is to avoid being exposed to the prion. There are vaccines available for some prion infections such as tetanus, diphtheria, pertussis, and pneumococcus.',
+  },
+};
+
+// --- COMMANDS ---
+
+const commands = {
+  innate: (args) => {
+    // code to handle the "innate" command
+    // split args into object and modifier where modifier is anything that starts with "--"
+    let modifier = args.filter((arg) => arg.startsWith('--'));
+    let objectArray = args.filter((arg) => !arg.startsWith('--'));
+    let object = objectArray.join(' ');
+    thread.innerHTML = 'you wrote innate ' + object + ' ' + modifier;
+  },
+  adapt: (args) => {
+    // code to handle the "adapt" command
+    // split args into object and modifier where modifier is anything that starts with "--"
+    let modifier = args.filter((arg) => arg.startsWith('--'));
+    let objectArray = args.filter((arg) => !arg.startsWith('--'));
+    let object = objectArray.join(' ');
+    thread.innerHTML = 'you wrote adapt ' + object + ' ' + modifier;
+  },
+  mem: (args) => {
+    // code to handle the "memory" command
+    thread.innerHTML = 'you wrote mem ' + args;
+  },
+  help: () => {
+    // code to handle the "help" command
+    thread.innerHTML = 'you wrote help';
+  },
+  clear: () => {
+    // code to handle the "clear" command
+    thread.innerHTML = 'Hi there. Run a command or use -h for help.';
+  },
+  new: (args) => {
+    // check if args contains a pathogen
+    if (args[0] in pathogens) {
+      // if it does, create a new thread with the pathogen's name
+      thread.innerHTML = 'you wrote new ' + args;
+    } else {
+      // if not, return an error
+      thread.innerHTML = "Hmm, I'm not following. Did you try using a command?";
+    }
   },
 };
 
