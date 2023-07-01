@@ -155,18 +155,18 @@ const innate = {
 // --- ADAPTIVE IMMUNE SYSTEM ACTORS ---
 
 const adaptive = {
-  helperT: {
+  helpert: {
     name: 'helper T cell',
     description: 'Helper T cells are a type of white blood cell.',
     action:
       'Helper T cells stimulate other immune cells by producing and releasing cytokines that bind to receptors on target cells. These cytokines activate signaling pathways within the target cells, leading to specific immune responses that aid in the clearance of pathogens.',
   },
-  cytotoxicT: {
+  cytotoxict: {
     name: 'cytotoxic T cell',
     description: 'Cytotoxic T cells are a type of white blood cell.',
     action: 'Cytotoxic T cells kill infected cells.',
   },
-  memoryT: {
+  memoryt: {
     name: 'memory T cell',
     description: 'Memory T cells are a type of white blood cell.',
     action: 'Memory T cells remember antigens.',
@@ -188,11 +188,21 @@ const adaptive = {
 const commands = {
   innate: (obj, mod) => {
     // code to handle the "innate" command
-    thread.innerHTML = 'you wrote innate ' + obj + ' ' + mod;
+    obj.toLowerCase();
+    let output = creatOutputDiv(innate[obj].description);
+    returnOutput(output, outputDelay[0]);
+    output = creatOutputDiv(innate[obj].action);
+    returnOutput(output, outputDelay[1]);
+    showCLI(outputDelay[2]);
   },
   adapt: (obj, mod) => {
     // code to handle the "adapt" command
-    thread.innerHTML = 'you wrote adapt ' + obj + ' ' + mod;
+    obj.toLowerCase();
+    let output = creatOutputDiv(adaptive[obj].description);
+    returnOutput(output, outputDelay[0]);
+    output = creatOutputDiv(adaptive[obj].action);
+    returnOutput(output, outputDelay[1]);
+    showCLI(outputDelay[2]);
   },
   mem: (args) => {
     // code to handle the "memory" command
@@ -207,11 +217,16 @@ const commands = {
     thread.innerHTML = 'Hi there. Run a command or use -h for help.';
   },
   new: (obj, mod) => {
+    obj.toLowerCase();
     // check if args contains a pathogen
     if (obj in pathogens) {
       // return description of pathogen
-      thread.innerHTML = obj + ': ' + pathogens[obj].description;
-      // thread.innerHTML = 'you wrote new ' + obj + ' ' + mod;
+      let output = creatOutputDiv(pathogens[obj].description);
+      returnOutput(output, outputDelay[0]);
+      // return symptoms of pathogen
+      output = creatOutputDiv(pathogens[obj].symptoms);
+      returnOutput(output, outputDelay[1]);
+      showCLI(outputDelay[2]);
     } else {
       thread.innerHTML = "Hmm, I'm not following. Did you try using a command?";
     }
@@ -224,11 +239,33 @@ const nullthread = `<div class="cli-thread-text">Hmm I'm not following. Did you 
 
 // --- OUTPUTS ---
 
-function returnOutput(output, time) {
+const creatOutputDiv = (text) => {
+  let output = document.createElement('div');
+  output.className = 'cli-thread-text';
+  output.innerHTML = text;
+  return output;
+};
+
+const returnOutput = (output, time) => {
   setTimeout(() => {
     thread.appendChild(output);
   }, time);
-}
+};
+
+const returnError = (error, time) => {
+  setTimeout(() => {
+    thread.innerHTML = error;
+  }, time);
+};
+
+const showCLI = (time) => {
+  setTimeout(() => {
+    cliContainer.style.display = 'flex';
+    cli.focus();
+  }, time);
+};
+
+const outputDelay = [600, 800, 1000, 1200, 1400, 1600, 1800, 2000];
 
 // --- ADDING EVENT LISTENERS FOR COMMANDS ---
 
@@ -240,17 +277,26 @@ cli.addEventListener('input', function () {
 });
 
 // Clear editor if user presses enter, refocus on editor, and show fake cursor
-function clearCLI() {
+const clearCLI = () => {
   cli.innerText = '';
   cli.focus();
   cursor.style.display = 'inline-flex';
-}
+};
 
 // Listening for command and executing function when user presses enter
 cli.addEventListener('keydown', function (e) {
   if (e.keyCode === 13) {
     e.preventDefault();
     if (input !== '') {
+      thread.innerHTML = '';
+      // hide CLI
+      cliContainer.style.display = 'none';
+      // Add input to thread
+      let output = document.createElement('div');
+      output.classList.add('cli-user-input');
+      output.innerHTML = input;
+      // put output at top of thread
+      thread.insertBefore(output, thread.firstChild);
       let parts = input.split(' ');
       let command = parts[0];
       let args = parts.slice(1);
