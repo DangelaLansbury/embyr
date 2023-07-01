@@ -98,7 +98,90 @@ const pathogens = {
   },
 };
 
-let pathogen;
+// --- INNATE IMMUNE SYSTEM ACTORS ---
+
+const innate = {
+  macrophage: {
+    name: 'macrophage',
+    description:
+      'Macrophages are a type of white blood cell that engulfs and digests cellular debris, foreign substances, microbes, cancer cells, and anything else that does not have the types of proteins specific to healthy body cells on its surface in a process called phagocytosis.',
+    action:
+      'Macrophages are the first responders to infections. They are constantly on the lookout for pathogens. When they find a pathogen, they engulf and digest it. They also release cytokines, which are chemical messengers that stimulate other immune cells to attack the pathogen.',
+  },
+  neutrophil: {
+    name: 'neutrophil',
+    description:
+      'Neutrophils are a type of white blood cell that engulfs and digests cellular debris, foreign substances, microbes, cancer cells, and anything else that does not have the types of proteins specific to healthy body cells on its surface in a process called phagocytosis.',
+    action:
+      'Neutrophils are the first responders to infections. They are constantly on the lookout for pathogens. When they find a pathogen, they engulf and digest it. They also release cytokines, which are chemical messengers that stimulate other immune cells to attack the pathogen.',
+  },
+  eosinophil: {
+    name: 'eosinophil',
+    description:
+      'Eosinophils are a type of white blood cell that engulfs and digests cellular debris, foreign substances, microbes, cancer cells, and anything else that does not have the types of proteins specific to healthy body cells on its surface in a process called phagocytosis.',
+    action:
+      'Eosinophils are the first responders to infections. They are constantly on the lookout for pathogens. When they find a pathogen, they engulf and digest it. They also release cytokines, which are chemical messengers that stimulate other immune cells to attack the pathogen.',
+  },
+  basophil: {
+    name: 'basophil',
+    description:
+      'Basophils are a type of white blood cell that engulfs and digests cellular debris, foreign substances, microbes, cancer cells, and anything else that does not have the types of proteins specific to healthy body cells on its surface in a process called phagocytosis.',
+    action:
+      'Basophils are the first responders to infections. They are constantly on the lookout for pathogens. When they find a pathogen, they engulf and digest it. They also release cytokines, which are chemical messengers that stimulate other immune cells to attack the pathogen.',
+  },
+  mastcell: {
+    name: 'mast cell',
+    description:
+      'Mast cells are a type of white blood cell that engulfs and digests cellular debris, foreign substances, microbes, cancer cells, and anything else that does not have the types of proteins specific to healthy body cells on its surface in a process called phagocytosis.',
+    action:
+      'Mast cells are the first responders to infections. They are constantly on the lookout for pathogens. When they find a pathogen, they engulf and digest it. They also release cytokines, which are chemical messengers that stimulate other immune cells to attack the pathogen.',
+  },
+  naturalkiller: {
+    name: 'natural killer cell',
+    description:
+      'Natural killer cells are a type of white blood cell that engulfs and digests cellular debris, foreign substances, microbes, cancer cells, and anything else that does not have the types of proteins specific to healthy body cells on its surface in a process called phagocytosis.',
+    action:
+      'Natural killer cells are the first responders to infections. They are constantly on the lookout for pathogens. When they find a pathogen, they engulf and digest it. They also release cytokines, which are chemical messengers that stimulate other immune cells to attack the pathogen.',
+  },
+  dendritic: {
+    name: 'dendritic cell',
+    description:
+      'Dendritic cells are a type of white blood cell that engulfs and digests cellular debris, foreign substances, microbes, cancer cells, and anything else that does not have the types of proteins specific to healthy body cells on its surface in a process called phagocytosis.',
+    action:
+      'Dendritic cells are the first responders to infections. They are constantly on the lookout for pathogens. When they find a pathogen, they engulf and digest it. They also release cytokines, which are chemical messengers that stimulate other immune cells to attack the pathogen.',
+  },
+};
+
+// --- ADAPTIVE IMMUNE SYSTEM ACTORS ---
+
+const adaptive = {
+  helperT: {
+    name: 'helper T cell',
+    description: 'Helper T cells are a type of white blood cell.',
+    action:
+      'Helper T cells stimulate other immune cells by producing and releasing cytokines that bind to receptors on target cells. These cytokines activate signaling pathways within the target cells, leading to specific immune responses that aid in the clearance of pathogens.',
+  },
+  cytotoxicT: {
+    name: 'cytotoxic T cell',
+    description: 'Cytotoxic T cells are a type of white blood cell.',
+    action: 'Cytotoxic T cells kill infected cells.',
+  },
+  memoryT: {
+    name: 'memory T cell',
+    description: 'Memory T cells are a type of white blood cell.',
+    action: 'Memory T cells remember antigens.',
+  },
+  bcell: {
+    name: 'B cell',
+    description: 'B cells are a type of white blood cell.',
+    action: 'B cells differentiate into plasma cells and memory cells. Plasma cells produce antibodies. Memory cells remember antigens.',
+  },
+  antibody: {
+    name: 'antibody',
+    description: 'Antibodies are proteins that bind to antigens.',
+    action: 'Antibodies bind to antigens. This allows other immune cells to destroy the pathogen. Antibodies are produced by B cells.',
+  },
+};
 
 // --- COMMANDS ---
 
@@ -126,7 +209,9 @@ const commands = {
   new: (obj, mod) => {
     // check if args contains a pathogen
     if (obj in pathogens) {
-      thread.innerHTML = 'you wrote new ' + obj + ' ' + mod;
+      // return description of pathogen
+      thread.innerHTML = obj + ': ' + pathogens[obj].description;
+      // thread.innerHTML = 'you wrote new ' + obj + ' ' + mod;
     } else {
       thread.innerHTML = "Hmm, I'm not following. Did you try using a command?";
     }
@@ -174,6 +259,7 @@ cli.addEventListener('keydown', function (e) {
         let modifier = args.filter((arg) => arg.startsWith('--'));
         let objectArray = args.filter((arg) => !arg.startsWith('--'));
         let object = objectArray.join(' ');
+        // run command
         commands[command](object, modifier);
         clearCLI();
       } else {
