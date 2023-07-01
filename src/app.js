@@ -311,6 +311,7 @@ cli.addEventListener('keydown', function (e) {
       } else {
         thread.innerHTML = nullthread;
         clearCLI();
+        showCLI(0);
       }
     }
   }
