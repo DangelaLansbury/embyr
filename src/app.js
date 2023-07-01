@@ -39,6 +39,7 @@ hideCursor(cli);
 
 // --- PATHOGENS ---
 
+// Pathogens object
 const pathogens = {
   virus: {
     name: 'virus',
@@ -97,24 +98,18 @@ const pathogens = {
   },
 };
 
+let pathogen;
+
 // --- COMMANDS ---
 
 const commands = {
-  innate: (args) => {
+  innate: (obj, mod) => {
     // code to handle the "innate" command
-    // split args into object and modifier where modifier is anything that starts with "--"
-    let modifier = args.filter((arg) => arg.startsWith('--'));
-    let objectArray = args.filter((arg) => !arg.startsWith('--'));
-    let object = objectArray.join(' ');
-    thread.innerHTML = 'you wrote innate ' + object + ' ' + modifier;
+    thread.innerHTML = 'you wrote innate ' + obj + ' ' + mod;
   },
-  adapt: (args) => {
+  adapt: (obj, mod) => {
     // code to handle the "adapt" command
-    // split args into object and modifier where modifier is anything that starts with "--"
-    let modifier = args.filter((arg) => arg.startsWith('--'));
-    let objectArray = args.filter((arg) => !arg.startsWith('--'));
-    let object = objectArray.join(' ');
-    thread.innerHTML = 'you wrote adapt ' + object + ' ' + modifier;
+    thread.innerHTML = 'you wrote adapt ' + obj + ' ' + mod;
   },
   mem: (args) => {
     // code to handle the "memory" command
@@ -128,13 +123,11 @@ const commands = {
     // code to handle the "clear" command
     thread.innerHTML = 'Hi there. Run a command or use -h for help.';
   },
-  new: (args) => {
+  new: (obj, mod) => {
     // check if args contains a pathogen
-    if (args[0] in pathogens) {
-      // if it does, create a new thread with the pathogen's name
-      thread.innerHTML = 'you wrote new ' + args;
+    if (obj in pathogens) {
+      thread.innerHTML = 'you wrote new ' + obj + ' ' + mod;
     } else {
-      // if not, return an error
       thread.innerHTML = "Hmm, I'm not following. Did you try using a command?";
     }
   },
@@ -176,9 +169,12 @@ cli.addEventListener('keydown', function (e) {
       let parts = input.split(' ');
       let command = parts[0];
       let args = parts.slice(1);
-      console.log(command, args);
       if (commands[command]) {
-        commands[command](args);
+        // split args into object and modifier where modifier is anything that starts with "--"
+        let modifier = args.filter((arg) => arg.startsWith('--'));
+        let objectArray = args.filter((arg) => !arg.startsWith('--'));
+        let object = objectArray.join(' ');
+        commands[command](object, modifier);
         clearCLI();
       } else {
         thread.innerHTML = nullthread;
