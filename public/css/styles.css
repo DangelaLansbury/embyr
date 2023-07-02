@@ -67,6 +67,8 @@ main {
   width: 100%;
   max-width: 100%;
   padding: 1rem 0;
+  z-index: 1;
+  background-color: #32302f;
 }
 /* header */
 .logo-header {
@@ -98,7 +100,7 @@ main {
 .workbook {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   vertical-align: middle;
   height: 100%;
   width: 100%;
@@ -125,6 +127,7 @@ main {
   align-items: flex-start;
   justify-content: flex-start;
   width: 100%;
+  overflow-y: scroll;
 }
 .thread-text {
   display: block;

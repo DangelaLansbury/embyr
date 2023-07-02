@@ -194,11 +194,9 @@ const commands = {
       returnOutput(output, outputDelay[0]);
       output = creatOutputDiv(innate[obj].action);
       returnOutput(output, outputDelay[1]);
-      // showCLI(outputDelay[2]);
     } else {
-      let output = creatOutputDiv(nullthread);
+      let output = creatOutputDiv(nullThread);
       returnOutput(output, 0);
-      // showCLI(0);
     }
   },
   adapt: (obj, mod) => {
@@ -209,22 +207,18 @@ const commands = {
       returnOutput(output, outputDelay[0]);
       output = creatOutputDiv(adaptive[obj].action);
       returnOutput(output, outputDelay[1]);
-      // showCLI(outputDelay[2]);
     } else {
-      let output = creatOutputDiv(nullthread);
+      let output = creatOutputDiv(nullThread);
       returnOutput(output, 0);
-      // showCLI(0);
     }
   },
   h: () => {
     // code to handle the "help" command
     thread.innerHTML = 'you wrote help';
-    // showCLI(0);
   },
   clear: () => {
     // code to handle the "clear" command
     thread.innerHTML = 'Hi there. Run a command or use h for help.';
-    // showCLI(0);
   },
   new: (obj, mod) => {
     obj.toLowerCase();
@@ -236,16 +230,21 @@ const commands = {
       // return symptoms of pathogen
       output = creatOutputDiv(pathogens[obj].symptoms);
       returnOutput(output, outputDelay[1]);
-      // showCLI(outputDelay[2]);
     } else {
-      thread.innerHTML = nullthread;
+      thread.innerHTML = nullThread;
     }
   },
 };
 
 // --- DEFAULT THREADS ---
 
-const nullthread = `<div class="cli-thread-text">Shoot, I don't recognize that command. You can use h to see the commands I know.</div>`;
+const defaultThread = `<div class="thread-text">Hi there. Run a command or use h for help.</div>`;
+
+window.onload = () => {
+  thread.innerHTML = defaultThread;
+};
+
+const nullThread = `<div class="thread-text">Shoot, I don't recognize that command. You can use h to see the commands I know.</div>`;
 
 // --- OUTPUTS ---
 
@@ -259,19 +258,16 @@ const creatOutputDiv = (text) => {
 const returnOutput = (output, time) => {
   setTimeout(() => {
     thread.appendChild(output);
+    // Scroll to bottom of thread
+    thread.scrollTop = thread.scrollHeight;
   }, time);
 };
 
 const returnError = (error, time) => {
   setTimeout(() => {
     thread.innerHTML = error;
-  }, time);
-};
-
-const showCLI = (time) => {
-  setTimeout(() => {
-    cliContainer.style.display = 'flex';
-    cli.focus();
+    // Scroll to bottom of thread
+    thread.scrollTop = thread.scrollHeight;
   }, time);
 };
 
@@ -298,32 +294,31 @@ cli.addEventListener('keydown', function (e) {
   if (e.keyCode === 13) {
     e.preventDefault();
     if (input !== '') {
-      thread.innerHTML = '';
-      // hide CLI
-      // cliContainer.style.display = 'none';
+      if (thread.innerHTML === defaultThread) {
+        thread.innerHTML = '';
+      }
       // Add input to thread
       let output = document.createElement('div');
       output.classList.add('cli-user-input');
       output.innerHTML = input;
-      // put output at top of thread
-      thread.insertBefore(output, thread.firstChild);
-      // split input into command and args
+      // Add output to thread
+      thread.appendChild(output);
+      // Split input into command and args
       input = input.toLowerCase().trim();
       let parts = input.split(' ');
       let command = parts[0];
       let args = parts.slice(1);
       if (commands[command]) {
-        // split args into object and modifier where modifier is anything that starts with "-"
+        // Split args into object and modifier where modifier is anything that starts with "-"
         let modifier = args.filter((arg) => arg.startsWith('-'));
         let objectArray = args.filter((arg) => !arg.startsWith('-'));
         let object = objectArray.join(' ');
-        // run command
+        // Run command
         commands[command](object, modifier);
         clearCLI();
       } else {
-        thread.innerHTML = nullthread;
+        thread.innerHTML = nullThread;
         clearCLI();
-        // showCLI(0);
       }
     }
   }
