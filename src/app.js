@@ -188,31 +188,43 @@ const adaptive = {
 const commands = {
   innate: (obj, mod) => {
     // code to handle the "innate" command
-    let output = creatOutputDiv(innate[obj].description);
-    returnOutput(output, outputDelay[0]);
-    output = creatOutputDiv(innate[obj].action);
-    returnOutput(output, outputDelay[1]);
-    showCLI(outputDelay[2]);
+    // check if args contains an innate immune system actor
+    if (obj in innate) {
+      let output = creatOutputDiv(innate[obj].description);
+      returnOutput(output, outputDelay[0]);
+      output = creatOutputDiv(innate[obj].action);
+      returnOutput(output, outputDelay[1]);
+      showCLI(outputDelay[2]);
+    } else {
+      let output = creatOutputDiv(nullthread);
+      returnOutput(output, 0);
+      showCLI(0);
+    }
   },
   adapt: (obj, mod) => {
     // code to handle the "adapt" command
-    let output = creatOutputDiv(adaptive[obj].description);
-    returnOutput(output, outputDelay[0]);
-    output = creatOutputDiv(adaptive[obj].action);
-    returnOutput(output, outputDelay[1]);
-    showCLI(outputDelay[2]);
-  },
-  mem: (args) => {
-    // code to handle the "memory" command
-    thread.innerHTML = 'you wrote mem ' + args;
+    // check if args contains an adaptive immune system actor
+    if (obj in adaptive) {
+      let output = creatOutputDiv(adaptive[obj].description);
+      returnOutput(output, outputDelay[0]);
+      output = creatOutputDiv(adaptive[obj].action);
+      returnOutput(output, outputDelay[1]);
+      showCLI(outputDelay[2]);
+    } else {
+      let output = creatOutputDiv(nullthread);
+      returnOutput(output, 0);
+      showCLI(0);
+    }
   },
   h: () => {
     // code to handle the "help" command
     thread.innerHTML = 'you wrote help';
+    showCLI(0);
   },
   clear: () => {
     // code to handle the "clear" command
-    thread.innerHTML = 'Hi there. Run a command or use -h for help.';
+    thread.innerHTML = 'Hi there. Run a command or use h for help.';
+    showCLI(0);
   },
   new: (obj, mod) => {
     obj.toLowerCase();
@@ -233,7 +245,7 @@ const commands = {
 
 // --- DEFAULT THREADS ---
 
-const nullthread = `<div class="cli-thread-text">Hmm I'm not following. Did you try using a command?</div>`;
+const nullthread = `<div class="cli-thread-text">Shoot, I don't recognize that command. You can use h to see the commands I know.</div>`;
 
 // --- OUTPUTS ---
 
