@@ -206,7 +206,7 @@ const commands = {
     // code to handle the "memory" command
     thread.innerHTML = 'you wrote mem ' + args;
   },
-  help: () => {
+  h: () => {
     // code to handle the "help" command
     thread.innerHTML = 'you wrote help';
   },
@@ -226,7 +226,7 @@ const commands = {
       returnOutput(output, outputDelay[1]);
       showCLI(outputDelay[2]);
     } else {
-      thread.innerHTML = "Hmm, I'm not following. Did you try using a command?";
+      thread.innerHTML = nullthread;
     }
   },
 };
@@ -301,9 +301,9 @@ cli.addEventListener('keydown', function (e) {
       let command = parts[0];
       let args = parts.slice(1);
       if (commands[command]) {
-        // split args into object and modifier where modifier is anything that starts with "--"
-        let modifier = args.filter((arg) => arg.startsWith('--'));
-        let objectArray = args.filter((arg) => !arg.startsWith('--'));
+        // split args into object and modifier where modifier is anything that starts with "-"
+        let modifier = args.filter((arg) => arg.startsWith('-'));
+        let objectArray = args.filter((arg) => !arg.startsWith('-'));
         let object = objectArray.join(' ');
         // run command
         commands[command](object, modifier);

@@ -161,41 +161,6 @@ main {
   margin: 0.25rem 0 1rem 0;
   width: 100%;
 }
-.cli-dot-group {
-  display: inline-flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  margin-right: 0.5rem;
-}
-.cli-dot {
-  display: inline-flex;
-  border-radius: 50%;
-  width: 0.5rem;
-  height: 0.5rem;
-  margin-right: 0.125rem;
-  margin-top: 0.4rem;
-}
-#dot1 {
-  animation: dot-bounce 0.5s infinite alternate;
-  background-color: #83a598;
-}
-#dot2 {
-  animation: dot-bounce 0.5s 0.2s infinite alternate;
-  background-color: #d3869b;
-}
-#dot3 {
-  animation: dot-bounce 0.5s 0.4s infinite alternate;
-  background-color: #8ec07c;
-}
-@keyframes dot-bounce {
-  0% {
-    transform: translateY(0);
-  }
-  100% {
-    transform: translateY(-0.5rem);
-  }
-}
 .cli-input {
   display: flex;
   border-radius: 4px;
