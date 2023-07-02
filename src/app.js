@@ -194,11 +194,11 @@ const commands = {
       returnOutput(output, outputDelay[0]);
       output = creatOutputDiv(innate[obj].action);
       returnOutput(output, outputDelay[1]);
-      showCLI(outputDelay[2]);
+      // showCLI(outputDelay[2]);
     } else {
       let output = creatOutputDiv(nullthread);
       returnOutput(output, 0);
-      showCLI(0);
+      // showCLI(0);
     }
   },
   adapt: (obj, mod) => {
@@ -209,22 +209,22 @@ const commands = {
       returnOutput(output, outputDelay[0]);
       output = creatOutputDiv(adaptive[obj].action);
       returnOutput(output, outputDelay[1]);
-      showCLI(outputDelay[2]);
+      // showCLI(outputDelay[2]);
     } else {
       let output = creatOutputDiv(nullthread);
       returnOutput(output, 0);
-      showCLI(0);
+      // showCLI(0);
     }
   },
   h: () => {
     // code to handle the "help" command
     thread.innerHTML = 'you wrote help';
-    showCLI(0);
+    // showCLI(0);
   },
   clear: () => {
     // code to handle the "clear" command
     thread.innerHTML = 'Hi there. Run a command or use h for help.';
-    showCLI(0);
+    // showCLI(0);
   },
   new: (obj, mod) => {
     obj.toLowerCase();
@@ -236,7 +236,7 @@ const commands = {
       // return symptoms of pathogen
       output = creatOutputDiv(pathogens[obj].symptoms);
       returnOutput(output, outputDelay[1]);
-      showCLI(outputDelay[2]);
+      // showCLI(outputDelay[2]);
     } else {
       thread.innerHTML = nullthread;
     }
@@ -300,7 +300,7 @@ cli.addEventListener('keydown', function (e) {
     if (input !== '') {
       thread.innerHTML = '';
       // hide CLI
-      cliContainer.style.display = 'none';
+      // cliContainer.style.display = 'none';
       // Add input to thread
       let output = document.createElement('div');
       output.classList.add('cli-user-input');
@@ -323,7 +323,7 @@ cli.addEventListener('keydown', function (e) {
       } else {
         thread.innerHTML = nullthread;
         clearCLI();
-        showCLI(0);
+        // showCLI(0);
       }
     }
   }

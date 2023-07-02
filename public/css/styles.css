@@ -61,7 +61,7 @@ main {
   display: flex;
   flex-direction: row;
   position: absolute;
-  bottom: 0;
+  top: 0;
   align-items: center;
   justify-content: flex-end;
   width: 100%;
@@ -106,16 +106,7 @@ main {
   overflow-y: scroll;
   overscroll-behavior: none;
   -ms-overflow-style: none;
-}
-/* workbook content */
-.workbook-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  height: 100%;
-  width: 92%;
-  margin: auto;
+  padding-bottom: 2%;
 }
 /* ---- CLI ---- */
 /* command line */
@@ -123,10 +114,10 @@ main {
   display: inline-flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: flex-start;
-  width: 100%;
+  justify-content: flex-end;
+  width: 92%;
   height: 100%;
-  margin-top: 4%;
+  margin: auto;
 }
 .thread {
   display: flex;
