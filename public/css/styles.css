@@ -136,8 +136,9 @@ main {
   display: block;
 }
 .cli-user-input::before {
-  content: '$';
+  content: '>';
   color: #8ec07c;
+  font-weight: 900;
   margin-right: 0.5rem;
 }
 .examples {
@@ -163,9 +164,10 @@ main {
   align-items: center;
 }
 .cli-input::before {
-  content: 'human@zetsu:~$';
-  margin-right: 0.5rem;
+  content: '>';
   color: #8ec07c;
+  font-weight: 900;
+  margin-right: 0.5rem;
 }
 .cli-input-text {
   display: inline-flex;
