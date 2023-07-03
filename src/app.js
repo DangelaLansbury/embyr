@@ -214,24 +214,30 @@ const commands = {
   },
   h: () => {
     // code to handle the "help" command
-    thread.innerHTML = 'you wrote help';
+    let output = creatOutputDiv(helpThread);
+    returnOutput(output, 0);
   },
   clear: () => {
     // code to handle the "clear" command
     thread.innerHTML = 'Hi there. Run a command or use h for help.';
   },
   new: (obj, mod) => {
-    obj.toLowerCase();
-    // check if args contains a pathogen
-    if (obj in pathogens) {
-      // return description of pathogen
-      let output = creatOutputDiv(pathogens[obj].description);
-      returnOutput(output, outputDelay[0]);
-      // return symptoms of pathogen
-      output = creatOutputDiv(pathogens[obj].symptoms);
-      returnOutput(output, outputDelay[1]);
+    // check if obj is empty
+    if (obj !== '') {
+      // check if args contains a pathogen
+      if (obj in pathogens) {
+        // return description of pathogen
+        let output = creatOutputDiv(pathogens[obj].description);
+        returnOutput(output, outputDelay[0]);
+        // return symptoms of pathogen
+        output = creatOutputDiv(pathogens[obj].symptoms);
+        returnOutput(output, outputDelay[1]);
+      } else {
+        let output = creatOutputDiv(nullThread);
+        returnOutput(output, 0);
+      }
     } else {
-      thread.innerHTML = nullThread;
+      thread.innerHTML = 'you wrote new';
     }
   },
 };
@@ -245,6 +251,8 @@ window.onload = () => {
 };
 
 const nullThread = `<div class="thread-text">Shoot, I don't recognize that command. You can use h to see the commands I know.</div>`;
+
+const helpThread = `<div class="thread-text">Here are the commands I know...</div>`;
 
 // --- OUTPUTS ---
 
@@ -296,6 +304,8 @@ cli.addEventListener('keydown', function (e) {
     if (input !== '') {
       if (thread.innerHTML === defaultThread) {
         thread.innerHTML = '';
+      } else if (thread.lastChild.innerHTML === helpThread || thread.lastChild.innerHTML === nullThread) {
+        thread.lastChild.remove();
       }
       // Add input to thread
       let output = document.createElement('div');
@@ -317,7 +327,7 @@ cli.addEventListener('keydown', function (e) {
         commands[command](object, modifier);
         clearCLI();
       } else {
-        thread.innerHTML = nullThread;
+        thread.appendChild(creatOutputDiv(nullThread));
         clearCLI();
       }
     }
