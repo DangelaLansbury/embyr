@@ -221,24 +221,8 @@ const commands = {
     // code to handle the "clear" command
     thread.innerHTML = 'Hi there. Run a command or use h for help.';
   },
-  new: (obj, mod) => {
-    // check if obj is empty
-    if (obj !== '') {
-      // check if args contains a pathogen
-      if (obj in pathogens) {
-        // return description of pathogen
-        let output = creatOutputDiv(pathogens[obj].description);
-        returnOutput(output, outputDelay[0]);
-        // return symptoms of pathogen
-        output = creatOutputDiv(pathogens[obj].symptoms);
-        returnOutput(output, outputDelay[1]);
-      } else {
-        let output = creatOutputDiv(nullThread);
-        returnOutput(output, 0);
-      }
-    } else {
-      thread.innerHTML = 'you wrote new';
-    }
+  new: () => {
+    thread.innerHTML = 'You wrote new';
   },
 };
 
@@ -258,7 +242,7 @@ const helpThread = `<div class="thread-text">Here are the commands I know...</di
 
 const creatOutputDiv = (text) => {
   let output = document.createElement('div');
-  output.className = 'cli-thread-text';
+  output.className = 'thread-text';
   output.innerHTML = text;
   return output;
 };
