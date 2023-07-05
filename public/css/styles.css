@@ -141,6 +141,34 @@ main {
   font-weight: 900;
   margin-right: 0.5rem;
 }
+.cmd-suggestions {
+  display: block;
+  width: 100%;
+  padding-left: 1rem;
+  border-left: #a79c8f 4px solid;
+  margin: 0.5rem 0 0.5rem 0.75rem;
+}
+.cmd-suggestion {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+  margin: 0 0 0.5rem 0;
+}
+.cmd-suggestion-text {
+  color: #d3869b;
+}
+.cmd-suggestion-text::before {
+  content: '*** ';
+  color: #a79c8f;
+}
+.cmd-suggestion-subtext {
+  color: #a79c8f;
+}
+.cmd-suggestion-subtext::before {
+  content: '--- ';
+}
 .examples {
   display: block;
   width: 100%;
