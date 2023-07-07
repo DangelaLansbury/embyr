@@ -18,7 +18,7 @@ body {
   font-size: 16px;
   font-weight: 600;
   line-height: 1.75rem;
-  color: #3e3c3b;
+  color: #1e1e1e;
   background-color: #f6f6f6;
 }
 h1 {
@@ -137,7 +137,7 @@ main {
 }
 .cli-user-input::before {
   content: '>';
-  color: #8ec07c;
+  color: #1e1e1e;
   font-weight: 900;
   margin-right: 0.5rem;
 }
@@ -145,7 +145,7 @@ main {
   display: block;
   width: 100%;
   padding-left: 1rem;
-  border-left: #a79c8f 4px solid;
+  border-left: #e3e4e8 4px solid;
   margin: 0.5rem 0 0.5rem 0.75rem;
 }
 .cmd-suggestion {
@@ -157,14 +157,14 @@ main {
   margin: 0 0 0.5rem 0;
 }
 .cmd-suggestion-text {
-  color: #d3869b;
+  color: #6aa0ed;
 }
 .cmd-suggestion-text::before {
   content: '*** ';
-  color: #a79c8f;
+  color: #4c4c4c;
 }
 .cmd-suggestion-subtext {
-  color: #a79c8f;
+  color: #8c8c8c;
 }
 .cmd-suggestion-subtext::before {
   content: '--- ';
@@ -193,7 +193,7 @@ main {
 }
 .cli-input::before {
   content: '>';
-  color: #8ec07c;
+  color: #1e1e1e;
   font-weight: 900;
   margin-right: 0.5rem;
 }
@@ -215,9 +215,10 @@ main {
 }
 .cursor {
   display: inline-flex;
-  width: 0.5rem;
+  width: 0.75rem;
   height: 1.25rem;
-  background-color: #8ec07c;
+  background-color: #f6f6f6;
+  border-bottom: 2px solid #1e1e1e;
   animation: blink 1s infinite;
   margin: auto 0;
   z-index: 1;
