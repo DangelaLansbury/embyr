@@ -1,6 +1,6 @@
 # Zetsu
 
-Your command line for immunity.
+Command Line Immunity.
 
 ## User Guide
 
