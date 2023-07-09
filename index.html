@@ -9,13 +9,13 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500&family=Source+Sans+3:wght@400;500&display=swap" rel="stylesheet" />
     <!-- Stylesheet -->
     <link rel="stylesheet" href="public/css/styles.css" />
   </head>
   <body>
     <!-- HTML -->
-    <div class="navbar" id="navbar">
+    <!-- <div class="navbar" id="navbar">
       <a href="#infoModal" class="logo-header" id="stamp">
         <div class="logo-header-text">
           <h1>Zetsu</h1>
@@ -24,28 +24,19 @@
           <img src="public/images/logo.svg" alt="logo" />
         </div>
       </a>
-    </div>
+    </div> -->
     <main>
       <div class="workbook">
-        <div class="container">
-          <div class="thread"></div>
-          <div class="cli-container">
-            <div class="cli-input">
-              <div class="cli-input-text" contenteditable="true" spellcheck="false" autocomplete="off"></div>
-              <div class="cursor"></div>
-              <div class="suggestion" contenteditable="false" tabindex="-1"></div>
-            </div>
+        <div class="workbook-header"></div>
+        <div class="thread"></div>
+        <div class="cli-container">
+          <div class="cli-input cmd">
+            <div class="cli-input-text" contenteditable="true" spellcheck="false" autocomplete="off"></div>
+            <div class="cursor"></div>
           </div>
         </div>
       </div>
     </main>
-    <div class="modal" id="infoModal">
-      <div href="#" class="modal__content">
-        <p>Welcome to Zetsu, your command line for immunity.</p>
-        <p>This is some placeholder text.</p>
-        <a href="#" class="modal__close">&times;</a>
-      </div>
-    </div>
     <script src="src/app.js" type="application/javascript"></script>
   </body>
 </html>

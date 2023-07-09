@@ -231,7 +231,7 @@ const commands = {
 
 // --- DEFAULT THREADS ---
 
-const defaultThread = `<div class="thread-text">Hi there. Run a command or use h for help.</div><div class="cmd-suggestions"><div class="cmd-suggestion"><div class="cmd-suggestion-text">new</div><div class="cmd-suggestion-subtext">Generate a new random pathogen and try to beat it.</div></div><div class="cmd-suggestion"><div class="cmd-suggestion-text">learn</div><div class="cmd-suggestion-subtext">See details about the immune mechanisms in your toolkit.</div></div></div>`;
+const defaultThread = `<div class="thread-text">Hi there. Run a command or use * for Zetsu assist.`;
 
 window.onload = () => {
   thread.innerHTML = defaultThread;
@@ -289,17 +289,13 @@ cli.addEventListener('keydown', function (e) {
   if (e.keyCode === 13) {
     e.preventDefault();
     if (input !== '') {
-      if (thread.innerHTML === defaultThread) {
-        thread.innerHTML = '';
-      } else if (thread.lastChild.innerHTML === helpThread || thread.lastChild.innerHTML === nullThread) {
+      if (thread.lastChild.innerHTML === nullThread) {
         thread.lastChild.remove();
       }
       // Add input to thread
-      let output = document.createElement('div');
-      output.classList.add('cli-user-input');
-      output.innerHTML = input;
-      // Add output to thread
-      thread.appendChild(output);
+      let output = creatOutputDiv(input);
+      output.classList.add('cmd');
+      returnOutput(output, 0);
       // Split input into command and args
       input = input.toLowerCase().trim();
       let parts = input.split(' ');
