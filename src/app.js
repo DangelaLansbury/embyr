@@ -296,7 +296,7 @@ cli.addEventListener('keydown', function (e) {
       }
       // Add input to thread
       let output = document.createElement('div');
-      output.classList.add('cli-user-input');
+      output.classList.add('thread-cmd');
       output.innerHTML = input;
       // Add output to thread
       thread.appendChild(output);
