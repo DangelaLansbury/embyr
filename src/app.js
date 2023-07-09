@@ -4,7 +4,6 @@ let container = document.querySelector('.container');
 let zetsuContainer = document.querySelector('.zetsu-container');
 let thread = document.querySelector('.thread');
 let zetsu = document.querySelector('.zetsu-input-text');
-let suggestion = document.querySelector('.suggestion');
 let cursor = document.querySelector('.cursor');
 
 // --- FOCUS ON EDITOR ---
@@ -16,7 +15,7 @@ document.body.addEventListener('click', function (e) {
   zetsu.focus();
 });
 
-// --- MANAGING FALSE CURSOR ---
+// --- MANAGING FAKE CURSOR ---
 
 // Hide fake cursor once user starts typing
 function hideCursor(elem) {
@@ -258,14 +257,6 @@ const returnOutput = (output, time) => {
   }, time);
 };
 
-const returnError = (error, time) => {
-  setTimeout(() => {
-    thread.innerHTML = error;
-    // Scroll to bottom of thread
-    thread.scrollTop = thread.scrollHeight;
-  }, time);
-};
-
 const outputDelay = [600, 800, 1000, 1200, 1400, 1600, 1800, 2000];
 
 // --- ADDING EVENT LISTENERS FOR COMMANDS ---
@@ -275,6 +266,35 @@ let input = '';
 // Listening for input and setting input variable
 zetsu.addEventListener('input', function () {
   input = this.innerText;
+});
+
+// Listening for up and down arrow keys to cycle through suggestions
+let suggestions = document.querySelectorAll('.suggestion');
+let suggestionIndex = 0;
+zetsu.addEventListener('keydown', function (e) {
+  if (e.keyCode === 38) {
+    e.preventDefault();
+    if (suggestionIndex > 0) {
+      suggestionIndex--;
+      suggestions[suggestionIndex].classList.add('active');
+      suggestions[suggestionIndex + 1].classList.remove('active');
+    } else {
+      suggestionIndex = suggestions.length - 1;
+      suggestions[suggestionIndex].classList.add('active');
+      suggestions[0].classList.remove('active');
+    }
+  } else if (e.keyCode === 40) {
+    e.preventDefault();
+    if (suggestionIndex < suggestions.length - 1) {
+      suggestionIndex++;
+      suggestions[suggestionIndex].classList.add('active');
+      suggestions[suggestionIndex - 1].classList.remove('active');
+    } else {
+      suggestionIndex = 0;
+      suggestions[suggestionIndex].classList.add('active');
+      suggestions[suggestions.length - 1].classList.remove('active');
+    }
+  }
 });
 
 // Clear editor if user presses enter, refocus on editor, and show fake cursor

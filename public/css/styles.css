@@ -202,9 +202,9 @@ main {
   justify-content: flex-start;
   align-items: flex-start;
   margin: 0;
-  padding: 0.5rem 0.5rem;
+  padding: 1rem 1rem;
   width: 33%;
-  height: calc(100% - 1rem);
+  height: calc(100% - 2rem);
   overflow-y: scroll;
   overscroll-behavior: none;
   -ms-overflow-style: none;
@@ -215,14 +215,18 @@ main {
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  margin: 0.125rem 0;
-  padding: 0.125rem 1.5rem;
-  width: calc(100% - 3rem);
+  margin: 0;
+  padding: 0.125rem 1rem;
+  width: calc(100% - 2rem);
   height: 2rem;
   min-height: 2rem;
   border-radius: 8px;
   transition: 0.2s;
   /* background-color: var(--soil-dk); */
+}
+.suggestion.active {
+  background-color: var(--soil-lt);
+  color: var(--sweetgrass);
 }
 
 /* --- To be deleted --- */
