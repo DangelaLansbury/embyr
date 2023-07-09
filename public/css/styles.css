@@ -86,6 +86,7 @@ main {
   justify-content: flex-end;
   height: 88%;
   width: 72%;
+  max-width: 60rem;
   margin: auto;
   background-color: var(--soil-dk);
   border-radius: 16px;
@@ -134,8 +135,8 @@ main {
   align-items: flex-start;
   margin: 0;
   width: 100%;
-  height: 20rem;
-  min-height: 20rem;
+  height: 40%;
+  min-height: 17.5rem;
 }
 .zetsu-input {
   display: flex;

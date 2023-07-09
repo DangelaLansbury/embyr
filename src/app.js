@@ -9,6 +9,10 @@ let suggestionsContainer = document.querySelector('.suggestions-container');
 
 // --- FOCUS ON EDITOR ---
 
+window.onload = () => {
+  thread.innerHTML = defaultThread;
+};
+
 zetsu.focus();
 
 // Listening for click and focusing on editor
@@ -222,15 +226,9 @@ const commands = {
 
 // --- DEFAULTS ---
 
-const defaultThread = `<div class="thread-text">Hi there. Run a command or use '/' for Zetsu assist.`;
-
-window.onload = () => {
-  thread.innerHTML = defaultThread;
-};
+const defaultThread = `<div class="thread-text">Hi there. Welcome to zetsu.</div>`;
 
 const nullThread = `<div class="thread-text">Shoot, I don't recognize that command. You can use h to see the commands I know.</div>`;
-
-const helpThread = `<div class="thread-text">Here are the commands I know...</div>`;
 
 // --- OUTPUTS ---
 
@@ -270,31 +268,51 @@ zetsu.addEventListener('input', function () {
       suggestion.className = 'suggestion';
       suggestion.innerHTML = command;
       suggestionsContainer.appendChild(suggestion);
-      // Listening for up and down arrow keys to cycle through suggestions
-      let suggestions = document.querySelectorAll('.suggestion');
-      let suggestionIndex = suggestions.length - 1;
-      zetsu.addEventListener('keydown', function (e) {
-        if (e.keyCode === 38) {
-          e.preventDefault();
-          suggestions[suggestionIndex].classList.remove('active');
-          suggestionIndex--;
-          if (suggestionIndex < 0) {
-            suggestionIndex = suggestions.length - 1;
-          }
-          suggestions[suggestionIndex].classList.add('active');
-        }
-        if (e.keyCode === 40) {
-          e.preventDefault();
-          suggestions[suggestionIndex].classList.remove('active');
-          suggestionIndex++;
-          if (suggestionIndex > suggestions.length - 1) {
-            suggestionIndex = 0;
-          }
-          suggestions[suggestionIndex].classList.add('active');
-        }
-      });
     }
   }
+  // Set first suggestion as active
+  let suggestions = document.querySelectorAll('.suggestion');
+  suggestions[0].classList.add('active');
+  // Listening for up and down arrow keys to cycle through suggestions
+  let suggestionIndex = 0;
+  zetsu.addEventListener('keydown', function (e) {
+    if (e.keyCode === 38) {
+      // Up arrow
+      e.preventDefault();
+      suggestions[suggestionIndex].classList.remove('active');
+      suggestionIndex--;
+      if (suggestionIndex < 0) {
+        suggestionIndex = suggestions.length - 1;
+      }
+      suggestions[suggestionIndex].classList.add('active');
+    }
+    if (e.keyCode === 40) {
+      // Down arrow
+      e.preventDefault();
+      suggestions[suggestionIndex].classList.remove('active');
+      suggestionIndex++;
+      if (suggestionIndex > suggestions.length - 1) {
+        suggestionIndex = 0;
+      }
+      suggestions[suggestionIndex].classList.add('active');
+    }
+  });
+  // Listening for tab key to autocomplete suggestion
+  zetsu.addEventListener('keydown', function (e) {
+    if (e.keyCode === 9) {
+      e.preventDefault();
+      zetsu.innerText = suggestions[suggestionIndex].innerText;
+      // Set cursor to end of text
+      let range = document.createRange();
+      let sel = window.getSelection();
+      range.setStart(zetsu.childNodes[0], zetsu.innerText.length);
+      range.collapse(true);
+      sel.removeAllRanges();
+      sel.addRange(range);
+      // Remove suggestions
+      suggestionsContainer.innerHTML = '';
+    }
+  });
 });
 
 // Clear editor if user presses enter, refocus on editor, and show fake cursor
@@ -309,19 +327,20 @@ zetsu.addEventListener('keydown', function (e) {
   if (e.keyCode === 13) {
     e.preventDefault();
     if (input !== '') {
-      if (thread.lastChild.innerHTML === nullThread) {
-        thread.lastChild.remove();
+      console.log(thread.lastChild.innerHTML);
+      if (thread.innerHTML === defaultThread) {
+        thread.innerHTML = '';
       }
-      // Add input to thread
-      let output = creatOutputDiv(input);
-      output.classList.add('cmd');
-      returnOutput(output, 0);
       // Split input into command and args
       input = input.toLowerCase().trim();
       let parts = input.split(' ');
       let command = parts[0];
       let args = parts.slice(1);
       if (commands[command]) {
+        // Add input to thread
+        let output = creatOutputDiv(input);
+        output.classList.add('cmd');
+        returnOutput(output, 0);
         // Split args into object and modifier where modifier is anything that starts with "-"
         let modifier = args.filter((arg) => arg.startsWith('-'));
         let objectArray = args.filter((arg) => !arg.startsWith('-'));
@@ -330,7 +349,12 @@ zetsu.addEventListener('keydown', function (e) {
         commands[command](object, modifier);
         clearzetsu();
       } else {
-        thread.appendChild(creatOutputDiv(nullThread));
+        // Add input to thread
+        let output = creatOutputDiv(input);
+        output.classList.add('cmd');
+        returnOutput(output, 0);
+        // Add nullThread to thread
+        returnOutput(creatOutputDiv(nullThread), 0);
         clearzetsu();
       }
     }
