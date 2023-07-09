@@ -205,6 +205,7 @@ main {
   padding: 1rem 1rem;
   width: 33%;
   height: calc(100% - 2rem);
+  max-height: calc(100% - 2rem);
   overflow-y: scroll;
   overscroll-behavior: none;
   -ms-overflow-style: none;

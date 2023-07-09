@@ -5,6 +5,7 @@ let zetsuContainer = document.querySelector('.zetsu-container');
 let thread = document.querySelector('.thread');
 let zetsu = document.querySelector('.zetsu-input-text');
 let cursor = document.querySelector('.cursor');
+let suggestionsContainer = document.querySelector('.suggestions-container');
 
 // --- FOCUS ON EDITOR ---
 
@@ -211,34 +212,29 @@ const commands = {
       returnOutput(output, 0);
     }
   },
-  h: () => {
-    // code to handle the "help" command
+  zetsu: () => {
+    // code to handle the meta commands
     let output = creatOutputDiv(helpThread);
     returnOutput(output, 0);
   },
-  clear: () => {
-    // code to handle the "clear" command
-    thread.innerHTML = defaultThread;
-  },
-  new: () => {
-    thread.innerHTML = 'You wrote new';
-  },
-  learn: () => {
-    thread.innerHTML = 'You wrote learn';
-  },
 };
 
-// --- DEFAULT THREADS ---
+// --- DEFAULTS ---
 
 const defaultThread = `<div class="thread-text">Hi there. Run a command or use '/' for Zetsu assist.`;
 
 window.onload = () => {
   thread.innerHTML = defaultThread;
+  suggestionsContainer.innerHTML = defaultSuggestions;
 };
 
 const nullThread = `<div class="thread-text">Shoot, I don't recognize that command. You can use h to see the commands I know.</div>`;
 
 const helpThread = `<div class="thread-text">Here are the commands I know...</div>`;
+
+const defaultSuggestions = `<div class="suggestion">innate</div>
+<div class="suggestion">adapt</div>
+<div class="suggestion">zetsu</div>`;
 
 // --- OUTPUTS ---
 
@@ -268,10 +264,28 @@ zetsu.addEventListener('input', function () {
   input = this.innerText;
 });
 
+// Populating suggestions container with suggestions based on input
+
+zetsu.addEventListener('input', function () {
+  suggestionsContainer.innerHTML = '';
+  if (input.length > 0) {
+    for (let command in commands) {
+      // check if a command contains the input letters
+      if (command.startsWith(input)) {
+        let suggestion = document.createElement('div');
+        suggestion.className = 'suggestion';
+        suggestion.innerHTML = command;
+        suggestionsContainer.appendChild(suggestion);
+      }
+    }
+  }
+});
+
 // Listening for up and down arrow keys to cycle through suggestions
 let suggestions = document.querySelectorAll('.suggestion');
-let suggestionIndex = 0;
+let suggestionIndex = suggestions.length - 1;
 zetsu.addEventListener('keydown', function (e) {
+  suggestions = document.querySelectorAll('.suggestion');
   if (e.keyCode === 38) {
     e.preventDefault();
     if (suggestionIndex > 0) {
