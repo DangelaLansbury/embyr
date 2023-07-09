@@ -1,19 +1,19 @@
 // --- DOM VARIABLES ---
 
 let container = document.querySelector('.container');
-let cliContainer = document.querySelector('.cli-container');
+let zetsuContainer = document.querySelector('.zetsu-container');
 let thread = document.querySelector('.thread');
-let cli = document.querySelector('.cli-input-text');
+let zetsu = document.querySelector('.zetsu-input-text');
 let suggestion = document.querySelector('.suggestion');
 let cursor = document.querySelector('.cursor');
 
 // --- FOCUS ON EDITOR ---
 
-cli.focus();
+zetsu.focus();
 
 // Listening for click and focusing on editor
 document.body.addEventListener('click', function (e) {
-  cli.focus();
+  zetsu.focus();
 });
 
 // --- MANAGING FALSE CURSOR ---
@@ -35,7 +35,7 @@ function hideCursor(elem) {
   });
 }
 
-hideCursor(cli);
+hideCursor(zetsu);
 
 // --- PATHOGENS ---
 
@@ -231,7 +231,7 @@ const commands = {
 
 // --- DEFAULT THREADS ---
 
-const defaultThread = `<div class="thread-text">Hi there. Run a command or use * for Zetsu assist.`;
+const defaultThread = `<div class="thread-text">Hi there. Run a command or use '/' for Zetsu assist.`;
 
 window.onload = () => {
   thread.innerHTML = defaultThread;
@@ -273,19 +273,19 @@ const outputDelay = [600, 800, 1000, 1200, 1400, 1600, 1800, 2000];
 let input = '';
 
 // Listening for input and setting input variable
-cli.addEventListener('input', function () {
+zetsu.addEventListener('input', function () {
   input = this.innerText;
 });
 
 // Clear editor if user presses enter, refocus on editor, and show fake cursor
-const clearCLI = () => {
-  cli.innerText = '';
-  cli.focus();
+const clearzetsu = () => {
+  zetsu.innerText = '';
+  zetsu.focus();
   cursor.style.display = 'inline-flex';
 };
 
 // Listening for command and executing function when user presses enter
-cli.addEventListener('keydown', function (e) {
+zetsu.addEventListener('keydown', function (e) {
   if (e.keyCode === 13) {
     e.preventDefault();
     if (input !== '') {
@@ -308,10 +308,10 @@ cli.addEventListener('keydown', function (e) {
         let object = objectArray.join(' ');
         // Run command
         commands[command](object, modifier);
-        clearCLI();
+        clearzetsu();
       } else {
         thread.appendChild(creatOutputDiv(nullThread));
-        clearCLI();
+        clearzetsu();
       }
     }
   }

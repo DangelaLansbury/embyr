@@ -139,8 +139,9 @@ main {
   background-color: var(--soil-dk);
   border-bottom: 1px solid var(--soil-lt);
   border-radius: 16px 16px 0 0;
+  margin-bottom: 1.5rem;
 }
-/* ---- CLI ---- */
+/* ---- zetsu ---- */
 /* command line */
 .thread {
   display: flex;
@@ -148,7 +149,7 @@ main {
   width: calc(100% - 4rem);
   padding: 0 2rem;
   margin-top: auto;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   overflow-y: scroll;
   overscroll-behavior: none;
   -ms-overflow-style: none;
@@ -163,14 +164,16 @@ main {
   margin-right: 0.5rem;
 }
 /* command line content */
-.cli-container {
+.zetsu-container {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
+  align-items: flex-start;
   margin: 0;
   width: 100%;
+  height: 30%;
 }
-.cli-input {
+.zetsu-input {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -179,7 +182,7 @@ main {
   padding: 0.75rem 2rem;
   width: calc(100% - 4rem);
 }
-.cli-input-text {
+.zetsu-input-text {
   display: inline-flex;
   margin: auto 0;
   height: 1.75rem;
@@ -188,11 +191,11 @@ main {
   white-space: pre-wrap;
   caret-color: #8ec07c;
 }
-.cli-input-text:focus {
+.zetsu-input-text:focus {
   border: none;
   outline: none;
 }
-.cli-input-text:empty {
+.zetsu-input-text:empty {
   caret-color: transparent;
 }
 .cursor {
