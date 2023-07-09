@@ -6,14 +6,16 @@ let thread = document.querySelector('.thread');
 let zetsu = document.querySelector('.zetsu-input-text');
 let cursor = document.querySelector('.cursor');
 let suggestionsContainer = document.querySelector('.suggestions-container');
+let details = document.querySelector('.suggestion-details');
+let detailsName = document.querySelector('.details-name');
+let detailsDescription = document.querySelector('.details-description');
 
 // --- FOCUS ON EDITOR ---
 
 window.onload = () => {
   thread.innerHTML = defaultThread;
+  zetsu.focus();
 };
-
-zetsu.focus();
 
 // Listening for click and focusing on editor
 document.body.addEventListener('click', function (e) {
@@ -36,6 +38,7 @@ function hideCursor(elem) {
       this.innerText = '';
       cursor.style.display = 'inline-flex';
       suggestionsContainer.innerHTML = '';
+      details.innerHTML = '';
     }
   });
 }
@@ -261,8 +264,8 @@ zetsu.addEventListener('input', function () {
 // Populating suggestions container with suggestions based on input and remove suggestions if input if user deletes input
 zetsu.addEventListener('input', function () {
   suggestionsContainer.innerHTML = '';
+  // check if a command or actor contains the input letters
   for (let command in commands) {
-    // check if a command contains the input letters
     if (command.includes(input)) {
       let suggestion = document.createElement('div');
       suggestion.className = 'suggestion';
@@ -270,9 +273,28 @@ zetsu.addEventListener('input', function () {
       suggestionsContainer.appendChild(suggestion);
     }
   }
+  for (let actor in innate) {
+    if (actor.includes(input)) {
+      let suggestion = document.createElement('div');
+      suggestion.className = 'suggestion';
+      suggestion.innerHTML = actor;
+      suggestionsContainer.appendChild(suggestion);
+    }
+  }
+  for (let actor in adaptive) {
+    if (actor.includes(input)) {
+      let suggestion = document.createElement('div');
+      suggestion.className = 'suggestion';
+      suggestion.innerHTML = actor;
+      suggestionsContainer.appendChild(suggestion);
+    }
+  }
   // Set first suggestion as active
   let suggestions = document.querySelectorAll('.suggestion');
   suggestions[0].classList.add('active');
+  // display suggestion description in details section
+  let suggestionName = suggestions[0].innerText;
+  details.innerHTML = `<div class="details-text">${suggestionName}</div>`;
   // Listening for up and down arrow keys to cycle through suggestions
   let suggestionIndex = 0;
   zetsu.addEventListener('keydown', function (e) {
@@ -285,6 +307,15 @@ zetsu.addEventListener('input', function () {
         suggestionIndex = suggestions.length - 1;
       }
       suggestions[suggestionIndex].classList.add('active');
+      // display suggestion description in details section
+      suggestionName = suggestions[suggestionIndex].innerText;
+      details.innerHTML = `<div class="details-text">${suggestionName}</div>`;
+      // Scroll to active suggestion
+      suggestions[suggestionIndex].scrollIntoView({
+        block: 'nearest',
+        inline: 'start',
+        behavior: 'smooth',
+      });
     }
     if (e.keyCode === 40) {
       // Down arrow
@@ -295,6 +326,15 @@ zetsu.addEventListener('input', function () {
         suggestionIndex = 0;
       }
       suggestions[suggestionIndex].classList.add('active');
+      // display suggestion description in details section
+      suggestionName = suggestions[suggestionIndex].innerText;
+      details.innerHTML = `<div class="details-text">${suggestionName}</div>`;
+      // Scroll to active suggestion
+      suggestions[suggestionIndex].scrollIntoView({
+        block: 'nearest',
+        inline: 'end',
+        behavior: 'smooth',
+      });
     }
   });
   // Listening for tab key to autocomplete suggestion
@@ -311,6 +351,8 @@ zetsu.addEventListener('input', function () {
       sel.addRange(range);
       // Remove suggestions
       suggestionsContainer.innerHTML = '';
+      // Remove details
+      details.innerHTML = '';
     }
   });
 });

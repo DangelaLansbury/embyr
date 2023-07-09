@@ -189,24 +189,20 @@ main {
 .zetsu-helper {
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
   border-top: 1px solid var(--soil-lt);
   height: 100%;
   width: 100%;
   background-color: var(--soil);
   border-radius: 0 0 16px 16px;
+  overflow: hidden;
 }
 .suggestions-container {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
   margin: 0;
   padding: 1rem 1rem;
   width: 33%;
   height: calc(100% - 2rem);
-  max-height: calc(100% - 2rem);
   overflow-y: scroll;
   overscroll-behavior: none;
   -ms-overflow-style: none;
