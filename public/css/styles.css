@@ -132,8 +132,10 @@ main {
 }
 /* header at top of workbook, outside of flex flow */
 .workbook-header {
+  display: block;
   width: 100%;
   height: 2rem;
+  min-height: 2rem;
   background-color: var(--soil-dk);
   border-bottom: 1px solid var(--soil-lt);
   border-radius: 16px 16px 0 0;
@@ -143,11 +145,10 @@ main {
 .thread {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
   width: calc(100% - 4rem);
-  height: calc(100% - 4rem);
-  padding: 2rem;
+  padding: 0 2rem;
+  margin-top: auto;
+  margin-bottom: 1rem;
   overflow-y: scroll;
   overscroll-behavior: none;
   -ms-overflow-style: none;
@@ -155,10 +156,7 @@ main {
 .thread-text {
   display: block;
 }
-.thread-cmd {
-  display: block;
-}
-.thread-cmd::before {
+.cmd::before {
   content: '>';
   color: var(--sweetgrass);
   font-weight: 900;
@@ -169,21 +167,17 @@ main {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  margin: 0.25rem 0 1rem 0;
+  margin: 0;
   width: 100%;
 }
 .cli-input {
   display: flex;
-  border-radius: 4px;
-  transition: 0.2s;
-  width: 100%;
+  flex-direction: row;
+  justify-content: flex-start;
   align-items: center;
-}
-.cli-input::before {
-  content: 'human@zetsu:~$';
-  color: var(--sweetgrass);
-  font-weight: 900;
-  margin-right: 0.5rem;
+  border-top: 1px solid var(--soil-lt);
+  padding: 0.75rem 2rem;
+  width: calc(100% - 4rem);
 }
 .cli-input-text {
   display: inline-flex;

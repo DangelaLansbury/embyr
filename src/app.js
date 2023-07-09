@@ -289,17 +289,13 @@ cli.addEventListener('keydown', function (e) {
   if (e.keyCode === 13) {
     e.preventDefault();
     if (input !== '') {
-      if (thread.innerHTML === defaultThread) {
-        thread.innerHTML = '';
-      } else if (thread.lastChild.innerHTML === helpThread || thread.lastChild.innerHTML === nullThread) {
+      if (thread.lastChild.innerHTML === nullThread) {
         thread.lastChild.remove();
       }
       // Add input to thread
-      let output = document.createElement('div');
-      output.classList.add('thread-cmd');
-      output.innerHTML = input;
-      // Add output to thread
-      thread.appendChild(output);
+      let output = creatOutputDiv(input);
+      output.classList.add('cmd');
+      returnOutput(output, 0);
       // Split input into command and args
       input = input.toLowerCase().trim();
       let parts = input.split(' ');
