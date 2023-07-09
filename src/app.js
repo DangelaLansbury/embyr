@@ -231,7 +231,7 @@ const commands = {
 
 // --- DEFAULT THREADS ---
 
-const defaultThread = `<div class="thread-text">Hi there. Run a command or use h for help.</div><div class="cmd-suggestions"><div class="cmd-suggestion"><div class="cmd-suggestion-text">new</div><div class="cmd-suggestion-subtext">Generate a new random pathogen and try to beat it.</div></div><div class="cmd-suggestion"><div class="cmd-suggestion-text">learn</div><div class="cmd-suggestion-subtext">See details about the immune mechanisms in your toolkit.</div></div></div>`;
+const defaultThread = `<div class="thread-text">Hi there. Run a command or use * for Zetsu assist.`;
 
 window.onload = () => {
   thread.innerHTML = defaultThread;
