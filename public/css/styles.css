@@ -1,5 +1,4 @@
 /* --- COLOR VARIABLES --- */
-
 /* Chai theme */
 :root {
   --soil-x-lt: #5a5958;
@@ -77,44 +76,7 @@ main {
   height: 100%;
   width: 100%;
 }
-/* ---- NAVIGATION ---- */
-.navbar {
-  display: flex;
-  flex-direction: row;
-  position: absolute;
-  top: 0;
-  align-items: center;
-  justify-content: flex-end;
-  width: 100%;
-  max-width: 100%;
-  padding: 1rem 0;
-  z-index: 1;
-}
-/* header */
-.logo-header {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  margin-right: 2rem;
-}
-.logo {
-  display: inline-block;
-  align-items: center;
-  justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  margin-left: 0.5rem;
-}
-.logo-header-text {
-  display: inline-block;
-  opacity: 0;
-  transition: 0.6s;
-}
-.logo-header:hover > .logo-header-text {
-  opacity: 1;
-}
+
 /* ---- WORKBOOK ---- */
 /* layout */
 .workbook {
@@ -141,8 +103,9 @@ main {
   border-radius: 16px 16px 0 0;
   margin-bottom: 1.5rem;
 }
-/* ---- zetsu ---- */
-/* command line */
+
+/* ---- ZETSU ---- */
+/* output thread */
 .thread {
   display: flex;
   flex-direction: column;
@@ -166,12 +129,13 @@ main {
 /* command line content */
 .zetsu-container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
   margin: 0;
   width: 100%;
-  height: 30%;
+  height: 20rem;
+  min-height: 20rem;
 }
 .zetsu-input {
   display: flex;
@@ -179,7 +143,7 @@ main {
   justify-content: flex-start;
   align-items: center;
   border-top: 1px solid var(--soil-lt);
-  padding: 0.75rem 2rem;
+  padding: 1rem 2rem;
   width: calc(100% - 4rem);
 }
 .zetsu-input-text {
@@ -219,4 +183,72 @@ main {
   100% {
     opacity: 0;
   }
+}
+/* helper */
+.zetsu-helper {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  border-top: 1px solid var(--soil-lt);
+  height: 100%;
+  width: 100%;
+  background-color: var(--soil);
+  border-radius: 0 0 16px 16px;
+}
+.suggestions-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin: 0;
+  padding: 0.5rem 0.5rem;
+  width: 33%;
+  height: calc(100% - 1rem);
+  overflow-y: scroll;
+  overscroll-behavior: none;
+  -ms-overflow-style: none;
+  border-right: 1px solid var(--soil-lt);
+}
+.suggestion {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 0.125rem 0;
+  padding: 0.125rem 1.5rem;
+  width: calc(100% - 3rem);
+  height: 2rem;
+  min-height: 2rem;
+  border-radius: 8px;
+  transition: 0.2s;
+  /* background-color: var(--soil-dk); */
+}
+
+/* --- To be deleted --- */
+
+/* header */
+.logo-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-right: 2rem;
+}
+.logo {
+  display: inline-block;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-left: 0.5rem;
+}
+.logo-header-text {
+  display: inline-block;
+  opacity: 0;
+  transition: 0.6s;
+}
+.logo-header:hover > .logo-header-text {
+  opacity: 1;
 }
