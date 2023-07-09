@@ -31,6 +31,7 @@ function hideCursor(elem) {
     if (e.key === 'Backspace' && this.innerText.toString().trim().length == 1) {
       this.innerText = '';
       cursor.style.display = 'inline-flex';
+      suggestionsContainer.innerHTML = '';
     }
   });
 }
@@ -225,16 +226,11 @@ const defaultThread = `<div class="thread-text">Hi there. Run a command or use '
 
 window.onload = () => {
   thread.innerHTML = defaultThread;
-  suggestionsContainer.innerHTML = defaultSuggestions;
 };
 
 const nullThread = `<div class="thread-text">Shoot, I don't recognize that command. You can use h to see the commands I know.</div>`;
 
 const helpThread = `<div class="thread-text">Here are the commands I know...</div>`;
-
-const defaultSuggestions = `<div class="suggestion">innate</div>
-<div class="suggestion">adapt</div>
-<div class="suggestion">zetsu</div>`;
 
 // --- OUTPUTS ---
 
@@ -264,49 +260,39 @@ zetsu.addEventListener('input', function () {
   input = this.innerText;
 });
 
-// Populating suggestions container with suggestions based on input
-
+// Populating suggestions container with suggestions based on input and remove suggestions if input if user deletes input
 zetsu.addEventListener('input', function () {
   suggestionsContainer.innerHTML = '';
-  if (input.length > 0) {
-    for (let command in commands) {
-      // check if a command contains the input letters
-      if (command.startsWith(input)) {
-        let suggestion = document.createElement('div');
-        suggestion.className = 'suggestion';
-        suggestion.innerHTML = command;
-        suggestionsContainer.appendChild(suggestion);
-      }
-    }
-  }
-});
-
-// Listening for up and down arrow keys to cycle through suggestions
-let suggestions = document.querySelectorAll('.suggestion');
-let suggestionIndex = suggestions.length - 1;
-zetsu.addEventListener('keydown', function (e) {
-  suggestions = document.querySelectorAll('.suggestion');
-  if (e.keyCode === 38) {
-    e.preventDefault();
-    if (suggestionIndex > 0) {
-      suggestionIndex--;
-      suggestions[suggestionIndex].classList.add('active');
-      suggestions[suggestionIndex + 1].classList.remove('active');
-    } else {
-      suggestionIndex = suggestions.length - 1;
-      suggestions[suggestionIndex].classList.add('active');
-      suggestions[0].classList.remove('active');
-    }
-  } else if (e.keyCode === 40) {
-    e.preventDefault();
-    if (suggestionIndex < suggestions.length - 1) {
-      suggestionIndex++;
-      suggestions[suggestionIndex].classList.add('active');
-      suggestions[suggestionIndex - 1].classList.remove('active');
-    } else {
-      suggestionIndex = 0;
-      suggestions[suggestionIndex].classList.add('active');
-      suggestions[suggestions.length - 1].classList.remove('active');
+  for (let command in commands) {
+    // check if a command contains the input letters
+    if (command.includes(input)) {
+      let suggestion = document.createElement('div');
+      suggestion.className = 'suggestion';
+      suggestion.innerHTML = command;
+      suggestionsContainer.appendChild(suggestion);
+      // Listening for up and down arrow keys to cycle through suggestions
+      let suggestions = document.querySelectorAll('.suggestion');
+      let suggestionIndex = suggestions.length - 1;
+      zetsu.addEventListener('keydown', function (e) {
+        if (e.keyCode === 38) {
+          e.preventDefault();
+          suggestions[suggestionIndex].classList.remove('active');
+          suggestionIndex--;
+          if (suggestionIndex < 0) {
+            suggestionIndex = suggestions.length - 1;
+          }
+          suggestions[suggestionIndex].classList.add('active');
+        }
+        if (e.keyCode === 40) {
+          e.preventDefault();
+          suggestions[suggestionIndex].classList.remove('active');
+          suggestionIndex++;
+          if (suggestionIndex > suggestions.length - 1) {
+            suggestionIndex = 0;
+          }
+          suggestions[suggestionIndex].classList.add('active');
+        }
+      });
     }
   }
 });
