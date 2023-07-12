@@ -226,6 +226,24 @@ main {
   background-color: var(--soil-lt);
   color: var(--sweetgrass);
 }
+.suggestion.active::after {
+  content: 'TAB to use';
+  display: inline-flex;
+  margin-left: auto;
+  color: var(--stone);
+  font-weight: 900;
+  font-size: 0.75rem;
+}
+.selected-command {
+  display: inline-flex;
+  margin: auto 0;
+  height: 1.75rem;
+  color: var(--lilac);
+}
+
+.hidden {
+  display: none !important;
+}
 
 /* --- To be deleted --- */
 

@@ -261,7 +261,7 @@ zetsu.addEventListener('input', function () {
   input = this.innerText;
 });
 
-// Populating suggestions container with suggestions based on input and remove suggestions if input if user deletes input
+// Populating suggestions container with suggestions based on input and remove suggestions if user deletes input
 zetsu.addEventListener('input', function () {
   suggestionsContainer.innerHTML = '';
   // check if a command or actor contains the input letters
@@ -288,6 +288,10 @@ zetsu.addEventListener('input', function () {
       suggestion.innerHTML = actor;
       suggestionsContainer.appendChild(suggestion);
     }
+  }
+  // Remove suggestion description if there are no matching suggestions
+  if (suggestionsContainer.childElementCount === 0) {
+    details.innerHTML = '';
   }
   // Set first suggestion as active
   let suggestions = document.querySelectorAll('.suggestion');
@@ -341,7 +345,7 @@ zetsu.addEventListener('input', function () {
   zetsu.addEventListener('keydown', function (e) {
     if (e.keyCode === 9) {
       e.preventDefault();
-      zetsu.innerText = suggestions[suggestionIndex].innerText;
+      zetsu.innerText = suggestions[suggestionIndex].innerText + ' ';
       // Set cursor to end of text
       let range = document.createRange();
       let sel = window.getSelection();
