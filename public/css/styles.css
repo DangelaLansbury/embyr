@@ -200,9 +200,9 @@ main {
   display: flex;
   flex-direction: column;
   margin: 0;
-  padding: 1rem 1rem;
+  padding: 0.75rem 0.75rem;
   width: 33%;
-  height: calc(100% - 2rem);
+  height: calc(100% - 1.5rem);
   overflow-y: scroll;
   overscroll-behavior: none;
   -ms-overflow-style: none;
@@ -227,7 +227,7 @@ main {
   color: var(--sweetgrass);
 }
 .suggestion.active::after {
-  content: 'TAB to use';
+  content: 'TAB';
   display: inline-flex;
   margin-left: auto;
   color: var(--stone);
