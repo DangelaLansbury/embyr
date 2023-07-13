@@ -20,6 +20,13 @@ window.onload = () => {
 
 // Listening for click and focusing on editor
 document.body.addEventListener('click', function (e) {
+  // Focus at end of text
+  let range = document.createRange();
+  let sel = window.getSelection();
+  range.setStart(zetsu.childNodes[0], zetsu.innerText.length);
+  range.collapse(true);
+  sel.removeAllRanges();
+  sel.addRange(range);
   zetsu.focus();
 });
 

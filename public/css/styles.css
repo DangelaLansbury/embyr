@@ -202,7 +202,7 @@ main {
   justify-content: flex-start;
   align-items: flex-start;
   margin: 0;
-  width: 33%;
+  width: 40%;
   height: 100%;
   overflow: hidden;
   border-right: 1px solid var(--soil-lt);
@@ -235,14 +235,14 @@ main {
   background-color: var(--soil-lt);
   color: var(--sweetgrass);
 }
-.suggestion.active::after {
+/* .suggestion.active::after {
   content: 'TAB';
   display: inline-flex;
   margin-left: auto;
   color: var(--stone);
   font-weight: 900;
   font-size: 0.75rem;
-}
+} */
 .selected-command {
   display: inline-flex;
   margin: auto 0;
