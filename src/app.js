@@ -6,6 +6,7 @@ let thread = document.querySelector('.thread');
 let zetsu = document.querySelector('.zetsu-input-text');
 let cursor = document.querySelector('.cursor');
 let suggestionsContainer = document.querySelector('.suggestions-container');
+let suggestionsList = document.querySelector('.suggestions-list');
 let details = document.querySelector('.suggestion-details');
 let detailsName = document.querySelector('.details-name');
 let detailsDescription = document.querySelector('.details-description');
@@ -37,7 +38,7 @@ function hideCursor(elem) {
     if (e.key === 'Backspace' && this.innerText.toString().trim().length == 1) {
       this.innerText = '';
       cursor.style.display = 'inline-flex';
-      suggestionsContainer.innerHTML = '';
+      suggestionsList.innerHTML = '';
       details.innerHTML = '';
     }
   });
@@ -229,7 +230,7 @@ const commands = {
 
 // --- DEFAULTS ---
 
-const defaultThread = `<div class="thread-text">Hi there. Welcome to zetsu.</div>`;
+const defaultThread = `<div class="thread-text" style="color: #A79C8F">Hi there. Welcome to zetsu.</div>`;
 
 const nullThread = `<div class="thread-text">Shoot, I don't recognize that command. You can use h to see the commands I know.</div>`;
 
@@ -263,14 +264,14 @@ zetsu.addEventListener('input', function () {
 
 // Populating suggestions container with suggestions based on input and remove suggestions if user deletes input
 zetsu.addEventListener('input', function () {
-  suggestionsContainer.innerHTML = '';
+  suggestionsList.innerHTML = '';
   // check if a command or actor contains the input letters
   for (let command in commands) {
     if (command.includes(input)) {
       let suggestion = document.createElement('div');
       suggestion.className = 'suggestion';
       suggestion.innerHTML = command;
-      suggestionsContainer.appendChild(suggestion);
+      suggestionsList.appendChild(suggestion);
     }
   }
   for (let actor in innate) {
@@ -278,7 +279,7 @@ zetsu.addEventListener('input', function () {
       let suggestion = document.createElement('div');
       suggestion.className = 'suggestion';
       suggestion.innerHTML = actor;
-      suggestionsContainer.appendChild(suggestion);
+      suggestionsList.appendChild(suggestion);
     }
   }
   for (let actor in adaptive) {
@@ -286,11 +287,11 @@ zetsu.addEventListener('input', function () {
       let suggestion = document.createElement('div');
       suggestion.className = 'suggestion';
       suggestion.innerHTML = actor;
-      suggestionsContainer.appendChild(suggestion);
+      suggestionsList.appendChild(suggestion);
     }
   }
   // Remove suggestion description if there are no matching suggestions
-  if (suggestionsContainer.childElementCount === 0) {
+  if (suggestionsList.childElementCount === 0) {
     details.innerHTML = '';
   }
   // Set first suggestion as active
@@ -354,7 +355,7 @@ zetsu.addEventListener('input', function () {
       sel.removeAllRanges();
       sel.addRange(range);
       // Remove suggestions
-      suggestionsContainer.innerHTML = '';
+      suggestionsList.innerHTML = '';
       // Remove details
       details.innerHTML = '';
     }
