@@ -20,13 +20,6 @@ window.onload = () => {
 
 // Listening for click and focusing on editor
 document.body.addEventListener('click', function (e) {
-  // Focus at end of text
-  let range = document.createRange();
-  let sel = window.getSelection();
-  range.setStart(zetsu.childNodes[0], zetsu.innerText.length);
-  range.collapse(true);
-  sel.removeAllRanges();
-  sel.addRange(range);
   zetsu.focus();
 });
 
@@ -233,6 +226,25 @@ const commands = {
     let output = creatOutputDiv(helpThread);
     returnOutput(output, 0);
   },
+};
+
+const smartAssist = (input) => {
+  // code to handle the smart assistant
+  // check if input is a command
+  if (input in commands) {
+    // check if input has a modifier
+    if (input.includes(' ')) {
+      let args = input.split(' ');
+      let obj = args[0];
+      let mod = args[1];
+      commands[obj](mod);
+    } else {
+      commands[input]();
+    }
+  } else {
+    let output = creatOutputDiv(nullThread);
+    returnOutput(output, 0);
+  }
 };
 
 // --- DEFAULTS ---
