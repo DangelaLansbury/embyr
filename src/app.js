@@ -363,7 +363,7 @@ zetsu.addEventListener('input', function () {
   });
   // Listening for tab key to autocomplete suggestion
   zetsu.addEventListener('keydown', function (e) {
-    if (e.keyCode === 9) {
+    if (e.keyCode === 9 && suggestionsList.childElementCount > 0) {
       e.preventDefault();
       zetsu.innerText = suggestions[suggestionIndex].innerText + ' ';
       // Set cursor to end of text
