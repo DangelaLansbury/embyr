@@ -364,21 +364,23 @@ zetsu.addEventListener('input', function () {
   });
   // Listening for tab key to autocomplete suggestion
   zetsu.addEventListener('keydown', function (e) {
-    if (e.keyCode === 9 && suggestionsList.childElementCount > 0) {
+    if (e.keyCode === 9) {
       e.preventDefault();
-      let currentSelection = document.querySelector('.active').innerText;
-      zetsu.innerText = currentSelection + ' ';
-      // Set cursor to end of text
-      let range = document.createRange();
-      let sel = window.getSelection();
-      range.setStart(zetsu.childNodes[0], zetsu.innerText.length);
-      range.collapse(true);
-      sel.removeAllRanges();
-      sel.addRange(range);
-      // Remove suggestions
-      suggestionsList.innerHTML = '';
-      // Remove details
-      details.innerHTML = '';
+      if (suggestionsList.childElementCount > 0) {
+        let currentSelection = document.querySelector('.active').innerText;
+        zetsu.innerText = currentSelection + ' ';
+        // Set cursor to end of text
+        let range = document.createRange();
+        let sel = window.getSelection();
+        range.setStart(zetsu.childNodes[0], zetsu.innerText.length);
+        range.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(range);
+        // Remove suggestions
+        suggestionsList.innerHTML = '';
+        // Remove details
+        details.innerHTML = '';
+      }
     }
   });
 });
@@ -394,6 +396,7 @@ const clearzetsu = () => {
 zetsu.addEventListener('keydown', function (e) {
   if (e.keyCode === 13) {
     e.preventDefault();
+    input = zetsu.innerText;
     if (input !== '') {
       console.log(thread.lastChild.innerHTML);
       if (thread.innerHTML === defaultThread) {

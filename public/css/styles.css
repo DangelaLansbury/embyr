@@ -113,7 +113,7 @@ main {
   width: calc(100% - 4rem);
   padding: 0 2rem;
   margin-top: auto;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   overflow-y: scroll;
   overscroll-behavior: none;
   -ms-overflow-style: none;
