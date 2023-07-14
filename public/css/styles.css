@@ -97,12 +97,12 @@ main {
 .workbook-header {
   display: block;
   width: 100%;
-  height: 2rem;
-  min-height: 2rem;
+  height: 1rem;
+  min-height: 1rem;
   background-color: var(--soil-dk);
-  border-bottom: 1px solid var(--soil-lt);
+  /* border-bottom: 1px solid var(--soil-lt); */
   border-radius: 16px 16px 0 0;
-  margin-bottom: 1.5rem;
+  /* margin-bottom: 0.25rem; */
 }
 
 /* ---- ZETSU ---- */
@@ -135,8 +135,8 @@ main {
   align-items: flex-start;
   margin: 0;
   width: 100%;
-  height: 40%;
-  min-height: 17.5rem;
+  height: 30%;
+  min-height: 30%;
 }
 .zetsu-input {
   display: flex;
@@ -226,7 +226,7 @@ main {
   justify-content: flex-start;
   align-items: center;
   margin: 0;
-  padding: 0.5rem 2rem;
+  padding: 0.25rem 2rem;
   width: calc(100% - 4rem);
   height: 2rem;
   min-height: 2rem;

@@ -40,6 +40,7 @@ function hideCursor(elem) {
       cursor.style.display = 'inline-flex';
       suggestionsList.innerHTML = '';
       details.innerHTML = '';
+      suggestionIndex = 0;
     }
   });
 }
@@ -309,10 +310,6 @@ zetsu.addEventListener('input', function () {
       suggestionsList.appendChild(suggestion);
     }
   }
-  // Remove suggestion description if there are no matching suggestions
-  if (suggestionsList.childElementCount === 0) {
-    details.innerHTML = '';
-  }
   // Set first suggestion as active
   let suggestions = document.querySelectorAll('.suggestion');
   suggestions[0].classList.add('active');
@@ -365,7 +362,8 @@ zetsu.addEventListener('input', function () {
   zetsu.addEventListener('keydown', function (e) {
     if (e.keyCode === 9 && suggestionsList.childElementCount > 0) {
       e.preventDefault();
-      zetsu.innerText = suggestions[suggestionIndex].innerText + ' ';
+      let currentSelection = document.querySelector('.active').innerText;
+      zetsu.innerText = currentSelection + ' ';
       // Set cursor to end of text
       let range = document.createRange();
       let sel = window.getSelection();
@@ -379,6 +377,10 @@ zetsu.addEventListener('input', function () {
       details.innerHTML = '';
     }
   });
+  // Remove suggestion description if there are no matching suggestions
+  if (suggestionsList.childElementCount === 0) {
+    details.innerHTML = '';
+  }
 });
 
 // Clear editor if user presses enter, refocus on editor, and show fake cursor
