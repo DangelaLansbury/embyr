@@ -310,6 +310,10 @@ zetsu.addEventListener('input', function () {
       suggestionsList.appendChild(suggestion);
     }
   }
+  // Remove suggestion description if there are no matching suggestions
+  if (suggestionsList.childElementCount === 0) {
+    details.innerHTML = '';
+  }
   // Set first suggestion as active
   let suggestions = document.querySelectorAll('.suggestion');
   suggestions[0].classList.add('active');
@@ -377,10 +381,6 @@ zetsu.addEventListener('input', function () {
       details.innerHTML = '';
     }
   });
-  // Remove suggestion description if there are no matching suggestions
-  if (suggestionsList.childElementCount === 0) {
-    details.innerHTML = '';
-  }
 });
 
 // Clear editor if user presses enter, refocus on editor, and show fake cursor
