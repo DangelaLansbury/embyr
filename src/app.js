@@ -96,41 +96,38 @@ const outputDelay = [600, 800, 1000, 1200, 1400, 1600, 1800, 2000];
 let input = '';
 
 // Listening for input and setting input variable
-zetsu.addEventListener('input', function () {
-  input = this.innerText;
-});
+// zetsu.addEventListener('input', function () {
+//   input = this.innerText;
+// });
 
 // Populating suggestions container with suggestions based on input and remove suggestions if user deletes input
 zetsu.addEventListener('input', function () {
+  input = this.innerText;
+  let wordsInInput = input.split(' ');
   suggestionsList.innerHTML = '';
+  details.innerHTML = '';
+  console.log(wordsInInput);
   // check if a command or actor contains the input letters
-  for (let command in commands) {
-    if (command.includes(input)) {
-      let suggestion = document.createElement('div');
-      suggestion.className = 'suggestion';
-      suggestion.innerHTML = command;
-      suggestionsList.appendChild(suggestion);
+  if (wordsInInput.length === 1) {
+    let cmd = wordsInInput[0];
+    for (let command in commands) {
+      if (command.includes(cmd)) {
+        let suggestion = document.createElement('div');
+        suggestion.className = 'suggestion';
+        suggestion.innerHTML = command;
+        suggestionsList.appendChild(suggestion);
+      }
     }
-  }
-  for (let actor in innate) {
-    if (actor.includes(input)) {
-      let suggestion = document.createElement('div');
-      suggestion.className = 'suggestion';
-      suggestion.innerHTML = actor;
-      suggestionsList.appendChild(suggestion);
+  } else if (wordsInInput.length > 1) {
+    let arg = wordsInInput[1];
+    for (let actor in innate) {
+      if (actor.includes(arg)) {
+        let suggestion = document.createElement('div');
+        suggestion.className = 'suggestion';
+        suggestion.innerHTML = actor;
+        suggestionsList.appendChild(suggestion);
+      }
     }
-  }
-  for (let actor in adaptive) {
-    if (actor.includes(input)) {
-      let suggestion = document.createElement('div');
-      suggestion.className = 'suggestion';
-      suggestion.innerHTML = actor;
-      suggestionsList.appendChild(suggestion);
-    }
-  }
-  // Remove suggestion description if there are no matching suggestions
-  if (suggestionsList.childElementCount === 0) {
-    details.innerHTML = '';
   }
   // Set first suggestion as active
   let suggestions = document.querySelectorAll('.suggestion');
@@ -186,7 +183,22 @@ zetsu.addEventListener('input', function () {
       e.preventDefault();
       if (suggestionsList.childElementCount > 0) {
         let currentSelection = document.querySelector('.active').innerText;
-        zetsu.innerText = currentSelection + ' ';
+        // Check if current selection is a command or an actor in innate or adaptive
+        if (currentSelection in commands) {
+          // Check if command has a modifier
+          if (currentSelection.includes(' ')) {
+            let args = currentSelection.split(' ');
+            let obj = args[0];
+            let mod = args[1];
+            zetsu.innerText = obj + ' ' + mod;
+          } else {
+            zetsu.innerText = currentSelection;
+          }
+        } else if (currentSelection in innate) {
+          zetsu.innerText = 'innate' + ' ' + currentSelection;
+        } else if (currentSelection in adaptive) {
+          zetsu.innerText = 'adapt' + ' ' + currentSelection;
+        }
         // Set cursor to end of text
         let range = document.createRange();
         let sel = window.getSelection();
