@@ -173,9 +173,14 @@ const commands = {
       returnOutput(output, 0);
     }
   },
-  zetsu: () => {
+  help: () => {
     // code to handle the meta commands
     let output = creatOutputDiv(helpThread);
+    returnOutput(output, 0);
+  },
+  status: () => {
+    // code to show status
+    let output = creatOutputDiv(statusThread);
     returnOutput(output, 0);
   },
 };
