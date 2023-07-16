@@ -137,12 +137,15 @@ main {
   width: 100%;
   height: 40%;
   min-height: 40%;
+  background-color: var(--soil);
+  border-radius: 0 0 16px 16px;
 }
 .zetsu-input {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
+  background-color: var(--soil-dk);
   border-top: 1px solid var(--soil-lt);
   padding: 1rem 2rem;
   width: calc(100% - 4rem);
@@ -192,8 +195,6 @@ main {
   border-top: 1px solid var(--soil-lt);
   height: 100%;
   width: 100%;
-  background-color: var(--soil);
-  border-radius: 0 0 16px 16px;
   overflow: hidden;
 }
 .suggestions-container {
@@ -202,7 +203,7 @@ main {
   justify-content: flex-start;
   align-items: flex-start;
   margin: 0;
-  width: 40%;
+  width: 33%;
   height: 100%;
   overflow: hidden;
   border-right: 1px solid var(--soil-lt);
@@ -211,9 +212,6 @@ main {
   display: flex;
   flex-direction: column;
   margin: 0;
-  /* padding: 0.75rem 0.75rem; */
-  /* width: calc(100% - 1.5rem);
-  height: calc(100% - 1.5rem); */
   width: 100%;
   height: 100%;
   overflow-y: scroll;
@@ -230,33 +228,22 @@ main {
   width: calc(100% - 4rem);
   height: 2rem;
   min-height: 2rem;
-  /* border-radius: 8px; */
   transition: 0.2s;
 }
 .suggestion.active {
   background-color: var(--soil-lt);
   color: var(--sweetgrass);
 }
-/* .suggestion.active::after {
-  content: 'TAB';
-  display: inline-flex;
-  margin-left: auto;
-  color: var(--stone);
-  font-weight: 900;
-  font-size: 0.75rem;
-} */
 .selected-command {
   display: inline-flex;
   margin: auto 0;
   height: 1.75rem;
   color: var(--lilac);
 }
-.suggestions-footer {
-  position: sticky;
-  bottom: 0;
+.zetsu-footer {
   width: 100%;
-  height: 2rem;
-  background-color: var(--soil);
+  height: 4rem;
+  min-height: 4rem;
   border-top: 1px solid var(--soil-lt);
 }
 
