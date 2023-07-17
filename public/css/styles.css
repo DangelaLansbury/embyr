@@ -135,8 +135,8 @@ main {
   align-items: flex-start;
   margin: 0;
   width: 100%;
-  height: 40%;
-  min-height: 40%;
+  height: 33%;
+  min-height: 33%;
   background-color: var(--soil);
   border-radius: 0 0 16px 16px;
 }
@@ -189,6 +189,19 @@ main {
   }
 }
 /* helper */
+/* .zetsu-default {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--soil-lt);
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+.zetsu-default-content {
+  margin: auto;
+  font-size: 0.875rem;
+  color: var(--stone);
+} */
 .zetsu-helper {
   display: flex;
   flex-direction: row;
@@ -198,12 +211,12 @@ main {
   overflow: hidden;
 }
 .suggestions-container {
-  display: flex;
+  display: none;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
   margin: 0;
-  width: 33%;
+  width: 40%;
   height: 100%;
   overflow: hidden;
   border-right: 1px solid var(--soil-lt);

@@ -2,6 +2,8 @@
 
 let container = document.querySelector('.container');
 let zetsuContainer = document.querySelector('.zetsu-container');
+let zetsuHelper = document.querySelector('.zetsu-helper');
+let zetsuDefault = document.querySelector('.zetsu-default');
 let thread = document.querySelector('.thread');
 let zetsu = document.querySelector('.zetsu-input-text');
 let cursor = document.querySelector('.cursor');
@@ -38,6 +40,7 @@ function hideCursor(elem) {
     if (e.key === 'Backspace' && this.innerText.toString().trim().length == 1) {
       this.innerText = '';
       cursor.style.display = 'inline-flex';
+      suggestionsContainer.style.display = 'none';
       suggestionsList.innerHTML = '';
       details.innerHTML = '';
       suggestionIndex = 0;
@@ -95,35 +98,44 @@ const outputDelay = [600, 800, 1000, 1200, 1400, 1600, 1800, 2000];
 
 // let input = '';
 
-// Populating suggestions container with suggestions based on input and remove suggestions if user deletes input
+// Populating suggestions container with suggestions based on input
 zetsu.addEventListener('input', function () {
   let input = this.innerText;
-  let wordsInInput = input.split(' ');
+  // let wordsInInput = input.split(' ');
   suggestionsList.innerHTML = '';
   details.innerHTML = '';
-  console.log(wordsInInput);
-  // check if a command or actor contains the input letters
-  if (wordsInInput.length === 1) {
-    let cmd = wordsInInput[0];
-    for (let command in commands) {
-      if (command.includes(cmd)) {
-        let suggestion = document.createElement('div');
-        suggestion.className = 'suggestion';
-        suggestion.innerHTML = command;
-        suggestionsList.appendChild(suggestion);
-      }
-    }
-  } else if (wordsInInput.length > 1) {
-    let arg = wordsInInput[1];
-    for (let actor in innate) {
-      if (actor.includes(arg)) {
-        let suggestion = document.createElement('div');
-        suggestion.className = 'suggestion';
-        suggestion.innerHTML = actor;
-        suggestionsList.appendChild(suggestion);
-      }
+  for (let command in commands) {
+    if (command.startsWith(input)) {
+      suggestionsContainer.style.display = 'flex';
+      let suggestion = document.createElement('div');
+      suggestion.className = 'suggestion';
+      suggestion.innerHTML = command;
+      suggestionsList.appendChild(suggestion);
     }
   }
+  // check if a command or actor contains the input letters
+  // if (wordsInInput.length === 1 && wordsInInput[0] !== '??') {
+  //   let cmd = wordsInInput[0];
+  //   for (let command in commands) {
+  //     if (command.startsWith(cmd)) {
+  //       let suggestion = document.createElement('div');
+  //       suggestion.className = 'suggestion';
+  //       suggestion.innerHTML = command;
+  //       suggestionsList.appendChild(suggestion);
+  //     }
+  //   }
+  // }
+  // } else if (wordsInInput.length > 1) {
+  //   let arg = wordsInInput[1];
+  //   for (let actor in innate) {
+  //     if (actor.includes(arg)) {
+  //       let suggestion = document.createElement('div');
+  //       suggestion.className = 'suggestion';
+  //       suggestion.innerHTML = actor;
+  //       suggestionsList.appendChild(suggestion);
+  //     }
+  //   }
+  // }
   // Set first suggestion as active
   let suggestions = document.querySelectorAll('.suggestion');
   suggestions[0].classList.add('active');
@@ -243,9 +255,8 @@ zetsu.addEventListener('keydown', function (e) {
           // Split args into object and modifier where modifier is anything that starts with "-"
           let modifier = args.filter((arg) => arg.startsWith('-'));
           let objectArray = args.filter((arg) => !arg.startsWith('-'));
-          let object = objectArray.join(' ');
           // Run subcommand within command object
-          commands[command].subcommands[subcommand](object, modifier);
+          commands[command].subcommands[subcommand](objectArray, modifier);
           clearzetsu();
         } else {
           // Add input to thread

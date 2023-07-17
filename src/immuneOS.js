@@ -96,48 +96,60 @@ const status = {
 // --- COMMANDS ---
 
 const commands = {
-  kill: {
-    name: 'killer T cell',
-    description: 'Killer T cells are a type of white blood cell.',
+  check: {
+    name: 'check',
+    description: 'Evaluate or interpret something in the system.',
     subcommands: {
-      check: (obj, mod) => {
-        let output = creatOutputDiv('check command' + obj + mod);
+      mhc: (obj, mod) => {
+        let output = creatOutputDiv('check mhc' + obj[0] + obj[1] + mod);
         returnOutput(output, outputDelay[0]);
       },
-      phago: (obj, mod) => {
-        let output = creatOutputDiv('phago command');
+      status: (obj, mod) => {
+        let output = creatOutputDiv('check status' + obj[0] + obj[1] + mod);
         returnOutput(output, outputDelay[0]);
       },
     },
   },
-  help: {
-    name: 'helper T cell',
-    description: 'Helper T cells are a type of white blood cell.',
+  kill: {
+    name: 'kill',
+    description: 'Remove something from the system.',
     subcommands: {
-      check: (obj, mod) => {
-        let output = creatOutputDiv('check command');
-        returnOutput(output, outputDelay[0]);
-      },
-      make: (obj, mod) => {
-        let output = creatOutputDiv('make command');
-        returnOutput(output, outputDelay[0]);
-      },
-      amplify: (obj, mod) => {
-        let output = creatOutputDiv('amplify command');
-        returnOutput(output, outputDelay[0]);
-      },
-      summon: (obj, mod) => {
-        let output = creatOutputDiv('summon command');
+      cell: (obj, mod) => {
+        let output = creatOutputDiv('phagocytose command');
         returnOutput(output, outputDelay[0]);
       },
     },
   },
   reg: {
-    name: 'regulatory T cell',
-    description: 'Regulatory T cells are a type of white blood cell.',
+    name: 'regulate',
+    description: 'Suppress immune response.',
     subcommands: {
-      suppress: (obj, mod) => {
+      down: (obj, mod) => {
         let output = creatOutputDiv('suppress command');
+        returnOutput(output, outputDelay[0]);
+      },
+      up: (obj, mod) => {
+        let output = creatOutputDiv('stimulate command');
+        returnOutput(output, outputDelay[0]);
+      },
+    },
+  },
+  mem: {
+    name: 'remember',
+    description: 'Remember antigen.',
+    subcommands: {
+      antigen: (obj, mod) => {
+        let output = creatOutputDiv('remember antigen command');
+        returnOutput(output, outputDelay[0]);
+      },
+    },
+  },
+  arm: {
+    name: 'arm',
+    description: 'Arm immune system.',
+    subcommands: {
+      local: (obj, mod) => {
+        let output = creatOutputDiv('local command');
         returnOutput(output, outputDelay[0]);
       },
     },
