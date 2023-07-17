@@ -73,7 +73,7 @@ const smartAssist = (input) => {
 
 const defaultThread = `<div class="thread-text" style="color: #A79C8F">Hi there. Welcome to immuneOS.</div>`;
 
-const nullThread = `<div class="thread-text">Shoot, I don't recognize that command. You can use h to see the commands I know.</div>`;
+const nullThread = `<div class="thread-text">Shoot, I don't recognize that command.</div>`;
 
 // --- OUTPUTS ---
 
@@ -105,7 +105,7 @@ zetsu.addEventListener('input', function () {
   suggestionsList.innerHTML = '';
   details.innerHTML = '';
   for (let command in commands) {
-    if (command.startsWith(input)) {
+    if (command.includes(input)) {
       suggestionsContainer.style.display = 'flex';
       let suggestion = document.createElement('div');
       suggestion.className = 'suggestion';
@@ -234,6 +234,12 @@ zetsu.addEventListener('keydown', function (e) {
   if (e.keyCode === 13) {
     e.preventDefault();
     let input = zetsu.innerText;
+    // Clear suggestions
+    suggestionsContainer.style.display = 'none';
+    suggestionsList.innerHTML = '';
+    details.innerHTML = '';
+    suggestionIndex = 0;
+    // Execute commands and return output
     if (input !== '') {
       if (thread.innerHTML === defaultThread) {
         thread.innerHTML = '';
@@ -264,7 +270,7 @@ zetsu.addEventListener('keydown', function (e) {
           output.classList.add('cmd');
           returnOutput(output, 0);
           // Add nullThread to thread
-          returnOutput(creatOutputDiv(nullThread), 0);
+          returnOutput(creatOutputDiv('Please add an argument'), 0);
           clearzetsu();
         }
       } else {
