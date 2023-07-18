@@ -12,6 +12,7 @@ let suggestionsList = document.querySelector('.suggestions-list');
 let details = document.querySelector('.suggestion-details');
 let detailsName = document.querySelector('.details-name');
 let detailsDescription = document.querySelector('.details-description');
+let suggestions = document.querySelectorAll('.suggestion');
 
 // --- FOCUS ON EDITOR ---
 
@@ -25,49 +26,18 @@ document.body.addEventListener('click', function (e) {
   zetsu.focus();
 });
 
-// --- MANAGING FAKE CURSOR ---
+// --- HANDLE DELETING INPUT ---
 
-// Hide fake cursor once user starts typing and resetting everything if user deletes input
-function hideCursor(elem) {
-  elem.addEventListener('input', function () {
-    if (this.innerText !== '') {
-      cursor.style.display = 'none';
-    } else {
-      cursor.style.display = 'inline-flex';
-    }
-  });
-  elem.addEventListener('keydown', function (e) {
-    if (e.key === 'Backspace' && this.innerText.toString().trim().length == 1) {
-      this.innerText = '';
-      cursor.style.display = 'inline-flex';
-      suggestionsContainer.style.display = 'none';
-      suggestionsList.innerHTML = '';
-      details.innerHTML = '';
-      suggestionIndex = 0;
-    }
-  });
-}
-
-hideCursor(zetsu);
-
-const smartAssist = (input) => {
-  // code to handle the smart assistant
-  // check if input is a command
-  if (input in commands) {
-    // check if input has a modifier
-    if (input.includes(' ')) {
-      let args = input.split(' ');
-      let obj = args[0];
-      let mod = args[1];
-      commands[obj](mod);
-    } else {
-      commands[input]();
-    }
-  } else {
-    let output = creatOutputDiv(nullThread);
-    returnOutput(output, 0);
+zetsu.addEventListener('keydown', function (e) {
+  if (e.key === 'Backspace' && this.innerText.toString().trim().length == 1) {
+    this.innerText = '';
+    cursor.style.display = 'inline-flex';
+    suggestionsContainer.style.display = 'none';
+    suggestionsList.innerHTML = '';
+    details.innerHTML = '';
+    suggestions = [];
   }
-};
+});
 
 // --- DEFAULTS ---
 
@@ -96,11 +66,14 @@ const outputDelay = [600, 800, 1000, 1200, 1400, 1600, 1800, 2000];
 
 // --- ADDING EVENT LISTENERS FOR COMMANDS ---
 
-// let input = '';
-
 // Populating suggestions container with suggestions based on input
 zetsu.addEventListener('input', function () {
   let input = this.innerText;
+  if (input !== '') {
+    cursor.style.display = 'none';
+  } else {
+    cursor.style.display = 'inline-flex';
+  }
   suggestionsList.innerHTML = '';
   details.innerHTML = '';
   for (let command in commands) {
@@ -114,82 +87,85 @@ zetsu.addEventListener('input', function () {
     }
   }
   // Listening for up and down arrow keys to cycle through suggestions
-  let suggestions = document.querySelectorAll('.suggestion');
+  suggestions = document.querySelectorAll('.suggestion');
   let suggestionIndex = -1;
   zetsu.addEventListener('keydown', function (e) {
-    if (e.key === 'ArrowDown') {
-      e.preventDefault();
-      if (suggestionIndex !== -1) {
-        suggestions[suggestionIndex].classList.remove('active');
-      }
-      suggestionIndex++;
-      if (suggestionIndex > suggestions.length - 1) {
-        suggestionIndex = -1;
-        zetsu.innerText = input;
-        details.innerHTML = '';
-        // focus and move cursor to end of input
-        let range = document.createRange();
-        let sel = window.getSelection();
-        range.setStart(zetsu.childNodes[0], zetsu.innerText.length);
-        range.collapse(true);
-        sel.removeAllRanges();
-        sel.addRange(range);
-      }
-      if (suggestionIndex !== -1) {
-        suggestions[suggestionIndex].classList.add('active');
-        zetsu.innerText = suggestions[suggestionIndex].innerText;
-        details.innerHTML = `<div class="details-name">${commands[suggestions[suggestionIndex].innerText].name}</div><div class="details-description">${commands[suggestions[suggestionIndex].innerText].description}</div>`;
-        // Scroll to active suggestion
-        suggestions[suggestionIndex].scrollIntoView({
-          block: 'nearest',
-          inline: 'end',
-          behavior: 'smooth',
-        });
-        // focus and move cursor to end of input
-        let range = document.createRange();
-        let sel = window.getSelection();
-        range.setStart(zetsu.childNodes[0], zetsu.innerText.length);
-        range.collapse(true);
-        sel.removeAllRanges();
-        sel.addRange(range);
-      }
-    } else if (e.key === 'ArrowUp') {
-      e.preventDefault();
-      if (suggestionIndex !== -1) {
-        suggestions[suggestionIndex].classList.remove('active');
-      }
-      suggestionIndex--;
-      if (suggestionIndex === -1) {
-        zetsu.innerText = input;
-        details.innerHTML = '';
-        // focus and move cursor to end of input
-        let range = document.createRange();
-        let sel = window.getSelection();
-        range.setStart(zetsu.childNodes[0], zetsu.innerText.length);
-        range.collapse(true);
-        sel.removeAllRanges();
-        sel.addRange(range);
-      }
-      if (suggestionIndex < -1) {
-        suggestionIndex = suggestions.length - 1;
-      }
-      if (suggestionIndex !== -1) {
-        suggestions[suggestionIndex].classList.add('active');
-        zetsu.innerText = suggestions[suggestionIndex].innerText;
-        details.innerHTML = `<div class="details-name">${commands[suggestions[suggestionIndex].innerText].name}</div><div class="details-description">${commands[suggestions[suggestionIndex].innerText].description}</div>`;
-        // Scroll to active suggestion
-        suggestions[suggestionIndex].scrollIntoView({
-          block: 'nearest',
-          inline: 'end',
-          behavior: 'smooth',
-        });
-        // focus and move cursor to end of input
-        let range = document.createRange();
-        let sel = window.getSelection();
-        range.setStart(zetsu.childNodes[0], zetsu.innerText.length);
-        range.collapse(true);
-        sel.removeAllRanges();
-        sel.addRange(range);
+    // Check if suggestions are present
+    if (suggestions.length !== 0) {
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        if (suggestionIndex !== -1) {
+          suggestions[suggestionIndex].classList.remove('active');
+        }
+        suggestionIndex++;
+        if (suggestionIndex > suggestions.length - 1) {
+          suggestionIndex = -1;
+          zetsu.innerText = input;
+          details.innerHTML = '';
+          // focus and move cursor to end of input
+          let range = document.createRange();
+          let sel = window.getSelection();
+          range.setStart(zetsu.childNodes[0], zetsu.innerText.length);
+          range.collapse(true);
+          sel.removeAllRanges();
+          sel.addRange(range);
+        }
+        if (suggestionIndex !== -1) {
+          suggestions[suggestionIndex].classList.add('active');
+          zetsu.innerText = suggestions[suggestionIndex].innerText;
+          details.innerHTML = `<div class="details-name">${commands[suggestions[suggestionIndex].innerText].name}</div><div class="details-description">${commands[suggestions[suggestionIndex].innerText].description}</div>`;
+          // Scroll to active suggestion
+          suggestions[suggestionIndex].scrollIntoView({
+            block: 'nearest',
+            inline: 'end',
+            behavior: 'smooth',
+          });
+          // focus and move cursor to end of input
+          let range = document.createRange();
+          let sel = window.getSelection();
+          range.setStart(zetsu.childNodes[0], zetsu.innerText.length);
+          range.collapse(true);
+          sel.removeAllRanges();
+          sel.addRange(range);
+        }
+      } else if (e.key === 'ArrowUp' && input.trim().length !== 0) {
+        e.preventDefault();
+        if (suggestionIndex !== -1) {
+          suggestions[suggestionIndex].classList.remove('active');
+        }
+        suggestionIndex--;
+        if (suggestionIndex === -1) {
+          zetsu.innerText = input;
+          details.innerHTML = '';
+          // focus and move cursor to end of input
+          let range = document.createRange();
+          let sel = window.getSelection();
+          range.setStart(zetsu.childNodes[0], zetsu.innerText.length);
+          range.collapse(true);
+          sel.removeAllRanges();
+          sel.addRange(range);
+        }
+        if (suggestionIndex < -1) {
+          suggestionIndex = suggestions.length - 1;
+        }
+        if (suggestionIndex !== -1) {
+          suggestions[suggestionIndex].classList.add('active');
+          zetsu.innerText = suggestions[suggestionIndex].innerText;
+          details.innerHTML = `<div class="details-name">${commands[suggestions[suggestionIndex].innerText].name}</div><div class="details-description">${commands[suggestions[suggestionIndex].innerText].description}</div>`;
+          // Scroll to active suggestion
+          suggestions[suggestionIndex].scrollIntoView({
+            block: 'nearest',
+            inline: 'end',
+            behavior: 'smooth',
+          });
+          // focus and move cursor to end of input
+          let range = document.createRange();
+          let sel = window.getSelection();
+          range.setStart(zetsu.childNodes[0], zetsu.innerText.length);
+          range.collapse(true);
+          sel.removeAllRanges();
+          sel.addRange(range);
+        }
       }
     }
   });
@@ -211,7 +187,6 @@ zetsu.addEventListener('keydown', function (e) {
     suggestionsContainer.style.display = 'none';
     suggestionsList.innerHTML = '';
     details.innerHTML = '';
-    suggestionIndex = 0;
     // Execute commands and return output
     if (input !== '') {
       // Clear default thread if it's still there
@@ -236,7 +211,6 @@ zetsu.addEventListener('keydown', function (e) {
             returnOutput(output, 0);
             // Run command
             commands[command].run();
-            clearzetsu();
           } else {
             // check if subcommand exists
             if (commands[command].subcommands[subcommand]) {
@@ -249,7 +223,6 @@ zetsu.addEventListener('keydown', function (e) {
               let objectArray = args.filter((arg) => !arg.startsWith('--'));
               // Run subcommand within command object
               commands[command].subcommands[subcommand].run(objectArray, modifier);
-              clearzetsu();
             } else {
               // Add input to thread
               let output = creatOutputDiv(input);
@@ -257,13 +230,11 @@ zetsu.addEventListener('keydown', function (e) {
               returnOutput(output, 0);
               // Add nullThread to thread
               returnOutput(creatOutputDiv(`Hm, I don't recognize this subcommand`), 0);
-              clearzetsu();
             }
           }
         } else {
           // Run command
           commands[command].run();
-          clearzetsu();
         }
       } else {
         // Add input to thread
@@ -272,8 +243,8 @@ zetsu.addEventListener('keydown', function (e) {
         returnOutput(output, 0);
         // Add nullThread to thread
         returnOutput(creatOutputDiv(nullThread), 0);
-        clearzetsu();
       }
+      clearzetsu();
     }
   }
 });

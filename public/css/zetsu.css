@@ -38,6 +38,17 @@
 .zetsu-input-text:empty {
   caret-color: transparent;
 }
+.placeholder {
+  position: relative;
+  right: 0.875rem;
+  display: inline-flex;
+  margin: auto 0;
+  height: 1.75rem;
+  min-height: 1.75rem;
+  min-width: 0.25rem;
+  white-space: pre-wrap;
+  color: var(--stone);
+}
 .cursor {
   display: inline-flex;
   width: 0.75rem;
