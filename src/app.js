@@ -27,7 +27,7 @@ document.body.addEventListener('click', function (e) {
 
 // --- MANAGING FAKE CURSOR ---
 
-// Hide fake cursor once user starts typing
+// Hide fake cursor once user starts typing and resetting everything if user deletes input
 function hideCursor(elem) {
   elem.addEventListener('input', function () {
     if (this.innerText !== '') {
@@ -106,6 +106,7 @@ zetsu.addEventListener('input', function () {
   details.innerHTML = '';
   for (let command in commands) {
     if (command.includes(input)) {
+      // Create suggestion element
       suggestionsContainer.style.display = 'flex';
       let suggestion = document.createElement('div');
       suggestion.className = 'suggestion';
@@ -113,109 +114,57 @@ zetsu.addEventListener('input', function () {
       suggestionsList.appendChild(suggestion);
     }
   }
-  // check if a command or actor contains the input letters
-  // if (wordsInInput.length === 1 && wordsInInput[0] !== '??') {
-  //   let cmd = wordsInInput[0];
-  //   for (let command in commands) {
-  //     if (command.startsWith(cmd)) {
-  //       let suggestion = document.createElement('div');
-  //       suggestion.className = 'suggestion';
-  //       suggestion.innerHTML = command;
-  //       suggestionsList.appendChild(suggestion);
-  //     }
-  //   }
-  // }
-  // } else if (wordsInInput.length > 1) {
-  //   let arg = wordsInInput[1];
-  //   for (let actor in innate) {
-  //     if (actor.includes(arg)) {
-  //       let suggestion = document.createElement('div');
-  //       suggestion.className = 'suggestion';
-  //       suggestion.innerHTML = actor;
-  //       suggestionsList.appendChild(suggestion);
-  //     }
-  //   }
-  // }
-  // Set first suggestion as active
+  // Listening for up and down arrow keys to cycle through suggestions, replace input with suggestion, and show details, but then cycle back to input if user presses up arrow on first suggestion or down arrow on last suggestion
   let suggestions = document.querySelectorAll('.suggestion');
-  suggestions[0].classList.add('active');
-  // display suggestion description in details section
-  let suggestionName = suggestions[0].innerText;
-  details.innerHTML = `<div class="details-text">${suggestionName}</div>`;
-  // Listening for up and down arrow keys to cycle through suggestions
-  let suggestionIndex = 0;
+  let suggestionIndex = -1;
+  // suggestions[suggestionIndex].classList.add('active');
   zetsu.addEventListener('keydown', function (e) {
-    if (e.keyCode === 38) {
-      // Up arrow
+    if (e.key === 'ArrowDown') {
       e.preventDefault();
-      suggestions[suggestionIndex].classList.remove('active');
-      suggestionIndex--;
-      if (suggestionIndex < 0) {
-        suggestionIndex = suggestions.length - 1;
+      if (suggestionIndex !== -1) {
+        suggestions[suggestionIndex].classList.remove('active');
       }
-      suggestions[suggestionIndex].classList.add('active');
-      // display suggestion description in details section
-      suggestionName = suggestions[suggestionIndex].innerText;
-      details.innerHTML = `<div class="details-text">${suggestionName}</div>`;
-      // Scroll to active suggestion
-      suggestions[suggestionIndex].scrollIntoView({
-        block: 'nearest',
-        inline: 'start',
-        behavior: 'smooth',
-      });
-    }
-    if (e.keyCode === 40) {
-      // Down arrow
-      e.preventDefault();
-      suggestions[suggestionIndex].classList.remove('active');
       suggestionIndex++;
       if (suggestionIndex > suggestions.length - 1) {
-        suggestionIndex = 0;
-      }
-      suggestions[suggestionIndex].classList.add('active');
-      // display suggestion description in details section
-      suggestionName = suggestions[suggestionIndex].innerText;
-      details.innerHTML = `<div class="details-text">${suggestionName}</div>`;
-      // Scroll to active suggestion
-      suggestions[suggestionIndex].scrollIntoView({
-        block: 'nearest',
-        inline: 'end',
-        behavior: 'smooth',
-      });
-    }
-  });
-  // Listening for tab key to autocomplete suggestion
-  zetsu.addEventListener('keydown', function (e) {
-    if (e.keyCode === 9) {
-      e.preventDefault();
-      if (suggestionsList.childElementCount > 0) {
-        let currentSelection = document.querySelector('.active').innerText;
-        // Check if current selection is a command or an actor in innate or adaptive
-        if (currentSelection in commands) {
-          // Check if command has a modifier
-          if (currentSelection.includes(' ')) {
-            let args = currentSelection.split(' ');
-            let obj = args[0];
-            let mod = args[1];
-            zetsu.innerText = obj + ' ' + mod;
-          } else {
-            zetsu.innerText = currentSelection;
-          }
-        } else if (currentSelection in innate) {
-          zetsu.innerText = 'innate' + ' ' + currentSelection;
-        } else if (currentSelection in adaptive) {
-          zetsu.innerText = 'adapt' + ' ' + currentSelection;
-        }
-        // Set cursor to end of text
+        suggestionIndex = -1;
+        // zetsu.innerText = input;
+        details.innerHTML = '';
+        // focus and move cursor to end of input
+        zetsu.focus();
         let range = document.createRange();
         let sel = window.getSelection();
         range.setStart(zetsu.childNodes[0], zetsu.innerText.length);
         range.collapse(true);
         sel.removeAllRanges();
         sel.addRange(range);
-        // Remove suggestions
-        suggestionsList.innerHTML = '';
-        // Remove details
+      }
+      if (suggestionIndex !== -1) {
+        suggestions[suggestionIndex].classList.add('active');
+        details.innerHTML = '';
+      }
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (suggestionIndex !== -1) {
+        suggestions[suggestionIndex].classList.remove('active');
+      }
+      suggestionIndex--;
+      if (suggestionIndex === -1) {
+        // zetsu.innerText = input;
+        details.innerHTML = '';
+        // focus and move cursor to end of input
+        zetsu.focus();
+        let range = document.createRange();
+        let sel = window.getSelection();
+        range.setStart(zetsu.childNodes[0], zetsu.innerText.length);
+        range.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(range);
+      }
+      if (suggestionIndex < -1) {
+        suggestionIndex = suggestions.length - 1;
+      }
+      if (suggestionIndex !== -1) {
+        suggestions[suggestionIndex].classList.add('active');
         details.innerHTML = '';
       }
     }
@@ -285,3 +234,80 @@ zetsu.addEventListener('keydown', function (e) {
     }
   }
 });
+
+// zetsu.addEventListener('keydown', function (e) {
+//   if (e.keyCode === 38) {
+//     // Up arrow
+//     e.preventDefault();
+//     suggestions[suggestionIndex].classList.remove('active');
+//     suggestionIndex--;
+//     if (suggestionIndex < 0) {
+//       suggestionIndex = suggestions.length - 1;
+//     }
+//     suggestions[suggestionIndex].classList.add('active');
+//     // display suggestion description in details section
+//     suggestionName = suggestions[suggestionIndex].innerText;
+//     details.innerHTML = `<div class="details-text">${suggestionName}</div>`;
+//     // Scroll to active suggestion
+//     suggestions[suggestionIndex].scrollIntoView({
+//       block: 'nearest',
+//       inline: 'start',
+//       behavior: 'smooth',
+//     });
+//   }
+//   if (e.keyCode === 40) {
+//     // Down arrow
+//     e.preventDefault();
+//     suggestions[suggestionIndex].classList.remove('active');
+//     suggestionIndex++;
+//     if (suggestionIndex > suggestions.length - 1) {
+//       suggestionIndex = 0;
+//     }
+//     suggestions[suggestionIndex].classList.add('active');
+//     // display suggestion description in details section
+//     suggestionName = suggestions[suggestionIndex].innerText;
+//     details.innerHTML = `<div class="details-text">${suggestionName}</div>`;
+//     // Scroll to active suggestion
+//     suggestions[suggestionIndex].scrollIntoView({
+//       block: 'nearest',
+//       inline: 'end',
+//       behavior: 'smooth',
+//     });
+//   }
+// });
+
+// zetsu.addEventListener('keydown', function (e) {
+//   if (e.keyCode === 9) {
+//     e.preventDefault();
+//     if (suggestionsList.childElementCount > 0) {
+//       let currentSelection = document.querySelector('.active').innerText;
+//       // Check if current selection is a command or an actor in innate or adaptive
+//       if (currentSelection in commands) {
+//         // Check if command has a modifier
+//         if (currentSelection.includes(' ')) {
+//           let args = currentSelection.split(' ');
+//           let obj = args[0];
+//           let mod = args[1];
+//           zetsu.innerText = obj + ' ' + mod;
+//         } else {
+//           zetsu.innerText = currentSelection;
+//         }
+//       } else if (currentSelection in innate) {
+//         zetsu.innerText = 'innate' + ' ' + currentSelection;
+//       } else if (currentSelection in adaptive) {
+//         zetsu.innerText = 'adapt' + ' ' + currentSelection;
+//       }
+//       // Set cursor to end of text
+//       let range = document.createRange();
+//       let sel = window.getSelection();
+//       range.setStart(zetsu.childNodes[0], zetsu.innerText.length);
+//       range.collapse(true);
+//       sel.removeAllRanges();
+//       sel.addRange(range);
+//       // Remove suggestions
+//       suggestionsList.innerHTML = '';
+//       // Remove details
+//       details.innerHTML = '';
+//     }
+//   }
+// });

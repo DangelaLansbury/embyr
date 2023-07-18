@@ -123,13 +123,6 @@ main {
   font-weight: 900;
   margin-right: 0.5rem;
 }
-.loading-msg {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  margin: 0.5rem 0;
-}
 .loading-text {
   display: inline-flex;
   margin: 1rem 1.75rem;
