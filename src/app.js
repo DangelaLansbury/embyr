@@ -127,10 +127,9 @@ zetsu.addEventListener('input', function () {
       suggestionIndex++;
       if (suggestionIndex > suggestions.length - 1) {
         suggestionIndex = -1;
-        // zetsu.innerText = input;
+        zetsu.innerText = input;
         details.innerHTML = '';
         // focus and move cursor to end of input
-        zetsu.focus();
         let range = document.createRange();
         let sel = window.getSelection();
         range.setStart(zetsu.childNodes[0], zetsu.innerText.length);
@@ -140,7 +139,15 @@ zetsu.addEventListener('input', function () {
       }
       if (suggestionIndex !== -1) {
         suggestions[suggestionIndex].classList.add('active');
-        details.innerHTML = '';
+        zetsu.innerText = suggestions[suggestionIndex].innerText;
+        details.innerHTML = `<div class="details-name">${suggestions[suggestionIndex].innerText}</div><div class="details-description">${commands[suggestions[suggestionIndex].innerText].description}</div>`;
+        // focus and move cursor to end of input
+        let range = document.createRange();
+        let sel = window.getSelection();
+        range.setStart(zetsu.childNodes[0], zetsu.innerText.length);
+        range.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(range);
       }
     } else if (e.key === 'ArrowUp') {
       e.preventDefault();
@@ -149,10 +156,9 @@ zetsu.addEventListener('input', function () {
       }
       suggestionIndex--;
       if (suggestionIndex === -1) {
-        // zetsu.innerText = input;
+        zetsu.innerText = input;
         details.innerHTML = '';
         // focus and move cursor to end of input
-        zetsu.focus();
         let range = document.createRange();
         let sel = window.getSelection();
         range.setStart(zetsu.childNodes[0], zetsu.innerText.length);
@@ -165,7 +171,15 @@ zetsu.addEventListener('input', function () {
       }
       if (suggestionIndex !== -1) {
         suggestions[suggestionIndex].classList.add('active');
-        details.innerHTML = '';
+        zetsu.innerText = suggestions[suggestionIndex].innerText;
+        details.innerHTML = `<div class="details-name">${suggestions[suggestionIndex].innerText}</div><div class="details-description">${commands[suggestions[suggestionIndex].innerText].description}</div>`;
+        // focus and move cursor to end of input
+        let range = document.createRange();
+        let sel = window.getSelection();
+        range.setStart(zetsu.childNodes[0], zetsu.innerText.length);
+        range.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(range);
       }
     }
   });
