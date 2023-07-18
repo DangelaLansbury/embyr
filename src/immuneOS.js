@@ -234,16 +234,42 @@ const commands = {
       returnOutput(output, outputDelay[0]);
     },
   },
-  '-about': {
-    name: 'About',
-    description: 'About this project.',
+  reset: {
+    name: 'Reset',
+    description: 'Reset the system... a fresh start.',
     run: (input) => {
       // Add input to thread
       let output = creatOutputDiv(input);
       output.classList.add('cmd');
       returnOutput(output, 0);
       // Add output to thread
-      output = creatOutputDiv('about command');
+      output = creatOutputDiv('reset command');
+      returnOutput(output, outputDelay[0]);
+    },
+  },
+  status: {
+    name: 'Status',
+    description: 'Check status of system.',
+    run: (input) => {
+      // Add input to thread
+      let output = creatOutputDiv(input);
+      output.classList.add('cmd');
+      returnOutput(output, 0);
+      // Add output to thread
+      output = creatOutputDiv('status command');
+      returnOutput(output, outputDelay[0]);
+    },
+  },
+  '-intro': {
+    name: 'Introduction',
+    description: 'Introduction to this project.',
+    run: (input) => {
+      // Add input to thread
+      let output = creatOutputDiv(input);
+      output.classList.add('cmd');
+      returnOutput(output, 0);
+      // Add output to thread
+      output = creatOutputDiv('intro command');
       returnOutput(output, outputDelay[0]);
     },
   },
@@ -257,29 +283,6 @@ const commands = {
       returnOutput(output, 0);
       // Add output to thread
       output = creatOutputDiv('help command');
-      returnOutput(output, outputDelay[0]);
-    },
-  },
-  '-reset': {
-    name: 'Reset',
-    description: 'Reset system and start fresh.',
-    run: () => {
-      // Reset thread
-      thread.innerHTML = '';
-      zetsuDefault.classList.remove('hidden');
-      zetsuHelper.classList.add('hidden');
-    },
-  },
-  '-status': {
-    name: 'Status',
-    description: 'Check status of system.',
-    run: (input) => {
-      // Add input to thread
-      let output = creatOutputDiv(input);
-      output.classList.add('cmd');
-      returnOutput(output, 0);
-      // Add output to thread
-      output = creatOutputDiv('status command');
       returnOutput(output, outputDelay[0]);
     },
   },
