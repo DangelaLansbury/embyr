@@ -36,7 +36,7 @@ body {
   font-family: 'Source Code Pro', monospace;
   font-size: 16px;
   font-weight: 500;
-  line-height: 1.75rem;
+  line-height: 1.5rem;
   color: var(--wheat);
   background-color: var(--soil-x-dk);
 }
@@ -97,8 +97,8 @@ main {
 .workbook-header {
   display: block;
   width: 100%;
-  height: 1rem;
-  min-height: 1rem;
+  height: 1.5rem;
+  min-height: 1.5rem;
   background-color: var(--soil-dk);
   border-radius: 16px 16px 0 0;
 }
@@ -109,7 +109,7 @@ main {
   width: calc(100% - 4rem);
   padding: 0 2rem;
   margin-top: auto;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   overflow-y: scroll;
   overscroll-behavior: none;
   -ms-overflow-style: none;

@@ -96,6 +96,24 @@ const status = {
 // --- COMMANDS ---
 
 const commands = {
+  arm: {
+    name: 'Arm',
+    description: 'Arm immune system.',
+    subcommands: {
+      local: {
+        name: 'Local',
+        description: 'Arm local region by upsurging bloodflow and secreting proteins to attract immune cells.',
+        run: (obj, mod) => {
+          let output = creatOutputDiv('arm local command');
+          returnOutput(output, outputDelay[0]);
+        },
+      },
+    },
+    run: () => {
+      let output = creatOutputDiv('What do you want to arm?');
+      returnOutput(output, outputDelay[0]);
+    },
+  },
   check: {
     name: 'Check',
     description: 'Evaluate or interpret something in the system.',
@@ -140,6 +158,24 @@ const commands = {
       returnOutput(output, outputDelay[0]);
     },
   },
+  mem: {
+    name: 'Remember',
+    description: 'Remember antigen.',
+    subcommands: {
+      antigen: {
+        name: 'Antigen',
+        description: 'Remember antigen.',
+        run: (obj, mod) => {
+          let output = creatOutputDiv('remember antigen command');
+          returnOutput(output, outputDelay[0]);
+        },
+      },
+    },
+    run: () => {
+      let output = creatOutputDiv('What do you want to remember?');
+      returnOutput(output, outputDelay[0]);
+    },
+  },
   reg: {
     name: 'Regulate',
     description: 'Suppress or incite immune response.',
@@ -166,48 +202,12 @@ const commands = {
       returnOutput(output, outputDelay[0]);
     },
   },
-  mem: {
-    name: 'Remember',
-    description: 'Remember antigen.',
-    subcommands: {
-      antigen: {
-        name: 'Antigen',
-        description: 'Remember antigen.',
-        run: (obj, mod) => {
-          let output = creatOutputDiv('remember antigen command');
-          returnOutput(output, outputDelay[0]);
-        },
-      },
-    },
-    run: () => {
-      let output = creatOutputDiv('What do you want to remember?');
-      returnOutput(output, outputDelay[0]);
-    },
-  },
-  arm: {
-    name: 'Arm',
-    description: 'Arm immune system.',
-    subcommands: {
-      local: {
-        name: 'Local',
-        description: 'Arm local region by upsurging bloodflow and secreting proteins to attract immune cells.',
-        run: (obj, mod) => {
-          let output = creatOutputDiv('arm local command');
-          returnOutput(output, outputDelay[0]);
-        },
-      },
-    },
-    run: () => {
-      let output = creatOutputDiv('What do you want to arm?');
-      returnOutput(output, outputDelay[0]);
-    },
-  },
   '-h': {
     name: 'Help',
     description: 'Get help.',
-    run: () => {
+    run: (input) => {
       // Add input to thread
-      let output = creatOutputDiv('-h');
+      let output = creatOutputDiv(input);
       output.classList.add('cmd');
       returnOutput(output, 0);
       // Add output to thread
@@ -220,7 +220,7 @@ const commands = {
     description: 'Reset system and start fresh.',
     run: () => {
       // Reset thread
-      thread.innerHTML = defaultThread;
+      thread.innerHTML = '';
       zetsuDefault.classList.remove('hidden');
       zetsuHelper.classList.add('hidden');
     },

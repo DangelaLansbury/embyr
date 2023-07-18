@@ -9,6 +9,8 @@
   width: 100%;
   height: 40%;
   min-height: 40%;
+  overflow: hidden;
+  border-top: 1px solid var(--soil-lt);
   background-color: var(--soil);
   border-radius: 0 0 16px 16px;
 }
@@ -18,15 +20,14 @@
   justify-content: flex-start;
   align-items: center;
   background-color: var(--soil-dk);
-  border-top: 1px solid var(--soil-lt);
-  padding: 1rem 2rem;
+  padding: 1.25rem 2rem;
   width: calc(100% - 4rem);
 }
 .zetsu-input-text {
   display: inline-flex;
   margin: auto 0;
-  height: 1.75rem;
-  min-height: 1.75rem;
+  height: 1.5rem;
+  min-height: 1.5rem;
   min-width: 0.25rem;
   white-space: pre-wrap;
   caret-color: #8ec07c;
@@ -37,17 +38,6 @@
 }
 .zetsu-input-text:empty {
   caret-color: transparent;
-}
-.placeholder {
-  position: relative;
-  right: 0.875rem;
-  display: inline-flex;
-  margin: auto 0;
-  height: 1.75rem;
-  min-height: 1.75rem;
-  min-width: 0.25rem;
-  white-space: pre-wrap;
-  color: var(--stone);
 }
 .cursor {
   display: inline-flex;
@@ -82,8 +72,7 @@
 }
 .zetsu-default-content {
   margin: auto;
-  font-size: 0.875rem;
-  color: var(--stone);
+  text-align: center;
 }
 .zetsu-helper {
   display: flex;
@@ -136,11 +125,32 @@
   height: 1.75rem;
   color: var(--lilac);
 }
-.zetsu-footer {
+.zetsu-toolbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
-  height: 4rem;
-  min-height: 4rem;
-  border-top: 1px solid var(--soil-lt);
+  height: 3rem;
+  min-height: 3rem;
+}
+.hotkey-hint {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 0 2rem;
+  font-size: 0.781rem;
+  line-height: 1.25rem;
+  color: var(--stone);
+}
+.hotkey-hint span {
+  margin: 0 0.5rem;
+}
+.hotkey {
+  padding: 0 0.375rem;
+  border-radius: 0.25rem;
+  border: 1px solid var(--soil-x-lt);
 }
 
 .hidden {

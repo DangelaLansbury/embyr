@@ -21,7 +21,7 @@ let suggestions = document.querySelectorAll('.suggestion');
 // --- FOCUS ON EDITOR ---
 
 window.onload = () => {
-  thread.innerHTML = defaultThread;
+  // thread.innerHTML = defaultThread;
   zetsu.focus();
 };
 
@@ -36,11 +36,10 @@ zetsu.addEventListener('keydown', function (e) {
   if (e.key === 'Backspace' && this.innerText.toString().trim().length == 1) {
     this.innerText = '';
     cursor.style.display = 'inline-flex';
-    suggestionsContainer.style.display = 'none';
     suggestionsList.innerHTML = '';
     details.innerHTML = '';
     suggestions = [];
-    if (thread.innerHTML === defaultThread) {
+    if (thread.innerHTML === '') {
       zetsuHelper.classList.add('hidden');
       zetsuDefault.classList.remove('hidden');
     }
@@ -49,7 +48,7 @@ zetsu.addEventListener('keydown', function (e) {
 
 // --- DEFAULTS ---
 
-const defaultThread = `<div class="thread-text" style="color: #A79C8F">Hi there. Welcome to immuneOS.</div>`;
+const defaultThread = `<div class="thread-text">Welcome to immuneOS.</div>`;
 
 const nullThread = `<div class="thread-text">Shoot, I don't recognize that command.</div>`;
 
@@ -203,6 +202,7 @@ zetsu.addEventListener('keydown', function (e) {
     // Clear suggestions
     suggestionsList.innerHTML = '';
     details.innerHTML = '';
+    suggestions = [];
     // Execute commands and return output
     if (input !== '') {
       // Clear default thread if it's still there
@@ -250,7 +250,7 @@ zetsu.addEventListener('keydown', function (e) {
           }
         } else {
           // Run command
-          commands[command].run();
+          commands[command].run(input);
         }
       } else {
         // Add input to thread
