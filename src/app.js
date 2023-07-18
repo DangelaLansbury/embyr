@@ -12,6 +12,7 @@ let zetsu = document.querySelector('.zetsu-input-text'); // Zetsu input field
 let cursor = document.querySelector('.cursor');
 // Suggestions and suggestion details
 let suggestionsContainer = document.querySelector('.suggestions-container');
+let suggestionsListContainer = document.querySelector('.suggestions-list-container');
 let suggestionsList = document.querySelector('.suggestions-list');
 let details = document.querySelector('.suggestion-details');
 let detailsName = document.querySelector('.details-name');
@@ -21,7 +22,6 @@ let suggestions = document.querySelectorAll('.suggestion');
 // --- FOCUS ON EDITOR ---
 
 window.onload = () => {
-  // thread.innerHTML = defaultThread;
   zetsu.focus();
 };
 
@@ -88,7 +88,6 @@ zetsu.addEventListener('input', function () {
   for (let command in commands) {
     if (command.includes(input)) {
       // Create suggestion element
-      suggestionsContainer.style.display = 'flex';
       let suggestion = document.createElement('div');
       suggestion.className = 'suggestion';
       suggestion.innerHTML = command;

@@ -92,6 +92,7 @@ main {
   border-radius: 16px;
   border: 1px solid var(--soil-lt);
   box-shadow: 0px 8px 24px 0px #141312;
+  overflow: hidden;
 }
 /* header at top of workbook, outside of flex flow */
 .workbook-header {

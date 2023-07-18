@@ -225,6 +225,32 @@ const commands = {
       zetsuHelper.classList.add('hidden');
     },
   },
+  '-status': {
+    name: 'Status',
+    description: 'Check status of system.',
+    run: () => {
+      // Add input to thread
+      let output = creatOutputDiv(input);
+      output.classList.add('cmd');
+      returnOutput(output, 0);
+      // Add output to thread
+      output = creatOutputDiv('status command');
+      returnOutput(output, outputDelay[0]);
+    },
+  },
+  '-a': {
+    name: 'About',
+    description: 'About this project.',
+    run: (input) => {
+      // Add input to thread
+      let output = creatOutputDiv(input);
+      output.classList.add('cmd');
+      returnOutput(output, 0);
+      // Add output to thread
+      output = creatOutputDiv('about command');
+      returnOutput(output, outputDelay[0]);
+    },
+  },
 };
 
 // const commands = {
