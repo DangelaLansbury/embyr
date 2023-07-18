@@ -260,32 +260,6 @@ const commands = {
       returnOutput(output, outputDelay[0]);
     },
   },
-  '-intro': {
-    name: 'Introduction',
-    description: 'Introduction to this project.',
-    run: (input) => {
-      // Add input to thread
-      let output = creatOutputDiv(input);
-      output.classList.add('cmd');
-      returnOutput(output, 0);
-      // Add output to thread
-      output = creatOutputDiv('intro command');
-      returnOutput(output, outputDelay[0]);
-    },
-  },
-  '-h': {
-    name: 'Help',
-    description: 'Get help.',
-    run: (input) => {
-      // Add input to thread
-      let output = creatOutputDiv(input);
-      output.classList.add('cmd');
-      returnOutput(output, 0);
-      // Add output to thread
-      output = creatOutputDiv('help command');
-      returnOutput(output, outputDelay[0]);
-    },
-  },
 };
 
 // const commands = {

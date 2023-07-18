@@ -2,10 +2,10 @@
 /* Chai theme */
 :root {
   --soil-x-lt: #5a5958;
-  --soil-lt: #464342;
-  --soil: #32302f;
-  --soil-dk: #282625;
-  --soil-x-dk: #1e1d1c;
+  --soil-lt: #3c3a39;
+  --soil: #282625;
+  --soil-dk: #1e1d1c;
+  --soil-x-dk: #141312;
   --wheat: #ebdbb2;
   --clay: #fd6d5c;
   --honey: #fabd2f;
@@ -91,7 +91,7 @@ main {
   background-color: var(--soil-dk);
   border-radius: 16px;
   border: 1px solid var(--soil-lt);
-  box-shadow: 0px 8px 24px 0px #141312;
+  box-shadow: 0px 8px 16px 0px #0a0909;
   overflow: hidden;
 }
 /* header at top of workbook, outside of flex flow */

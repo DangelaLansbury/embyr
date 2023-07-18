@@ -76,7 +76,7 @@
 }
 .zetsu-helper {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   border-top: 1px solid var(--soil-lt);
   height: 100%;
   width: 100%;
