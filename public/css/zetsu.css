@@ -1,0 +1,137 @@
+/* ---- ZETSU ---- */
+/* command line content */
+.zetsu-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin: 0;
+  width: 100%;
+  height: 33%;
+  min-height: 33%;
+  background-color: var(--soil);
+  border-radius: 0 0 16px 16px;
+}
+.zetsu-input {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: var(--soil-dk);
+  border-top: 1px solid var(--soil-lt);
+  padding: 1rem 2rem;
+  width: calc(100% - 4rem);
+}
+.zetsu-input-text {
+  display: inline-flex;
+  margin: auto 0;
+  height: 1.75rem;
+  min-height: 1.75rem;
+  min-width: 0.25rem;
+  white-space: pre-wrap;
+  caret-color: #8ec07c;
+}
+.zetsu-input-text:focus {
+  border: none;
+  outline: none;
+}
+.zetsu-input-text:empty {
+  caret-color: transparent;
+}
+.cursor {
+  display: inline-flex;
+  width: 0.75rem;
+  height: 1.25rem;
+  border-bottom: 2px solid var(--sweetgrass);
+  animation: blink 1s infinite;
+  margin: auto 0;
+  z-index: 1;
+  position: relative;
+  left: -0.25rem;
+}
+@keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+/* helper */
+/* .zetsu-default {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--soil-lt);
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+.zetsu-default-content {
+  margin: auto;
+  font-size: 0.875rem;
+  color: var(--stone);
+} */
+.zetsu-helper {
+  display: flex;
+  flex-direction: row;
+  border-top: 1px solid var(--soil-lt);
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+.suggestions-container {
+  display: none;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin: 0;
+  width: 40%;
+  height: 100%;
+  overflow: hidden;
+  border-right: 1px solid var(--soil-lt);
+}
+.suggestions-list {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  overscroll-behavior: none;
+  -ms-overflow-style: none;
+}
+.suggestion {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 0;
+  padding: 0.25rem 2rem;
+  width: calc(100% - 4rem);
+  height: 2rem;
+  min-height: 2rem;
+  transition: 0.2s;
+}
+.suggestion.active {
+  background-color: var(--soil-lt);
+  color: var(--sweetgrass);
+}
+.selected-command {
+  display: inline-flex;
+  margin: auto 0;
+  height: 1.75rem;
+  color: var(--lilac);
+}
+.zetsu-footer {
+  width: 100%;
+  height: 4rem;
+  min-height: 4rem;
+  border-top: 1px solid var(--soil-lt);
+}
+
+.hidden {
+  display: none !important;
+}
