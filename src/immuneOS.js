@@ -108,6 +108,14 @@ const commands = {
           returnOutput(output, outputDelay[0]);
         },
       },
+      '-h': {
+        name: 'Arm help',
+        description: 'Get help with arm command.',
+        run: () => {
+          let output = creatOutputDiv('arm help command');
+          returnOutput(output, outputDelay[0]);
+        },
+      },
     },
     run: () => {
       let output = creatOutputDiv('What do you want to arm?');
@@ -126,11 +134,11 @@ const commands = {
           returnOutput(output, outputDelay[0]);
         },
       },
-      status: {
-        name: 'Status',
-        description: 'Evaluate the status of something in the system.',
-        run: (obj, mod) => {
-          let output = creatOutputDiv('check status' + obj[0] + obj[1] + mod);
+      '-h': {
+        name: 'Check help',
+        description: 'Get help with check command.',
+        run: () => {
+          let output = creatOutputDiv('arm help command');
           returnOutput(output, outputDelay[0]);
         },
       },
@@ -152,6 +160,14 @@ const commands = {
           returnOutput(output, outputDelay[0]);
         },
       },
+      '-h': {
+        name: 'Kill help',
+        description: 'Get help with kill command.',
+        run: () => {
+          let output = creatOutputDiv('kill help command');
+          returnOutput(output, outputDelay[0]);
+        },
+      },
     },
     run: () => {
       let output = creatOutputDiv('What do you want to kill?');
@@ -167,6 +183,14 @@ const commands = {
         description: 'Remember antigen.',
         run: (obj, mod) => {
           let output = creatOutputDiv('remember antigen command');
+          returnOutput(output, outputDelay[0]);
+        },
+      },
+      '-h': {
+        name: 'Remember help',
+        description: 'Get help with remember command.',
+        run: () => {
+          let output = creatOutputDiv('remember help command');
           returnOutput(output, outputDelay[0]);
         },
       },
@@ -196,9 +220,30 @@ const commands = {
           returnOutput(output, outputDelay[0]);
         },
       },
+      '-h': {
+        name: 'Regulate help',
+        description: 'Get help with regulate command.',
+        run: () => {
+          let output = creatOutputDiv('regulate help command');
+          returnOutput(output, outputDelay[0]);
+        },
+      },
     },
     run: () => {
       let output = creatOutputDiv('What do you want to regulate?');
+      returnOutput(output, outputDelay[0]);
+    },
+  },
+  '-about': {
+    name: 'About',
+    description: 'About this project.',
+    run: (input) => {
+      // Add input to thread
+      let output = creatOutputDiv(input);
+      output.classList.add('cmd');
+      returnOutput(output, 0);
+      // Add output to thread
+      output = creatOutputDiv('about command');
       returnOutput(output, outputDelay[0]);
     },
   },
@@ -228,26 +273,13 @@ const commands = {
   '-status': {
     name: 'Status',
     description: 'Check status of system.',
-    run: () => {
-      // Add input to thread
-      let output = creatOutputDiv(input);
-      output.classList.add('cmd');
-      returnOutput(output, 0);
-      // Add output to thread
-      output = creatOutputDiv('status command');
-      returnOutput(output, outputDelay[0]);
-    },
-  },
-  '-a': {
-    name: 'About',
-    description: 'About this project.',
     run: (input) => {
       // Add input to thread
       let output = creatOutputDiv(input);
       output.classList.add('cmd');
       returnOutput(output, 0);
       // Add output to thread
-      output = creatOutputDiv('about command');
+      output = creatOutputDiv('status command');
       returnOutput(output, outputDelay[0]);
     },
   },

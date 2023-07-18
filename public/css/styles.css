@@ -98,8 +98,8 @@ main {
 .workbook-header {
   display: block;
   width: 100%;
-  height: 1.5rem;
-  min-height: 1.5rem;
+  height: 1.25rem;
+  min-height: 1.25rem;
   background-color: var(--soil-dk);
   border-radius: 16px 16px 0 0;
 }

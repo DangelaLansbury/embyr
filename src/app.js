@@ -48,9 +48,16 @@ zetsu.addEventListener('keydown', function (e) {
 
 // --- DEFAULTS ---
 
-const defaultThread = `<div class="thread-text">Welcome to immuneOS.</div>`;
-
 const nullThread = `<div class="thread-text">Shoot, I don't recognize that command.</div>`;
+
+// display suggestions and detail
+
+const displaySuggestion = (command) => {
+  let suggestion = document.createElement('div');
+  suggestion.className = 'suggestion';
+  suggestion.innerHTML = command;
+  suggestionsList.appendChild(suggestion);
+};
 
 // --- OUTPUTS ---
 
@@ -86,13 +93,13 @@ zetsu.addEventListener('input', function () {
   suggestionsList.innerHTML = '';
   details.innerHTML = '';
   for (let command in commands) {
-    if (command.includes(input)) {
+    if (command.startsWith(input)) {
       // Create suggestion element
-      let suggestion = document.createElement('div');
-      suggestion.className = 'suggestion';
-      suggestion.innerHTML = command;
-      suggestionsList.appendChild(suggestion);
+      displaySuggestion(command);
     }
+  }
+  if (suggestionsList.innerHTML === '') {
+    displaySuggestion('Testing...');
   }
   // Listening for up and down arrow keys to cycle through suggestions
   suggestions = document.querySelectorAll('.suggestion');
@@ -204,10 +211,6 @@ zetsu.addEventListener('keydown', function (e) {
     suggestions = [];
     // Execute commands and return output
     if (input !== '') {
-      // Clear default thread if it's still there
-      if (thread.innerHTML === defaultThread) {
-        thread.innerHTML = '';
-      }
       // Split input into command and args
       input = input.toLowerCase().trim();
       let parts = input.split(' ');
