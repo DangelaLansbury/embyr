@@ -97,60 +97,88 @@ const status = {
 
 const commands = {
   check: {
-    name: 'check',
+    name: 'Check',
     description: 'Evaluate or interpret something in the system.',
     subcommands: {
-      mhc: (obj, mod) => {
-        let output = creatOutputDiv('check mhc' + obj[0] + obj[1] + mod);
-        returnOutput(output, outputDelay[0]);
+      mhc: {
+        name: 'MHC',
+        description: 'Major histocompatibility complex (MHC) molecules are cell surface proteins that present antigens to T cells.',
+        run: (obj, mod) => {
+          let output = creatOutputDiv('check mhc' + obj[0] + obj[1] + mod);
+          returnOutput(output, outputDelay[0]);
+        },
       },
-      status: (obj, mod) => {
-        let output = creatOutputDiv('check status' + obj[0] + obj[1] + mod);
-        returnOutput(output, outputDelay[0]);
+      status: {
+        name: 'Status',
+        description: 'Evaluate the status of something in the system.',
+        run: (obj, mod) => {
+          let output = creatOutputDiv('check status' + obj[0] + obj[1] + mod);
+          returnOutput(output, outputDelay[0]);
+        },
       },
     },
   },
   kill: {
-    name: 'kill',
+    name: 'Kill',
     description: 'Remove something from the system.',
     subcommands: {
-      cell: (obj, mod) => {
-        let output = creatOutputDiv('phagocytose command');
-        returnOutput(output, outputDelay[0]);
+      pathogen: {
+        name: 'Pathogen',
+        description: 'Remove pathogen from the system.',
+        run: (obj, mod) => {
+          let output = creatOutputDiv('phagocytose command');
+          returnOutput(output, outputDelay[0]);
+        },
       },
     },
   },
   reg: {
-    name: 'regulate',
-    description: 'Suppress immune response.',
+    name: 'Regulate',
+    description: 'Suppress or incite immune response.',
     subcommands: {
-      down: (obj, mod) => {
-        let output = creatOutputDiv('suppress command');
-        returnOutput(output, outputDelay[0]);
+      up: {
+        name: 'Up',
+        description: 'Incite immune response.',
+        run: (obj, mod) => {
+          let output = creatOutputDiv('regulate up command');
+          returnOutput(output, outputDelay[0]);
+        },
       },
-      up: (obj, mod) => {
-        let output = creatOutputDiv('stimulate command');
-        returnOutput(output, outputDelay[0]);
+      down: {
+        name: 'Down',
+        description: 'Suppress immune response.',
+        run: (obj, mod) => {
+          let output = creatOutputDiv('regulate down command');
+          returnOutput(output, outputDelay[0]);
+        },
       },
     },
   },
   mem: {
-    name: 'remember',
+    name: 'Remember',
     description: 'Remember antigen.',
     subcommands: {
-      antigen: (obj, mod) => {
-        let output = creatOutputDiv('remember antigen command');
-        returnOutput(output, outputDelay[0]);
+      antigen: {
+        name: 'Antigen',
+        description: 'Remember antigen.',
+        run: (obj, mod) => {
+          let output = creatOutputDiv('remember antigen command');
+          returnOutput(output, outputDelay[0]);
+        },
       },
     },
   },
   arm: {
-    name: 'arm',
+    name: 'Arm',
     description: 'Arm immune system.',
     subcommands: {
-      local: (obj, mod) => {
-        let output = creatOutputDiv('local command');
-        returnOutput(output, outputDelay[0]);
+      local: {
+        name: 'Local',
+        description: 'Arm local region by upsurging bloodflow and secreting proteins to attract immune cells.',
+        run: (obj, mod) => {
+          let output = creatOutputDiv('arm local command');
+          returnOutput(output, outputDelay[0]);
+        },
       },
     },
   },

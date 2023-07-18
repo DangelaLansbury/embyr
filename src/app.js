@@ -101,7 +101,6 @@ const outputDelay = [600, 800, 1000, 1200, 1400, 1600, 1800, 2000];
 // Populating suggestions container with suggestions based on input
 zetsu.addEventListener('input', function () {
   let input = this.innerText;
-  // let wordsInInput = input.split(' ');
   suggestionsList.innerHTML = '';
   details.innerHTML = '';
   for (let command in commands) {
@@ -114,10 +113,9 @@ zetsu.addEventListener('input', function () {
       suggestionsList.appendChild(suggestion);
     }
   }
-  // Listening for up and down arrow keys to cycle through suggestions, replace input with suggestion, and show details, but then cycle back to input if user presses up arrow on first suggestion or down arrow on last suggestion
+  // Listening for up and down arrow keys to cycle through suggestions
   let suggestions = document.querySelectorAll('.suggestion');
   let suggestionIndex = -1;
-  // suggestions[suggestionIndex].classList.add('active');
   zetsu.addEventListener('keydown', function (e) {
     if (e.key === 'ArrowDown') {
       e.preventDefault();
@@ -140,7 +138,13 @@ zetsu.addEventListener('input', function () {
       if (suggestionIndex !== -1) {
         suggestions[suggestionIndex].classList.add('active');
         zetsu.innerText = suggestions[suggestionIndex].innerText;
-        details.innerHTML = `<div class="details-name">${suggestions[suggestionIndex].innerText}</div><div class="details-description">${commands[suggestions[suggestionIndex].innerText].description}</div>`;
+        details.innerHTML = `<div class="details-name">${commands[suggestions[suggestionIndex].innerText].name}</div><div class="details-description">${commands[suggestions[suggestionIndex].innerText].description}</div>`;
+        // Scroll to active suggestion
+        suggestions[suggestionIndex].scrollIntoView({
+          block: 'nearest',
+          inline: 'end',
+          behavior: 'smooth',
+        });
         // focus and move cursor to end of input
         let range = document.createRange();
         let sel = window.getSelection();
@@ -172,7 +176,13 @@ zetsu.addEventListener('input', function () {
       if (suggestionIndex !== -1) {
         suggestions[suggestionIndex].classList.add('active');
         zetsu.innerText = suggestions[suggestionIndex].innerText;
-        details.innerHTML = `<div class="details-name">${suggestions[suggestionIndex].innerText}</div><div class="details-description">${commands[suggestions[suggestionIndex].innerText].description}</div>`;
+        details.innerHTML = `<div class="details-name">${commands[suggestions[suggestionIndex].innerText].name}</div><div class="details-description">${commands[suggestions[suggestionIndex].innerText].description}</div>`;
+        // Scroll to active suggestion
+        suggestions[suggestionIndex].scrollIntoView({
+          block: 'nearest',
+          inline: 'end',
+          behavior: 'smooth',
+        });
         // focus and move cursor to end of input
         let range = document.createRange();
         let sel = window.getSelection();
@@ -225,7 +235,7 @@ zetsu.addEventListener('keydown', function (e) {
           let modifier = args.filter((arg) => arg.startsWith('-'));
           let objectArray = args.filter((arg) => !arg.startsWith('-'));
           // Run subcommand within command object
-          commands[command].subcommands[subcommand](objectArray, modifier);
+          commands[command].subcommands[subcommand].run(objectArray, modifier);
           clearzetsu();
         } else {
           // Add input to thread
@@ -248,80 +258,3 @@ zetsu.addEventListener('keydown', function (e) {
     }
   }
 });
-
-// zetsu.addEventListener('keydown', function (e) {
-//   if (e.keyCode === 38) {
-//     // Up arrow
-//     e.preventDefault();
-//     suggestions[suggestionIndex].classList.remove('active');
-//     suggestionIndex--;
-//     if (suggestionIndex < 0) {
-//       suggestionIndex = suggestions.length - 1;
-//     }
-//     suggestions[suggestionIndex].classList.add('active');
-//     // display suggestion description in details section
-//     suggestionName = suggestions[suggestionIndex].innerText;
-//     details.innerHTML = `<div class="details-text">${suggestionName}</div>`;
-//     // Scroll to active suggestion
-//     suggestions[suggestionIndex].scrollIntoView({
-//       block: 'nearest',
-//       inline: 'start',
-//       behavior: 'smooth',
-//     });
-//   }
-//   if (e.keyCode === 40) {
-//     // Down arrow
-//     e.preventDefault();
-//     suggestions[suggestionIndex].classList.remove('active');
-//     suggestionIndex++;
-//     if (suggestionIndex > suggestions.length - 1) {
-//       suggestionIndex = 0;
-//     }
-//     suggestions[suggestionIndex].classList.add('active');
-//     // display suggestion description in details section
-//     suggestionName = suggestions[suggestionIndex].innerText;
-//     details.innerHTML = `<div class="details-text">${suggestionName}</div>`;
-//     // Scroll to active suggestion
-//     suggestions[suggestionIndex].scrollIntoView({
-//       block: 'nearest',
-//       inline: 'end',
-//       behavior: 'smooth',
-//     });
-//   }
-// });
-
-// zetsu.addEventListener('keydown', function (e) {
-//   if (e.keyCode === 9) {
-//     e.preventDefault();
-//     if (suggestionsList.childElementCount > 0) {
-//       let currentSelection = document.querySelector('.active').innerText;
-//       // Check if current selection is a command or an actor in innate or adaptive
-//       if (currentSelection in commands) {
-//         // Check if command has a modifier
-//         if (currentSelection.includes(' ')) {
-//           let args = currentSelection.split(' ');
-//           let obj = args[0];
-//           let mod = args[1];
-//           zetsu.innerText = obj + ' ' + mod;
-//         } else {
-//           zetsu.innerText = currentSelection;
-//         }
-//       } else if (currentSelection in innate) {
-//         zetsu.innerText = 'innate' + ' ' + currentSelection;
-//       } else if (currentSelection in adaptive) {
-//         zetsu.innerText = 'adapt' + ' ' + currentSelection;
-//       }
-//       // Set cursor to end of text
-//       let range = document.createRange();
-//       let sel = window.getSelection();
-//       range.setStart(zetsu.childNodes[0], zetsu.innerText.length);
-//       range.collapse(true);
-//       sel.removeAllRanges();
-//       sel.addRange(range);
-//       // Remove suggestions
-//       suggestionsList.innerHTML = '';
-//       // Remove details
-//       details.innerHTML = '';
-//     }
-//   }
-// });
