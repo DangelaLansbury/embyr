@@ -3,10 +3,12 @@
 // Terminal components
 let container = document.querySelector('.container'); // Main container
 let thread = document.querySelector('.thread'); // Thread container
+let help = document.querySelector('.help-bar-left'); // Help container
 // Zetsu components
 let zetsuContainer = document.querySelector('.zetsu-container'); // Full Zetsu container for input, suggestions, and details
+let zetsuInit = document.querySelector('.zetsu-init'); // Zetsu init content
+let meetZetsu = document.querySelector('#meetZetsuHint'); // Meet Zetsu hint in init footer
 let zetsuHelper = document.querySelector('.zetsu-helper'); // Zetsu suggestions and description container
-let zetsuDefault = document.querySelector('.zetsu-default'); // Zetsu default text
 // Zetsu input
 let zetsu = document.querySelector('.zetsu-input-text'); // Zetsu input field
 let cursor = document.querySelector('.cursor');
@@ -41,7 +43,7 @@ zetsu.addEventListener('keydown', function (e) {
     suggestions = [];
     if (thread.innerHTML === '') {
       zetsuHelper.classList.add('hidden');
-      zetsuDefault.classList.remove('hidden');
+      zetsuInit.classList.remove('hidden');
     }
   }
 });
@@ -80,16 +82,33 @@ const outputDelay = [600, 800, 1000, 1200, 1400, 1600, 1800, 2000];
 
 // --- ADDING EVENT LISTENERS FOR COMMANDS ---
 
+// Listen for meta commands: '?' '&'
+zetsu.addEventListener('keydown', function (e) {
+  if (e.key === '?') {
+    e.preventDefault();
+    help.classList.toggle('hidden');
+  }
+  if (e.key === '&') {
+    e.preventDefault();
+    if (!meetZetsu.classList.contains('hidden')) {
+      meetZetsu.classList.add('hidden');
+      returnOutput(creatOutputDiv(`Hi, I'm Zetsu!`), 0);
+    }
+  }
+});
+
 // Populating suggestions container with suggestions based on input
 zetsu.addEventListener('input', function () {
   let input = this.innerText;
+  // Check if input is empty
   if (input !== '') {
     cursor.style.display = 'none';
     if (zetsuHelper.classList.contains('hidden')) {
       zetsuHelper.classList.remove('hidden');
-      zetsuDefault.classList.add('hidden');
+      zetsuInit.classList.add('hidden');
     }
   }
+  // Clear suggestions and details
   suggestionsList.innerHTML = '';
   details.innerHTML = '';
   for (let command in commands) {

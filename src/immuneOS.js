@@ -96,33 +96,7 @@ const status = {
 // --- COMMANDS ---
 
 const commands = {
-  arm: {
-    name: 'Arm',
-    description: 'Arm immune system.',
-    subcommands: {
-      local: {
-        name: 'Local',
-        description: 'Arm local region by upsurging bloodflow and secreting proteins to attract immune cells.',
-        run: (obj, mod) => {
-          let output = creatOutputDiv('arm local command');
-          returnOutput(output, outputDelay[0]);
-        },
-      },
-      '-h': {
-        name: 'Arm help',
-        description: 'Get help with arm command.',
-        run: () => {
-          let output = creatOutputDiv('arm help command');
-          returnOutput(output, outputDelay[0]);
-        },
-      },
-    },
-    run: () => {
-      let output = creatOutputDiv('What do you want to arm?');
-      returnOutput(output, outputDelay[0]);
-    },
-  },
-  check: {
+  chk: {
     name: 'Check',
     description: 'Evaluate or interpret something in the system.',
     subcommands: {
@@ -148,8 +122,30 @@ const commands = {
       returnOutput(output, outputDelay[0]);
     },
   },
-  kill: {
-    name: 'Kill',
+  mk: {
+    name: 'Make',
+    description: 'Synthesize proteins and clone cells.',
+    subcommands: {
+      protein: {
+        name: 'Protein',
+        description: 'Make proteins.',
+        run: (obj, mod) => {
+          let output = creatOutputDiv('make protein command');
+          returnOutput(output, outputDelay[0]);
+        },
+      },
+      '-h': {
+        name: 'Make help',
+        description: 'Get help with make command.',
+        run: () => {
+          let output = creatOutputDiv('make help command');
+          returnOutput(output, outputDelay[0]);
+        },
+      },
+    },
+  },
+  ph: {
+    name: 'Phagocytose',
     description: 'Remove something from the system.',
     subcommands: {
       invader: {
@@ -161,10 +157,10 @@ const commands = {
         },
       },
       '-h': {
-        name: 'Kill help',
+        name: 'Phagocytose help',
         description: 'Get help with kill command.',
         run: () => {
-          let output = creatOutputDiv('kill help command');
+          let output = creatOutputDiv('ph help command');
           returnOutput(output, outputDelay[0]);
         },
       },
@@ -174,67 +170,7 @@ const commands = {
       returnOutput(output, outputDelay[0]);
     },
   },
-  mem: {
-    name: 'Remember',
-    description: 'Remember antigen.',
-    subcommands: {
-      antigen: {
-        name: 'Antigen',
-        description: 'Remember antigen.',
-        run: (obj, mod) => {
-          let output = creatOutputDiv('remember antigen command');
-          returnOutput(output, outputDelay[0]);
-        },
-      },
-      '-h': {
-        name: 'Remember help',
-        description: 'Get help with remember command.',
-        run: () => {
-          let output = creatOutputDiv('remember help command');
-          returnOutput(output, outputDelay[0]);
-        },
-      },
-    },
-    run: () => {
-      let output = creatOutputDiv('What do you want to remember?');
-      returnOutput(output, outputDelay[0]);
-    },
-  },
-  reg: {
-    name: 'Regulate',
-    description: 'Suppress or incite immune response.',
-    subcommands: {
-      up: {
-        name: 'Up',
-        description: 'Incite immune response.',
-        run: (obj, mod) => {
-          let output = creatOutputDiv('regulate up command');
-          returnOutput(output, outputDelay[0]);
-        },
-      },
-      down: {
-        name: 'Down',
-        description: 'Suppress immune response.',
-        run: (obj, mod) => {
-          let output = creatOutputDiv('regulate down command');
-          returnOutput(output, outputDelay[0]);
-        },
-      },
-      '-h': {
-        name: 'Regulate help',
-        description: 'Get help with regulate command.',
-        run: () => {
-          let output = creatOutputDiv('regulate help command');
-          returnOutput(output, outputDelay[0]);
-        },
-      },
-    },
-    run: () => {
-      let output = creatOutputDiv('What do you want to regulate?');
-      returnOutput(output, outputDelay[0]);
-    },
-  },
-  reset: {
+  r: {
     name: 'Reset',
     description: 'Reset the system... a fresh start.',
     run: (input) => {
@@ -247,16 +183,29 @@ const commands = {
       returnOutput(output, outputDelay[0]);
     },
   },
-  status: {
-    name: 'Status',
-    description: 'Check status of system.',
-    run: (input) => {
-      // Add input to thread
-      let output = creatOutputDiv(input);
-      output.classList.add('cmd');
-      returnOutput(output, 0);
-      // Add output to thread
-      output = creatOutputDiv('status command');
+  sup: {
+    name: 'Suppress',
+    description: 'Suppress immune response.',
+    subcommands: {
+      tcells: {
+        name: 'Suppress T Cells',
+        description: 'Suppress killer T cell immune response.',
+        run: (obj, mod) => {
+          let output = creatOutputDiv('suppress T cells command');
+          returnOutput(output, outputDelay[0]);
+        },
+      },
+      '-h': {
+        name: 'Suppress help',
+        description: 'Get help with suppress command.',
+        run: () => {
+          let output = creatOutputDiv('suppress help command');
+          returnOutput(output, outputDelay[0]);
+        },
+      },
+    },
+    run: () => {
+      let output = creatOutputDiv('What do you want to regulate?');
       returnOutput(output, outputDelay[0]);
     },
   },

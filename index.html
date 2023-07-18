@@ -9,7 +9,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500&family=Source+Sans+3:wght@400;500&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500;600&display=swap" rel="stylesheet" />
     <!-- Stylesheet -->
     <link rel="stylesheet" href="public/css/styles.css" />
     <link rel="stylesheet" href="public/css/zetsu.css" />
@@ -29,16 +29,48 @@
     <main>
       <div class="workbook">
         <div class="workbook-header"></div>
-        <div class="thread"></div>
+        <div class="thread-container">
+          <div class="thread"></div>
+          <div class="help-bar">
+            <div class="help-bar-left hidden">
+              <div class="help-bar-hint">
+                <div class="help-bar-cmd">chk</div>
+                <div class="help-bar-text">check</div>
+              </div>
+              <div class="help-bar-hint">
+                <div class="help-bar-cmd">mk</div>
+                <div class="help-bar-text">make</div>
+              </div>
+              <div class="help-bar-hint">
+                <div class="help-bar-cmd">ph</div>
+                <div class="help-bar-text">phagocytose</div>
+              </div>
+              <div class="help-bar-hint">
+                <div class="help-bar-cmd">sup</div>
+                <div class="help-bar-text">suppress</div>
+              </div>
+              <div class="help-bar-hint">
+                <div class="help-bar-cmd">r</div>
+                <div class="help-bar-text">reset</div>
+              </div>
+            </div>
+            <div class="help-bar-right">
+              <div class="help-bar-hint">
+                <div class="help-bar-cmd">?</div>
+                <div class="help-bar-text">toggle help</div>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="zetsu-container">
           <div class="zetsu-input cmd">
             <div class="zetsu-input-text" contenteditable="true" spellcheck="false" autocomplete="off"></div>
             <div class="cursor"></div>
           </div>
-          <div class="zetsu-default">
-            <div class="zetsu-default-content">You're accessing <span style="color: var(--honey)">ImmunityOS</span> with a <span style="color: var(--sweetgrass)">Zetsu</span> terminal.</div>
-            <div class="zetsu-toolbar">
-              <div class="hotkey-hint">First time? Type <span class="hotkey">&</span> to meet Zetsu.</div>
+          <div class="zetsu-init">
+            <div class="zetsu-init-content">You're accessing <span style="color: var(--honey)">ImmunityOS</span> with <span style="color: var(--sweetgrass)">Zetsu</span> terminal.</div>
+            <div class="zetsu-init-footer">
+              <div class="hotkey-hint" id="meetZetsuHint">First time? Type <span class="hotkey">&</span> to meet Zetsu.</div>
             </div>
           </div>
           <div class="zetsu-helper hidden">
@@ -46,9 +78,7 @@
               <div class="suggestions-list-container">
                 <div class="suggestions-list"></div>
               </div>
-              <div class="suggestion-details">
-                <!-- <div class="loading-text">Thinking...</div> -->
-              </div>
+              <div class="suggestion-details"></div>
             </div>
           </div>
         </div>
@@ -58,3 +88,5 @@
     <script src="src/app.js" type="application/javascript"></script>
   </body>
 </html>
+
+<!-- <div class="loading-text">Thinking...</div> -->
