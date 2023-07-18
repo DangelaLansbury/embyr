@@ -72,7 +72,7 @@
   }
 }
 /* helper */
-/* .zetsu-default {
+.zetsu-default {
   display: flex;
   flex-direction: column;
   border-top: 1px solid var(--soil-lt);
@@ -84,7 +84,7 @@
   margin: auto;
   font-size: 0.875rem;
   color: var(--stone);
-} */
+}
 .zetsu-helper {
   display: flex;
   flex-direction: row;

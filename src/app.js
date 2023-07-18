@@ -1,12 +1,16 @@
 // --- DOM VARIABLES ---
 
-let container = document.querySelector('.container');
-let zetsuContainer = document.querySelector('.zetsu-container');
-let zetsuHelper = document.querySelector('.zetsu-helper');
-let zetsuDefault = document.querySelector('.zetsu-default');
-let thread = document.querySelector('.thread');
-let zetsu = document.querySelector('.zetsu-input-text');
+// Terminal components
+let container = document.querySelector('.container'); // Main container
+let thread = document.querySelector('.thread'); // Thread container
+// Zetsu components
+let zetsuContainer = document.querySelector('.zetsu-container'); // Full Zetsu container for input, suggestions, and details
+let zetsuHelper = document.querySelector('.zetsu-helper'); // Zetsu suggestions and description container
+let zetsuDefault = document.querySelector('.zetsu-default'); // Zetsu default text
+// Zetsu input
+let zetsu = document.querySelector('.zetsu-input-text'); // Zetsu input field
 let cursor = document.querySelector('.cursor');
+// Suggestions and suggestion details
 let suggestionsContainer = document.querySelector('.suggestions-container');
 let suggestionsList = document.querySelector('.suggestions-list');
 let details = document.querySelector('.suggestion-details');
@@ -109,8 +113,7 @@ zetsu.addEventListener('input', function () {
           range.collapse(true);
           sel.removeAllRanges();
           sel.addRange(range);
-        }
-        if (suggestionIndex !== -1) {
+        } else if (suggestionIndex !== -1) {
           suggestions[suggestionIndex].classList.add('active');
           zetsu.innerText = suggestions[suggestionIndex].innerText;
           details.innerHTML = `<div class="details-name">${commands[suggestions[suggestionIndex].innerText].name}</div><div class="details-description">${commands[suggestions[suggestionIndex].innerText].description}</div>`;
@@ -167,6 +170,14 @@ zetsu.addEventListener('input', function () {
           sel.addRange(range);
         }
       }
+    } else {
+      suggestionIndex = -1;
+    }
+  });
+  // Reset suggestion index when user presses space or continues to type
+  zetsu.addEventListener('keydown', function (e) {
+    if (e.key === ' ' || e.key === 'Backspace') {
+      suggestionIndex = -1;
     }
   });
 });
