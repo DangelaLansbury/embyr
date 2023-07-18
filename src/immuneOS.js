@@ -221,6 +221,8 @@ const commands = {
     run: () => {
       // Reset thread
       thread.innerHTML = defaultThread;
+      zetsuDefault.classList.remove('hidden');
+      zetsuHelper.classList.add('hidden');
     },
   },
 };

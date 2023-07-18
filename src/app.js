@@ -40,6 +40,10 @@ zetsu.addEventListener('keydown', function (e) {
     suggestionsList.innerHTML = '';
     details.innerHTML = '';
     suggestions = [];
+    if (thread.innerHTML === defaultThread) {
+      zetsuHelper.classList.add('hidden');
+      zetsuDefault.classList.remove('hidden');
+    }
   }
 });
 
@@ -75,8 +79,10 @@ zetsu.addEventListener('input', function () {
   let input = this.innerText;
   if (input !== '') {
     cursor.style.display = 'none';
-  } else {
-    cursor.style.display = 'inline-flex';
+    if (zetsuHelper.classList.contains('hidden')) {
+      zetsuHelper.classList.remove('hidden');
+      zetsuDefault.classList.add('hidden');
+    }
   }
   suggestionsList.innerHTML = '';
   details.innerHTML = '';
@@ -174,9 +180,9 @@ zetsu.addEventListener('input', function () {
       suggestionIndex = -1;
     }
   });
-  // Reset suggestion index when user presses space or continues to type
+  // Reset suggestion index when user presses space or continues to type or hits enter
   zetsu.addEventListener('keydown', function (e) {
-    if (e.key === ' ' || e.key === 'Backspace') {
+    if (e.key === ' ' || e.key === 'Backspace' || e.key === 'Enter') {
       suggestionIndex = -1;
     }
   });
@@ -195,7 +201,6 @@ zetsu.addEventListener('keydown', function (e) {
     e.preventDefault();
     let input = zetsu.innerText;
     // Clear suggestions
-    suggestionsContainer.style.display = 'none';
     suggestionsList.innerHTML = '';
     details.innerHTML = '';
     // Execute commands and return output
