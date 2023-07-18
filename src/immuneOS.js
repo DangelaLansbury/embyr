@@ -117,19 +117,27 @@ const commands = {
         },
       },
     },
+    run: () => {
+      let output = creatOutputDiv('What do you want to check?');
+      returnOutput(output, outputDelay[0]);
+    },
   },
   kill: {
     name: 'Kill',
     description: 'Remove something from the system.',
     subcommands: {
-      pathogen: {
-        name: 'Pathogen',
+      invader: {
+        name: 'Foreign pathogen',
         description: 'Remove pathogen from the system.',
         run: (obj, mod) => {
           let output = creatOutputDiv('phagocytose command');
           returnOutput(output, outputDelay[0]);
         },
       },
+    },
+    run: () => {
+      let output = creatOutputDiv('What do you want to kill?');
+      returnOutput(output, outputDelay[0]);
     },
   },
   reg: {
@@ -153,6 +161,10 @@ const commands = {
         },
       },
     },
+    run: () => {
+      let output = creatOutputDiv('What do you want to regulate?');
+      returnOutput(output, outputDelay[0]);
+    },
   },
   mem: {
     name: 'Remember',
@@ -167,6 +179,10 @@ const commands = {
         },
       },
     },
+    run: () => {
+      let output = creatOutputDiv('What do you want to remember?');
+      returnOutput(output, outputDelay[0]);
+    },
   },
   arm: {
     name: 'Arm',
@@ -180,6 +196,31 @@ const commands = {
           returnOutput(output, outputDelay[0]);
         },
       },
+    },
+    run: () => {
+      let output = creatOutputDiv('What do you want to arm?');
+      returnOutput(output, outputDelay[0]);
+    },
+  },
+  '-h': {
+    name: 'Help',
+    description: 'Get help.',
+    run: () => {
+      // Add input to thread
+      let output = creatOutputDiv('-h');
+      output.classList.add('cmd');
+      returnOutput(output, 0);
+      // Add output to thread
+      output = creatOutputDiv('help command');
+      returnOutput(output, outputDelay[0]);
+    },
+  },
+  '-reset': {
+    name: 'Reset',
+    description: 'Reset system and start fresh.',
+    run: () => {
+      // Reset thread
+      thread.innerHTML = defaultThread;
     },
   },
 };

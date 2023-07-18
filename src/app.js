@@ -214,6 +214,7 @@ zetsu.addEventListener('keydown', function (e) {
     suggestionIndex = 0;
     // Execute commands and return output
     if (input !== '') {
+      // Clear default thread if it's still there
       if (thread.innerHTML === defaultThread) {
         thread.innerHTML = '';
       }
@@ -225,25 +226,43 @@ zetsu.addEventListener('keydown', function (e) {
       let args = parts.slice(2);
       // Check if command exists
       if (commands[command]) {
-        // check if subcommand exists
-        if (commands[command].subcommands[subcommand]) {
-          // Add input to thread
-          let output = creatOutputDiv(input);
-          output.classList.add('cmd');
-          returnOutput(output, 0);
-          // Split args into object and modifier where modifier is anything that starts with "-"
-          let modifier = args.filter((arg) => arg.startsWith('-'));
-          let objectArray = args.filter((arg) => !arg.startsWith('-'));
-          // Run subcommand within command object
-          commands[command].subcommands[subcommand].run(objectArray, modifier);
-          clearzetsu();
+        // Check if command has subcommands
+        if (commands[command].subcommands) {
+          // Check if user added subcommand
+          if (subcommand === undefined) {
+            // Add input to thread
+            let output = creatOutputDiv(input);
+            output.classList.add('cmd');
+            returnOutput(output, 0);
+            // Run command
+            commands[command].run();
+            clearzetsu();
+          } else {
+            // check if subcommand exists
+            if (commands[command].subcommands[subcommand]) {
+              // Add input to thread
+              let output = creatOutputDiv(input);
+              output.classList.add('cmd');
+              returnOutput(output, 0);
+              // Split args into object and modifier where modifier is anything that starts with "--"
+              let modifier = args.filter((arg) => arg.startsWith('--'));
+              let objectArray = args.filter((arg) => !arg.startsWith('--'));
+              // Run subcommand within command object
+              commands[command].subcommands[subcommand].run(objectArray, modifier);
+              clearzetsu();
+            } else {
+              // Add input to thread
+              let output = creatOutputDiv(input);
+              output.classList.add('cmd');
+              returnOutput(output, 0);
+              // Add nullThread to thread
+              returnOutput(creatOutputDiv(`Hm, I don't recognize this subcommand`), 0);
+              clearzetsu();
+            }
+          }
         } else {
-          // Add input to thread
-          let output = creatOutputDiv(input);
-          output.classList.add('cmd');
-          returnOutput(output, 0);
-          // Add nullThread to thread
-          returnOutput(creatOutputDiv('Please add an argument'), 0);
+          // Run command
+          commands[command].run();
           clearzetsu();
         }
       } else {
