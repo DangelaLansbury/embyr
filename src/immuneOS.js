@@ -97,7 +97,7 @@ const status = {
 
 const commands = {
   chk: {
-    name: 'Check',
+    name: 'check',
     description: 'Evaluate or interpret something in the system.',
     subcommands: {
       mhc: {
@@ -122,8 +122,8 @@ const commands = {
       returnOutput(output, outputDelay[0]);
     },
   },
-  mk: {
-    name: 'Make',
+  mut: {
+    name: 'mutate',
     description: 'Synthesize proteins and clone cells.',
     subcommands: {
       protein: {
@@ -145,7 +145,7 @@ const commands = {
     },
   },
   ph: {
-    name: 'Phagocytose',
+    name: 'phagocytose',
     description: 'Remove something from the system.',
     subcommands: {
       invader: {
@@ -171,7 +171,7 @@ const commands = {
     },
   },
   r: {
-    name: 'Reset',
+    name: 'reset',
     description: 'Reset the system... a fresh start.',
     run: (input) => {
       // Add input to thread
@@ -180,32 +180,6 @@ const commands = {
       returnOutput(output, 0);
       // Add output to thread
       output = creatOutputDiv('reset command');
-      returnOutput(output, outputDelay[0]);
-    },
-  },
-  sup: {
-    name: 'Suppress',
-    description: 'Suppress immune response.',
-    subcommands: {
-      tcells: {
-        name: 'Suppress T Cells',
-        description: 'Suppress killer T cell immune response.',
-        run: (obj, mod) => {
-          let output = creatOutputDiv('suppress T cells command');
-          returnOutput(output, outputDelay[0]);
-        },
-      },
-      '-h': {
-        name: 'Suppress help',
-        description: 'Get help with suppress command.',
-        run: () => {
-          let output = creatOutputDiv('suppress help command');
-          returnOutput(output, outputDelay[0]);
-        },
-      },
-    },
-    run: () => {
-      let output = creatOutputDiv('What do you want to regulate?');
       returnOutput(output, outputDelay[0]);
     },
   },

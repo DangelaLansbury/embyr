@@ -25,6 +25,7 @@ let suggestions = document.querySelectorAll('.suggestion');
 
 window.onload = () => {
   zetsu.focus();
+  displayHelpCommands(commands);
 };
 
 // Listening for click and focusing on editor
@@ -59,6 +60,17 @@ const displaySuggestion = (command) => {
   suggestion.className = 'suggestion';
   suggestion.innerHTML = command;
   suggestionsList.appendChild(suggestion);
+};
+
+// populate help bar with commands
+const displayHelpCommands = (commands) => {
+  for (let command in commands) {
+    let commandName = document.createElement('div');
+    commandName.className = 'help-bar-hint';
+    commandName.innerHTML = `<div class="help-bar-cmd">${command}</div>
+                <div class="help-bar-text">${command.name}</div>`;
+    help.appendChild(commandName);
+  }
 };
 
 // --- OUTPUTS ---
