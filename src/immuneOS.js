@@ -122,27 +122,9 @@ const commands = {
       returnOutput(output, outputDelay[0]);
     },
   },
-  mut: {
-    name: 'mutate',
-    description: 'Synthesize proteins and clone cells.',
-    subcommands: {
-      protein: {
-        name: 'Protein',
-        description: 'Make proteins.',
-        run: (obj, mod) => {
-          let output = creatOutputDiv('make protein command');
-          returnOutput(output, outputDelay[0]);
-        },
-      },
-      '-h': {
-        name: 'Make help',
-        description: 'Get help with make command.',
-        run: () => {
-          let output = creatOutputDiv('make help command');
-          returnOutput(output, outputDelay[0]);
-        },
-      },
-    },
+  edit: {
+    name: 'rewrite genes',
+    description: 'Rewrite genes to alter structure and function.',
   },
   ph: {
     name: 'phagocytose',

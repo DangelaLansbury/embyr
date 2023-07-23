@@ -65,11 +65,16 @@ const displaySuggestion = (command) => {
 // populate help bar with commands
 const displayHelpCommands = (commands) => {
   for (let command in commands) {
-    let commandName = document.createElement('div');
-    commandName.className = 'help-bar-hint';
-    commandName.innerHTML = `<div class="help-bar-cmd">${command}</div>
-                <div class="help-bar-text">${command.name}</div>`;
-    help.appendChild(commandName);
+    // if (command !== 'r') {
+    //   let commandHint = document.createElement('div');
+    //   commandHint.className = 'help-bar-hint';
+    //   commandHint.innerHTML = `<div class="help-bar-cmd">${command}</div><div class="help-bar-text">${commands[command].name}</div>`;
+    //   help.appendChild(commandHint);
+    // }
+    let commandHint = document.createElement('div');
+    commandHint.className = 'help-bar-hint';
+    commandHint.innerHTML = `<div class="help-bar-cmd">${command}</div><div class="help-bar-text">${commands[command].name}</div>`;
+    help.appendChild(commandHint);
   }
 };
 
@@ -282,6 +287,10 @@ zetsu.addEventListener('keydown', function (e) {
             }
           }
         } else {
+          // Add input to thread
+          let output = creatOutputDiv(input);
+          output.classList.add('cmd');
+          returnOutput(output, 0);
           // Run command
           commands[command].run(input);
         }
