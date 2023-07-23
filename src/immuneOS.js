@@ -85,12 +85,10 @@ const adaptive = {
 
 // --- STATUS ---
 
-const status = {
-  health: 100,
-  infection: 0,
-  infectionRate: 0,
-  infectionRateMax: 100,
-  infectionRateMin: 0,
+const targetCell = {
+  isSelf: false,
+  isInfected: true,
+  isCloaked: false,
 };
 
 // --- COMMANDS ---
@@ -101,10 +99,18 @@ const commands = {
     description: 'Evaluate or interpret something in the system.',
     subcommands: {
       mhc: {
-        name: 'MHC',
+        name: 'MHC class I',
         description: 'Major histocompatibility complex (MHC) molecules are cell surface proteins that present antigens to T cells.',
         run: (obj, mod) => {
           let output = creatOutputDiv('check mhc' + obj[0] + obj[1] + mod);
+          returnOutput(output, outputDelay[0]);
+        },
+      },
+      peptide: {
+        name: 'peptide',
+        description: 'Peptides are short chains of amino acids.',
+        run: (obj, mod) => {
+          let output = creatOutputDiv('check peptide');
           returnOutput(output, outputDelay[0]);
         },
       },
@@ -118,13 +124,29 @@ const commands = {
       },
     },
     run: () => {
-      let output = creatOutputDiv('What do you want to check?');
+      // Add output to thread
+      output = creatOutputDiv('What do you want to check?');
       returnOutput(output, outputDelay[0]);
     },
   },
   edit: {
     name: 'rewrite genes',
     description: 'Rewrite genes to alter structure and function.',
+    subcommands: {
+      '-h': {
+        name: 'Edit help',
+        description: 'Get help with edit command.',
+        run: () => {
+          let output = creatOutputDiv('edit help command');
+          returnOutput(output, outputDelay[0]);
+        },
+      },
+    },
+    run: () => {
+      // Add output to thread
+      output = creatOutputDiv('What do you want to edit?');
+      returnOutput(output, outputDelay[0]);
+    },
   },
   ph: {
     name: 'phagocytose',
@@ -148,7 +170,8 @@ const commands = {
       },
     },
     run: () => {
-      let output = creatOutputDiv('What do you want to kill?');
+      // Add output to thread
+      output = creatOutputDiv('What do you want to kill?');
       returnOutput(output, outputDelay[0]);
     },
   },

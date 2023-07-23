@@ -287,18 +287,10 @@ zetsu.addEventListener('keydown', function (e) {
             }
           }
         } else {
-          // Add input to thread
-          let output = creatOutputDiv(input);
-          output.classList.add('cmd');
-          returnOutput(output, 0);
           // Run command
           commands[command].run(input);
         }
       } else {
-        // Add input to thread
-        let output = creatOutputDiv(input);
-        output.classList.add('cmd');
-        returnOutput(output, 0);
         // Add nullThread to thread
         returnOutput(creatOutputDiv(nullThread), 0);
       }
