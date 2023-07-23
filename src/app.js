@@ -1,9 +1,11 @@
 // --- DOM VARIABLES ---
 
+// Workbook components
+let workbook = document.querySelector('.workbook'); // Main container
 // Terminal components
-let container = document.querySelector('.container'); // Main container
 let thread = document.querySelector('.thread'); // Thread container
-let help = document.querySelector('.help-bar-left'); // Help container
+let help1 = document.querySelector('#help1'); // Help container for first set of commands
+let help2 = document.querySelector('#help2'); // Help container for second set of commands
 // Zetsu components
 let zetsuContainer = document.querySelector('.zetsu-container'); // Full Zetsu container for input, suggestions, and details
 let zetsuInit = document.querySelector('.zetsu-init'); // Zetsu init content
@@ -11,7 +13,7 @@ let meetZetsu = document.querySelector('#meetZetsuHint'); // Meet Zetsu hint in 
 let zetsuHelper = document.querySelector('.zetsu-helper'); // Zetsu suggestions and description container
 // Zetsu input
 let zetsu = document.querySelector('.zetsu-input-text'); // Zetsu input field
-let cursor = document.querySelector('.cursor');
+let cursor = document.querySelector('.cursor'); // Zetsu input fake cursor
 // Suggestions and suggestion details
 let suggestionsContainer = document.querySelector('.suggestions-container');
 let suggestionsListContainer = document.querySelector('.suggestions-list-container');
@@ -65,16 +67,14 @@ const displaySuggestion = (command) => {
 // populate help bar with commands
 const displayHelpCommands = (commands) => {
   for (let command in commands) {
-    // if (command !== 'r') {
-    //   let commandHint = document.createElement('div');
-    //   commandHint.className = 'help-bar-hint';
-    //   commandHint.innerHTML = `<div class="help-bar-cmd">${command}</div><div class="help-bar-text">${commands[command].name}</div>`;
-    //   help.appendChild(commandHint);
-    // }
     let commandHint = document.createElement('div');
     commandHint.className = 'help-bar-hint';
     commandHint.innerHTML = `<div class="help-bar-cmd">${command}</div><div class="help-bar-text">${commands[command].name}</div>`;
-    help.appendChild(commandHint);
+    if (commands[command].meta === false) {
+      help1.appendChild(commandHint);
+    } else {
+      help2.appendChild(commandHint);
+    }
   }
 };
 
@@ -99,17 +99,17 @@ const outputDelay = [600, 800, 1000, 1200, 1400, 1600, 1800, 2000];
 
 // --- ADDING EVENT LISTENERS FOR COMMANDS ---
 
-// Listen for meta commands: '?' '&'
+// Listen for help toggle: '?'
 zetsu.addEventListener('keydown', function (e) {
   if (e.key === '?') {
     e.preventDefault();
-    help.classList.toggle('hidden');
-  }
-  if (e.key === '&') {
-    e.preventDefault();
-    if (!meetZetsu.classList.contains('hidden')) {
-      meetZetsu.classList.add('hidden');
-      returnOutput(creatOutputDiv(`Hi, I'm Zetsu!`), 0);
+    if (help1.classList.contains('hidden') && help2.classList.contains('hidden')) {
+      help1.classList.remove('hidden');
+    } else if (!help1.classList.contains('hidden') && help2.classList.contains('hidden')) {
+      help1.classList.add('hidden');
+      help2.classList.remove('hidden');
+    } else if (help1.classList.contains('hidden') && !help2.classList.contains('hidden')) {
+      help2.classList.add('hidden');
     }
   }
 });

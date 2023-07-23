@@ -95,6 +95,7 @@ const targetCell = {
 
 const commands = {
   chk: {
+    meta: false,
     name: 'check',
     description: 'Evaluate or interpret something in the system.',
     subcommands: {
@@ -130,6 +131,7 @@ const commands = {
     },
   },
   edit: {
+    meta: false,
     name: 'rewrite genes',
     description: 'Rewrite genes to alter structure and function.',
     subcommands: {
@@ -149,6 +151,7 @@ const commands = {
     },
   },
   ph: {
+    meta: false,
     name: 'phagocytose',
     description: 'Remove something from the system.',
     subcommands: {
@@ -175,7 +178,22 @@ const commands = {
       returnOutput(output, outputDelay[0]);
     },
   },
+  init: {
+    meta: true,
+    name: 'initialize',
+    description: 'Get started.',
+    run: (input) => {
+      // Add input to thread
+      let output = creatOutputDiv(input);
+      output.classList.add('cmd');
+      returnOutput(output, 0);
+      // Add output to thread
+      output = creatOutputDiv('init command');
+      returnOutput(output, outputDelay[0]);
+    },
+  },
   r: {
+    meta: true,
     name: 'reset',
     description: 'Reset the system... a fresh start.',
     run: (input) => {
@@ -185,6 +203,20 @@ const commands = {
       returnOutput(output, 0);
       // Add output to thread
       output = creatOutputDiv('reset command');
+      returnOutput(output, outputDelay[0]);
+    },
+  },
+  '&': {
+    meta: true,
+    name: 'about',
+    description: 'About this project.',
+    run: (input) => {
+      // Add input to thread
+      let output = creatOutputDiv(input);
+      output.classList.add('cmd');
+      returnOutput(output, 0);
+      // Add output to thread
+      output = creatOutputDiv('about command');
       returnOutput(output, outputDelay[0]);
     },
   },
