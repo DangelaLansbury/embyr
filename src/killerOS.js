@@ -178,9 +178,9 @@ const commands = {
       returnOutput(output, outputDelay[0]);
     },
   },
-  init: {
+  new: {
     meta: true,
-    name: 'initialize',
+    name: 'new cell',
     description: 'Get started.',
     run: (input) => {
       // Add input to thread

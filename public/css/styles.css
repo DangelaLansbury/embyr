@@ -102,6 +102,7 @@ main {
   min-height: 1.25rem;
   background-color: var(--soil-dk);
   border-radius: 16px 16px 0 0;
+  margin-bottom: 0.75rem;
 }
 /* output thread */
 .thread-container {
@@ -136,12 +137,11 @@ main {
 .help-bar {
   display: flex;
   flex-direction: row;
-  align-items: center;
   justify-content: flex-end;
   width: 100%;
   height: 2.5rem;
   min-height: 2.5rem;
-  font-size: 0.813rem;
+  font-size: 0.75rem;
 }
 .help-bar-left {
   display: flex;
@@ -154,7 +154,7 @@ main {
 }
 #help1::after {
   content: '...';
-  color: var(--stone);
+  color: var(--soil-x-lt);
 }
 .help-bar-right {
   display: flex;
@@ -179,7 +179,7 @@ main {
   height: 100%;
   margin-right: 0.5rem;
   font-weight: 600;
-  color: var(--wheat);
+  color: var(--stone);
 }
 .help-bar-text {
   display: inline-flex;
@@ -187,7 +187,7 @@ main {
   justify-content: center;
   height: 100%;
   font-weight: 400;
-  color: var(--stone);
+  color: var(--soil-x-lt);
 }
 .loading-text {
   display: inline-flex;

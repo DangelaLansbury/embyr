@@ -97,7 +97,7 @@ const returnOutput = (output, time) => {
 
 const outputDelay = [600, 800, 1000, 1200, 1400, 1600, 1800, 2000];
 
-// --- ADDING EVENT LISTENERS FOR COMMANDS ---
+// --- ADDING EVENT LISTENERS ---
 
 // Listen for help toggle: '?'
 zetsu.addEventListener('keydown', function (e) {
