@@ -30,9 +30,34 @@ window.onload = () => {
   displayHelpCommands(commands);
 };
 
-// Listening for click and focusing on editor
-document.body.addEventListener('click', function (e) {
+// Listening for click and focusing at end of editor
+workbook.addEventListener('click', function (e) {
   zetsu.focus();
+  // Set cursor at end of editor if target is not zetsu
+  if (e.target !== zetsu && zetsu.innerText.toString().trim().length > 0) {
+    focusAtEnd();
+  }
+});
+
+const focusAtEnd = () => {
+  let range = document.createRange();
+  let sel = window.getSelection();
+  range.setStart(zetsu.childNodes[0], zetsu.innerText.length);
+  range.collapse(true);
+  sel.removeAllRanges();
+  sel.addRange(range);
+};
+
+// Hide cursor if input loses focus
+zetsu.addEventListener('blur', function (e) {
+  cursor.style.display = 'none';
+});
+
+// Show cursor if input gains focus
+zetsu.addEventListener('focus', function (e) {
+  if (zetsu.innerText.toString().trim().length == 0) {
+    cursor.style.display = 'inline-flex';
+  }
 });
 
 // --- HANDLE DELETING INPUT ---
@@ -134,9 +159,6 @@ zetsu.addEventListener('input', function () {
       displaySuggestion(command);
     }
   }
-  if (suggestionsList.innerHTML === '') {
-    displaySuggestion('Testing...');
-  }
   // Listening for up and down arrow keys to cycle through suggestions
   suggestions = document.querySelectorAll('.suggestion');
   let suggestionIndex = -1;
@@ -154,12 +176,7 @@ zetsu.addEventListener('input', function () {
           zetsu.innerText = input;
           details.innerHTML = '';
           // focus and move cursor to end of input
-          let range = document.createRange();
-          let sel = window.getSelection();
-          range.setStart(zetsu.childNodes[0], zetsu.innerText.length);
-          range.collapse(true);
-          sel.removeAllRanges();
-          sel.addRange(range);
+          focusAtEnd();
         } else if (suggestionIndex !== -1) {
           suggestions[suggestionIndex].classList.add('active');
           zetsu.innerText = suggestions[suggestionIndex].innerText;
@@ -171,12 +188,7 @@ zetsu.addEventListener('input', function () {
             behavior: 'smooth',
           });
           // focus and move cursor to end of input
-          let range = document.createRange();
-          let sel = window.getSelection();
-          range.setStart(zetsu.childNodes[0], zetsu.innerText.length);
-          range.collapse(true);
-          sel.removeAllRanges();
-          sel.addRange(range);
+          focusAtEnd();
         }
       } else if (e.key === 'ArrowUp' && input.trim().length !== 0) {
         e.preventDefault();
@@ -188,12 +200,7 @@ zetsu.addEventListener('input', function () {
           zetsu.innerText = input;
           details.innerHTML = '';
           // focus and move cursor to end of input
-          let range = document.createRange();
-          let sel = window.getSelection();
-          range.setStart(zetsu.childNodes[0], zetsu.innerText.length);
-          range.collapse(true);
-          sel.removeAllRanges();
-          sel.addRange(range);
+          focusAtEnd();
         }
         if (suggestionIndex < -1) {
           suggestionIndex = suggestions.length - 1;
@@ -209,12 +216,7 @@ zetsu.addEventListener('input', function () {
             behavior: 'smooth',
           });
           // focus and move cursor to end of input
-          let range = document.createRange();
-          let sel = window.getSelection();
-          range.setStart(zetsu.childNodes[0], zetsu.innerText.length);
-          range.collapse(true);
-          sel.removeAllRanges();
-          sel.addRange(range);
+          focusAtEnd();
         }
       }
     } else {

@@ -152,9 +152,19 @@ main {
   height: 100%;
   margin-left: 2.5rem;
 }
+#help1::before {
+  content: '1 of 2';
+  color: var(--soil-x-lt);
+  margin-right: 1rem;
+}
 #help1::after {
   content: '...';
   color: var(--soil-x-lt);
+}
+#help2::before {
+  content: '2 of 2';
+  color: var(--soil-x-lt);
+  margin-right: 1rem;
 }
 .help-bar-right {
   display: flex;
