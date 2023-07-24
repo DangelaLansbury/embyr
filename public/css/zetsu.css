@@ -1,5 +1,4 @@
 /* ---- ZETSU ---- */
-/* command line content */
 .zetsu-container {
   display: flex;
   flex-direction: column;
@@ -7,60 +6,18 @@
   align-items: flex-start;
   margin: 0;
   width: 100%;
-  height: 33%;
-  min-height: 33%;
+  height: 25%;
+  min-height: 25%;
   overflow: hidden;
-  border-top: 1px solid var(--soil-lt);
   background-color: var(--soil);
 }
-.zetsu-input {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  background-color: var(--soil-dk);
-  padding: 1rem 2.5rem;
-  width: calc(100% - 5rem);
-}
-.zetsu-input-text {
-  display: inline-flex;
-  margin: auto 0;
-  height: 1.5rem;
-  min-height: 1.5rem;
-  min-width: 0.25rem;
-  white-space: pre-wrap;
-  caret-color: #8ec07c;
-}
-.zetsu-input-text:focus {
-  border: none;
-  outline: none;
-}
-.zetsu-input-text:empty {
-  caret-color: transparent;
-}
-.cursor {
-  display: inline-flex;
-  width: 0.75rem;
-  height: 1.25rem;
-  border-bottom: 2px solid var(--sweetgrass);
-  animation: blink 1s infinite;
-  margin: auto 0;
-  z-index: 1;
-  position: relative;
-  left: -0.25rem;
-}
-@keyframes blink {
-  0% {
-    opacity: 0;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
+/* hide zetsu container on mobile */
+@media (max-width: 768px) {
+  .zetsu-container {
+    display: none;
   }
 }
-/* helper */
+/* INITIAL SCREEN */
 .zetsu-init {
   display: flex;
   flex-direction: column;
@@ -105,10 +62,7 @@
   border-radius: 0.25rem;
   border: 1px solid var(--soil-x-lt);
 }
-
-.hidden {
-  display: none !important;
-}
+/* HELPER */
 .zetsu-helper {
   display: flex;
   flex-direction: column;

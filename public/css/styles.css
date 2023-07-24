@@ -213,8 +213,8 @@ main {
   .help-bar {
     display: none;
   }
-  .thread-container {
-    margin-bottom: 1.5rem;
+  .zetsu-input {
+    margin-top: 2rem;
   }
 }
 /* loading */
@@ -257,6 +257,59 @@ main {
   100% {
     content: '⠇';
   }
+}
+/* ---- INPUT ---- */
+.zetsu-input {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: var(--soil-dk);
+  padding: 1rem 2.5rem;
+  width: calc(100% - 5rem);
+  border-top: 1px solid var(--soil-lt);
+}
+.zetsu-input-text {
+  display: inline-flex;
+  margin: auto 0;
+  height: 1.5rem;
+  min-height: 1.5rem;
+  min-width: 0.25rem;
+  white-space: pre-wrap;
+  caret-color: #8ec07c;
+}
+.zetsu-input-text:focus {
+  border: none;
+  outline: none;
+}
+.zetsu-input-text:empty {
+  caret-color: transparent;
+}
+.cursor {
+  display: inline-flex;
+  width: 0.75rem;
+  height: 1.25rem;
+  border-bottom: 2px solid var(--sweetgrass);
+  animation: blink 1s infinite;
+  margin: auto 0;
+  z-index: 1;
+  position: relative;
+  left: -0.25rem;
+}
+@keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+/* ---- HIDING ---- */
+.hidden {
+  display: none !important;
 }
 
 /* --- To be deleted --- */

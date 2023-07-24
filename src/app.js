@@ -30,15 +30,6 @@ window.onload = () => {
   displayHelpCommands(commands);
 };
 
-// Listening for click and focusing at end of editor
-workbook.addEventListener('click', function (e) {
-  zetsu.focus();
-  // Set cursor at end of editor if target is not zetsu
-  if (e.target !== zetsu && zetsu.innerText.toString().trim().length > 0) {
-    focusAtEnd();
-  }
-});
-
 const focusAtEnd = () => {
   let range = document.createRange();
   let sel = window.getSelection();
@@ -47,6 +38,15 @@ const focusAtEnd = () => {
   sel.removeAllRanges();
   sel.addRange(range);
 };
+
+// Listening for click and focusing at end of editor
+workbook.addEventListener('click', function (e) {
+  zetsu.focus();
+  // Set cursor at end of editor if target is not zetsu
+  if (e.target !== zetsu && zetsu.innerText.toString().trim().length > 0) {
+    focusAtEnd();
+  }
+});
 
 // Hide cursor if input loses focus
 zetsu.addEventListener('blur', function (e) {
