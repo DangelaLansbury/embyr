@@ -94,6 +94,15 @@ main {
   box-shadow: 0px 8px 16px 0px #0a0909;
   overflow: hidden;
 }
+/* make workbook take up full window on mobile */
+@media only screen and (max-width: 600px) {
+  .workbook {
+    height: 100%;
+    width: 100%;
+    max-width: 100%;
+    border-radius: 0;
+  }
+}
 /* header at top of workbook, outside of flex flow */
 .workbook-header {
   display: block;
@@ -101,7 +110,6 @@ main {
   height: 1.25rem;
   min-height: 1.25rem;
   background-color: var(--soil-dk);
-  border-radius: 16px 16px 0 0;
   margin-bottom: 0.75rem;
 }
 /* output thread */
@@ -134,6 +142,7 @@ main {
   font-weight: 600;
   margin-right: 0.5rem;
 }
+/* help bar */
 .help-bar {
   display: flex;
   flex-direction: row;
@@ -199,6 +208,16 @@ main {
   font-weight: 400;
   color: var(--soil-x-lt);
 }
+/* hide help bar on medium screens */
+@media (max-width: 900px) {
+  .help-bar {
+    display: none;
+  }
+  .thread-container {
+    margin-bottom: 1.5rem;
+  }
+}
+/* loading */
 .loading-text {
   display: inline-flex;
   margin: 1rem 1.75rem;

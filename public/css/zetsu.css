@@ -12,7 +12,6 @@
   overflow: hidden;
   border-top: 1px solid var(--soil-lt);
   background-color: var(--soil);
-  border-radius: 0 0 16px 16px;
 }
 .zetsu-input {
   display: flex;
