@@ -98,30 +98,31 @@ const commands = {
     meta: false,
     name: 'check',
     description: 'Evaluate or interpret something in the system.',
-    subcommands: {
-      mhc: {
-        name: 'MHC class I',
-        description: 'Major histocompatibility complex (MHC) molecules are cell surface proteins that present antigens to T cells.',
+    chains: {
+      '.': {
+        name: 'Check MHC class I and peptide',
+        full: 'chk .',
+        description: 'Check MHC class I molecules and peptides at the same time to see if cell is of self and if it is infected.',
         run: (obj, mod) => {
-          let output = creatOutputDiv('check mhc' + obj[0] + obj[1] + mod);
+          let output = creatOutputDiv('check mhc peptide');
+          returnOutput(output, outputDelay[0]);
+        },
+      },
+      mhc: {
+        name: 'Check MHC class I',
+        full: 'chk mhc',
+        description: 'Check MHC class I molecules to see if cell is of self.',
+        run: (obj, mod) => {
+          let output = creatOutputDiv('check mhc');
           returnOutput(output, outputDelay[0]);
         },
       },
       peptide: {
-        name: 'peptide',
-        description: 'Peptides are short chains of amino acids.',
+        name: 'Check peptide',
+        full: 'chk peptide',
+        description: 'Check peptide to see if it represents an infected cell.',
         run: (obj, mod) => {
           let output = creatOutputDiv('check peptide');
-          returnOutput(output, outputDelay[0]);
-        },
-      },
-    },
-    chains: {
-      'mhc peptide': {
-        name: 'Check MHC class I and peptide',
-        description: 'Check MHC class I molecules and peptides at the same time.',
-        run: (obj, mod) => {
-          let output = creatOutputDiv('check mhc peptide');
           returnOutput(output, outputDelay[0]);
         },
       },
@@ -129,6 +130,29 @@ const commands = {
     run: () => {
       // Add output to thread
       output = creatOutputDiv('What do you want to check?');
+      returnOutput(output, outputDelay[0]);
+    },
+  },
+  e: {
+    meta: false,
+    name: 'edit',
+    description: 'Rewrite genes to alter structure and function.',
+    chains: {
+      'c.0000A>C': {
+        name: 'Change A to C',
+        full: 'e c.0000A>C',
+        description: 'Change A to C at position 0000.',
+        run: (obj, mod) => {
+          let output = creatOutputDiv('edit c.0000A>C');
+          returnOutput(output, outputDelay[0]);
+          output = creatOutputDiv('You have successfully edited the genome.');
+          returnOutput(output, outputDelay[0]);
+        },
+      },
+    },
+    run: () => {
+      // Add output to thread
+      output = creatOutputDiv('What do you want to edit?');
       returnOutput(output, outputDelay[0]);
     },
   },
@@ -143,36 +167,6 @@ const commands = {
       returnOutput(output, 0);
       // Add output to thread
       output = creatOutputDiv('Kill that cell!');
-      returnOutput(output, outputDelay[0]);
-    },
-  },
-  $: {
-    meta: false,
-    name: 'edit',
-    description: 'Rewrite genes to alter structure and function.',
-    subcommands: {
-      gene: {
-        name: 'mutationExample',
-        description: 'GeneA is a gene.',
-        run: (obj, mod) => {
-          let output = creatOutputDiv('geneA has been changed to geneB');
-          returnOutput(output, outputDelay[0]);
-        },
-      },
-    },
-    chains: {
-      gene: {
-        name: 'Change geneA to geneB',
-        description: 'Change geneA to geneB.',
-        run: (obj, mod) => {
-          let output = creatOutputDiv('geneA has been changed to geneB');
-          returnOutput(output, outputDelay[0]);
-        },
-      },
-    },
-    run: () => {
-      // Add output to thread
-      output = creatOutputDiv('What do you want to edit?');
       returnOutput(output, outputDelay[0]);
     },
   },

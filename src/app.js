@@ -81,16 +81,25 @@ zetsu.addEventListener('keydown', function (e) {
 const nullThread = `<div class="thread-text">Shoot, I don't recognize that command.</div>`;
 
 // display suggestions and detail
-const displaySuggestion = (command) => {
+const displaySuggestion = (command, name) => {
   let suggestion = document.createElement('div');
   suggestion.className = 'suggestion';
-  suggestion.innerHTML = command;
+  suggestion.innerHTML = `<div class="chain-parent">${command}</div> <div class="suggestion-name">${name}</div>`;
   suggestionsList.appendChild(suggestion);
 };
 
 const displayChainSuggestion = (command, chain) => {
   let suggestion = document.createElement('div');
-  suggestion.innerHTML = `<div class="suggestion chain"><div class="chain-parent">${command}</div><div class="chain-arguments">${chain}</div></div>`;
+  suggestion.className = 'suggestion chain';
+  suggestion.innerHTML = `<div class="chain-parent">${command}</div> <div class="chain-arguments">${chain}</div>`;
+  suggestionsList.appendChild(suggestion);
+};
+
+const displayErrorSuggestion = (error, description) => {
+  let suggestion = document.createElement('div');
+  suggestion.className = 'suggestion error';
+  suggestion.innerHTML = `<div class="chain-parent">${error}</div>`;
+  details.innerHTML = `<div class="details-name">${error}</div><div class="details-description">${description}</div>`;
   suggestionsList.appendChild(suggestion);
 };
 
@@ -161,10 +170,21 @@ zetsu.addEventListener('input', function () {
   for (let command in commands) {
     if (command.startsWith(input.toLowerCase()) || commands[command].name.toLowerCase().startsWith(input.toLowerCase())) {
       // Create suggestion element
-      displaySuggestion(command);
-      // Display details of related chains
+      displaySuggestion(command, commands[command].name);
+    }
+    if (suggestionsList.innerHTML === '') {
       for (let chain in commands[command].chains) {
-        displayChainSuggestion(command, chain);
+        if (commands[command].chains[chain].full.startsWith(input.toLowerCase())) {
+          // Display details of related chains
+          displayChainSuggestion(command, chain);
+        } else {
+          // Display details of related chains
+          for (let argument in commands[command].chains[chain].arguments) {
+            if (commands[command].chains[chain].arguments[argument].name.startsWith(input.toLowerCase())) {
+              displayChainSuggestion(command, chain);
+            }
+          }
+        }
       }
     }
   }
@@ -173,7 +193,7 @@ zetsu.addEventListener('input', function () {
   let suggestionIndex = -1;
   zetsu.addEventListener('keydown', function (e) {
     // Check if suggestions are present
-    if (suggestions.length !== 0) {
+    if (suggestions.length !== 0 && !suggestionsList.firstElementChild.classList.contains('error')) {
       if (e.key === 'ArrowDown') {
         e.preventDefault();
         if (suggestionIndex !== -1) {
@@ -193,8 +213,10 @@ zetsu.addEventListener('input', function () {
               commands[suggestions[suggestionIndex].firstElementChild.innerText].chains[suggestions[suggestionIndex].lastElementChild.innerText].description
             }</div>`;
           } else {
-            zetsu.innerText = suggestions[suggestionIndex].innerText;
-            details.innerHTML = `<div class="details-name">${commands[suggestions[suggestionIndex].innerText].name}</div><div class="details-description">${commands[suggestions[suggestionIndex].innerText].description}</div>`;
+            zetsu.innerText = suggestions[suggestionIndex].firstElementChild.innerText;
+            details.innerHTML = `<div class="details-name">${commands[suggestions[suggestionIndex].firstElementChild.innerText].name}</div><div class="details-description">${
+              commands[suggestions[suggestionIndex].firstElementChild.innerText].description
+            }</div>`;
           }
           suggestions[suggestionIndex].scrollIntoView({
             block: 'nearest',
@@ -225,8 +247,10 @@ zetsu.addEventListener('input', function () {
               commands[suggestions[suggestionIndex].firstElementChild.innerText].chains[suggestions[suggestionIndex].lastElementChild.innerText].description
             }</div>`;
           } else {
-            zetsu.innerText = suggestions[suggestionIndex].innerText;
-            details.innerHTML = `<div class="details-name">${commands[suggestions[suggestionIndex].innerText].name}</div><div class="details-description">${commands[suggestions[suggestionIndex].innerText].description}</div>`;
+            zetsu.innerText = suggestions[suggestionIndex].firstElementChild.innerText;
+            details.innerHTML = `<div class="details-name">${commands[suggestions[suggestionIndex].firstElementChild.innerText].name}</div><div class="details-description">${
+              commands[suggestions[suggestionIndex].firstElementChild.innerText].description
+            }</div>`;
           }
           // Scroll to active suggestion
           suggestions[suggestionIndex].scrollIntoView({

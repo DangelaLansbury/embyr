@@ -115,14 +115,27 @@
   min-height: 2rem;
   transition: 0.2s;
 }
+.suggestion-name {
+  display: inline-flex;
+  color: var(--soil-x-lt);
+}
 .chain-parent {
   display: inline-flex;
+  flex-direction: row;
+  justify-content: flex-start;
   align-items: center;
-  margin-right: 0.5rem;
+  margin-right: 0.625rem;
 }
+/* .chain-parent::before {
+  content: '';
+  display: inline-block;
+  margin-right: 0.5rem;
+  width: 1rem;
+  height: 1rem;
+  background-image: url('../images/sparkles.svg');
+} */
 .chain-arguments {
   display: inline-flex;
-  align-items: center;
   margin: 0;
   color: var(--stone);
 }
@@ -132,6 +145,12 @@
 }
 .suggestion.active > .chain-arguments {
   color: var(--sweetgrass);
+}
+.suggestion.active > .suggestion-name {
+  color: var(--stone);
+}
+.suggestion.error > .chain-parent {
+  color: var(--clay);
 }
 .selected-command {
   display: inline-flex;
