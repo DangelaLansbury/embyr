@@ -222,13 +222,13 @@ main {
 .loading-text {
   display: inline-flex;
   margin: 1rem 1.75rem;
-  &:before {
+  /* &:before {
     animation: spin 1.5s linear infinite;
     content: '⠋';
     margin-right: 0.5rem;
     color: var(--sweetgrass);
     font-size: 1.75rem;
-  }
+  } */
 }
 @keyframes spin {
   0% {

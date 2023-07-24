@@ -98,30 +98,30 @@ const commands = {
     name: 'Check',
     description: 'Evaluate or interpret something in the system.',
     chains: {
-      '.': {
+      'chk .': {
         name: 'Check MHC class I and peptide',
-        full: 'chk .',
         description: 'Check MHC class I molecules and peptides at the same time to see if cell is of self and if it is infected.',
+        keywords: ['mhc', 'peptide'],
         run: (input) => {
           returnInput(input);
           let output = creatOutputDiv('check mhc peptide');
           returnOutput(output, outputDelay[1]);
         },
       },
-      mhc: {
+      'chk mhc': {
         name: 'Check MHC class I',
-        full: 'chk mhc',
         description: 'Check MHC class I molecules to see if cell is of self.',
+        keywords: [],
         run: (input) => {
           returnInput(input);
           let output = creatOutputDiv('check mhc');
           returnOutput(output, outputDelay[1]);
         },
       },
-      peptide: {
+      'chk peptide': {
         name: 'Check peptide',
-        full: 'chk peptide',
         description: 'Check peptide to see if it represents an infected cell.',
+        keywords: [],
         run: (input) => {
           returnInput(input);
           let output = creatOutputDiv('check peptide');
@@ -129,9 +129,9 @@ const commands = {
         },
       },
     },
-    run: (input) => {
+    run: (input, args) => {
       returnInput(input);
-      output = creatOutputDiv('What do you want to check?');
+      output = creatOutputDiv('What do you want to check?' + args);
       returnOutput(output, outputDelay[0]);
     },
   },
@@ -140,9 +140,8 @@ const commands = {
     name: 'Edit',
     description: 'Rewrite genes to alter structure and function.',
     chains: {
-      'c.0000A>C': {
+      'e c.0000A>C': {
         name: 'Change A to C',
-        full: 'e c.0000a>c',
         description: 'Change A to C at position 0000.',
         run: (input) => {
           returnInput(input);
@@ -150,9 +149,8 @@ const commands = {
           returnOutput(output, outputDelay[1]);
         },
       },
-      'c.0000A>G': {
+      'e c.0000A>G': {
         name: 'Change A to G',
-        full: 'e c.0000a>g',
         description: 'Change A to G at position 0000.',
         run: (input) => {
           returnInput(input);
@@ -163,8 +161,7 @@ const commands = {
     },
     run: (input, args) => {
       returnInput(input);
-      // Add output to thread
-      output = creatOutputDiv('What do you want to edit?');
+      output = creatOutputDiv('What do you want to edit?' + args);
       returnOutput(output, outputDelay[0]);
     },
   },
