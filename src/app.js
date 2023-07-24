@@ -108,7 +108,7 @@ const displayHelpCommands = (commands) => {
   for (let command in commands) {
     let commandHint = document.createElement('div');
     commandHint.className = 'help-bar-hint';
-    commandHint.innerHTML = `<div class="help-bar-cmd">${command}</div><div class="help-bar-text">${commands[command].name}</div>`;
+    commandHint.innerHTML = `<div class="help-bar-cmd">${command}</div><div class="help-bar-text">${commands[command].name.toLowerCase()}</div>`;
     if (commands[command].meta === false) {
       help1.appendChild(commandHint);
     } else {
@@ -132,6 +132,12 @@ const returnOutput = (output, time) => {
     // Scroll to bottom of thread
     thread.scrollTop = thread.scrollHeight;
   }, time);
+};
+
+const returnInput = (input) => {
+  let output = creatOutputDiv(input);
+  output.classList.add('cmd');
+  returnOutput(output, 0);
 };
 
 const outputDelay = [600, 800, 1000, 1200, 1400, 1600, 1800, 2000];
@@ -170,21 +176,22 @@ zetsu.addEventListener('input', function () {
   for (let command in commands) {
     if (command.startsWith(input.toLowerCase()) || commands[command].name.toLowerCase().startsWith(input.toLowerCase())) {
       // Create suggestion element
-      displaySuggestion(command, commands[command].name);
+      displaySuggestion(command, commands[command].name.toLowerCase());
     }
     if (suggestionsList.innerHTML === '') {
       for (let chain in commands[command].chains) {
         if (commands[command].chains[chain].full.startsWith(input.toLowerCase())) {
           // Display details of related chains
           displayChainSuggestion(command, chain);
-        } else {
-          // Display details of related chains
-          for (let argument in commands[command].chains[chain].arguments) {
-            if (commands[command].chains[chain].arguments[argument].name.startsWith(input.toLowerCase())) {
-              displayChainSuggestion(command, chain);
-            }
-          }
         }
+        // else {
+        //   // Display details of related chains
+        //   for (let argument in commands[command].chains[chain].arguments) {
+        //     if (commands[command].chains[chain].arguments[argument].name.startsWith(input.toLowerCase())) {
+        //       displayChainSuggestion(command, chain);
+        //     }
+        //   }
+        // }
       }
     }
   }
@@ -193,7 +200,7 @@ zetsu.addEventListener('input', function () {
   let suggestionIndex = -1;
   zetsu.addEventListener('keydown', function (e) {
     // Check if suggestions are present
-    if (suggestions.length !== 0 && !suggestionsList.firstElementChild.classList.contains('error')) {
+    if (suggestions.length !== 0) {
       if (e.key === 'ArrowDown') {
         e.preventDefault();
         if (suggestionIndex !== -1) {
@@ -225,7 +232,7 @@ zetsu.addEventListener('input', function () {
           });
         }
         focusAtEnd();
-      } else if (e.key === 'ArrowUp' && input.trim().length !== 0) {
+      } else if (e.key === 'ArrowUp') {
         e.preventDefault();
         if (suggestionIndex !== -1) {
           suggestions[suggestionIndex].classList.remove('active');
@@ -292,50 +299,23 @@ zetsu.addEventListener('keydown', function (e) {
     // Execute commands and return output
     if (input !== '') {
       // Split input into command and args
-      input = input.toLowerCase().trim();
       let parts = input.split(' ');
-      let command = parts[0];
-      let subcommand = parts[1];
-      let args = parts.slice(2);
+      let command = parts[0].toLowerCase();
+      let args = parts.slice(1);
       // Check if command exists
       if (commands[command]) {
-        // Check if command has subcommands
-        if (commands[command].subcommands) {
-          // Check if user added subcommand
-          if (subcommand === undefined) {
-            // Add input to thread
-            let output = creatOutputDiv(input);
-            output.classList.add('cmd');
-            returnOutput(output, 0);
-            // Run command
-            commands[command].run();
+        // Check if user args match any chains
+        for (let chain in commands[command].chains) {
+          if (commands[command].chains[chain].full === input.toLowerCase()) {
+            commands[command].chains[chain].run(input);
+            clearzetsu();
+            return;
           } else {
-            // check if subcommand exists
-            if (commands[command].subcommands[subcommand]) {
-              // Add input to thread
-              let output = creatOutputDiv(input);
-              output.classList.add('cmd');
-              returnOutput(output, 0);
-              // Split args into object and modifier where modifier is anything that starts with "--"
-              let modifier = args.filter((arg) => arg.startsWith('--'));
-              let objectArray = args.filter((arg) => !arg.startsWith('--'));
-              // Run subcommand within command object
-              commands[command].subcommands[subcommand].run(objectArray, modifier);
-            } else {
-              // Add input to thread
-              let output = creatOutputDiv(input);
-              output.classList.add('cmd');
-              returnOutput(output, 0);
-              // Add nullThread to thread
-              returnOutput(creatOutputDiv(`Hm, I don't recognize this subcommand`), 0);
-            }
+            commands[command].run(input, args);
           }
-        } else {
-          // Run command
-          commands[command].run(input);
         }
       } else {
-        // Add nullThread to thread
+        returnInput(input);
         returnOutput(creatOutputDiv(nullThread), 0);
       }
       clearzetsu();

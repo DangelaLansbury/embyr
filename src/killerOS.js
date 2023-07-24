@@ -87,8 +87,7 @@ const adaptive = {
 
 const targetCell = {
   isSelf: false,
-  isInfected: true,
-  isCloaked: false,
+  isAltered: false,
 };
 
 // --- COMMANDS ---
@@ -96,61 +95,74 @@ const targetCell = {
 const commands = {
   chk: {
     meta: false,
-    name: 'check',
+    name: 'Check',
     description: 'Evaluate or interpret something in the system.',
     chains: {
       '.': {
         name: 'Check MHC class I and peptide',
         full: 'chk .',
         description: 'Check MHC class I molecules and peptides at the same time to see if cell is of self and if it is infected.',
-        run: (obj, mod) => {
+        run: (input) => {
+          returnInput(input);
           let output = creatOutputDiv('check mhc peptide');
-          returnOutput(output, outputDelay[0]);
+          returnOutput(output, outputDelay[1]);
         },
       },
       mhc: {
         name: 'Check MHC class I',
         full: 'chk mhc',
         description: 'Check MHC class I molecules to see if cell is of self.',
-        run: (obj, mod) => {
+        run: (input) => {
+          returnInput(input);
           let output = creatOutputDiv('check mhc');
-          returnOutput(output, outputDelay[0]);
+          returnOutput(output, outputDelay[1]);
         },
       },
       peptide: {
         name: 'Check peptide',
         full: 'chk peptide',
         description: 'Check peptide to see if it represents an infected cell.',
-        run: (obj, mod) => {
+        run: (input) => {
+          returnInput(input);
           let output = creatOutputDiv('check peptide');
-          returnOutput(output, outputDelay[0]);
+          returnOutput(output, outputDelay[1]);
         },
       },
     },
-    run: () => {
-      // Add output to thread
+    run: (input) => {
+      returnInput(input);
       output = creatOutputDiv('What do you want to check?');
       returnOutput(output, outputDelay[0]);
     },
   },
   e: {
     meta: false,
-    name: 'edit',
+    name: 'Edit',
     description: 'Rewrite genes to alter structure and function.',
     chains: {
       'c.0000A>C': {
         name: 'Change A to C',
-        full: 'e c.0000A>C',
+        full: 'e c.0000a>c',
         description: 'Change A to C at position 0000.',
-        run: (obj, mod) => {
-          let output = creatOutputDiv('edit c.0000A>C');
-          returnOutput(output, outputDelay[0]);
-          output = creatOutputDiv('You have successfully edited the genome.');
-          returnOutput(output, outputDelay[0]);
+        run: (input) => {
+          returnInput(input);
+          let output = creatOutputDiv('You have successfully edited the genome.');
+          returnOutput(output, outputDelay[1]);
+        },
+      },
+      'c.0000A>G': {
+        name: 'Change A to G',
+        full: 'e c.0000a>g',
+        description: 'Change A to G at position 0000.',
+        run: (input) => {
+          returnInput(input);
+          let output = creatOutputDiv('You have successfully edited the genome.');
+          returnOutput(output, outputDelay[1]);
         },
       },
     },
-    run: () => {
+    run: (input, args) => {
+      returnInput(input);
       // Add output to thread
       output = creatOutputDiv('What do you want to edit?');
       returnOutput(output, outputDelay[0]);
@@ -158,56 +170,40 @@ const commands = {
   },
   ph: {
     meta: false,
-    name: 'phagocytose',
+    name: 'Phagocytose',
     description: 'Remove something from the system.',
     run: (input) => {
-      // Add input to thread
-      let output = creatOutputDiv(input);
-      output.classList.add('cmd');
-      returnOutput(output, 0);
-      // Add output to thread
+      returnInput(input);
       output = creatOutputDiv('Kill that cell!');
       returnOutput(output, outputDelay[0]);
     },
   },
   new: {
     meta: true,
-    name: 'new cell',
+    name: 'New cell',
     description: 'Get started.',
     run: (input) => {
-      // Add input to thread
-      let output = creatOutputDiv(input);
-      output.classList.add('cmd');
-      returnOutput(output, 0);
-      // Add output to thread
+      returnInput(input);
       output = creatOutputDiv('init command');
       returnOutput(output, outputDelay[0]);
     },
   },
   r: {
     meta: true,
-    name: 'reset',
+    name: 'Reset',
     description: 'Reset the system... a fresh start.',
     run: (input) => {
-      // Add input to thread
-      let output = creatOutputDiv(input);
-      output.classList.add('cmd');
-      returnOutput(output, 0);
-      // Add output to thread
+      returnInput(input);
       output = creatOutputDiv('reset command');
       returnOutput(output, outputDelay[0]);
     },
   },
   a: {
     meta: true,
-    name: 'about',
+    name: 'About',
     description: 'About this project.',
     run: (input) => {
-      // Add input to thread
-      let output = creatOutputDiv(input);
-      output.classList.add('cmd');
-      returnOutput(output, 0);
-      // Add output to thread
+      returnInput(input);
       output = creatOutputDiv('about command');
       returnOutput(output, outputDelay[0]);
     },
