@@ -173,29 +173,25 @@ zetsu.addEventListener('input', function () {
   suggestionsList.innerHTML = '';
   details.innerHTML = '';
   // Check if input is a command or chain
-  let words = input.toLowerCase().split(' ');
   for (let command in commands) {
     if (command.startsWith(input.toLowerCase()) || commands[command].name.toLowerCase().startsWith(input.toLowerCase())) {
       // Create suggestion element
       displaySuggestion(command, commands[command].name.toLowerCase());
       break;
     }
-    if (commands[command].meta === false && commands[command].tags !== undefined) {
-      let tags = commands[command].tags;
-      let shared = tags.filter((value) => words.includes(value));
-      if (shared.length > 1) {
-        // Create suggestion element
-        displaySuggestion(command, commands[command].name.toLowerCase());
-      }
-    } else {
-      if (commands[command].chains === undefined) continue;
-      for (let chain in commands[command].chains) {
-        let tags = commands[command].chains[chain].tags;
-        let shared = tags.filter((value) => words.includes(value));
-        if (chain.startsWith(input.toLowerCase()) || shared.length > 1) {
-          // Create suggestion element
-          displayChainSuggestion(chain);
+    for (let chain in commands[command].chains) {
+      let chainCheck = chain.toLowerCase();
+      let tagsFound = 0;
+      let tags = commands[command].chains[chain].tags;
+      if (tags !== undefined) {
+        for (let i = 0; i < tags.length; i++) {
+          if (input.toLowerCase().includes(tags[i])) {
+            tagsFound++;
+          }
         }
+      }
+      if (chainCheck.startsWith(input.toLowerCase()) || commands[command].chains[chain].name.toLowerCase().startsWith(input.toLowerCase()) || tagsFound > 0) {
+        displayChainSuggestion(chain);
       }
     }
   }

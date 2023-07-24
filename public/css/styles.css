@@ -209,7 +209,7 @@ main {
   color: var(--soil-x-lt);
 }
 /* hide help bar on medium screens */
-@media (max-width: 900px) {
+@media (max-width: 1000px) {
   .help-bar {
     display: none;
   }

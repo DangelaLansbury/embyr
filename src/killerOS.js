@@ -85,21 +85,22 @@ const adaptive = {
 
 // --- STATUS ---
 
-const targetCell = {
-  isSelf: false,
-  isAltered: false,
+const status = {
+  targetIsSelf: true,
+  targetIsAltered: false,
+  tCellActive: false,
 };
 
 // --- COMMANDS ---
 
 const commands = {
-  chk: {
+  det: {
     meta: false,
-    name: 'Check',
+    name: 'Detect',
     description: 'Evaluate or interpret something in the system.',
     chains: {
-      'chk .': {
-        name: 'Check MHC class I and peptide',
+      'det .': {
+        name: 'Detect MHC class I and peptide',
         description: 'Check MHC class I molecules and peptides at the same time to see if cell is of self and if it is infected.',
         tags: ['green', 'blue', 'red'],
         run: (input) => {
@@ -108,8 +109,8 @@ const commands = {
           returnOutput(output, outputDelay[1]);
         },
       },
-      'chk mhc': {
-        name: 'Check MHC class I',
+      'det mhc': {
+        name: 'Detect MHC class I',
         description: 'Check MHC class I molecules to see if cell is of self.',
         tags: ['blue'],
         run: (input) => {
@@ -118,8 +119,8 @@ const commands = {
           returnOutput(output, outputDelay[1]);
         },
       },
-      'chk peptide': {
-        name: 'Check peptide',
+      'det peptide': {
+        name: 'Detect peptide',
         description: 'Check peptide to see if it represents an infected cell.',
         tags: ['red'],
         run: (input) => {
@@ -135,28 +136,50 @@ const commands = {
       returnOutput(output, outputDelay[0]);
     },
   },
-  e: {
+  exp: {
     meta: false,
-    name: 'Edit',
-    description: 'Rewrite genes to alter structure and function.',
+    name: 'express',
+    description: 'Express protein or molecule.',
     chains: {
-      'e c.0000A>C': {
-        name: 'Change A to C',
-        description: 'Change A to C at position 0000.',
-        tags: ['purple'],
+      'exp car': {
+        name: 'Express CAR',
+        description: 'Express chimeric antigen receptors to activate T cell.',
+        tags: ['crimson'],
         run: (input) => {
           returnInput(input);
-          let output = creatOutputDiv('You have successfully edited the genome.');
+          let output = creatOutputDiv('You have successfully activated proteinA.');
           returnOutput(output, outputDelay[1]);
         },
       },
-      'e c.0000A>G': {
-        name: 'Change A to G',
-        description: 'Change A to G at position 0000.',
+      run: (input, args) => {
+        returnInput(input);
+        output = creatOutputDiv('What do you want to activate?' + args);
+        returnOutput(output, outputDelay[0]);
+      },
+    },
+  },
+  inh: {
+    meta: false,
+    name: 'Inhibit',
+    description: 'Inhibit checkpoint.',
+    chains: {
+      'inh PD-1': {
+        name: 'Inhibit PD-1',
+        description: 'Inhibit PD-1 to prevent it from binding to PD-L1 and preventing T cell activation.',
+        tags: ['purple'],
+        run: (input) => {
+          returnInput(input);
+          let output = creatOutputDiv('You have successfully inhibited PD-1.');
+          returnOutput(output, outputDelay[1]);
+        },
+      },
+      'inh CTLA4': {
+        name: 'Inhibit CTLA-4',
+        description: 'Inhibit CTLA-4 to prevent it from binding to CD80 and preventing T cell activation.',
         tags: ['indigo'],
         run: (input) => {
           returnInput(input);
-          let output = creatOutputDiv('You have successfully edited the genome.');
+          let output = creatOutputDiv('You have successfully inhibited CTLA-4.');
           returnOutput(output, outputDelay[1]);
         },
       },
@@ -171,6 +194,18 @@ const commands = {
     meta: false,
     name: 'Phagocytose',
     description: 'Remove something from the system.',
+    chains: {
+      ph: {
+        name: 'Phagocytose',
+        description: 'Phagocytose something.',
+        tags: ['amber'],
+        run: (input) => {
+          returnInput(input);
+          let output = creatOutputDiv('You have successfully phagocytosed something.');
+          returnOutput(output, outputDelay[1]);
+        },
+      },
+    },
     run: (input) => {
       returnInput(input);
       output = creatOutputDiv('Kill that cell!');
@@ -181,6 +216,7 @@ const commands = {
     meta: true,
     name: 'New cell',
     description: 'Get started.',
+    chains: null,
     run: (input) => {
       returnInput(input);
       output = creatOutputDiv('init command');
@@ -191,16 +227,18 @@ const commands = {
     meta: true,
     name: 'Reset',
     description: 'Reset the system... a fresh start.',
+    chains: null,
     run: (input) => {
       returnInput(input);
       output = creatOutputDiv('reset command');
       returnOutput(output, outputDelay[0]);
     },
   },
-  a: {
+  '&': {
     meta: true,
     name: 'About',
     description: 'About this project.',
+    chains: null,
     run: (input) => {
       returnInput(input);
       output = creatOutputDiv('about command');
@@ -208,84 +246,3 @@ const commands = {
     },
   },
 };
-
-// const commands = {
-//   kill: (obj, mod) => {
-//     // code to handle the "killer" command
-//     let output = creatOutputDiv('kill command');
-//     returnOutput(output, outputDelay[0]);
-//   },
-//   help: (obj, mod) => {
-//     // code to handle the "helper" command
-//     let output = creatOutputDiv('help command');
-//     returnOutput(output, outputDelay[0]);
-//   },
-//   reg: (obj, mod) => {
-//     // code to handle the "reg" command
-//     let output = creatOutputDiv('reg command');
-//     returnOutput(output, outputDelay[0]);
-//   },
-//   status: (obj, mod) => {
-//     // code to handle the "status" command
-//     let output = creatOutputDiv('status command');
-//     returnOutput(output, outputDelay[0]);
-//   },
-//   reset: (obj, mod) => {
-//     // code to handle the "reset" command
-//     let output = creatOutputDiv('reset command');
-//     returnOutput(output, outputDelay[0]);
-//   },
-// };
-
-// const subcommands = {
-//   make: (obj, mod) => {
-//     console.log('make subcommand');
-//   },
-//   read: (obj, mod) => {
-//     console.log('read subcommand');
-//   },
-//   phago: (obj, mod) => {
-//     console.log('phagocytose subcommand');
-//   },
-// };
-
-// --------------------------------------------------------------------------------------------
-
-// const commands = {
-//   innate: (obj, mod) => {
-//     // code to handle the "innate" command
-//     // check if args contains an innate immune system actor
-//     if (obj in innate) {
-//       let output = creatOutputDiv(innate[obj].description);
-//       returnOutput(output, outputDelay[0]);
-//       output = creatOutputDiv(innate[obj].action);
-//       returnOutput(output, outputDelay[1]);
-//     } else {
-//       let output = creatOutputDiv(nullThread);
-//       returnOutput(output, 0);
-//     }
-//   },
-//   adapt: (obj, mod) => {
-//     // code to handle the "adapt" command
-//     // check if args contains an adaptive immune system actor
-//     if (obj in adaptive) {
-//       let output = creatOutputDiv(adaptive[obj].description);
-//       returnOutput(output, outputDelay[0]);
-//       output = creatOutputDiv(adaptive[obj].action);
-//       returnOutput(output, outputDelay[1]);
-//     } else {
-//       let output = creatOutputDiv(nullThread);
-//       returnOutput(output, 0);
-//     }
-//   },
-//   help: () => {
-//     // code to handle the meta commands
-//     let output = creatOutputDiv(helpThread);
-//     returnOutput(output, 0);
-//   },
-//   status: () => {
-//     // code to show status
-//     let output = creatOutputDiv(statusThread);
-//     returnOutput(output, 0);
-//   },
-// };
