@@ -214,7 +214,7 @@ main {
     display: none;
   }
   .zetsu-input {
-    margin-top: 2rem;
+    margin-top: 2.5rem;
   }
 }
 /* loading */
@@ -265,7 +265,7 @@ main {
   justify-content: flex-start;
   align-items: center;
   background-color: var(--soil-dk);
-  padding: 1rem 2.5rem;
+  padding: 1.5rem 2.5rem;
   width: calc(100% - 5rem);
   border-top: 1px solid var(--soil-lt);
 }

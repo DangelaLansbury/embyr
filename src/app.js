@@ -76,16 +76,21 @@ zetsu.addEventListener('keydown', function (e) {
   }
 });
 
-// --- DEFAULTS ---
+// --- POPULATING CONTENT ---
 
 const nullThread = `<div class="thread-text">Shoot, I don't recognize that command.</div>`;
 
 // display suggestions and detail
-
 const displaySuggestion = (command) => {
   let suggestion = document.createElement('div');
   suggestion.className = 'suggestion';
   suggestion.innerHTML = command;
+  suggestionsList.appendChild(suggestion);
+};
+
+const displayChainSuggestion = (command, chain) => {
+  let suggestion = document.createElement('div');
+  suggestion.innerHTML = `<div class="suggestion chain"><div class="chain-parent">${command}</div><div class="chain-arguments">${chain}</div></div>`;
   suggestionsList.appendChild(suggestion);
 };
 
@@ -154,9 +159,13 @@ zetsu.addEventListener('input', function () {
   suggestionsList.innerHTML = '';
   details.innerHTML = '';
   for (let command in commands) {
-    if (command.startsWith(input)) {
+    if (command.startsWith(input.toLowerCase()) || commands[command].name.toLowerCase().startsWith(input.toLowerCase())) {
       // Create suggestion element
       displaySuggestion(command);
+      // Display details of related chains
+      for (let chain in commands[command].chains) {
+        displayChainSuggestion(command, chain);
+      }
     }
   }
   // Listening for up and down arrow keys to cycle through suggestions
@@ -175,21 +184,25 @@ zetsu.addEventListener('input', function () {
           suggestionIndex = -1;
           zetsu.innerText = input;
           details.innerHTML = '';
-          // focus and move cursor to end of input
-          focusAtEnd();
         } else if (suggestionIndex !== -1) {
           suggestions[suggestionIndex].classList.add('active');
-          zetsu.innerText = suggestions[suggestionIndex].innerText;
-          details.innerHTML = `<div class="details-name">${commands[suggestions[suggestionIndex].innerText].name}</div><div class="details-description">${commands[suggestions[suggestionIndex].innerText].description}</div>`;
-          // Scroll to active suggestion
+          // Check if suggestion is a chain
+          if (suggestions[suggestionIndex].classList.contains('chain')) {
+            zetsu.innerText = suggestions[suggestionIndex].firstElementChild.innerText + ' ' + suggestions[suggestionIndex].lastElementChild.innerText;
+            details.innerHTML = `<div class="details-name">${commands[suggestions[suggestionIndex].firstElementChild.innerText].chains[suggestions[suggestionIndex].lastElementChild.innerText].name}</div><div class="details-description">${
+              commands[suggestions[suggestionIndex].firstElementChild.innerText].chains[suggestions[suggestionIndex].lastElementChild.innerText].description
+            }</div>`;
+          } else {
+            zetsu.innerText = suggestions[suggestionIndex].innerText;
+            details.innerHTML = `<div class="details-name">${commands[suggestions[suggestionIndex].innerText].name}</div><div class="details-description">${commands[suggestions[suggestionIndex].innerText].description}</div>`;
+          }
           suggestions[suggestionIndex].scrollIntoView({
             block: 'nearest',
             inline: 'end',
             behavior: 'smooth',
           });
-          // focus and move cursor to end of input
-          focusAtEnd();
         }
+        focusAtEnd();
       } else if (e.key === 'ArrowUp' && input.trim().length !== 0) {
         e.preventDefault();
         if (suggestionIndex !== -1) {
@@ -199,25 +212,30 @@ zetsu.addEventListener('input', function () {
         if (suggestionIndex === -1) {
           zetsu.innerText = input;
           details.innerHTML = '';
-          // focus and move cursor to end of input
-          focusAtEnd();
         }
         if (suggestionIndex < -1) {
           suggestionIndex = suggestions.length - 1;
         }
         if (suggestionIndex !== -1) {
           suggestions[suggestionIndex].classList.add('active');
-          zetsu.innerText = suggestions[suggestionIndex].innerText;
-          details.innerHTML = `<div class="details-name">${commands[suggestions[suggestionIndex].innerText].name}</div><div class="details-description">${commands[suggestions[suggestionIndex].innerText].description}</div>`;
+          // Check if suggestion is a chain
+          if (suggestions[suggestionIndex].classList.contains('chain')) {
+            zetsu.innerText = suggestions[suggestionIndex].firstElementChild.innerText + ' ' + suggestions[suggestionIndex].lastElementChild.innerText;
+            details.innerHTML = `<div class="details-name">${commands[suggestions[suggestionIndex].firstElementChild.innerText].chains[suggestions[suggestionIndex].lastElementChild.innerText].name}</div><div class="details-description">${
+              commands[suggestions[suggestionIndex].firstElementChild.innerText].chains[suggestions[suggestionIndex].lastElementChild.innerText].description
+            }</div>`;
+          } else {
+            zetsu.innerText = suggestions[suggestionIndex].innerText;
+            details.innerHTML = `<div class="details-name">${commands[suggestions[suggestionIndex].innerText].name}</div><div class="details-description">${commands[suggestions[suggestionIndex].innerText].description}</div>`;
+          }
           // Scroll to active suggestion
           suggestions[suggestionIndex].scrollIntoView({
             block: 'nearest',
             inline: 'end',
             behavior: 'smooth',
           });
-          // focus and move cursor to end of input
-          focusAtEnd();
         }
+        focusAtEnd();
       }
     } else {
       suggestionIndex = -1;

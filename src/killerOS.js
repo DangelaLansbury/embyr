@@ -115,11 +115,13 @@ const commands = {
           returnOutput(output, outputDelay[0]);
         },
       },
-      '-h': {
-        name: 'Check help',
-        description: 'Get help with check command.',
-        run: () => {
-          let output = creatOutputDiv('arm help command');
+    },
+    chains: {
+      'mhc peptide': {
+        name: 'Check MHC class I and peptide',
+        description: 'Check MHC class I molecules and peptides at the same time.',
+        run: (obj, mod) => {
+          let output = creatOutputDiv('check mhc peptide');
           returnOutput(output, outputDelay[0]);
         },
       },
@@ -130,16 +132,40 @@ const commands = {
       returnOutput(output, outputDelay[0]);
     },
   },
-  edit: {
+  ph: {
     meta: false,
-    name: 'rewrite genes',
+    name: 'phagocytose',
+    description: 'Remove something from the system.',
+    run: (input) => {
+      // Add input to thread
+      let output = creatOutputDiv(input);
+      output.classList.add('cmd');
+      returnOutput(output, 0);
+      // Add output to thread
+      output = creatOutputDiv('Kill that cell!');
+      returnOutput(output, outputDelay[0]);
+    },
+  },
+  $: {
+    meta: false,
+    name: 'edit',
     description: 'Rewrite genes to alter structure and function.',
     subcommands: {
-      '-h': {
-        name: 'Edit help',
-        description: 'Get help with edit command.',
-        run: () => {
-          let output = creatOutputDiv('edit help command');
+      gene: {
+        name: 'mutationExample',
+        description: 'GeneA is a gene.',
+        run: (obj, mod) => {
+          let output = creatOutputDiv('geneA has been changed to geneB');
+          returnOutput(output, outputDelay[0]);
+        },
+      },
+    },
+    chains: {
+      gene: {
+        name: 'Change geneA to geneB',
+        description: 'Change geneA to geneB.',
+        run: (obj, mod) => {
+          let output = creatOutputDiv('geneA has been changed to geneB');
           returnOutput(output, outputDelay[0]);
         },
       },
@@ -147,34 +173,6 @@ const commands = {
     run: () => {
       // Add output to thread
       output = creatOutputDiv('What do you want to edit?');
-      returnOutput(output, outputDelay[0]);
-    },
-  },
-  ph: {
-    meta: false,
-    name: 'phagocytose',
-    description: 'Remove something from the system.',
-    subcommands: {
-      invader: {
-        name: 'Foreign pathogen',
-        description: 'Remove pathogen from the system.',
-        run: (obj, mod) => {
-          let output = creatOutputDiv('phagocytose command');
-          returnOutput(output, outputDelay[0]);
-        },
-      },
-      '-h': {
-        name: 'Phagocytose help',
-        description: 'Get help with kill command.',
-        run: () => {
-          let output = creatOutputDiv('ph help command');
-          returnOutput(output, outputDelay[0]);
-        },
-      },
-    },
-    run: () => {
-      // Add output to thread
-      output = creatOutputDiv('What do you want to kill?');
       returnOutput(output, outputDelay[0]);
     },
   },
@@ -206,7 +204,7 @@ const commands = {
       returnOutput(output, outputDelay[0]);
     },
   },
-  '&': {
+  a: {
     meta: true,
     name: 'about',
     description: 'About this project.',

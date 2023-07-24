@@ -88,6 +88,7 @@
   align-items: flex-start;
   margin: 0;
   width: 40%;
+  min-width: 40%;
   height: 100%;
   overflow: hidden;
   border-right: 1px solid var(--soil-lt);
@@ -114,8 +115,22 @@
   min-height: 2rem;
   transition: 0.2s;
 }
+.chain-parent {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 0.5rem;
+}
+.chain-arguments {
+  display: inline-flex;
+  align-items: center;
+  margin: 0;
+  color: var(--stone);
+}
 .suggestion.active {
   background-color: var(--soil-lt);
+  color: var(--sweetgrass);
+}
+.suggestion.active > .chain-arguments {
   color: var(--sweetgrass);
 }
 .selected-command {
