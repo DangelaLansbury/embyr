@@ -172,26 +172,30 @@ zetsu.addEventListener('input', function () {
   // Clear suggestions and details
   suggestionsList.innerHTML = '';
   details.innerHTML = '';
+  // Check if input is a command or chain
+  let words = input.toLowerCase().split(' ');
   for (let command in commands) {
     if (command.startsWith(input.toLowerCase()) || commands[command].name.toLowerCase().startsWith(input.toLowerCase())) {
       // Create suggestion element
       displaySuggestion(command, commands[command].name.toLowerCase());
+      break;
     }
-    if (suggestionsList.innerHTML === '') {
+    if (commands[command].meta === false && commands[command].tags !== undefined) {
+      let tags = commands[command].tags;
+      let shared = tags.filter((value) => words.includes(value));
+      if (shared.length > 1) {
+        // Create suggestion element
+        displaySuggestion(command, commands[command].name.toLowerCase());
+      }
+    } else {
+      if (commands[command].chains === undefined) continue;
       for (let chain in commands[command].chains) {
-        let chainName = chain.toLowerCase();
-        if (chainName.startsWith(input.toLowerCase())) {
-          // Display details of related chains
+        let tags = commands[command].chains[chain].tags;
+        let shared = tags.filter((value) => words.includes(value));
+        if (chain.startsWith(input.toLowerCase()) || shared.length > 1) {
+          // Create suggestion element
           displayChainSuggestion(chain);
         }
-        // else {
-        //   // Display details of related chains
-        //   for (let argument in commands[command].chains[chain].arguments) {
-        //     if (commands[command].chains[chain].arguments[argument].name.startsWith(input.toLowerCase())) {
-        //       displayChainSuggestion(command, chain);
-        //     }
-        //   }
-        // }
       }
     }
   }

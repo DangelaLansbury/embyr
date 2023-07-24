@@ -101,7 +101,7 @@ const commands = {
       'chk .': {
         name: 'Check MHC class I and peptide',
         description: 'Check MHC class I molecules and peptides at the same time to see if cell is of self and if it is infected.',
-        keywords: ['mhc', 'peptide'],
+        tags: ['green', 'blue', 'red'],
         run: (input) => {
           returnInput(input);
           let output = creatOutputDiv('check mhc peptide');
@@ -111,7 +111,7 @@ const commands = {
       'chk mhc': {
         name: 'Check MHC class I',
         description: 'Check MHC class I molecules to see if cell is of self.',
-        keywords: [],
+        tags: ['blue'],
         run: (input) => {
           returnInput(input);
           let output = creatOutputDiv('check mhc');
@@ -121,7 +121,7 @@ const commands = {
       'chk peptide': {
         name: 'Check peptide',
         description: 'Check peptide to see if it represents an infected cell.',
-        keywords: [],
+        tags: ['red'],
         run: (input) => {
           returnInput(input);
           let output = creatOutputDiv('check peptide');
@@ -143,6 +143,7 @@ const commands = {
       'e c.0000A>C': {
         name: 'Change A to C',
         description: 'Change A to C at position 0000.',
+        tags: ['purple'],
         run: (input) => {
           returnInput(input);
           let output = creatOutputDiv('You have successfully edited the genome.');
@@ -152,6 +153,7 @@ const commands = {
       'e c.0000A>G': {
         name: 'Change A to G',
         description: 'Change A to G at position 0000.',
+        tags: ['indigo'],
         run: (input) => {
           returnInput(input);
           let output = creatOutputDiv('You have successfully edited the genome.');
