@@ -119,14 +119,14 @@
   display: inline-flex;
   color: var(--soil-x-lt);
 }
-.chain-parent {
+.suggestion.first-level,
+.suggestion.second-level {
   display: inline-flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  margin-right: 0.625rem;
 }
-/* .chain-parent::before {
+/* .suggestion.first-level::before {
   content: '';
   display: inline-block;
   margin-right: 0.5rem;
@@ -134,7 +134,7 @@
   height: 1rem;
   background-image: url('../images/sparkles.svg');
 } */
-.chain-arguments {
+.suggestion-arg {
   display: inline-flex;
   margin: 0;
   color: var(--stone);
@@ -146,15 +146,26 @@
 .suggestion.active > .chain-arguments {
   color: var(--sweetgrass);
 }
-.suggestion.active > .suggestion-name {
-  color: var(--stone);
+.details-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
-.suggestion.error > .chain-parent {
-  color: var(--clay);
-}
-.selected-command {
-  display: inline-flex;
-  margin: auto 0;
-  height: 1.75rem;
-  color: var(--lilac);
+.details {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin: 0.75rem 2.5rem;
+  width: fill-available;
+  height: fit-content;
+  /* background-color: var(--sweetgrass); */
+  overflow-y: scroll;
+  overscroll-behavior: none;
+  -ms-overflow-style: none;
 }

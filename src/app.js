@@ -18,10 +18,12 @@ let cursor = document.querySelector('.cursor'); // Zetsu input fake cursor
 let suggestionsContainer = document.querySelector('.suggestions-container');
 let suggestionsListContainer = document.querySelector('.suggestions-list-container');
 let suggestionsList = document.querySelector('.suggestions-list');
-let details = document.querySelector('.suggestion-details');
-let detailsName = document.querySelector('.details-name');
-let detailsDescription = document.querySelector('.details-description');
 let suggestions = document.querySelectorAll('.suggestion');
+let details = document.querySelector('.details');
+let detailsName = document.querySelector('.details-name');
+let detailsDescription = document.querySelector('.details-desc');
+let detailsArguments = document.querySelector('.details-args-accepted');
+let detailsSyntax = document.querySelector('.details-syntax');
 
 // --- FOCUS ON EDITOR ---
 
@@ -81,18 +83,18 @@ zetsu.addEventListener('keydown', function (e) {
 const nullThread = `<div class="thread-text">Shoot, I don't recognize that command.</div>`;
 
 // display suggestions and detail
-const displaySuggestion = (command, name) => {
+const displaySuggestion = (command, classParam) => {
   let suggestion = document.createElement('div');
-  suggestion.className = 'suggestion';
-  suggestion.innerHTML = `<div class="chain-parent">${command}</div> <div class="suggestion-name">${name}</div>`;
+  suggestion.className = `suggestion ${classParam}`;
+  suggestion.innerHTML = `<div class="suggestion-command">${command}</div>`;
   suggestionsList.appendChild(suggestion);
 };
 
-const displayChainSuggestion = (chain) => {
-  let suggestion = document.createElement('div');
-  suggestion.className = 'suggestion chain';
-  suggestion.innerHTML = `<div class="chain-parent">${chain}</div>`;
-  suggestionsList.appendChild(suggestion);
+const displaySuggestionDetails = (name, description) => {
+  let newDetails = document.createElement('div');
+  newDetails.className = 'suggestion-details';
+  newDetails.innerHTML = `<div class="details-name">${name}</div><div class="details-description">${description}</div>`;
+  details.appendChild(newDetails);
 };
 
 // populate help bar with commands
@@ -172,28 +174,48 @@ zetsu.addEventListener('input', function () {
   // Clear suggestions and details
   suggestionsList.innerHTML = '';
   details.innerHTML = '';
-  // Check if input is a command or chain
+  suggestions = [];
+  // Check if input is a command
   for (let command in commands) {
     if (command.startsWith(input.toLowerCase()) || commands[command].name.toLowerCase().startsWith(input.toLowerCase())) {
       // Create suggestion element
-      displaySuggestion(command, commands[command].name.toLowerCase());
+      displaySuggestion(commands[command].nickname, 'first-level');
       break;
     }
-    for (let chain in commands[command].chains) {
-      let chainCheck = chain.toLowerCase();
-      let tagsFound = 0;
-      let tags = commands[command].chains[chain].tags;
-      if (tags !== undefined) {
-        for (let i = 0; i < tags.length; i++) {
-          if (input.toLowerCase().includes(tags[i])) {
-            tagsFound++;
-          }
-        }
-      }
-      if (chainCheck.startsWith(input.toLowerCase()) || commands[command].chains[chain].name.toLowerCase().startsWith(input.toLowerCase()) || tagsFound > 0) {
-        displayChainSuggestion(chain);
+    // Check if input contains an argument
+    for (let arg in commands[command].arguments) {
+      let fullCommand = commands[command].nickname + ' ' + arg;
+      if (fullCommand.toLowerCase().startsWith(input.toLowerCase())) {
+        displaySuggestion(fullCommand, 'second-level');
       }
     }
+    // Checking tags
+    // else {
+    //       let thisCommand = commands[command].arguments.find((argument) => argument.name === argName);
+    //       let argTags = thisCommand.tags;
+    //       if (argTags !== undefined) {
+    //         for (let i = 0; i < argTags.length; i++) {
+    //           if (input.toLowerCase().includes(argTags[i])) {
+    //             displaySuggestion(fullCommand, thisCommand.name.toLowerCase());
+    //           }
+    //         }
+    //       }
+    //     }
+    // for (let chain in commands[command].chains) {
+    //   let chainCheck = chain.toLowerCase();
+    //   let tagsFound = 0;
+    //   let tags = commands[command].chains[chain].tags;
+    //   if (tags !== undefined) {
+    //     for (let i = 0; i < tags.length; i++) {
+    //       if (input.toLowerCase().includes(tags[i])) {
+    //         tagsFound++;
+    //       }
+    //     }
+    //   }
+    //   if (chainCheck.startsWith(input.toLowerCase()) || commands[command].chains[chain].name.toLowerCase().startsWith(input.toLowerCase()) || tagsFound > 0) {
+    //     displayChainSuggestion(chain);
+    //   }
+    // }
   }
   // Listening for up and down arrow keys to cycle through suggestions
   suggestions = document.querySelectorAll('.suggestion');
@@ -203,26 +225,43 @@ zetsu.addEventListener('input', function () {
     if (suggestions.length !== 0) {
       if (e.key === 'ArrowDown') {
         e.preventDefault();
+        details.innerHTML = '';
+        if (cursor.style.display === 'inline-flex') {
+          cursor.style.display = 'none';
+        }
         if (suggestionIndex !== -1) {
           suggestions[suggestionIndex].classList.remove('active');
         }
         suggestionIndex++;
         if (suggestionIndex > suggestions.length - 1) {
           suggestionIndex = -1;
-          zetsu.innerText = input;
-          details.innerHTML = '';
+          if (input !== '') {
+            zetsu.innerText = input;
+          } else {
+            zetsu.innerText = '';
+          }
         } else if (suggestionIndex !== -1) {
           suggestions[suggestionIndex].classList.add('active');
-          // Check if suggestion is a chain and display name and details
-          if (suggestions[suggestionIndex].classList.contains('chain')) {
-            let chain = suggestions[suggestionIndex].firstElementChild.innerText;
-            let command = suggestions[suggestionIndex].firstElementChild.innerText.split(' ')[0];
-            zetsu.innerText = chain;
-            details.innerHTML = `<div class="details-name">${commands[command].chains[chain].name}</div><div class="details-description">${commands[command].chains[chain].description}</div>`;
+          let suggestedCommand = suggestions[suggestionIndex].querySelector('.suggestion-command').innerText;
+          zetsu.innerText = suggestedCommand;
+          // Display suggestion details
+          if (suggestions.length !== 0 && suggestionIndex !== -1) {
+            let parts = suggestions[suggestionIndex].querySelector('.suggestion-command').innerText.split(' ');
+            let commandName = parts[0].toLowerCase();
+            let arg = parts.slice(1).join(' ');
+            if (commands[commandName].arguments !== null && arg !== '') {
+              for (let argument in commands[commandName].arguments) {
+                let argName = commands[commandName].arguments[argument].name;
+                let argDesc = commands[commandName].arguments[argument].description;
+                if (argName === arg) {
+                  displaySuggestionDetails(argName, argDesc);
+                }
+              }
+            } else {
+              displaySuggestionDetails(commands[commandName].name, commands[commandName].description);
+            }
           } else {
-            let command = suggestions[suggestionIndex].firstElementChild.innerText;
-            zetsu.innerText = command;
-            details.innerHTML = `<div class="details-name">${commands[command].name}</div><div class="details-description">${commands[command].description}</div>`;
+            details.innerHTML = '';
           }
           suggestions[suggestionIndex].scrollIntoView({
             block: 'nearest',
@@ -230,32 +269,53 @@ zetsu.addEventListener('input', function () {
             behavior: 'smooth',
           });
         }
-        focusAtEnd();
+        if (zetsu.innerText !== '') {
+          focusAtEnd();
+        } else {
+          cursor.style.display = 'inline-flex';
+        }
       } else if (e.key === 'ArrowUp') {
         e.preventDefault();
+        details.innerHTML = '';
+        if (cursor.style.display === 'inline-flex') {
+          cursor.style.display = 'none';
+        }
         if (suggestionIndex !== -1) {
           suggestions[suggestionIndex].classList.remove('active');
         }
         suggestionIndex--;
         if (suggestionIndex === -1) {
-          zetsu.innerText = input;
-          details.innerHTML = '';
+          if (input !== '') {
+            zetsu.innerText = input;
+          } else {
+            zetsu.innerText = '';
+          }
         }
         if (suggestionIndex < -1) {
           suggestionIndex = suggestions.length - 1;
         }
         if (suggestionIndex !== -1) {
           suggestions[suggestionIndex].classList.add('active');
-          // Check if suggestion is a chain and display name and details
-          if (suggestions[suggestionIndex].classList.contains('chain')) {
-            let chain = suggestions[suggestionIndex].firstElementChild.innerText;
-            let command = suggestions[suggestionIndex].firstElementChild.innerText.split(' ')[0];
-            zetsu.innerText = chain;
-            details.innerHTML = `<div class="details-name">${commands[command].chains[chain].name}</div><div class="details-description">${commands[command].chains[chain].description}</div>`;
+          let suggestedCommand = suggestions[suggestionIndex].querySelector('.suggestion-command').innerText;
+          zetsu.innerText = suggestedCommand;
+          // Display suggestion details
+          if (suggestions.length !== 0 && suggestionIndex !== -1) {
+            let parts = suggestions[suggestionIndex].querySelector('.suggestion-command').innerText.split(' ');
+            let commandName = parts[0].toLowerCase();
+            let arg = parts.slice(1).join(' ');
+            if (commands[commandName].arguments !== null && arg !== '') {
+              for (let argument in commands[commandName].arguments) {
+                let argName = commands[commandName].arguments[argument].name;
+                let argDesc = commands[commandName].arguments[argument].description;
+                if (argName === arg) {
+                  displaySuggestionDetails(argName, argDesc);
+                }
+              }
+            } else {
+              displaySuggestionDetails(commands[commandName].name, commands[commandName].description);
+            }
           } else {
-            let command = suggestions[suggestionIndex].firstElementChild.innerText;
-            zetsu.innerText = command;
-            details.innerHTML = `<div class="details-name">${commands[command].name}</div><div class="details-description">${commands[command].description}</div>`;
+            details.innerHTML = '';
           }
           // Scroll to active suggestion
           suggestions[suggestionIndex].scrollIntoView({
@@ -264,7 +324,11 @@ zetsu.addEventListener('input', function () {
             behavior: 'smooth',
           });
         }
-        focusAtEnd();
+        if (zetsu.innerText !== '') {
+          focusAtEnd();
+        } else {
+          cursor.style.display = 'inline-flex';
+        }
       }
     } else {
       suggestionIndex = -1;
@@ -272,14 +336,17 @@ zetsu.addEventListener('input', function () {
   });
   // Reset suggestion index when user presses space or continues to type or hits enter
   zetsu.addEventListener('keydown', function (e) {
-    if (e.key === ' ' || e.key === 'Backspace' || e.key === 'Enter') {
+    if (e.key === ' ' || e.key === 'Backspace') {
+      suggestionIndex = -1;
+    } else if (e.key === 'Enter') {
+      input = '';
       suggestionIndex = -1;
     }
   });
 });
 
 // Clear editor if user presses enter, refocus on editor, and show fake cursor
-const clearzetsu = () => {
+const clearZetsu = () => {
   zetsu.innerText = '';
   zetsu.focus();
   cursor.style.display = 'inline-flex';
@@ -295,22 +362,19 @@ zetsu.addEventListener('keydown', function (e) {
     let input = zetsu.innerText.trim();
     // Execute commands and return output
     if (input !== '') {
-      clearzetsu();
+      clearZetsu();
       let parts = input.split(' ');
       let command = parts[0].toLowerCase();
-      let args = parts.slice(1).join(' ');
+      let args = parts.slice(1);
+      let arg = args.join(' ');
       if (commands[command]) {
-        let chain = null;
-        for (let chainName in commands[command].chains) {
-          let chainCheck = chainName.toLowerCase();
-          if (chainCheck === input.toLowerCase()) {
-            chain = chainName;
-          }
-        }
-        if (chain) {
-          commands[command].chains[chain].run(input);
+        // Check if command has arguments
+        if (commands[command].arguments !== null) {
+          // Run command and pass in argument
+          commands[command].run(input, arg);
         } else {
-          commands[command].run(input, args);
+          // Run command
+          commands[command].run(input);
         }
       } else {
         returnInput(input);

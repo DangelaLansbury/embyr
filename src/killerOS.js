@@ -96,153 +96,176 @@ const status = {
 const commands = {
   det: {
     meta: false,
+    nickname: 'det',
     name: 'Detect',
+    title: 'Detect characteristics',
     description: 'Evaluate or interpret something in the system.',
-    chains: {
-      'det .': {
-        name: 'Detect MHC class I and peptide',
-        description: 'Check MHC class I molecules and peptides at the same time to see if cell is of self and if it is infected.',
-        tags: ['green', 'blue', 'red'],
-        run: (input) => {
-          returnInput(input);
-          let output = creatOutputDiv('check mhc peptide');
-          returnOutput(output, outputDelay[1]);
-        },
+    arguments: [
+      {
+        name: 'mhc',
+        description: 'Detect MHC class I molecules to check for self.',
+        return: 'mhc',
       },
-      'det mhc': {
-        name: 'Detect MHC class I',
-        description: 'Check MHC class I molecules to see if cell is of self.',
-        tags: ['blue'],
-        run: (input) => {
-          returnInput(input);
-          let output = creatOutputDiv('check mhc');
-          returnOutput(output, outputDelay[1]);
-        },
+      {
+        name: 'peptide',
+        description: 'Detect peptides to check for altered self.',
+        return: 'peptide',
       },
-      'det peptide': {
-        name: 'Detect peptide',
-        description: 'Check peptide to see if it represents an infected cell.',
-        tags: ['red'],
-        run: (input) => {
-          returnInput(input);
-          let output = creatOutputDiv('check peptide');
-          returnOutput(output, outputDelay[1]);
-        },
+      {
+        name: '.',
+        description: 'Detect both MHC class I molecules and peptides to check for self and altered self.',
+        return: 'mhc peptide',
       },
-    },
-    run: (input, args) => {
+    ],
+    run: (input, arg) => {
       returnInput(input);
-      output = creatOutputDiv('What do you want to check?' + args);
-      returnOutput(output, outputDelay[0]);
+      // let result = commands['det'].arguments.find((argument) => argument.name === arg);
+      let output = creatOutputDiv('You have successfully detected ' + arg + '.');
+      returnOutput(output, outputDelay[1]);
     },
   },
-  exp: {
+  car: {
     meta: false,
-    name: 'express',
+    nickname: 'CAR',
+    name: 'Express CAR',
+    title: 'Express Chimeric antigen receptor',
     description: 'Express protein or molecule.',
-    chains: {
-      'exp car': {
-        name: 'Express CAR',
-        description: 'Express chimeric antigen receptors to activate T cell.',
-        tags: ['crimson'],
-        run: (input) => {
-          returnInput(input);
-          let output = creatOutputDiv('You have successfully activated proteinA.');
-          returnOutput(output, outputDelay[1]);
-        },
+    arguments: {
+      CD19: {
+        name: 'CD19',
+        description: 'Express chimeric antigen receptor to activate T cell against CD19.',
+        return: 'You have successfully expressed CAR against CD19.',
       },
-      run: (input, args) => {
-        returnInput(input);
-        output = creatOutputDiv('What do you want to activate?' + args);
-        returnOutput(output, outputDelay[0]);
+      CD20: {
+        name: 'CD20',
+        description: 'Express chimeric antigen receptor to activate T cell against CD20.',
+        return: 'You have successfully expressed CAR against CD20.',
       },
+      CD22: {
+        name: 'CD22',
+        description: 'Express chimeric antigen receptor to activate T cell against CD22.',
+        return: 'You have successfully expressed CAR against CD22.',
+      },
+      CD30: {
+        name: 'CD30',
+        description: 'Express chimeric antigen receptor to activate T cell against CD30.',
+        return: 'You have successfully expressed CAR against CD30.',
+      },
+      BCMA: {
+        name: 'BCMA',
+        description: 'Express chimeric antigen receptor to activate T cell against BCMA.',
+        return: 'You have successfully expressed CAR against BCMA.',
+      },
+    },
+    run: (input, arg) => {
+      returnInput(input);
+      let argResult;
+      for (let argument in commands['car'].arguments) {
+        if (commands['car'].arguments[argument].name.toLowerCase() === arg.toLowerCase()) {
+          argResult = commands['car'].arguments[argument].return;
+        }
+      }
+      if (argResult === undefined) {
+        clearZetsu();
+        let output = creatOutputDiv(`I don't know this antigen. If I've missed it, you can create a new one.`);
+        returnOutput(output, outputDelay[1]);
+        displaySuggestion(`new antigen ${arg}`, 'third-level');
+        suggestions = document.querySelectorAll('.suggestion');
+      } else {
+        clearZetsu();
+        let output = creatOutputDiv(argResult);
+        returnOutput(output, outputDelay[1]);
+      }
     },
   },
   inh: {
     meta: false,
+    nickname: 'inh',
     name: 'Inhibit',
     description: 'Inhibit checkpoint.',
-    chains: {
-      'inh PD-1': {
-        name: 'Inhibit PD-1',
+    arguments: {
+      'PD-1': {
+        name: 'PD-1',
         description: 'Inhibit PD-1 to prevent it from binding to PD-L1 and preventing T cell activation.',
-        tags: ['purple'],
-        run: (input) => {
-          returnInput(input);
-          let output = creatOutputDiv('You have successfully inhibited PD-1.');
-          returnOutput(output, outputDelay[1]);
-        },
+        return: 'You have successfully inhibited PD-1.',
       },
-      'inh CTLA4': {
-        name: 'Inhibit CTLA-4',
+      'CTLA-4': {
+        name: 'CTLA-4',
         description: 'Inhibit CTLA-4 to prevent it from binding to CD80 and preventing T cell activation.',
-        tags: ['indigo'],
-        run: (input) => {
-          returnInput(input);
-          let output = creatOutputDiv('You have successfully inhibited CTLA-4.');
-          returnOutput(output, outputDelay[1]);
-        },
+        return: 'You have successfully inhibited CTLA-4.',
       },
     },
-    run: (input, args) => {
+    run: (input, arg) => {
       returnInput(input);
-      output = creatOutputDiv('What do you want to edit?' + args);
-      returnOutput(output, outputDelay[0]);
+      let output = creatOutputDiv('You have successfully inhibited ' + arg + '.');
+      returnOutput(output, outputDelay[1]);
     },
   },
   ph: {
     meta: false,
+    nickname: 'ph',
     name: 'Phagocytose',
-    description: 'Remove something from the system.',
-    chains: {
-      ph: {
-        name: 'Phagocytose',
-        description: 'Phagocytose something.',
-        tags: ['amber'],
-        run: (input) => {
-          returnInput(input);
-          let output = creatOutputDiv('You have successfully phagocytosed something.');
-          returnOutput(output, outputDelay[1]);
-        },
-      },
-    },
+    description: 'Munch this cell right up.',
+    arguments: null,
     run: (input) => {
       returnInput(input);
-      output = creatOutputDiv('Kill that cell!');
-      returnOutput(output, outputDelay[0]);
+      let output = creatOutputDiv('You have successfully phagocytosed target cell.');
+      returnOutput(output, outputDelay[1]);
     },
   },
   new: {
     meta: true,
-    name: 'New cell',
-    description: 'Get started.',
-    chains: null,
-    run: (input) => {
+    nickname: 'new',
+    name: 'New object',
+    description: 'Create something new.',
+    arguments: [
+      {
+        name: 'antigen',
+        description: 'Create a new antigen.',
+        return: 'You have successfully created a new antigen.',
+      },
+    ],
+    run: (input, arg) => {
       returnInput(input);
-      output = creatOutputDiv('init command');
+      output = creatOutputDiv('created new antigen called ' + arg);
       returnOutput(output, outputDelay[0]);
     },
   },
   r: {
     meta: true,
+    nickname: 'r',
     name: 'Reset',
     description: 'Reset the system... a fresh start.',
-    chains: null,
+    arguments: null,
     run: (input) => {
       returnInput(input);
       output = creatOutputDiv('reset command');
       returnOutput(output, outputDelay[0]);
     },
   },
-  '&': {
+  a: {
     meta: true,
+    nickname: 'a',
     name: 'About',
     description: 'About this project.',
-    chains: null,
+    arguments: null,
     run: (input) => {
       returnInput(input);
       output = creatOutputDiv('about command');
       returnOutput(output, outputDelay[0]);
+    },
+  },
+};
+
+const chains = {
+  'det . => % "alteredSelf" "true" $ ph : quit': {
+    name: 'Detect MHC class I and peptide and phagocytose if altered self',
+    description: 'Check MHC class I molecules and peptides at the same time to see if cell is of part of own body and if it is infected. If it is infected, phagocytose the cell.',
+    tags: ['mhc', 'class i', 'class 1', 'class one', 'class-one', 'histocompatibility', 'histocompatibility complex', 'self', 'peptide', 'peptides', 'antigen', 'antigens', 'phagocytose', 'phagocytosis'],
+    run: (input) => {
+      returnInput(input);
+      let output = creatOutputDiv('check mhc peptide and phagocytose if altered self');
+      returnOutput(output, outputDelay[1]);
     },
   },
 };
