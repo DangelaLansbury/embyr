@@ -217,6 +217,26 @@ zetsu.addEventListener('input', function () {
     //   }
     // }
   }
+  suggestions = document.querySelectorAll('.suggestion');
+  if (suggestions.length === 0) {
+    for (let command in commands) {
+      for (let arg in commands[command].arguments) {
+        let argName = commands[command].arguments[arg].name;
+        let argDesc = commands[command].arguments[arg].description;
+        let fullCommand = commands[command].nickname + ' ' + argName;
+        let inputWords = input.split(' ');
+        let similarities = 0;
+        for (let i = 0; i < inputWords.length; i++) {
+          if (argDesc.toLowerCase().includes(inputWords[i].toLowerCase())) {
+            similarities++;
+          }
+        }
+        if (argName.toLowerCase().startsWith(input.toLowerCase()) || similarities > 2) {
+          displaySuggestion(fullCommand, 'third-level');
+        }
+      }
+    }
+  }
   // Listening for up and down arrow keys to cycle through suggestions
   suggestions = document.querySelectorAll('.suggestion');
   let suggestionIndex = -1;

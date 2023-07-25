@@ -131,30 +131,35 @@ const commands = {
     title: 'Express Chimeric antigen receptor',
     description: 'Express protein or molecule.',
     arguments: {
-      CD19: {
-        name: 'CD19',
-        description: 'Express chimeric antigen receptor to activate T cell against CD19.',
-        return: 'You have successfully expressed CAR against CD19.',
+      'a-folate': {
+        name: 'a-folate',
+        description: 'Express chimeric antigen receptor to activate T cell against a-folate.',
+        return: 'You have successfully expressed CAR against a-folate.',
       },
-      CD20: {
-        name: 'CD20',
-        description: 'Express chimeric antigen receptor to activate T cell against CD20.',
-        return: 'You have successfully expressed CAR against CD20.',
+      CD_: {
+        name: 'CD_',
+        description: 'Express chimeric antigen receptor to activate T cell against CD19, CD20, CD22, CD30, etc.',
+        return: 'You have successfully expressed CAR against CD19, CD20, CD22, CD30, etc.',
       },
-      CD22: {
-        name: 'CD22',
-        description: 'Express chimeric antigen receptor to activate T cell against CD22.',
-        return: 'You have successfully expressed CAR against CD22.',
+      EGFR: {
+        name: 'EGFR',
+        description: 'Express chimeric antigen receptor to activate T cell against EGFR.',
+        return: 'You have successfully expressed CAR against EGFR.',
       },
-      CD30: {
-        name: 'CD30',
-        description: 'Express chimeric antigen receptor to activate T cell against CD30.',
-        return: 'You have successfully expressed CAR against CD30.',
+      GD2: {
+        name: 'GD2',
+        description: 'Express chimeric antigen receptor to activate T cell against GD2.',
+        return: 'You have successfully expressed CAR against GD2.',
       },
-      BCMA: {
-        name: 'BCMA',
-        description: 'Express chimeric antigen receptor to activate T cell against BCMA.',
-        return: 'You have successfully expressed CAR against BCMA.',
+      HER2: {
+        name: 'HER2',
+        description: 'Express chimeric antigen receptor to activate T cell against HER2.',
+        return: 'You have successfully expressed CAR against HER2.',
+      },
+      L1CAM: {
+        name: 'L1CAM',
+        description: 'Express chimeric antigen receptor to activate T cell against L1 cell adhesion molecule.',
+        return: 'You have successfully expressed CAR against L1 cell adhesion molecule.',
       },
     },
     run: (input, arg) => {
@@ -218,13 +223,18 @@ const commands = {
     nickname: 'new',
     name: 'New object',
     description: 'Create something new.',
-    arguments: [
-      {
+    arguments: {
+      antigen: {
         name: 'antigen',
         description: 'Create a new antigen.',
         return: 'You have successfully created a new antigen.',
       },
-    ],
+      conditonal: {
+        name: 'conditional',
+        description: 'Create a new conditional.',
+        return: 'You have successfully created a new conditional.',
+      },
+    },
     run: (input, arg) => {
       returnInput(input);
       output = creatOutputDiv('created new antigen called ' + arg);

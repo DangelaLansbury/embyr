@@ -120,7 +120,8 @@
   color: var(--soil-x-lt);
 }
 .suggestion.first-level,
-.suggestion.second-level {
+.suggestion.second-level,
+.suggestion.third-level {
   display: inline-flex;
   flex-direction: row;
   justify-content: flex-start;
