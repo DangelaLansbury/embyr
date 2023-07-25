@@ -162,7 +162,7 @@ main {
   margin-left: 2.5rem;
 }
 #help1::before {
-  content: '1 of 2';
+  content: '1/2';
   color: var(--soil-x-lt);
   margin-right: 1rem;
 }
@@ -171,7 +171,7 @@ main {
   color: var(--soil-x-lt);
 }
 #help2::before {
-  content: '2 of 2';
+  content: '2/2';
   color: var(--soil-x-lt);
   margin-right: 1rem;
 }
@@ -219,16 +219,16 @@ main {
   }
 }
 /* loading */
-.loading-text {
+/* .loading-text {
   display: inline-flex;
   margin: 1rem 1.75rem;
-  /* &:before {
+  &:before {
     animation: spin 1.5s linear infinite;
     content: '⠋';
     margin-right: 0.5rem;
     color: var(--sweetgrass);
     font-size: 1.75rem;
-  } */
+  }
 }
 @keyframes spin {
   0% {
@@ -258,7 +258,7 @@ main {
   100% {
     content: '⠇';
   }
-}
+} */
 /* ---- INPUT ---- */
 .zetsu-input {
   display: flex;

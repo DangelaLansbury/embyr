@@ -127,7 +127,7 @@ const commands = {
   car: {
     meta: false,
     nickname: 'CAR',
-    name: 'Express CAR',
+    name: 'Express receptor',
     title: 'Express Chimeric antigen receptor',
     description: 'Express protein or molecule.',
     arguments: {
@@ -187,6 +187,7 @@ const commands = {
     meta: false,
     nickname: 'inh',
     name: 'Inhibit',
+    title: 'Inhibit checkpoint',
     description: 'Inhibit checkpoint.',
     arguments: {
       'PD-1': {
@@ -210,6 +211,7 @@ const commands = {
     meta: false,
     nickname: 'ph',
     name: 'Phagocytose',
+    title: 'Phagocytose target cell',
     description: 'Munch this cell right up.',
     arguments: null,
     run: (input) => {
@@ -222,6 +224,7 @@ const commands = {
     meta: true,
     nickname: 'new',
     name: 'New object',
+    title: 'Create new data object',
     description: 'Create something new.',
     arguments: {
       antigen: {
@@ -245,6 +248,7 @@ const commands = {
     meta: true,
     nickname: 'r',
     name: 'Reset',
+    title: 'Reset system',
     description: 'Reset the system... a fresh start.',
     arguments: null,
     run: (input) => {
@@ -257,6 +261,7 @@ const commands = {
     meta: true,
     nickname: 'a',
     name: 'About',
+    title: 'About this project',
     description: 'About this project.',
     arguments: null,
     run: (input) => {

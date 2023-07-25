@@ -189,50 +189,38 @@ zetsu.addEventListener('input', function () {
         displaySuggestion(fullCommand, 'second-level');
       }
     }
-    // Checking tags
-    // else {
-    //       let thisCommand = commands[command].arguments.find((argument) => argument.name === argName);
-    //       let argTags = thisCommand.tags;
-    //       if (argTags !== undefined) {
-    //         for (let i = 0; i < argTags.length; i++) {
-    //           if (input.toLowerCase().includes(argTags[i])) {
-    //             displaySuggestion(fullCommand, thisCommand.name.toLowerCase());
-    //           }
-    //         }
-    //       }
-    //     }
-    // for (let chain in commands[command].chains) {
-    //   let chainCheck = chain.toLowerCase();
-    //   let tagsFound = 0;
-    //   let tags = commands[command].chains[chain].tags;
-    //   if (tags !== undefined) {
-    //     for (let i = 0; i < tags.length; i++) {
-    //       if (input.toLowerCase().includes(tags[i])) {
-    //         tagsFound++;
-    //       }
-    //     }
-    //   }
-    //   if (chainCheck.startsWith(input.toLowerCase()) || commands[command].chains[chain].name.toLowerCase().startsWith(input.toLowerCase()) || tagsFound > 0) {
-    //     displayChainSuggestion(chain);
-    //   }
-    // }
   }
   suggestions = document.querySelectorAll('.suggestion');
   if (suggestions.length === 0) {
     for (let command in commands) {
-      for (let arg in commands[command].arguments) {
-        let argName = commands[command].arguments[arg].name;
-        let argDesc = commands[command].arguments[arg].description;
-        let fullCommand = commands[command].nickname + ' ' + argName;
+      if (commands[command].arguments !== null) {
+        for (let arg in commands[command].arguments) {
+          let argName = commands[command].arguments[arg].name;
+          let argDesc = commands[command].arguments[arg].description;
+          let cmdDesc = commands[command].description;
+          let fullCommand = commands[command].nickname + ' ' + argName;
+          let inputWords = input.split(' ');
+          let similarities = 0;
+          for (let i = 0; i < inputWords.length; i++) {
+            if (argDesc.toLowerCase().includes(inputWords[i].toLowerCase())) {
+              similarities++;
+            }
+          }
+          if (argName.toLowerCase().startsWith(input.toLowerCase()) || similarities > 2) {
+            displaySuggestion(fullCommand, 'third-level');
+          }
+        }
+      } else {
+        let cmdDesc = commands[command].description;
         let inputWords = input.split(' ');
         let similarities = 0;
         for (let i = 0; i < inputWords.length; i++) {
-          if (argDesc.toLowerCase().includes(inputWords[i].toLowerCase())) {
+          if (cmdDesc.toLowerCase().includes(inputWords[i].toLowerCase())) {
             similarities++;
           }
         }
-        if (argName.toLowerCase().startsWith(input.toLowerCase()) || similarities > 2) {
-          displaySuggestion(fullCommand, 'third-level');
+        if (similarities > 2) {
+          displaySuggestion(commands[command].nickname, 'third-level');
         }
       }
     }
@@ -273,12 +261,13 @@ zetsu.addEventListener('input', function () {
               for (let argument in commands[commandName].arguments) {
                 let argName = commands[commandName].arguments[argument].name;
                 let argDesc = commands[commandName].arguments[argument].description;
+                let fullCommand = commands[commandName].nickname + ' ' + argName;
                 if (argName === arg) {
-                  displaySuggestionDetails(argName, argDesc);
+                  displaySuggestionDetails(fullCommand, argDesc);
                 }
               }
             } else {
-              displaySuggestionDetails(commands[commandName].name, commands[commandName].description);
+              displaySuggestionDetails(commands[commandName].title, commands[commandName].description);
             }
           } else {
             details.innerHTML = '';
