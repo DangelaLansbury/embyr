@@ -130,30 +130,7 @@ const commands = {
     name: 'Express receptor',
     title: 'Express chimeric antigen receptor',
     description: 'Express protein or molecule.',
-    keywords: [
-      'express',
-      'receptor',
-      'protein',
-      'molecule',
-      'chimeric antigen receptor',
-      'car',
-      'a-folate',
-      'afolate',
-      'afolates',
-      'a-folates',
-      'cd',
-      'cd19',
-      'cd20',
-      'cd22',
-      'cd30',
-      'cd33',
-      'egfr',
-      'gd2',
-      'her2',
-      'l1cam',
-      'l1',
-      'l1 cell adhesion molecule',
-    ],
+    keywords: ['express', 'receptor', 'protein', 'molecule', 'chimeric', 'antigen', 'car', 'a-folate', 'cd', 'cd19', 'cd20', 'cd22', 'cd30', 'cd33', 'egfr', 'gd2', 'her2', 'l1cam', 'l1', 'adhesion'],
     arguments: {
       'a-folate': {
         name: 'a-folate',
@@ -197,8 +174,8 @@ const commands = {
       if (argResult === undefined) {
         clearZetsu();
         let output = creatOutputDiv(`I don't know this antigen. If I've missed it, you can create a new one.`);
-        returnOutput(output, outputDelay[1]);
-        displaySuggestion(`new antigen ${arg}`, 'third-level');
+        returnOutput(output, 0);
+        populateSuggestion(`new antigen ${arg}`, 'third-level');
         suggestions = document.querySelectorAll('.suggestion');
       } else {
         clearZetsu();
@@ -268,7 +245,7 @@ const commands = {
     },
     run: (input, arg) => {
       returnInput(input);
-      output = creatOutputDiv('created new antigen called ' + arg);
+      let output = creatOutputDiv('created new antigen called ' + arg);
       returnOutput(output, outputDelay[0]);
     },
   },
@@ -280,10 +257,8 @@ const commands = {
     description: 'Reset the system... a fresh start.',
     keywords: ['reset', 'start over', 'fresh start'],
     arguments: null,
-    run: (input) => {
-      returnInput(input);
-      output = creatOutputDiv('reset command');
-      returnOutput(output, outputDelay[0]);
+    run: () => {
+      thread.innerHTML = '';
     },
   },
   a: {
@@ -294,10 +269,30 @@ const commands = {
     description: 'About this project.',
     keywords: ['about', 'project', 'zetsu', 'killerOS', 'immune system', 'immunity'],
     arguments: null,
-    run: (input) => {
-      returnInput(input);
-      output = creatOutputDiv('about command');
-      returnOutput(output, outputDelay[0]);
+    run: () => {
+      thread.innerHTML = '';
+      let output = document.createElement('div');
+      output.innerHTML = `
+        <div class="logo-container">
+          <div class="logo">
+            <img src="public/images/logo.svg" class="logo-svg" alt="logo" />
+            <div class="logo-text">
+              <h1>Zetsu</h1>
+            </div>
+          </div>
+        </div>
+        <div class="thread-block">
+          <div class="thread-text">terminal: <span style="color: var(--sweetgrass)">Zetsu</span></div>
+          <div class="thread-text">A terminal concept with GUI sprinkles.</div>
+          <div class="thread-text stone small">-- Fuzzy search commands as you type and review before executing.</div>
+          <div class="thread-text stone small">-- Check out <a href="https://github.com/DangelaLansbury/zetsu">the docs</a> for more info.</div>
+        </div>
+        <div class="thread-block">
+          <div class="thread-text">shell: <span style="color: var(--honey)">KillerOS</span></div>
+          <div class="thread-text">A fake shell for killer T cells: unmask invaders and chomp em to bits.</div>
+          <div class="thread-text stone small">-- Just a fun way to demo Zetsu, not an accurate simulation. Enjoy!</div>
+        </div>`;
+      returnOutput(output, 0);
     },
   },
 };

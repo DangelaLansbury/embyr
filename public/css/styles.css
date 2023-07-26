@@ -14,6 +14,14 @@
   --river: #83a598;
   --lilac: #d3869b;
   --stone: #a79c8f;
+  --xSmallSize: 0.75rem;
+  --smallSize: 0.875rem;
+  --normalSize: 1rem;
+  --bigSize: 1.125em;
+}
+
+.small {
+  font-size: var(--smallSize);
 }
 
 /* --- GLOBAL --- */
@@ -65,7 +73,17 @@ a {
   text-decoration: none;
   margin: 0;
   padding: 0;
-  color: #ebdbb2;
+  color: inherit;
+}
+a:hover {
+  text-decoration: underline;
+  color: var(--sweetgrass);
+}
+.stone a:hover {
+  color: var(--wheat);
+}
+.soil-x-lt a:hover {
+  color: var(--stone);
 }
 main {
   display: flex;
@@ -123,18 +141,35 @@ main {
 .thread {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
   padding: 0 2.5rem;
   width: calc(100% - 5rem);
+  max-width: 800px;
   margin-top: auto;
   margin-bottom: 0;
   overflow-y: scroll;
   overscroll-behavior: none;
   -ms-overflow-style: none;
 }
+.thread-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+  margin: 0.5rem 0;
+}
 .thread-text {
   display: block;
   width: 100%;
   margin: 0.25rem 0 0 0;
+}
+.thread-text.stone {
+  color: var(--stone);
+}
+.thread-text.soil-x-lt {
+  color: var(--soil-x-lt);
 }
 .cmd::before {
   content: '>';
@@ -311,32 +346,4 @@ main {
 /* ---- HIDING ---- */
 .hidden {
   display: none !important;
-}
-
-/* --- To be deleted --- */
-
-/* header */
-.logo-header {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  margin-right: 2rem;
-}
-.logo {
-  display: inline-block;
-  align-items: center;
-  justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  margin-left: 0.5rem;
-}
-.logo-header-text {
-  display: inline-block;
-  opacity: 0;
-  transition: 0.6s;
-}
-.logo-header:hover > .logo-header-text {
-  opacity: 1;
 }

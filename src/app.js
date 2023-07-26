@@ -62,18 +62,6 @@ zetsu.addEventListener('focus', function (e) {
   }
 });
 
-// --- HANDLE DELETING INPUT ---
-
-zetsu.addEventListener('keydown', function (e) {
-  if (e.key === 'Backspace' && this.innerText.toString().trim().length == 1) {
-    this.innerText = '';
-    cursor.style.display = 'inline-flex';
-    suggestionsList.innerHTML = '';
-    details.innerHTML = '';
-    suggestions = [];
-  }
-});
-
 // --- POPULATING CONTENT ---
 
 const nullThread = `<div class="thread-text">Shoot, I don't recognize that command.</div>`;
@@ -135,7 +123,7 @@ const outputDelay = [600, 800, 1000, 1200, 1400, 1600, 1800, 2000];
 // --- ADDING EVENT LISTENERS ---
 
 // Listen for help toggle: '?'
-zetsu.addEventListener('keydown', function (e) {
+window.addEventListener('keydown', function (e) {
   if (e.key === '?') {
     e.preventDefault();
     if (help1.classList.contains('hidden') && help2.classList.contains('hidden')) {
@@ -198,10 +186,8 @@ zetsu.addEventListener('input', function () {
   // Check if input is empty
   if (input !== '') {
     cursor.style.display = 'none';
-    // if (zetsuHelper.classList.contains('hidden')) {
-    //   zetsuHelper.classList.remove('hidden');
-    //   zetsuInit.classList.add('hidden');
-    // }
+  } else {
+    cursor.style.display = 'inline-flex';
   }
   // Clear suggestions and details
   suggestionsList.innerHTML = '';
@@ -209,7 +195,7 @@ zetsu.addEventListener('input', function () {
   suggestions = [];
   let inputWords = input.split(' ');
   for (let command in commands) {
-    if (command.startsWith(input.toLowerCase())) {
+    if (command.startsWith(input.toLowerCase()) && input !== '') {
       suggestions = document.querySelectorAll('.suggestion');
       let alreadySuggested = false;
       for (let k = 0; k < suggestions.length; k++) {
@@ -219,6 +205,7 @@ zetsu.addEventListener('input', function () {
       }
       if (!alreadySuggested) {
         populateSuggestion(commands[command].nickname, 'first-level');
+        break;
       }
     } else {
       if (commands[command].arguments !== null) {
@@ -238,52 +225,53 @@ zetsu.addEventListener('input', function () {
           }
         }
       }
-      // fuzzy search keywords in each command
-      let keywords = commands[command].keywords;
-      for (let i = 0; i < inputWords.length; i++) {
-        for (let j = 0; j < keywords.length; j++) {
-          let levDist = levenshteinDistance(inputWords[i], keywords[j]);
-          let similarity = 1 - levDist / Math.max(inputWords[i].length, keywords[j].length);
-          if (similarity > 0.5) {
-            // check to see if keyword matches any arguments
-            if (commands[command].arguments !== null) {
-              for (let arg in commands[command].arguments) {
-                let argName = commands[command].arguments[arg].name;
-                if (argName.toLowerCase() == keywords[j]) {
-                  let fullCommand = commands[command].nickname + ' ' + argName;
-                  // check suggestions to see if command is already suggested
-                  suggestions = document.querySelectorAll('.suggestion');
-                  let alreadySuggested = false;
-                  for (let k = 0; k < suggestions.length; k++) {
-                    if (suggestions[k].querySelector('.suggestion-command').innerText === fullCommand) {
-                      alreadySuggested = true;
-                    }
-                  }
-                  if (!alreadySuggested) {
-                    populateSuggestion(fullCommand, 'third-level');
+    }
+  }
+  for (let command in commands) {
+    // fuzzy search keywords in each command
+    let keywords = commands[command].keywords;
+    for (let i = 0; i < inputWords.length; i++) {
+      for (let j = 0; j < keywords.length; j++) {
+        let levDist = levenshteinDistance(inputWords[i], keywords[j]);
+        let similarity = 1 - levDist / Math.max(inputWords[i].length, keywords[j].length);
+        if (similarity > 0.5) {
+          // check to see if keyword matches any arguments
+          if (commands[command].arguments !== null) {
+            for (let arg in commands[command].arguments) {
+              let argName = commands[command].arguments[arg].name;
+              if (argName.toLowerCase() == keywords[j]) {
+                let fullCommand = commands[command].nickname + ' ' + argName;
+                // check suggestions to see if command is already suggested
+                suggestions = document.querySelectorAll('.suggestion');
+                let alreadySuggested = false;
+                for (let k = 0; k < suggestions.length; k++) {
+                  if (suggestions[k].querySelector('.suggestion-command').innerText === fullCommand) {
+                    alreadySuggested = true;
                   }
                 }
-              }
-            } else {
-              let fullCommand = commands[command].nickname + ' ' + argName;
-              // check suggestions to see if command is already suggested
-              suggestions = document.querySelectorAll('.suggestion');
-              let alreadySuggested = false;
-              for (let k = 0; k < suggestions.length; k++) {
-                if (suggestions[k].querySelector('.suggestion-command').innerText === fullCommand) {
-                  alreadySuggested = true;
+                if (!alreadySuggested) {
+                  populateSuggestion(fullCommand, 'third-level');
                 }
               }
-              if (!alreadySuggested) {
-                populateSuggestion(fullCommand, 'third-level');
+            }
+          } else {
+            let fullCommand = commands[command].nickname;
+            // check suggestions to see if command is already suggested
+            suggestions = document.querySelectorAll('.suggestion');
+            let alreadySuggested = false;
+            for (let k = 0; k < suggestions.length; k++) {
+              if (suggestions[k].querySelector('.suggestion-command').innerText.toLowerCase() === fullCommand.toLowerCase()) {
+                alreadySuggested = true;
               }
+            }
+            if (!alreadySuggested) {
+              populateSuggestion(fullCommand, 'third-level');
             }
           }
         }
       }
     }
   }
-  // }
   suggestions = document.querySelectorAll('.suggestion');
   let suggestionIndex = -1;
   // Listening for up and down arrow keys to cycle through suggestions
@@ -383,6 +371,19 @@ zetsu.addEventListener('input', function () {
       suggestionIndex = -1;
     }
   });
+  // Reset suggestions if all text is deleted at once
+  zetsu.addEventListener('keydown', function (e) {
+    if (e.key === 'Backspace' && zetsu.innerText.trim().length == 1) {
+      zetsu.innerText = '';
+      cursor.style.display = 'inline-flex';
+      suggestionsList.innerHTML = '';
+      details.innerHTML = '';
+      suggestions = [];
+    }
+  });
+  if (zetsu.innerText.trim().length == 0) {
+    clearZetsu();
+  }
 });
 
 // Clear editor if user presses enter, refocus on editor, and show fake cursor
@@ -408,7 +409,7 @@ zetsu.addEventListener('keydown', function (e) {
       let args = parts.slice(1);
       let arg = args.join(' ');
       if (commands[command]) {
-        commands[command].run(input);
+        commands[command].run(input, arg);
       } else {
         returnInput(input);
         returnOutput(creatOutputDiv(nullThread), 0);

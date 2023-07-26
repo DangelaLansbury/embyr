@@ -213,3 +213,25 @@
   margin: 0 0 0.75rem 0;
   color: var(--sweetgrass);
 }
+/* logo */
+.logo-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 1rem 0;
+}
+.logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.logo-svg {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-right: 0.5rem;
+}
+.logo-text {
+  display: inline-block;
+}
