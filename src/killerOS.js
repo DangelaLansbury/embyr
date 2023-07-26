@@ -100,36 +100,60 @@ const commands = {
     name: 'Detect',
     title: 'Detect characteristics',
     description: 'Evaluate or interpret something in the system.',
-    arguments: [
-      {
+    keywords: ['detect', 'evaluate', 'interpret', 'check', 'mhc', 'class i', 'class 1', 'class one', 'histocompatibility', 'histocompatibility complex', 'self', 'peptide', 'antigen'],
+    arguments: {
+      mhc: {
         name: 'mhc',
         description: 'Detect MHC class I molecules to check for self.',
         return: 'mhc',
       },
-      {
+      peptide: {
         name: 'peptide',
         description: 'Detect peptides to check for altered self.',
         return: 'peptide',
       },
-      {
+      '.': {
         name: '.',
         description: 'Detect both MHC class I molecules and peptides to check for self and altered self.',
         return: 'mhc peptide',
       },
-    ],
+    },
     run: (input, arg) => {
       returnInput(input);
-      // let result = commands['det'].arguments.find((argument) => argument.name === arg);
       let output = creatOutputDiv('You have successfully detected ' + arg + '.');
       returnOutput(output, outputDelay[1]);
     },
   },
   car: {
     meta: false,
-    nickname: 'CAR',
+    nickname: 'car',
     name: 'Express receptor',
-    title: 'Express Chimeric antigen receptor',
+    title: 'Express chimeric antigen receptor',
     description: 'Express protein or molecule.',
+    keywords: [
+      'express',
+      'receptor',
+      'protein',
+      'molecule',
+      'chimeric antigen receptor',
+      'car',
+      'a-folate',
+      'afolate',
+      'afolates',
+      'a-folates',
+      'cd',
+      'cd19',
+      'cd20',
+      'cd22',
+      'cd30',
+      'cd33',
+      'egfr',
+      'gd2',
+      'her2',
+      'l1cam',
+      'l1',
+      'l1 cell adhesion molecule',
+    ],
     arguments: {
       'a-folate': {
         name: 'a-folate',
@@ -189,6 +213,7 @@ const commands = {
     name: 'Inhibit',
     title: 'Inhibit checkpoint',
     description: 'Inhibit checkpoint.',
+    keywords: ['inhibit', 'checkpoint', 'pd-1', 'pd1', 'pd-l1', 'pdl1', 'ctla-4', 'ctla4', 'cd80'],
     arguments: {
       'PD-1': {
         name: 'PD-1',
@@ -198,6 +223,7 @@ const commands = {
       'CTLA-4': {
         name: 'CTLA-4',
         description: 'Inhibit CTLA-4 to prevent it from binding to CD80 and preventing T cell activation.',
+        keywords: ['ctla-4', 'ctla4', 'cd80'],
         return: 'You have successfully inhibited CTLA-4.',
       },
     },
@@ -213,6 +239,7 @@ const commands = {
     name: 'Phagocytose',
     title: 'Phagocytose target cell',
     description: 'Munch this cell right up.',
+    keywords: ['phagocytose', 'phagocytosis'],
     arguments: null,
     run: (input) => {
       returnInput(input);
@@ -226,6 +253,7 @@ const commands = {
     name: 'New object',
     title: 'Create new data object',
     description: 'Create something new.',
+    keywords: ['new', 'create', 'make'],
     arguments: {
       antigen: {
         name: 'antigen',
@@ -250,6 +278,7 @@ const commands = {
     name: 'Reset',
     title: 'Reset system',
     description: 'Reset the system... a fresh start.',
+    keywords: ['reset', 'start over', 'fresh start'],
     arguments: null,
     run: (input) => {
       returnInput(input);
@@ -263,24 +292,12 @@ const commands = {
     name: 'About',
     title: 'About this project',
     description: 'About this project.',
+    keywords: ['about', 'project', 'zetsu', 'killerOS', 'immune system', 'immunity'],
     arguments: null,
     run: (input) => {
       returnInput(input);
       output = creatOutputDiv('about command');
       returnOutput(output, outputDelay[0]);
-    },
-  },
-};
-
-const chains = {
-  'det . => % "alteredSelf" "true" $ ph : quit': {
-    name: 'Detect MHC class I and peptide and phagocytose if altered self',
-    description: 'Check MHC class I molecules and peptides at the same time to see if cell is of part of own body and if it is infected. If it is infected, phagocytose the cell.',
-    tags: ['mhc', 'class i', 'class 1', 'class one', 'class-one', 'histocompatibility', 'histocompatibility complex', 'self', 'peptide', 'peptides', 'antigen', 'antigens', 'phagocytose', 'phagocytosis'],
-    run: (input) => {
-      returnInput(input);
-      let output = creatOutputDiv('check mhc peptide and phagocytose if altered self');
-      returnOutput(output, outputDelay[1]);
     },
   },
 };

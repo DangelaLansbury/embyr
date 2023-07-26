@@ -135,16 +135,8 @@
   height: 1rem;
   background-image: url('../images/sparkles.svg');
 } */
-.suggestion-arg {
-  display: inline-flex;
-  margin: 0;
-  color: var(--stone);
-}
 .suggestion.active {
   background-color: var(--soil-lt);
-  color: var(--sweetgrass);
-}
-.suggestion.active > .chain-arguments {
   color: var(--sweetgrass);
 }
 .listening-text {

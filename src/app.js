@@ -71,10 +71,6 @@ zetsu.addEventListener('keydown', function (e) {
     suggestionsList.innerHTML = '';
     details.innerHTML = '';
     suggestions = [];
-    if (thread.innerHTML === '') {
-      zetsuHelper.classList.add('hidden');
-      zetsuInit.classList.remove('hidden');
-    }
   }
 });
 
@@ -83,14 +79,14 @@ zetsu.addEventListener('keydown', function (e) {
 const nullThread = `<div class="thread-text">Shoot, I don't recognize that command.</div>`;
 
 // display suggestions and detail
-const displaySuggestion = (command, classParam) => {
+const populateSuggestion = (command, classParam) => {
   let suggestion = document.createElement('div');
   suggestion.className = `suggestion ${classParam}`;
   suggestion.innerHTML = `<div class="suggestion-command">${command}</div>`;
   suggestionsList.appendChild(suggestion);
 };
 
-const displaySuggestionDetails = (name, description) => {
+const populateDetails = (name, description) => {
   let newDetails = document.createElement('div');
   newDetails.className = 'suggestion-details';
   newDetails.innerHTML = `<div class="details-name">${name}</div><div class="details-description">${description}</div>`;
@@ -160,74 +156,138 @@ zetsu.addEventListener('keydown', function (e) {
   }
 });
 
+const displayDetails = (command) => {
+  let cmd = command.split(' ')[0];
+  if (commands[cmd].arguments !== null && command.split(' ').length > 1) {
+    let argName = command.split(' ')[1];
+    // let argDesc = command.arguments[argName].description;
+    // let argSyntax = command.arguments[argName].syntax;
+    details.innerHTML = '';
+    populateDetails(commands[cmd].arguments[argName].name, commands[cmd].arguments[argName].description);
+  } else {
+    details.innerHTML = '';
+    populateDetails(commands[cmd].title, commands[cmd].description);
+  }
+};
+
+const levenshteinDistance = (str1, str2) => {
+  // Convert strings to lowercase
+  str1 = str1.toLowerCase();
+  str2 = str2.toLowerCase();
+  let m = str1.length;
+  let n = str2.length;
+  let dp = new Array(m + 1).fill(null).map(() => new Array(n + 1).fill(null));
+  for (let i = 0; i <= m; i++) {
+    dp[i][0] = i;
+  }
+  for (let j = 0; j <= n; j++) {
+    dp[0][j] = j;
+  }
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      let cost = str1[i - 1] === str2[j - 1] ? 0 : 1;
+      dp[i][j] = Math.min(dp[i - 1][j] + 1, dp[i][j - 1] + 1, dp[i - 1][j - 1] + cost);
+    }
+  }
+  return dp[m][n];
+};
+
 // Populating suggestions container with suggestions based on input
 zetsu.addEventListener('input', function () {
   let input = this.innerText;
   // Check if input is empty
   if (input !== '') {
     cursor.style.display = 'none';
-    if (zetsuHelper.classList.contains('hidden')) {
-      zetsuHelper.classList.remove('hidden');
-      zetsuInit.classList.add('hidden');
-    }
+    // if (zetsuHelper.classList.contains('hidden')) {
+    //   zetsuHelper.classList.remove('hidden');
+    //   zetsuInit.classList.add('hidden');
+    // }
   }
   // Clear suggestions and details
   suggestionsList.innerHTML = '';
   details.innerHTML = '';
   suggestions = [];
-  // Check if input is a command
+  // Suggest commands if input starts with a parent command or argument
+  // for (let command in commands) {
+  //   if (command.startsWith(input.toLowerCase())) {
+  //     // Create suggestion element
+  //     populateSuggestion(commands[command].nickname, 'first-level');
+  //     break;
+  //   }
+  //   // if (commands[command].arguments !== null) {
+  //   //   for (let arg in commands[command].arguments) {
+  //   //     let fullCommand = commands[command].nickname + ' ' + arg;
+  //   //     if (commands[command].arguments[arg].name.toLowerCase().startsWith(input.toLowerCase())) {
+  //   //       populateSuggestion(fullCommand, 'second-level');
+  //   //     }
+  //   //   }
+  //   // }
+  // }
+  // Suggest arguments based on fuzzy search
+  // if (suggestions.length === 0) {
+  let inputWords = input.split(' ');
   for (let command in commands) {
-    if (command.startsWith(input.toLowerCase()) || commands[command].name.toLowerCase().startsWith(input.toLowerCase())) {
-      // Create suggestion element
-      displaySuggestion(commands[command].nickname, 'first-level');
-      break;
-    }
-    // Check if input contains an argument
-    for (let arg in commands[command].arguments) {
-      let fullCommand = commands[command].nickname + ' ' + arg;
-      if (fullCommand.toLowerCase().startsWith(input.toLowerCase())) {
-        displaySuggestion(fullCommand, 'second-level');
+    if (command.startsWith(input.toLowerCase())) {
+      suggestions = document.querySelectorAll('.suggestion');
+      let alreadySuggested = false;
+      for (let k = 0; k < suggestions.length; k++) {
+        if (suggestions[k].querySelector('.suggestion-command').innerText === commands[command].nickname) {
+          alreadySuggested = true;
+        }
+      }
+      if (!alreadySuggested) {
+        populateSuggestion(commands[command].nickname, 'first-level');
+        break;
       }
     }
-  }
-  suggestions = document.querySelectorAll('.suggestion');
-  if (suggestions.length === 0) {
-    for (let command in commands) {
-      if (commands[command].arguments !== null) {
-        for (let arg in commands[command].arguments) {
-          let argName = commands[command].arguments[arg].name;
-          let argDesc = commands[command].arguments[arg].description;
-          let cmdDesc = commands[command].description;
-          let fullCommand = commands[command].nickname + ' ' + argName;
-          let inputWords = input.split(' ');
-          let similarities = 0;
-          for (let i = 0; i < inputWords.length; i++) {
-            if (argDesc.toLowerCase().includes(inputWords[i].toLowerCase())) {
-              similarities++;
+    // fuzzy search keywords in each command
+    let keywords = commands[command].keywords;
+    for (let i = 0; i < inputWords.length; i++) {
+      for (let j = 0; j < keywords.length; j++) {
+        let levDist = levenshteinDistance(inputWords[i], keywords[j]);
+        let similarity = 1 - levDist / Math.max(inputWords[i].length, keywords[j].length);
+        if (similarity > 0.5) {
+          // check to see if keyword matches any arguments
+          if (commands[command].arguments !== null) {
+            for (let arg in commands[command].arguments) {
+              let argName = commands[command].arguments[arg].name.toLowerCase();
+              if (argName == keywords[j]) {
+                let fullCommand = commands[command].nickname + ' ' + argName;
+                // check suggestions to see if command is already suggested
+                suggestions = document.querySelectorAll('.suggestion');
+                let alreadySuggested = false;
+                for (let k = 0; k < suggestions.length; k++) {
+                  if (suggestions[k].querySelector('.suggestion-command').innerText === fullCommand) {
+                    alreadySuggested = true;
+                  }
+                }
+                if (!alreadySuggested) {
+                  populateSuggestion(fullCommand, 'third-level');
+                }
+              }
+            }
+          } else {
+            let fullCommand = commands[command].nickname + ' ' + argName;
+            // check suggestions to see if command is already suggested
+            suggestions = document.querySelectorAll('.suggestion');
+            let alreadySuggested = false;
+            for (let k = 0; k < suggestions.length; k++) {
+              if (suggestions[k].querySelector('.suggestion-command').innerText === fullCommand) {
+                alreadySuggested = true;
+              }
+            }
+            if (!alreadySuggested) {
+              populateSuggestion(fullCommand, 'third-level');
             }
           }
-          if (argName.toLowerCase().startsWith(input.toLowerCase()) || similarities > 2) {
-            displaySuggestion(fullCommand, 'third-level');
-          }
-        }
-      } else {
-        let cmdDesc = commands[command].description;
-        let inputWords = input.split(' ');
-        let similarities = 0;
-        for (let i = 0; i < inputWords.length; i++) {
-          if (cmdDesc.toLowerCase().includes(inputWords[i].toLowerCase())) {
-            similarities++;
-          }
-        }
-        if (similarities > 2) {
-          displaySuggestion(commands[command].nickname, 'third-level');
         }
       }
     }
   }
-  // Listening for up and down arrow keys to cycle through suggestions
+  // }
   suggestions = document.querySelectorAll('.suggestion');
   let suggestionIndex = -1;
+  // Listening for up and down arrow keys to cycle through suggestions
   zetsu.addEventListener('keydown', function (e) {
     // Check if suggestions are present
     if (suggestions.length !== 0) {
@@ -254,21 +314,7 @@ zetsu.addEventListener('input', function () {
           zetsu.innerText = suggestedCommand;
           // Display suggestion details
           if (suggestions.length !== 0 && suggestionIndex !== -1) {
-            let parts = suggestions[suggestionIndex].querySelector('.suggestion-command').innerText.split(' ');
-            let commandName = parts[0].toLowerCase();
-            let arg = parts.slice(1).join(' ');
-            if (commands[commandName].arguments !== null && arg !== '') {
-              for (let argument in commands[commandName].arguments) {
-                let argName = commands[commandName].arguments[argument].name;
-                let argDesc = commands[commandName].arguments[argument].description;
-                let fullCommand = commands[commandName].nickname + ' ' + argName;
-                if (argName === arg) {
-                  displaySuggestionDetails(fullCommand, argDesc);
-                }
-              }
-            } else {
-              displaySuggestionDetails(commands[commandName].title, commands[commandName].description);
-            }
+            displayDetails(suggestedCommand);
           } else {
             details.innerHTML = '';
           }
@@ -309,24 +355,10 @@ zetsu.addEventListener('input', function () {
           zetsu.innerText = suggestedCommand;
           // Display suggestion details
           if (suggestions.length !== 0 && suggestionIndex !== -1) {
-            let parts = suggestions[suggestionIndex].querySelector('.suggestion-command').innerText.split(' ');
-            let commandName = parts[0].toLowerCase();
-            let arg = parts.slice(1).join(' ');
-            if (commands[commandName].arguments !== null && arg !== '') {
-              for (let argument in commands[commandName].arguments) {
-                let argName = commands[commandName].arguments[argument].name;
-                let argDesc = commands[commandName].arguments[argument].description;
-                if (argName === arg) {
-                  displaySuggestionDetails(argName, argDesc);
-                }
-              }
-            } else {
-              displaySuggestionDetails(commands[commandName].name, commands[commandName].description);
-            }
+            displayDetails(suggestedCommand);
           } else {
             details.innerHTML = '';
           }
-          // Scroll to active suggestion
           suggestions[suggestionIndex].scrollIntoView({
             block: 'nearest',
             inline: 'end',
