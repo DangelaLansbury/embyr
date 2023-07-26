@@ -190,7 +190,7 @@ const commands = {
     name: 'Inhibit',
     title: 'Inhibit checkpoint',
     description: 'Inhibit checkpoint.',
-    keywords: ['inhibit', 'checkpoint', 'pd-1', 'pd1', 'pd-l1', 'pdl1', 'ctla-4', 'ctla4', 'cd80'],
+    keywords: ['inhibit', 'checkpoint', 'pd-1', 'ctla-4'],
     arguments: {
       'PD-1': {
         name: 'PD-1',
@@ -216,8 +216,14 @@ const commands = {
     name: 'Phagocytose',
     title: 'Phagocytose target cell',
     description: 'Munch this cell right up.',
-    keywords: ['phagocytose', 'phagocytosis', 'kill', 'destroy', 'eat', 'munch', 'macrophage', 'neutrophil', 'eosinophil', 'basophil', 'mast cell', 'natural killer cell', 'dendritic cell'],
-    arguments: null,
+    keywords: ['phagocytose', 'phagocytosis', 'kill', 'destroy', 'eat', 'munch', 'chomp'],
+    arguments: {
+      _help: {
+        name: '_help',
+        description: 'This is how to use the phagocytosis command.',
+        return: '',
+      },
+    },
     run: (input) => {
       returnInput(input);
       let output = creatOutputDiv('You have successfully phagocytosed target cell.');
@@ -255,9 +261,20 @@ const commands = {
     name: 'Reset',
     title: 'Reset system',
     description: 'Reset the system... a fresh start.',
-    keywords: ['reset', 'start over', 'fresh start'],
-    arguments: null,
-    run: () => {
+    keywords: ['reset', 'clear', 'restart', 'refresh'],
+    arguments: {
+      _target: {
+        name: '_target',
+        description: 'Reset target cell.',
+        return: 'You have successfully reset target cell.',
+      },
+      _receptors: {
+        name: '_receptors',
+        description: 'Reset receptors.',
+        return: 'You have successfully reset receptors.',
+      },
+    },
+    run: (input, arg) => {
       thread.innerHTML = '';
     },
   },
@@ -268,7 +285,23 @@ const commands = {
     title: 'About this project',
     description: 'About this project.',
     keywords: ['about', 'project', 'zetsu', 'killerOS', 'immune system', 'immunity'],
-    arguments: null,
+    arguments: {
+      _zetsu: {
+        name: 'zetsu',
+        description: 'About Zetsu.',
+        return: `<div class="thread-text">terminal: <span style="color: var(--sweetgrass)">Zetsu</span></div>
+          <div class="thread-text">A terminal sundae with GUI sprinkles.</div>
+          <div class="thread-text stone small">-- Fuzzy search commands and review as you type.</div>
+          <div class="thread-text stone small">-- Check out <a href="https://github.com/DangelaLansbury/zetsu">the docs</a> for more info.</div>`,
+      },
+      _killerOS: {
+        name: 'killerOS',
+        description: 'About KillerOS.',
+        return: `<div class="thread-text">shell: <span style="color: var(--honey)">KillerOS</span></div>
+          <div class="thread-text">A fake shell for killer T cells: unmask invaders and chomp em to bits.</div>
+          <div class="thread-text stone small">-- Just a fun way to demo Zetsu, not an accurate simulation. Enjoy!</div>`,
+      },
+    },
     run: () => {
       thread.innerHTML = '';
       let output = document.createElement('div');
@@ -282,15 +315,10 @@ const commands = {
           </div>
         </div>
         <div class="thread-block">
-          <div class="thread-text">terminal: <span style="color: var(--sweetgrass)">Zetsu</span></div>
-          <div class="thread-text">A terminal concept with GUI sprinkles.</div>
-          <div class="thread-text stone small">-- Fuzzy search commands as you type and review before executing.</div>
-          <div class="thread-text stone small">-- Check out <a href="https://github.com/DangelaLansbury/zetsu">the docs</a> for more info.</div>
+          ${commands['a'].arguments._zetsu.return}
         </div>
         <div class="thread-block">
-          <div class="thread-text">shell: <span style="color: var(--honey)">KillerOS</span></div>
-          <div class="thread-text">A fake shell for killer T cells: unmask invaders and chomp em to bits.</div>
-          <div class="thread-text stone small">-- Just a fun way to demo Zetsu, not an accurate simulation. Enjoy!</div>
+          ${commands['a'].arguments._killerOS.return}
         </div>`;
       returnOutput(output, 0);
     },

@@ -114,18 +114,25 @@
   height: 2rem;
   min-height: 2rem;
   transition: 0.2s;
+  --command-icon: url('../images/terminal.svg');
+}
+.suggestion::before {
+  content: '';
+  display: inline-block;
+  margin-right: 1rem;
+  width: 1rem;
+  height: 1rem;
+  background-image: var(--command-icon);
 }
 .suggestion-name {
   display: inline-flex;
   color: var(--soil-x-lt);
 }
-.suggestion.first-level,
-.suggestion.second-level,
-.suggestion.third-level {
-  display: inline-flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
+.suggestion.matched {
+  color: var(--sweetgrass);
+}
+.suggestion.assisted {
+  color: var(--lilac);
 }
 /* .suggestion.first-level::before {
   content: '';
@@ -219,7 +226,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  margin: 1rem 0;
+  margin: 0.75rem 0;
 }
 .logo {
   display: inline-flex;

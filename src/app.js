@@ -66,21 +66,6 @@ zetsu.addEventListener('focus', function (e) {
 
 const nullThread = `<div class="thread-text">Shoot, I don't recognize that command.</div>`;
 
-// display suggestions and detail
-const populateSuggestion = (command, classParam) => {
-  let suggestion = document.createElement('div');
-  suggestion.className = `suggestion ${classParam}`;
-  suggestion.innerHTML = `<div class="suggestion-command">${command}</div>`;
-  suggestionsList.appendChild(suggestion);
-};
-
-const populateDetails = (name, description) => {
-  let newDetails = document.createElement('div');
-  newDetails.className = 'suggestion-details';
-  newDetails.innerHTML = `<div class="details-name">${name}</div><div class="details-description">${description}</div>`;
-  details.appendChild(newDetails);
-};
-
 // populate help bar with commands
 const displayHelpCommands = (commands) => {
   for (let command in commands) {
@@ -92,6 +77,39 @@ const displayHelpCommands = (commands) => {
     } else {
       help2.appendChild(commandHint);
     }
+  }
+};
+
+// display suggestions and detail
+const populateSuggestion = (command, classParam) => {
+  let suggestion = document.createElement('div');
+  suggestion.className = `suggestion ${classParam}`;
+  suggestion.innerHTML = `<div class="suggestion-command">${command}</div>`;
+  // Update --command-icon based on classParam
+  // if (classParam === 'first-level') {
+  //   suggestion.style.setProperty('--command-icon', `url(../images/sparkles.svg)`);
+  // }
+  suggestionsList.appendChild(suggestion);
+};
+
+const populateDetails = (name, description) => {
+  let newDetails = document.createElement('div');
+  newDetails.className = 'suggestion-details';
+  newDetails.innerHTML = `<div class="details-name">${name}</div><div class="details-description">${description}</div>`;
+  details.appendChild(newDetails);
+};
+
+const displayDetails = (command) => {
+  let cmd = command.split(' ')[0];
+  if (command.split(' ').length > 1) {
+    let argName = command.split(' ')[1];
+    // let argDesc = command.arguments[argName].description;
+    // let argSyntax = command.arguments[argName].syntax;
+    details.innerHTML = '';
+    populateDetails(commands[cmd].arguments[argName].name, commands[cmd].arguments[argName].description);
+  } else {
+    details.innerHTML = '';
+    populateDetails(commands[cmd].title, commands[cmd].description);
   }
 };
 
@@ -144,20 +162,6 @@ zetsu.addEventListener('keydown', function (e) {
   }
 });
 
-const displayDetails = (command) => {
-  let cmd = command.split(' ')[0];
-  if (commands[cmd].arguments !== null && command.split(' ').length > 1) {
-    let argName = command.split(' ')[1];
-    // let argDesc = command.arguments[argName].description;
-    // let argSyntax = command.arguments[argName].syntax;
-    details.innerHTML = '';
-    populateDetails(commands[cmd].arguments[argName].name, commands[cmd].arguments[argName].description);
-  } else {
-    details.innerHTML = '';
-    populateDetails(commands[cmd].title, commands[cmd].description);
-  }
-};
-
 const levenshteinDistance = (str1, str2) => {
   // Convert strings to lowercase
   str1 = str1.toLowerCase();
@@ -196,76 +200,72 @@ zetsu.addEventListener('input', function () {
   let inputWords = input.split(' ');
   for (let command in commands) {
     if (command.startsWith(input.toLowerCase()) && input !== '') {
-      suggestions = document.querySelectorAll('.suggestion');
-      let alreadySuggested = false;
-      for (let k = 0; k < suggestions.length; k++) {
-        if (suggestions[k].querySelector('.suggestion-command').innerText === commands[command].nickname) {
-          alreadySuggested = true;
-        }
-      }
-      if (!alreadySuggested) {
-        populateSuggestion(commands[command].nickname, 'first-level');
-        break;
-      }
+      populateSuggestion(commands[command].nickname, 'matched');
+      break;
     } else {
-      if (commands[command].arguments !== null) {
-        for (let arg in commands[command].arguments) {
-          let fullCommand = commands[command].nickname + ' ' + arg;
-          if (fullCommand.toLowerCase().startsWith(input.toLowerCase())) {
-            suggestions = document.querySelectorAll('.suggestion');
-            let alreadySuggested = false;
-            for (let k = 0; k < suggestions.length; k++) {
-              if (suggestions[k].querySelector('.suggestion-command').innerText === fullCommand) {
-                alreadySuggested = true;
-              }
+      for (let arg in commands[command].arguments) {
+        let fullCommand = commands[command].nickname + ' ' + commands[command].arguments[arg].name;
+        if (fullCommand.toLowerCase().startsWith(input.toLowerCase()) && !fullCommand.startsWith('_') && inputWords.length > 1) {
+          suggestions = document.querySelectorAll('.suggestion');
+          let alreadySuggested = false;
+          for (let k = 0; k < suggestions.length; k++) {
+            if (suggestions[k].querySelector('.suggestion-command').innerText === fullCommand) {
+              alreadySuggested = true;
             }
-            if (!alreadySuggested) {
-              populateSuggestion(fullCommand, 'second-level');
-            }
+          }
+          if (!alreadySuggested) {
+            populateSuggestion(fullCommand, 'matched');
           }
         }
       }
     }
   }
-  for (let command in commands) {
-    // fuzzy search keywords in each command
-    let keywords = commands[command].keywords;
-    for (let i = 0; i < inputWords.length; i++) {
-      for (let j = 0; j < keywords.length; j++) {
-        let levDist = levenshteinDistance(inputWords[i], keywords[j]);
-        let similarity = 1 - levDist / Math.max(inputWords[i].length, keywords[j].length);
-        if (similarity > 0.5) {
-          // check to see if keyword matches any arguments
-          if (commands[command].arguments !== null) {
+  suggestions = document.querySelectorAll('.suggestion');
+  let suggestionsArray = [];
+  if (suggestions.length === 0) {
+    // let suggestionsArray = [];
+    for (let command in commands) {
+      // fuzzy search keywords in each command
+      let keywords = commands[command].keywords;
+      for (let i = 0; i < inputWords.length; i++) {
+        for (let j = 0; j < keywords.length; j++) {
+          let levDist = levenshteinDistance(inputWords[i], keywords[j]);
+          let similarity = 1 - levDist / Math.max(inputWords[i].length, keywords[j].length);
+          if (similarity > 0.66) {
+            let fullCommand = commands[command].nickname;
+            // check to see if keyword matches any arguments
             for (let arg in commands[command].arguments) {
               let argName = commands[command].arguments[arg].name;
-              if (argName.toLowerCase() == keywords[j]) {
-                let fullCommand = commands[command].nickname + ' ' + argName;
-                // check suggestions to see if command is already suggested
-                suggestions = document.querySelectorAll('.suggestion');
-                let alreadySuggested = false;
-                for (let k = 0; k < suggestions.length; k++) {
-                  if (suggestions[k].querySelector('.suggestion-command').innerText === fullCommand) {
-                    alreadySuggested = true;
-                  }
-                }
-                if (!alreadySuggested) {
-                  populateSuggestion(fullCommand, 'third-level');
-                }
+              if (!argName.startsWith('_') && argName.toLowerCase() == keywords[j]) {
+                fullCommand += ' ' + argName;
               }
             }
-          } else {
-            let fullCommand = commands[command].nickname;
-            // check suggestions to see if command is already suggested
-            suggestions = document.querySelectorAll('.suggestion');
             let alreadySuggested = false;
-            for (let k = 0; k < suggestions.length; k++) {
-              if (suggestions[k].querySelector('.suggestion-command').innerText.toLowerCase() === fullCommand.toLowerCase()) {
+            for (let k = 0; k < suggestionsArray.length; k++) {
+              if (suggestionsArray[k].command === fullCommand.toLowerCase()) {
                 alreadySuggested = true;
               }
             }
             if (!alreadySuggested) {
-              populateSuggestion(fullCommand, 'third-level');
+              populateSuggestion(fullCommand, 'assisted');
+              let suggestion = {
+                command: fullCommand,
+                similarity: similarity,
+              };
+              suggestionsArray.push(suggestion);
+              // Reorder suggestions in order of similarity
+              if (suggestionsArray.length > 0) {
+                suggestionsArray.sort((a, b) => {
+                  const nameA = a.similarity;
+                  const nameB = b.similarity;
+                  return nameB - nameA;
+                });
+                // Populate suggestions list with new order
+                suggestionsList.innerHTML = '';
+                for (let k = 0; k < suggestionsArray.length; k++) {
+                  populateSuggestion(suggestionsArray[k].command, 'assisted');
+                }
+              }
             }
           }
         }
@@ -273,6 +273,7 @@ zetsu.addEventListener('input', function () {
     }
   }
   suggestions = document.querySelectorAll('.suggestion');
+  suggestionsArray = [];
   let suggestionIndex = -1;
   // Listening for up and down arrow keys to cycle through suggestions
   zetsu.addEventListener('keydown', function (e) {
