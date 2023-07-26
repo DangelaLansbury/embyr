@@ -239,7 +239,7 @@ const commands = {
     name: 'Phagocytose',
     title: 'Phagocytose target cell',
     description: 'Munch this cell right up.',
-    keywords: ['phagocytose', 'phagocytosis'],
+    keywords: ['phagocytose', 'phagocytosis', 'kill', 'destroy', 'eat', 'munch', 'macrophage', 'neutrophil', 'eosinophil', 'basophil', 'mast cell', 'natural killer cell', 'dendritic cell'],
     arguments: null,
     run: (input) => {
       returnInput(input);

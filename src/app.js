@@ -207,24 +207,6 @@ zetsu.addEventListener('input', function () {
   suggestionsList.innerHTML = '';
   details.innerHTML = '';
   suggestions = [];
-  // Suggest commands if input starts with a parent command or argument
-  // for (let command in commands) {
-  //   if (command.startsWith(input.toLowerCase())) {
-  //     // Create suggestion element
-  //     populateSuggestion(commands[command].nickname, 'first-level');
-  //     break;
-  //   }
-  //   // if (commands[command].arguments !== null) {
-  //   //   for (let arg in commands[command].arguments) {
-  //   //     let fullCommand = commands[command].nickname + ' ' + arg;
-  //   //     if (commands[command].arguments[arg].name.toLowerCase().startsWith(input.toLowerCase())) {
-  //   //       populateSuggestion(fullCommand, 'second-level');
-  //   //     }
-  //   //   }
-  //   // }
-  // }
-  // Suggest arguments based on fuzzy search
-  // if (suggestions.length === 0) {
   let inputWords = input.split(' ');
   for (let command in commands) {
     if (command.startsWith(input.toLowerCase())) {
@@ -237,38 +219,12 @@ zetsu.addEventListener('input', function () {
       }
       if (!alreadySuggested) {
         populateSuggestion(commands[command].nickname, 'first-level');
-        break;
       }
-    }
-    // fuzzy search keywords in each command
-    let keywords = commands[command].keywords;
-    for (let i = 0; i < inputWords.length; i++) {
-      for (let j = 0; j < keywords.length; j++) {
-        let levDist = levenshteinDistance(inputWords[i], keywords[j]);
-        let similarity = 1 - levDist / Math.max(inputWords[i].length, keywords[j].length);
-        if (similarity > 0.5) {
-          // check to see if keyword matches any arguments
-          if (commands[command].arguments !== null) {
-            for (let arg in commands[command].arguments) {
-              let argName = commands[command].arguments[arg].name.toLowerCase();
-              if (argName == keywords[j]) {
-                let fullCommand = commands[command].nickname + ' ' + argName;
-                // check suggestions to see if command is already suggested
-                suggestions = document.querySelectorAll('.suggestion');
-                let alreadySuggested = false;
-                for (let k = 0; k < suggestions.length; k++) {
-                  if (suggestions[k].querySelector('.suggestion-command').innerText === fullCommand) {
-                    alreadySuggested = true;
-                  }
-                }
-                if (!alreadySuggested) {
-                  populateSuggestion(fullCommand, 'third-level');
-                }
-              }
-            }
-          } else {
-            let fullCommand = commands[command].nickname + ' ' + argName;
-            // check suggestions to see if command is already suggested
+    } else {
+      if (commands[command].arguments !== null) {
+        for (let arg in commands[command].arguments) {
+          let fullCommand = commands[command].nickname + ' ' + arg;
+          if (fullCommand.toLowerCase().startsWith(input.toLowerCase())) {
             suggestions = document.querySelectorAll('.suggestion');
             let alreadySuggested = false;
             for (let k = 0; k < suggestions.length; k++) {
@@ -277,7 +233,50 @@ zetsu.addEventListener('input', function () {
               }
             }
             if (!alreadySuggested) {
-              populateSuggestion(fullCommand, 'third-level');
+              populateSuggestion(fullCommand, 'second-level');
+            }
+          }
+        }
+      }
+      // fuzzy search keywords in each command
+      let keywords = commands[command].keywords;
+      for (let i = 0; i < inputWords.length; i++) {
+        for (let j = 0; j < keywords.length; j++) {
+          let levDist = levenshteinDistance(inputWords[i], keywords[j]);
+          let similarity = 1 - levDist / Math.max(inputWords[i].length, keywords[j].length);
+          if (similarity > 0.5) {
+            // check to see if keyword matches any arguments
+            if (commands[command].arguments !== null) {
+              for (let arg in commands[command].arguments) {
+                let argName = commands[command].arguments[arg].name;
+                if (argName.toLowerCase() == keywords[j]) {
+                  let fullCommand = commands[command].nickname + ' ' + argName;
+                  // check suggestions to see if command is already suggested
+                  suggestions = document.querySelectorAll('.suggestion');
+                  let alreadySuggested = false;
+                  for (let k = 0; k < suggestions.length; k++) {
+                    if (suggestions[k].querySelector('.suggestion-command').innerText === fullCommand) {
+                      alreadySuggested = true;
+                    }
+                  }
+                  if (!alreadySuggested) {
+                    populateSuggestion(fullCommand, 'third-level');
+                  }
+                }
+              }
+            } else {
+              let fullCommand = commands[command].nickname + ' ' + argName;
+              // check suggestions to see if command is already suggested
+              suggestions = document.querySelectorAll('.suggestion');
+              let alreadySuggested = false;
+              for (let k = 0; k < suggestions.length; k++) {
+                if (suggestions[k].querySelector('.suggestion-command').innerText === fullCommand) {
+                  alreadySuggested = true;
+                }
+              }
+              if (!alreadySuggested) {
+                populateSuggestion(fullCommand, 'third-level');
+              }
             }
           }
         }
@@ -409,14 +408,7 @@ zetsu.addEventListener('keydown', function (e) {
       let args = parts.slice(1);
       let arg = args.join(' ');
       if (commands[command]) {
-        // Check if command has arguments
-        if (commands[command].arguments !== null) {
-          // Run command and pass in argument
-          commands[command].run(input, arg);
-        } else {
-          // Run command
-          commands[command].run(input);
-        }
+        commands[command].run(input);
       } else {
         returnInput(input);
         returnOutput(creatOutputDiv(nullThread), 0);
