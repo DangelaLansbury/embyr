@@ -242,7 +242,7 @@ zetsu.addEventListener('input', function () {
             }
             let alreadySuggested = false;
             for (let k = 0; k < suggestionsArray.length; k++) {
-              if (suggestionsArray[k].command === fullCommand.toLowerCase()) {
+              if (suggestionsArray[k].command.toLowerCase() === fullCommand.toLowerCase()) {
                 alreadySuggested = true;
               }
             }

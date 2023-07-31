@@ -323,4 +323,24 @@ const commands = {
       returnOutput(output, 0);
     },
   },
+  h: {
+    meta: true,
+    nickname: 'h',
+    name: 'Help',
+    title: 'Help',
+    description: 'Get help.',
+    keywords: ['help', 'commands', 'list', 'manual', 'docs', 'documentation'],
+    arguments: {
+      _commands: {
+        name: '_commands',
+        description: 'List commands.',
+        return: 'You have successfully listed commands.',
+      },
+    },
+    run: (input, arg) => {
+      returnInput(input);
+      let output = creatOutputDiv(commands['help'].arguments._commands.return);
+      returnOutput(output, outputDelay[1]);
+    },
+  },
 };
