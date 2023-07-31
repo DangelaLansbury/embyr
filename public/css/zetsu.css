@@ -114,7 +114,8 @@
   height: 2rem;
   min-height: 2rem;
   transition: 0.2s;
-  --command-icon: url('../images/terminal.svg');
+  --command-matched: url('../images/terminal.svg');
+  --command-assisted: url('../images/sparkles.svg');
 }
 .suggestion::before {
   content: '';
@@ -122,17 +123,16 @@
   margin-right: 1rem;
   width: 1rem;
   height: 1rem;
-  background-image: var(--command-icon);
 }
 .suggestion-name {
   display: inline-flex;
   color: var(--soil-x-lt);
 }
-.suggestion.matched {
-  color: var(--sweetgrass);
+.suggestion.matched::before {
+  background-image: var(--command-matched);
 }
-.suggestion.assisted {
-  color: var(--lilac);
+.suggestion.assisted::before {
+  background-image: var(--command-assisted);
 }
 /* .suggestion.first-level::before {
   content: '';

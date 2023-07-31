@@ -233,7 +233,7 @@ const commands = {
   new: {
     meta: true,
     nickname: 'new',
-    name: 'New object',
+    name: 'Create new',
     title: 'Create new data object',
     description: 'Create something new.',
     keywords: ['new', 'create', 'make'],
@@ -339,7 +339,7 @@ const commands = {
     },
     run: (input, arg) => {
       returnInput(input);
-      let output = creatOutputDiv(commands['help'].arguments._commands.return);
+      let output = creatOutputDiv(commands['h'].arguments._commands.return);
       returnOutput(output, outputDelay[1]);
     },
   },
