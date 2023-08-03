@@ -81,13 +81,15 @@ const displayHelpCommands = (commands) => {
 };
 
 // display suggestions and detail
-const populateSuggestion = (command, classParam) => {
+const populateSuggestion = (command) => {
   let suggestion = document.createElement('div');
-  suggestion.className = `suggestion ${classParam}`;
+  let cmd = command.split(' ')[0];
+  suggestion.className = 'suggestion';
   suggestion.innerHTML = `<div class="suggestion-command">${command}</div>`;
+  // suggestion.style.setProperty('--command-icon', `url(../assets/icons/${commands[cmd].icon}.svg)`);
   // Update --command-icon based on classParam
   // if (classParam === 'first-level') {
-  //   suggestion.style.setProperty('--command-icon', `url(../images/sparkles.svg)`);
+  // suggestion.style.setProperty('--command-icon', `url(../images/sparkles.svg)`);
   // }
   suggestionsList.appendChild(suggestion);
 };
@@ -200,12 +202,12 @@ zetsu.addEventListener('input', function () {
   let inputWords = input.split(' ');
   for (let command in commands) {
     if (command.startsWith(input.toLowerCase()) && input !== '') {
-      populateSuggestion(commands[command].nickname, 'matched');
+      populateSuggestion(commands[command].nickname);
       break;
     } else {
       for (let arg in commands[command].arguments) {
         let fullCommand = commands[command].nickname + ' ' + commands[command].arguments[arg].name;
-        if (fullCommand.toLowerCase().startsWith(input.toLowerCase()) && !fullCommand.startsWith('_') && inputWords.length > 1) {
+        if (fullCommand.toLowerCase().startsWith(input.toLowerCase()) && !arg.startsWith('_') && inputWords.length > 1) {
           suggestions = document.querySelectorAll('.suggestion');
           let alreadySuggested = false;
           for (let k = 0; k < suggestions.length; k++) {
@@ -214,7 +216,7 @@ zetsu.addEventListener('input', function () {
             }
           }
           if (!alreadySuggested) {
-            populateSuggestion(fullCommand, 'matched');
+            populateSuggestion(fullCommand);
           }
         }
       }
@@ -247,7 +249,7 @@ zetsu.addEventListener('input', function () {
               }
             }
             if (!alreadySuggested) {
-              populateSuggestion(fullCommand, 'assisted');
+              populateSuggestion(fullCommand);
               let suggestion = {
                 command: fullCommand,
                 similarity: similarity,
@@ -263,7 +265,7 @@ zetsu.addEventListener('input', function () {
                 // Populate suggestions list with new order
                 suggestionsList.innerHTML = '';
                 for (let k = 0; k < suggestionsArray.length; k++) {
-                  populateSuggestion(suggestionsArray[k].command, 'assisted');
+                  populateSuggestion(suggestionsArray[k].command);
                 }
               }
             }

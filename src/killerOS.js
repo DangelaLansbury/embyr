@@ -100,7 +100,8 @@ const commands = {
     name: 'Detect',
     title: 'Detect characteristics',
     description: 'Evaluate or interpret something in the system.',
-    keywords: ['detect', 'evaluate', 'interpret', 'check', 'mhc', 'class i', 'class 1', 'class one', 'histocompatibility', 'histocompatibility complex', 'self', 'peptide', 'antigen'],
+    keywords: ['detect', 'evaluate', 'interpret', 'check', 'see', 'mhc', 'class i', 'class 1', 'class one', 'histocompatibility', 'histocompatibility complex', 'self', 'peptide', 'antigen'],
+    icon: 'magnifying-glass',
     arguments: {
       mhc: {
         name: 'mhc',
@@ -131,6 +132,7 @@ const commands = {
     title: 'Express chimeric antigen receptor',
     description: 'Express protein or molecule.',
     keywords: ['express', 'receptor', 'protein', 'molecule', 'chimeric', 'antigen', 'car', 'a-folate', 'cd', 'cd19', 'cd20', 'cd22', 'cd30', 'cd33', 'egfr', 'gd2', 'her2', 'l1cam', 'l1', 'adhesion'],
+    icon: 'killer-t-cell',
     arguments: {
       'a-folate': {
         name: 'a-folate',
@@ -191,6 +193,7 @@ const commands = {
     title: 'Inhibit checkpoint',
     description: 'Inhibit checkpoint.',
     keywords: ['inhibit', 'checkpoint', 'pd-1', 'ctla-4'],
+    icon: 'inhibit',
     arguments: {
       'PD-1': {
         name: 'PD-1',
@@ -217,6 +220,7 @@ const commands = {
     title: 'Phagocytose target cell',
     description: 'Munch this cell right up.',
     keywords: ['phagocytose', 'phagocytosis', 'kill', 'destroy', 'eat', 'munch', 'chomp'],
+    icon: 'eat',
     arguments: {
       _help: {
         name: '_help',
@@ -237,16 +241,12 @@ const commands = {
     title: 'Create new data object',
     description: 'Create something new.',
     keywords: ['new', 'create', 'make'],
+    icon: 'plus',
     arguments: {
       antigen: {
         name: 'antigen',
         description: 'Create a new antigen.',
         return: 'You have successfully created a new antigen.',
-      },
-      conditonal: {
-        name: 'conditional',
-        description: 'Create a new conditional.',
-        return: 'You have successfully created a new conditional.',
       },
     },
     run: (input, arg) => {
@@ -262,6 +262,7 @@ const commands = {
     title: 'Reset system',
     description: 'Reset the system... a fresh start.',
     keywords: ['reset', 'clear', 'restart', 'refresh'],
+    icon: 'undo',
     arguments: {
       _target: {
         name: '_target',
@@ -285,6 +286,7 @@ const commands = {
     title: 'About this project',
     description: 'About this project.',
     keywords: ['about', 'project', 'zetsu', 'killerOS', 'immune system', 'immunity'],
+    icon: 'info-circle',
     arguments: {
       _zetsu: {
         name: 'zetsu',
@@ -321,26 +323,6 @@ const commands = {
           ${commands['a'].arguments._killerOS.return}
         </div>`;
       returnOutput(output, 0);
-    },
-  },
-  h: {
-    meta: true,
-    nickname: 'h',
-    name: 'Help',
-    title: 'Help',
-    description: 'Get help.',
-    keywords: ['help', 'commands', 'list', 'manual', 'docs', 'documentation'],
-    arguments: {
-      _commands: {
-        name: '_commands',
-        description: 'List commands.',
-        return: 'You have successfully listed commands.',
-      },
-    },
-    run: (input, arg) => {
-      returnInput(input);
-      let output = creatOutputDiv(commands['h'].arguments._commands.return);
-      returnOutput(output, outputDelay[1]);
     },
   },
 };
