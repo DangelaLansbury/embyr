@@ -94,11 +94,11 @@ const status = {
 // --- COMMANDS ---
 
 const commands = {
-  det: {
+  chk: {
     meta: false,
-    nickname: 'det',
-    name: 'Detect',
-    title: 'Detect characteristics',
+    nickname: 'chk',
+    name: 'Check',
+    title: 'Check characteristics',
     description: 'Evaluate or interpret something in the system.',
     keywords: ['detect', 'evaluate', 'interpret', 'check', 'see', 'mhc', 'class i', 'class 1', 'class one', 'histocompatibility', 'histocompatibility complex', 'self', 'peptide', 'antigen'],
     icon: 'magnifying-glass',
@@ -125,13 +125,13 @@ const commands = {
       returnOutput(output, outputDelay[1]);
     },
   },
-  car: {
+  exp: {
     meta: false,
-    nickname: 'car',
-    name: 'Express receptor',
+    nickname: 'exp',
+    name: 'Express',
     title: 'Express chimeric antigen receptor',
     description: 'Express protein or molecule.',
-    keywords: ['express', 'receptor', 'protein', 'molecule', 'chimeric', 'antigen', 'car', 'a-folate', 'cd', 'cd19', 'cd20', 'cd22', 'cd30', 'cd33', 'egfr', 'gd2', 'her2', 'l1cam', 'l1', 'adhesion'],
+    keywords: ['express', 'receptor', 'protein', 'molecule', 'chimeric', 'antigen', 'car', 'a-folate', 'cd', 'cd19', 'cd20', 'cd22', 'cd30', 'cd33', 'egfr', 'gd2', 'her2', 'l1cam', 'l1', 'adhesion', 'kill', 'seek', 'find', 'ninja', 'hunt'],
     icon: 'killer-t-cell',
     arguments: {
       'a-folate': {
@@ -192,7 +192,7 @@ const commands = {
     name: 'Inhibit',
     title: 'Inhibit checkpoint',
     description: 'Inhibit checkpoint.',
-    keywords: ['inhibit', 'checkpoint', 'pd-1', 'ctla-4'],
+    keywords: ['inhibit', 'checkpoint', 'pd-1', 'ctla-4', 'kill', 'activate', 'rage', 'berserker'],
     icon: 'inhibit',
     arguments: {
       'PD-1': {
@@ -210,27 +210,6 @@ const commands = {
     run: (input, arg) => {
       returnInput(input);
       let output = creatOutputDiv('You have successfully inhibited ' + arg + '.');
-      returnOutput(output, outputDelay[1]);
-    },
-  },
-  ph: {
-    meta: false,
-    nickname: 'ph',
-    name: 'Phagocytose',
-    title: 'Phagocytose target cell',
-    description: 'Munch this cell right up.',
-    keywords: ['phagocytose', 'phagocytosis', 'kill', 'destroy', 'eat', 'munch', 'chomp'],
-    icon: 'eat',
-    arguments: {
-      _help: {
-        name: '_help',
-        description: 'This is how to use the phagocytosis command.',
-        return: '',
-      },
-    },
-    run: (input) => {
-      returnInput(input);
-      let output = creatOutputDiv('You have successfully phagocytosed target cell.');
       returnOutput(output, outputDelay[1]);
     },
   },
@@ -255,53 +234,47 @@ const commands = {
       returnOutput(output, outputDelay[0]);
     },
   },
-  r: {
+  clear: {
     meta: true,
-    nickname: 'r',
-    name: 'Reset',
+    nickname: 'clear',
+    name: 'Clear changes',
     title: 'Reset system',
     description: 'Reset the system... a fresh start.',
     keywords: ['reset', 'clear', 'restart', 'refresh'],
     icon: 'undo',
     arguments: {
-      _target: {
-        name: '_target',
-        description: 'Reset target cell.',
-        return: 'You have successfully reset target cell.',
-      },
       _receptors: {
         name: '_receptors',
         description: 'Reset receptors.',
         return: 'You have successfully reset receptors.',
+      },
+      _inhibitors: {
+        name: '_inhibitors',
+        description: 'Reset inhibitors.',
+        return: 'You have successfully reset inhibitors.',
       },
     },
     run: (input, arg) => {
       thread.innerHTML = '';
     },
   },
-  a: {
+  help: {
     meta: true,
-    nickname: 'a',
-    name: 'About',
-    title: 'About this project',
-    description: 'About this project.',
-    keywords: ['about', 'project', 'zetsu', 'killerOS', 'immune system', 'immunity'],
+    nickname: 'help',
+    name: 'More help',
+    title: 'Help',
+    description: 'Get help.',
+    keywords: ['about', 'project', 'zetsu', 'immune system', 'immunity', 'commands', 'info'],
     icon: 'info-circle',
     arguments: {
       _zetsu: {
         name: 'zetsu',
         description: 'About Zetsu.',
-        return: `<div class="thread-text">terminal: <span style="color: var(--sweetgrass)">Zetsu</span></div>
-          <div class="thread-text">A terminal sundae with GUI sprinkles.</div>
-          <div class="thread-text stone small">-- Fuzzy search commands and review as you type.</div>
-          <div class="thread-text stone small">-- Check out <a href="https://github.com/DangelaLansbury/zetsu">the docs</a> for more info.</div>`,
-      },
-      _killerOS: {
-        name: 'killerOS',
-        description: 'About KillerOS.',
-        return: `<div class="thread-text">shell: <span style="color: var(--honey)">KillerOS</span></div>
-          <div class="thread-text">A fake shell for killer T cells: unmask invaders and chomp em to bits.</div>
-          <div class="thread-text stone small">-- Just a fun way to demo Zetsu, not an accurate simulation. Enjoy!</div>`,
+        return: `<div class="thread-text">A reimagined terminal experience to orchestrate Killer T Cells</div>
+          <div class="thread-text small">Fuzzy search executables as you type. Don't remember a command or argument? Try describing it.</div>
+          <div class="thread-text small"><span style="color: var(--lilac)">Ninja</span>: hunt down and kill specific threats. Use <span style="color: var(--sweetgrass)">exp</span> to express chimeric antigen receptors so cancel cells can't hide.</div>
+          <div class="thread-text small"><span style="color: var(--honey)">Berserker</span>: open up a can of whoopass on all they asses. Use <span style="color: var(--sweetgrass)">inh</span> to prevent cancer cells from mellowing you out.</div>
+          <div class="thread-text stone small">-- Not what you're looking for? Check out <a href="https://github.com/DangelaLansbury/zetsu">the docs</a> for more info.</div>`,
       },
     },
     run: () => {
@@ -317,11 +290,9 @@ const commands = {
           </div>
         </div>
         <div class="thread-block">
-          ${commands['a'].arguments._zetsu.return}
+          ${commands['help'].arguments._zetsu.return}
         </div>
-        <div class="thread-block">
-          ${commands['a'].arguments._killerOS.return}
-        </div>`;
+        `;
       returnOutput(output, 0);
     },
   },

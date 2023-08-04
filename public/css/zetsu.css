@@ -117,10 +117,11 @@
   --command-icon: url('../images/terminal.svg');
 }
 /* .suggestion::before {
-  content: '';
+  content: '>';
+  color: transparent;
   display: inline-block;
-  margin-right: 1rem;
-  width: 1rem;
+  margin-right: 0.5rem;
+  width: 0.5rem;
   height: 1rem;
   background-image: var(--command-icon);
 } */
@@ -128,24 +129,13 @@
   display: inline-flex;
   color: var(--soil-x-lt);
 }
-/* .suggestion.matched::before {
-  background-image: var(--command-matched);
-}
-.suggestion.assisted::before {
-  background-image: var(--command-assisted);
-} */
-/* .suggestion.first-level::before {
-  content: '';
-  display: inline-block;
-  margin-right: 0.5rem;
-  width: 1rem;
-  height: 1rem;
-  background-image: url('../images/sparkles.svg');
-} */
 .suggestion.active {
   background-color: var(--soil-lt);
   color: var(--sweetgrass);
 }
+/* .suggestion.active::before {
+  color: var(--sweetgrass);
+} */
 .listening-text {
   display: inline-flex;
   margin: 1rem 1.75rem;
@@ -205,7 +195,7 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  margin: 1rem 2.5rem;
+  margin: 1rem;
   width: fill-available;
   height: fit-content;
   /* background-color: var(--sweetgrass); */
