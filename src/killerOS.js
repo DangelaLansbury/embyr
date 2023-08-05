@@ -103,25 +103,20 @@ const commands = {
     keywords: ['detect', 'evaluate', 'interpret', 'check', 'see', 'mhc', 'class i', 'class 1', 'class one', 'histocompatibility', 'histocompatibility complex', 'self', 'peptide', 'antigen'],
     icon: 'magnifying-glass',
     arguments: {
-      mhc: {
-        name: 'mhc',
+      _mhc: {
+        name: '_mhc',
         description: 'Detect MHC class I molecules to check for self.',
         return: 'mhc',
       },
-      peptide: {
-        name: 'peptide',
+      _peptide: {
+        name: '_peptide',
         description: 'Detect peptides to check for altered self.',
         return: 'peptide',
-      },
-      '.': {
-        name: '.',
-        description: 'Detect both MHC class I molecules and peptides to check for self and altered self.',
-        return: 'mhc peptide',
       },
     },
     run: (input, arg) => {
       returnInput(input);
-      let output = creatOutputDiv('You have successfully detected ' + arg + '.');
+      let output = creatOutputDiv('You have successfully checked mhc + peptide.');
       returnOutput(output, outputDelay[1]);
     },
   },
@@ -186,7 +181,7 @@ const commands = {
     name: 'Inhibit',
     title: 'Inhibit checkpoint',
     description: 'Inhibit checkpoint.',
-    keywords: ['inhibit', 'checkpoint', 'pd-1', 'ctla-4', 'kill', 'activate', 'rage', 'berserker'],
+    keywords: ['inhibit', 'block', 'prevent', 'checkpoint', 'pd-1', 'ctla-4', 'kill', 'activate', 'rage', 'berserker'],
     icon: 'inhibit',
     arguments: {
       'PD-1': {

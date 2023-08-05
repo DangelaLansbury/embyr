@@ -95,10 +95,10 @@
   justify-content: flex-start;
   align-items: center;
   margin: 0 2.5rem;
-  font-size: 0.813rem;
-  line-height: 1.25rem;
-  font-weight: 500;
-  color: var(--stone);
+  /* font-size: 0.813rem; */
+  /* line-height: 1.25rem; */
+  /* font-weight: 500; */
+  /* color: var(--stone); */
 }
 .zetsu-init-footer .hotkey-hint {
   position: relative;

@@ -83,7 +83,7 @@ const displayHelpCommands = (commands) => {
 // display suggestions and detail
 const populateSuggestion = (command) => {
   let suggestion = document.createElement('div');
-  let cmd = command.split(' ')[0];
+  // let cmd = command.split(' ')[0];
   suggestion.className = 'suggestion';
   suggestion.innerHTML = `<div class="suggestion-command">${command}</div>`;
   // suggestion.style.setProperty('--command-icon', `url(../assets/icons/${commands[cmd].icon}.svg)`);
@@ -201,72 +201,67 @@ zetsu.addEventListener('input', function () {
   suggestions = [];
   let inputWords = input.split(' ');
   for (let command in commands) {
-    if (command.startsWith(input.toLowerCase()) && input !== '') {
-      populateSuggestion(commands[command].nickname);
-      break;
-    } else {
-      for (let arg in commands[command].arguments) {
-        let fullCommand = commands[command].nickname + ' ' + commands[command].arguments[arg].name;
-        if (fullCommand.toLowerCase().startsWith(input.toLowerCase()) && !arg.startsWith('_') && inputWords.length > 1) {
-          suggestions = document.querySelectorAll('.suggestion');
-          let alreadySuggested = false;
-          for (let k = 0; k < suggestions.length; k++) {
-            if (suggestions[k].querySelector('.suggestion-command').innerText === fullCommand) {
-              alreadySuggested = true;
-            }
+    for (let arg in commands[command].arguments) {
+      let fullCommand = commands[command].nickname + ' ' + commands[command].arguments[arg].name;
+      if (fullCommand.toLowerCase().startsWith(input.toLowerCase())) {
+        if (arg.startsWith('_')) {
+          fullCommand = commands[command].nickname;
+        }
+        suggestions = document.querySelectorAll('.suggestion');
+        let alreadySuggested = false;
+        for (let k = 0; k < suggestions.length; k++) {
+          if (suggestions[k].querySelector('.suggestion-command').innerText === fullCommand) {
+            alreadySuggested = true;
           }
-          if (!alreadySuggested) {
-            populateSuggestion(fullCommand);
-          }
+        }
+        if (!alreadySuggested) {
+          populateSuggestion(fullCommand);
         }
       }
     }
   }
   suggestions = document.querySelectorAll('.suggestion');
   let suggestionsArray = [];
-  if (suggestions.length === 0) {
-    // let suggestionsArray = [];
-    for (let command in commands) {
-      // fuzzy search keywords in each command
-      let keywords = commands[command].keywords;
-      for (let i = 0; i < inputWords.length; i++) {
-        for (let j = 0; j < keywords.length; j++) {
-          let levDist = levenshteinDistance(inputWords[i], keywords[j]);
-          let similarity = 1 - levDist / Math.max(inputWords[i].length, keywords[j].length);
-          if (similarity > 0.66) {
-            let fullCommand = commands[command].nickname;
-            // check to see if keyword matches any arguments
-            for (let arg in commands[command].arguments) {
-              let argName = commands[command].arguments[arg].name;
-              if (!argName.startsWith('_') && argName.toLowerCase() == keywords[j]) {
-                fullCommand += ' ' + argName;
-              }
+  for (let command in commands) {
+    // fuzzy search keywords in each command
+    let keywords = commands[command].keywords;
+    for (let i = 0; i < inputWords.length; i++) {
+      for (let j = 0; j < keywords.length; j++) {
+        let levDist = levenshteinDistance(inputWords[i], keywords[j]);
+        let similarity = 1 - levDist / Math.max(inputWords[i].length, keywords[j].length);
+        if (similarity > 0.66) {
+          let fullCommand = commands[command].nickname;
+          // check to see if keyword matches any arguments
+          for (let arg in commands[command].arguments) {
+            let argName = commands[command].arguments[arg].name;
+            if (!argName.startsWith('_') && argName.toLowerCase() == keywords[j]) {
+              fullCommand += ' ' + argName;
             }
-            let alreadySuggested = false;
-            for (let k = 0; k < suggestionsArray.length; k++) {
-              if (suggestionsArray[k].command.toLowerCase() === fullCommand.toLowerCase()) {
-                alreadySuggested = true;
-              }
+          }
+          let alreadySuggested = false;
+          for (let k = 0; k < suggestionsArray.length; k++) {
+            if (suggestionsArray[k].command.toLowerCase() === fullCommand.toLowerCase()) {
+              alreadySuggested = true;
             }
-            if (!alreadySuggested) {
-              populateSuggestion(fullCommand);
-              let suggestion = {
-                command: fullCommand,
-                similarity: similarity,
-              };
-              suggestionsArray.push(suggestion);
-              // Reorder suggestions in order of similarity
-              if (suggestionsArray.length > 0) {
-                suggestionsArray.sort((a, b) => {
-                  const nameA = a.similarity;
-                  const nameB = b.similarity;
-                  return nameB - nameA;
-                });
-                // Populate suggestions list with new order
-                suggestionsList.innerHTML = '';
-                for (let k = 0; k < suggestionsArray.length; k++) {
-                  populateSuggestion(suggestionsArray[k].command);
-                }
+          }
+          if (!alreadySuggested) {
+            populateSuggestion(fullCommand);
+            let suggestion = {
+              command: fullCommand,
+              similarity: similarity,
+            };
+            suggestionsArray.push(suggestion);
+            // Reorder suggestions in order of similarity
+            if (suggestionsArray.length > 0) {
+              suggestionsArray.sort((a, b) => {
+                const nameA = a.similarity;
+                const nameB = b.similarity;
+                return nameB - nameA;
+              });
+              // Populate suggestions list with new order
+              suggestionsList.innerHTML = '';
+              for (let k = 0; k < suggestionsArray.length; k++) {
+                populateSuggestion(suggestionsArray[k].command);
               }
             }
           }
@@ -387,6 +382,7 @@ zetsu.addEventListener('input', function () {
   if (zetsu.innerText.trim().length == 0) {
     clearZetsu();
   }
+  return suggestionsArray;
 });
 
 // Clear editor if user presses enter, refocus on editor, and show fake cursor
