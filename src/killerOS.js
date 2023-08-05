@@ -168,22 +168,16 @@ const commands = {
     run: (input, arg) => {
       returnInput(input);
       let argResult;
-      for (let argument in commands['car'].arguments) {
-        if (commands['car'].arguments[argument].name.toLowerCase() === arg.toLowerCase()) {
-          argResult = commands['car'].arguments[argument].return;
+      for (let argument in commands['exp'].arguments) {
+        if (commands['exp'].arguments[argument].name.toLowerCase() === arg.toLowerCase()) {
+          argResult = commands['exp'].arguments[argument].return;
+        } else {
+          argResult = 'You have successfully expressed CAR against ' + arg + '.';
         }
       }
-      if (argResult === undefined) {
-        clearZetsu();
-        let output = creatOutputDiv(`I don't know this antigen. If I've missed it, you can create a new one.`);
-        returnOutput(output, 0);
-        populateSuggestion(`new antigen ${arg}`, 'third-level');
-        suggestions = document.querySelectorAll('.suggestion');
-      } else {
-        clearZetsu();
-        let output = creatOutputDiv(argResult);
-        returnOutput(output, outputDelay[1]);
-      }
+      clearZetsu();
+      let output = creatOutputDiv(argResult);
+      returnOutput(output, outputDelay[1]);
     },
   },
   inh: {
@@ -213,31 +207,10 @@ const commands = {
       returnOutput(output, outputDelay[1]);
     },
   },
-  new: {
+  r: {
     meta: true,
-    nickname: 'new',
-    name: 'Create new',
-    title: 'Create new data object',
-    description: 'Create something new.',
-    keywords: ['new', 'create', 'make'],
-    icon: 'plus',
-    arguments: {
-      antigen: {
-        name: 'antigen',
-        description: 'Create a new antigen.',
-        return: 'You have successfully created a new antigen.',
-      },
-    },
-    run: (input, arg) => {
-      returnInput(input);
-      let output = creatOutputDiv('created new antigen called ' + arg);
-      returnOutput(output, outputDelay[0]);
-    },
-  },
-  clear: {
-    meta: true,
-    nickname: 'clear',
-    name: 'Clear changes',
+    nickname: 'r',
+    name: 'Reset',
     title: 'Reset system',
     description: 'Reset the system... a fresh start.',
     keywords: ['reset', 'clear', 'restart', 'refresh'],
@@ -258,17 +231,17 @@ const commands = {
       thread.innerHTML = '';
     },
   },
-  help: {
+  h: {
     meta: true,
-    nickname: 'help',
+    nickname: 'h',
     name: 'More help',
     title: 'Help',
     description: 'Get help.',
-    keywords: ['about', 'project', 'zetsu', 'immune system', 'immunity', 'commands', 'info'],
+    keywords: ['help', 'about', 'project', 'zetsu', 'immune system', 'immunity', 'commands', 'info'],
     icon: 'info-circle',
     arguments: {
       _zetsu: {
-        name: 'zetsu',
+        name: '_zetsu',
         description: 'About Zetsu.',
         return: `<div class="thread-text">A reimagined terminal experience to orchestrate Killer T Cells</div>
           <div class="thread-text small">Fuzzy search executables as you type. Don't remember a command or argument? Try describing it.</div>
@@ -290,7 +263,7 @@ const commands = {
           </div>
         </div>
         <div class="thread-block">
-          ${commands['help'].arguments._zetsu.return}
+          ${commands['h'].arguments._zetsu.return}
         </div>
         `;
       returnOutput(output, 0);
