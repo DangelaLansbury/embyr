@@ -83,14 +83,21 @@ const displayHelpCommands = (commands) => {
 // display suggestions and detail
 const populateSuggestion = (command) => {
   let suggestion = document.createElement('div');
-  // let cmd = command.split(' ')[0];
+  let cmd = command.split(' ')[0];
+  let newCommand;
+  if (command.split(' ').length > 1) {
+    let arg = command.slice(cmd.length + 1);
+    // extract any text after the last "/" in the path and separate it from the path
+    let argName = arg.split('/').pop();
+    let path = commands[cmd].arguments[argName].path.split(argName)[0];
+    // newCommand = commands[cmd].nickname + ' ' + commands[cmd].arguments[argName].path;
+    newCommand = `<div class="suggestion-command">${commands[cmd].nickname} <span class="suggestion-path">${path}</span><span class="suggestion-arg">${argName}</span></div>`;
+  } else {
+    newCommand = `<div class="suggestion-command">${command}</div>`;
+  }
   suggestion.className = 'suggestion';
-  suggestion.innerHTML = `<div class="suggestion-command">${command}</div>`;
+  suggestion.innerHTML = newCommand;
   // suggestion.style.setProperty('--command-icon', `url(../assets/icons/${commands[cmd].icon}.svg)`);
-  // Update --command-icon based on classParam
-  // if (classParam === 'first-level') {
-  // suggestion.style.setProperty('--command-icon', `url(../images/sparkles.svg)`);
-  // }
   suggestionsList.appendChild(suggestion);
 };
 
@@ -104,11 +111,14 @@ const populateDetails = (name, description) => {
 const displayDetails = (command) => {
   let cmd = command.split(' ')[0];
   if (command.split(' ').length > 1) {
-    let argName = command.split(' ')[1];
-    // let argDesc = command.arguments[argName].description;
+    let arg = command.slice(cmd.length + 1);
+    // extract any text after the last "/" in the path
+    let argName = arg.split('/').pop();
+    let displayCommand = cmd + ' ' + commands[cmd].arguments[argName].path;
+    let argDesc = commands[cmd].arguments[argName].description;
     // let argSyntax = command.arguments[argName].syntax;
     details.innerHTML = '';
-    populateDetails(commands[cmd].arguments[argName].name, commands[cmd].arguments[argName].description);
+    populateDetails(displayCommand, argDesc);
   } else {
     details.innerHTML = '';
     populateDetails(commands[cmd].title, commands[cmd].description);
@@ -203,7 +213,8 @@ zetsu.addEventListener('input', function () {
   for (let command in commands) {
     for (let arg in commands[command].arguments) {
       let fullCommand = commands[command].nickname + ' ' + commands[command].arguments[arg].name;
-      if (fullCommand.toLowerCase().startsWith(input.toLowerCase())) {
+      let fullCommandWithPath = commands[command].nickname + ' ' + commands[command].arguments[arg].path;
+      if (fullCommand.toLowerCase().startsWith(input.toLowerCase()) || fullCommandWithPath.toLowerCase().startsWith(input.toLowerCase())) {
         if (arg.startsWith('_')) {
           fullCommand = commands[command].nickname;
         }
@@ -234,6 +245,7 @@ zetsu.addEventListener('input', function () {
           // check to see if keyword matches any arguments
           for (let arg in commands[command].arguments) {
             let argName = commands[command].arguments[arg].name;
+            let argPath = commands[command].arguments[arg].path;
             if (!argName.startsWith('_') && argName.toLowerCase() == keywords[j]) {
               fullCommand += ' ' + argName;
             }

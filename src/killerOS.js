@@ -132,31 +132,37 @@ const commands = {
       'a-folate': {
         name: 'a-folate',
         description: 'Express chimeric antigen receptor to activate T cell against a-folate.',
+        path: 'targets/a-folate',
         return: 'You have successfully expressed CAR against a-folate.',
       },
       CD_: {
         name: 'CD_',
         description: 'Express chimeric antigen receptor to activate T cell against CD19, CD20, CD22, CD30, etc.',
+        path: 'targets/CD_',
         return: 'You have successfully expressed CAR against CD19, CD20, CD22, CD30, etc.',
       },
       EGFR: {
         name: 'EGFR',
         description: 'Express chimeric antigen receptor to activate T cell against EGFR.',
+        path: 'targets/EGFR',
         return: 'You have successfully expressed CAR against EGFR.',
       },
       GD2: {
         name: 'GD2',
         description: 'Express chimeric antigen receptor to activate T cell against GD2.',
+        path: 'targets/GD2',
         return: 'You have successfully expressed CAR against GD2.',
       },
       HER2: {
         name: 'HER2',
         description: 'Express chimeric antigen receptor to activate T cell against HER2.',
+        path: 'targets/HER2',
         return: 'You have successfully expressed CAR against HER2.',
       },
       L1CAM: {
         name: 'L1CAM',
         description: 'Express chimeric antigen receptor to activate T cell against L1 cell adhesion molecule.',
+        path: 'targets/L1CAM',
         return: 'You have successfully expressed CAR against L1 cell adhesion molecule.',
       },
     },
@@ -187,12 +193,14 @@ const commands = {
       'PD-1': {
         name: 'PD-1',
         description: 'Inhibit PD-1 to prevent it from binding to PD-L1 and preventing T cell activation.',
+        path: 'chkpnts/PD-1',
         return: 'You have successfully inhibited PD-1.',
       },
       'CTLA-4': {
         name: 'CTLA-4',
         description: 'Inhibit CTLA-4 to prevent it from binding to CD80 and preventing T cell activation.',
         keywords: ['ctla-4', 'ctla4', 'cd80'],
+        path: 'chkpnts/CTLA-4',
         return: 'You have successfully inhibited CTLA-4.',
       },
     },

@@ -179,13 +179,25 @@
   display: inline-flex;
   color: var(--soil-x-lt);
 }
+.suggestion-command {
+  color: var(--wheat);
+}
+.suggestion-path {
+  color: var(--soil-x-lt);
+}
+.suggestion-arg {
+  color: var(--wheat);
+}
 .suggestion.active {
   background-color: var(--soil-lt);
+}
+.suggestion.active .suggestion-command,
+.suggestion.active .suggestion-arg {
   color: var(--sweetgrass);
 }
-/* .suggestion.active::before {
-  color: var(--sweetgrass);
-} */
+.suggestion.active .suggestion-path {
+  color: var(--stone);
+}
 .suggestions-footer {
   display: flex;
   flex-direction: row;

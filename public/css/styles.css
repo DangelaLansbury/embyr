@@ -20,6 +20,12 @@
   --bigSize: 1.125em;
 }
 
+.stone {
+  color: var(--stone);
+}
+
+/* --- FONT VARIABLES --- */
+
 .small {
   font-size: var(--smallSize);
 }
