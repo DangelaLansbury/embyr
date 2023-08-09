@@ -56,8 +56,8 @@
   align-items: flex-start;
   margin: 0;
   width: 100%;
-  height: 20%;
-  min-height: 20%;
+  height: 33%;
+  min-height: 33%;
   overflow: hidden;
   background-color: var(--soil);
 }
