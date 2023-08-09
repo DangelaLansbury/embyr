@@ -84,19 +84,9 @@ const displayHelpCommands = (commands) => {
 const populateSuggestion = (command) => {
   let suggestion = document.createElement('div');
   let cmd = command.split(' ')[0];
-  let newCommand;
-  if (command.split(' ').length > 1) {
-    let arg = command.slice(cmd.length + 1);
-    // extract any text after the last "/" in the path and separate it from the path
-    let argName = arg.split('/').pop();
-    let path = commands[cmd].arguments[argName].path.split(argName)[0];
-    // newCommand = commands[cmd].nickname + ' ' + commands[cmd].arguments[argName].path;
-    newCommand = `<div class="suggestion-command">${commands[cmd].nickname} <span class="suggestion-path">${path}</span><span class="suggestion-arg">${argName}</span></div>`;
-  } else {
-    newCommand = `<div class="suggestion-command">${command}</div>`;
-  }
+  let arg = command.split(' ')[1];
   suggestion.className = 'suggestion';
-  suggestion.innerHTML = newCommand;
+  suggestion.innerHTML = `<div class="suggestion-command">${cmd} <span class="suggestion-arg">${arg}</span></div>`;
   // suggestion.style.setProperty('--command-icon', `url(../assets/icons/${commands[cmd].icon}.svg)`);
   suggestionsList.appendChild(suggestion);
 };
@@ -112,13 +102,9 @@ const displayDetails = (command) => {
   let cmd = command.split(' ')[0];
   if (command.split(' ').length > 1) {
     let arg = command.slice(cmd.length + 1);
-    // extract any text after the last "/" in the path
-    let argName = arg.split('/').pop();
-    let displayCommand = cmd + ' ' + commands[cmd].arguments[argName].path;
-    let argDesc = commands[cmd].arguments[argName].description;
-    // let argSyntax = command.arguments[argName].syntax;
+    let argDesc = commands[cmd].arguments[arg].description;
     details.innerHTML = '';
-    populateDetails(displayCommand, argDesc);
+    populateDetails(arg, argDesc);
   } else {
     details.innerHTML = '';
     populateDetails(commands[cmd].title, commands[cmd].description);
@@ -213,8 +199,7 @@ zetsu.addEventListener('input', function () {
   for (let command in commands) {
     for (let arg in commands[command].arguments) {
       let fullCommand = commands[command].nickname + ' ' + commands[command].arguments[arg].name;
-      let fullCommandWithPath = commands[command].nickname + ' ' + commands[command].arguments[arg].path;
-      if (fullCommand.toLowerCase().startsWith(input.toLowerCase()) || fullCommandWithPath.toLowerCase().startsWith(input.toLowerCase())) {
+      if (fullCommand.toLowerCase().startsWith(input.toLowerCase())) {
         if (arg.startsWith('_')) {
           fullCommand = commands[command].nickname;
         }

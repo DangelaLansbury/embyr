@@ -181,7 +181,7 @@
   color: var(--soil-x-lt);
 }
 .suggestion-arg {
-  color: var(--wheat);
+  color: var(--stone);
 }
 .suggestion.active {
   background-color: var(--soil-lt);
