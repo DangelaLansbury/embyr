@@ -201,19 +201,9 @@ zetsu.addEventListener('input', function () {
   suggestions = [];
   let inputWords = input.split(' ');
   for (let command in commands) {
-    for (let arg in commands[command].arguments) {
-      if (!arg.startsWith('_')) {
-        let argName = commands[command].arguments[arg].name;
-        let fullCommand = commands[command].nickname + ' ' + commands[command].arguments[arg].name;
-        if (fullCommand.toLowerCase().startsWith(input.toLowerCase())) {
-          populateSuggestion(fullCommand);
-        }
-      } else {
-        let fullCommand = commands[command].nickname;
-        if (fullCommand.toLowerCase().startsWith(input.toLowerCase())) {
-          populateSuggestion(fullCommand);
-        }
-      }
+    let commandName = commands[command].nickname;
+    if (commandName.startsWith(input)) {
+      populateSuggestion(commandName);
     }
   }
   suggestions = document.querySelectorAll('.suggestion');
