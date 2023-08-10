@@ -86,7 +86,11 @@ const populateSuggestion = (command) => {
   let cmd = command.split(' ')[0];
   let arg = command.split(' ')[1];
   suggestion.className = 'suggestion';
-  suggestion.innerHTML = `<div class="suggestion-command">${cmd} <span class="suggestion-arg">${arg}</span></div>`;
+  if (arg) {
+    suggestion.innerHTML = `<div class="suggestion-command">${cmd} <span class="suggestion-arg">${arg}</span></div>`;
+  } else {
+    suggestion.innerHTML = `<div class="suggestion-command">${cmd}</div>`;
+  }
   // suggestion.style.setProperty('--command-icon', `url(../assets/icons/${commands[cmd].icon}.svg)`);
   suggestionsList.appendChild(suggestion);
 };
@@ -198,19 +202,15 @@ zetsu.addEventListener('input', function () {
   let inputWords = input.split(' ');
   for (let command in commands) {
     for (let arg in commands[command].arguments) {
-      let fullCommand = commands[command].nickname + ' ' + commands[command].arguments[arg].name;
-      if (fullCommand.toLowerCase().startsWith(input.toLowerCase())) {
-        if (arg.startsWith('_')) {
-          fullCommand = commands[command].nickname;
+      if (!arg.startsWith('_')) {
+        let argName = commands[command].arguments[arg].name;
+        let fullCommand = commands[command].nickname + ' ' + commands[command].arguments[arg].name;
+        if (fullCommand.toLowerCase().startsWith(input.toLowerCase())) {
+          populateSuggestion(fullCommand);
         }
-        suggestions = document.querySelectorAll('.suggestion');
-        let alreadySuggested = false;
-        for (let k = 0; k < suggestions.length; k++) {
-          if (suggestions[k].querySelector('.suggestion-command').innerText === fullCommand) {
-            alreadySuggested = true;
-          }
-        }
-        if (!alreadySuggested) {
+      } else {
+        let fullCommand = commands[command].nickname;
+        if (fullCommand.toLowerCase().startsWith(input.toLowerCase())) {
           populateSuggestion(fullCommand);
         }
       }
@@ -230,7 +230,6 @@ zetsu.addEventListener('input', function () {
           // check to see if keyword matches any arguments
           for (let arg in commands[command].arguments) {
             let argName = commands[command].arguments[arg].name;
-            let argPath = commands[command].arguments[arg].path;
             if (!argName.startsWith('_') && argName.toLowerCase() == keywords[j]) {
               fullCommand += ' ' + argName;
             }
@@ -271,6 +270,9 @@ zetsu.addEventListener('input', function () {
   let suggestionIndex = -1;
   // Listening for up and down arrow keys to cycle through suggestions
   zetsu.addEventListener('keydown', function (e) {
+    for (let i = 0; i < suggestions.length; i++) {
+      suggestions[i].classList.remove('active');
+    }
     // Check if suggestions are present
     if (suggestions.length !== 0) {
       if (e.key === 'ArrowDown') {
@@ -381,6 +383,32 @@ zetsu.addEventListener('input', function () {
   }
   return suggestionsArray;
 });
+
+// Make a suggestion active if clicked
+// suggestionsList.addEventListener('click', function (e) {
+//   if (e.target.classList.contains('suggestion')) {
+//     // Remove active class from all suggestions
+//     for (let i = 0; i < suggestions.length; i++) {
+//       suggestions[i].classList.remove('active');
+//     }
+//     // Add active class to clicked suggestion
+//     e.target.classList.add('active');
+//     let suggestedCommand = e.target.querySelector('.suggestion-command').innerText;
+//     zetsu.innerText = suggestedCommand;
+//     // Display suggestion details
+//     details.innerHTML = '';
+//     displayDetails(suggestedCommand);
+//     // Set suggestion index to clicked suggestion
+//     suggestionIndex = Array.from(suggestions).indexOf(e.target);
+//     // Scroll to suggestion
+//     suggestions[suggestionIndex].scrollIntoView({
+//       block: 'nearest',
+//       inline: 'end',
+//       behavior: 'smooth',
+//     });
+//     focusAtEnd();
+//   }
+// });
 
 // Clear editor if user presses enter, refocus on editor, and show fake cursor
 const clearZetsu = () => {
