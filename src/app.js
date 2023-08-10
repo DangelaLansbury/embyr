@@ -12,6 +12,7 @@ let zetsuInit = document.querySelector('.zetsu-init'); // Zetsu init content
 let meetZetsu = document.querySelector('#meetZetsuHint'); // Meet Zetsu hint in init footer
 let zetsuHelper = document.querySelector('.zetsu-helper'); // Zetsu suggestions and description container
 // Zetsu input
+let zetsuBar = document.querySelector('.zetsu-input');
 let zetsu = document.querySelector('.zetsu-input-text'); // Zetsu input field
 let cursor = document.querySelector('.cursor'); // Zetsu input fake cursor
 // Suggestions and suggestion details
@@ -230,7 +231,7 @@ zetsu.addEventListener('input', function () {
               alreadySuggested = true;
             }
           }
-          if (!alreadySuggested) {
+          if (!alreadySuggested && fullCommand !== inputWords[0]) {
             populateSuggestion(fullCommand);
             let suggestion = {
               command: fullCommand,
