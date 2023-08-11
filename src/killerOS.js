@@ -105,7 +105,7 @@ const commands = {
     title: 'Express chimeric antigen receptor',
     description: 'Express protein or molecule.',
     keywords: ['express', 'receptor', 'protein', 'molecule', 'chimeric', 'antigen', 'car', 'a-folate', 'cd', 'cd19', 'cd20', 'cd22', 'cd30', 'cd33', 'egfr', 'gd2', 'her2', 'l1cam', 'l1', 'adhesion', 'show', 'display', 'add'],
-    icon: 'killer-t-cell',
+    icon: 'sparkles',
     suggestions: [
       {
         command: 'x car',
@@ -113,43 +113,6 @@ const commands = {
         return: 'You have successfully expressed chimeric antigen receptor.',
       },
     ],
-    arguments: {
-      'a-folate': {
-        name: 'a-folate',
-        description: 'Express chimeric antigen receptor to activate T cell against a-folate.',
-        return: 'You have successfully expressed CAR against a-folate.',
-      },
-      CD: {
-        name: 'CD',
-        description: 'Express chimeric antigen receptor to activate T cell against CD19, CD20, CD22, CD30, etc.',
-        return: 'You have successfully expressed CAR against CD19, CD20, CD22, CD30, etc.',
-      },
-      EGFR: {
-        name: 'EGFR',
-        description: 'Express chimeric antigen receptor to activate T cell against EGFR.',
-        return: 'You have successfully expressed CAR against EGFR.',
-      },
-      GD2: {
-        name: 'GD2',
-        description: 'Express chimeric antigen receptor to activate T cell against GD2.',
-        return: 'You have successfully expressed CAR against GD2.',
-      },
-      HER2: {
-        name: 'HER2',
-        description: 'Express chimeric antigen receptor to activate T cell against HER2.',
-        return: 'You have successfully expressed CAR against HER2.',
-      },
-      L1CAM: {
-        name: 'L1CAM',
-        description: 'Express chimeric antigen receptor to activate T cell against L1 cell adhesion molecule.',
-        return: 'You have successfully expressed CAR against L1 cell adhesion molecule.',
-      },
-      car: {
-        name: 'car',
-        description: 'Express chimeric antigen receptor.',
-        return: 'You have successfully expressed chimeric antigen receptor.',
-      },
-    },
     run: (input, arg) => {
       returnInput(input);
       let argResult;
@@ -180,23 +143,6 @@ const commands = {
         return: 'You have successfully inhibited checkpoint.',
       },
     ],
-    arguments: {
-      'PD-1': {
-        name: 'PD-1',
-        description: 'Inhibit PD-1 to prevent it from binding to PD-L1 and preventing T cell activation.',
-        return: 'You have successfully inhibited PD-1.',
-      },
-      'CTLA-4': {
-        name: 'CTLA-4',
-        description: 'Inhibit CTLA-4 to prevent it from binding to CD80 and preventing T cell activation.',
-        return: 'You have successfully inhibited CTLA-4.',
-      },
-      checkpoint: {
-        name: 'checkpoint',
-        description: 'Inhibit checkpoint.',
-        return: 'You have successfully inhibited checkpoint.',
-      },
-    },
     run: (input, arg) => {
       returnInput(input);
       let output = creatOutputDiv('You have successfully inhibited ' + arg + '.');
@@ -213,7 +159,7 @@ const commands = {
       'detect',
       'evaluate',
       'interpret',
-      'check',
+      'look',
       'see',
       'mhc',
       'class i',
@@ -239,18 +185,6 @@ const commands = {
         return: 'You have successfully searched the system for antigens and phagocytosed them.',
       },
     ],
-    arguments: {
-      _mhc: {
-        name: '_mhc',
-        description: 'Detect MHC class I molecules to check for self.',
-        return: 'mhc',
-      },
-      _peptide: {
-        name: '_peptide',
-        description: 'Detect peptides to check for altered self.',
-        return: 'peptide',
-      },
-    },
     run: (input, arg) => {
       returnInput(input);
       let output = creatOutputDiv('You have successfully checked mhc + peptide.');
@@ -263,7 +197,7 @@ const commands = {
     name: 'Revert state',
     title: 'Restore',
     description: 'Revert to previous receptor or inhibitor state',
-    keywords: ['return', 'revert', 'version', 'history', 'go back'],
+    keywords: ['restore', 'revert', 'version', 'history', 'go back'],
     icon: 'undo',
     suggestions: [
       {
@@ -272,18 +206,6 @@ const commands = {
         return: 'You have successfully reverted to previous receptor or inhibitor state.',
       },
     ],
-    arguments: {
-      _receptors: {
-        name: '_receptors',
-        description: 'Reset receptors.',
-        return: 'You have successfully reset receptors.',
-      },
-      _inhibitors: {
-        name: '_inhibitors',
-        description: 'Reset inhibitors.',
-        return: 'You have successfully reset inhibitors.',
-      },
-    },
     run: (input, arg) => {
       thread.innerHTML = '';
     },
@@ -294,7 +216,7 @@ const commands = {
     name: 'Reset all',
     title: 'Clear thread and reset system',
     description: 'Reset the system... a fresh start.',
-    keywords: ['reset', 'clear', 'restart', 'refresh'],
+    keywords: ['reset', 'clear', 'restart', 'refresh', 'start over', 'reset all'],
     icon: 'undo',
     suggestions: [
       {
@@ -303,18 +225,6 @@ const commands = {
         return: 'You have successfully reset the system.',
       },
     ],
-    arguments: {
-      _receptors: {
-        name: '_receptors',
-        description: 'Reset receptors.',
-        return: 'You have successfully reset receptors.',
-      },
-      _inhibitors: {
-        name: '_inhibitors',
-        description: 'Reset inhibitors.',
-        return: 'You have successfully reset inhibitors.',
-      },
-    },
     run: (input, arg) => {
       thread.innerHTML = '';
     },

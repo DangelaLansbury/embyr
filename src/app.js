@@ -85,14 +85,15 @@ const displayHelpCommands = (commands) => {
 const populateSuggestion = (command) => {
   let suggestion = document.createElement('div');
   let cmd = command.split(' ')[0];
-  let arg = command.split(' ')[1];
+  // let arg = command.split(' ')[1];
   suggestion.className = 'suggestion';
-  if (arg) {
-    suggestion.innerHTML = `<div class="suggestion-command">${cmd} <span class="suggestion-arg">${arg}</span></div>`;
-  } else {
-    suggestion.innerHTML = `<div class="suggestion-command">${cmd}</div>`;
-  }
-  // suggestion.style.setProperty('--command-icon', `url(../assets/icons/${commands[cmd].icon}.svg)`);
+  suggestion.innerHTML = `<div class="suggestion-command">${command}</div>`;
+  // if (arg) {
+  //   suggestion.innerHTML = `<div class="suggestion-command">${cmd} <span class="suggestion-arg">${arg}</span></div>`;
+  // } else {
+  //   suggestion.innerHTML = `<div class="suggestion-command">${cmd}</div>`;
+  // }
+  suggestion.style.setProperty('--command-icon', `url(../images/${commands[cmd].icon}.svg)`);
   suggestionsList.appendChild(suggestion);
 };
 
@@ -105,15 +106,17 @@ const populateDetails = (name, description) => {
 
 const displayDetails = (command) => {
   let cmd = command.split(' ')[0];
-  if (command.split(' ').length > 1) {
-    let arg = command.slice(cmd.length + 1);
-    let argDesc = commands[cmd].arguments[arg].description;
-    details.innerHTML = '';
-    populateDetails(arg, argDesc);
-  } else {
-    details.innerHTML = '';
-    populateDetails(commands[cmd].title, commands[cmd].description);
-  }
+  details.innerHTML = '';
+  populateDetails(commands[cmd].title, commands[cmd].description);
+  // if (command.split(' ').length > 1) {
+  //   let arg = command.slice(cmd.length + 1);
+  //   let argDesc = commands[cmd].arguments[arg].description;
+  //   details.innerHTML = '';
+  //   populateDetails(arg, argDesc);
+  // } else {
+  //   details.innerHTML = '';
+  //   populateDetails(commands[cmd].title, commands[cmd].description);
+  // }
 };
 
 // --- OUTPUTS ---
@@ -220,12 +223,12 @@ zetsu.addEventListener('input', function () {
           let fullCommand = commands[command].suggestions[0].command;
           // let fullCommand = commands[command].nickname;
           // check to see if keyword matches any arguments
-          for (let arg in commands[command].arguments) {
-            let argName = commands[command].arguments[arg].name;
-            if (!argName.startsWith('_') && argName.toLowerCase() == keywords[j]) {
-              fullCommand = commands[command].nickname + ' ' + argName;
-            }
-          }
+          // for (let arg in commands[command].arguments) {
+          //   let argName = commands[command].arguments[arg].name;
+          //   if (!argName.startsWith('_') && argName.toLowerCase() == keywords[j]) {
+          //     fullCommand = commands[command].nickname + ' ' + argName;
+          //   }
+          // }
           let alreadySuggested = false;
           for (let k = 0; k < suggestionsArray.length; k++) {
             if (suggestionsArray[k].command.toLowerCase() === fullCommand.toLowerCase()) {

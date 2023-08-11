@@ -161,21 +161,23 @@
   transition: 0.2s;
   --command-icon: url('../images/terminal.svg');
 }
-/* .suggestion::before {
-  content: '>';
-  color: transparent;
-  display: inline-block;
-  margin-right: 0.5rem;
-  width: 0.5rem;
-  height: 1rem;
-  background-image: var(--command-icon);
-} */
 .suggestion-name {
   display: inline-flex;
   color: var(--soil-x-lt);
 }
 .suggestion-command {
   color: var(--wheat);
+}
+.suggestion::before {
+  content: ' ';
+  /* color: transparent; */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 0.5rem;
+  width: 0.5rem;
+  height: 1rem;
+  background-image: var(--command-icon);
 }
 .suggestion-path {
   color: var(--soil-x-lt);
@@ -203,50 +205,6 @@
   font-size: 0.75rem;
   padding: 0 2.5rem;
 }
-.listening-text {
-  display: inline-flex;
-  margin: 1rem 1.75rem;
-  font-size: 0.813rem;
-  line-height: 1.25rem;
-  font-weight: 500;
-  color: var(--stone);
-  &:before {
-    animation: spin 1.5s linear infinite;
-    content: '⠋';
-    margin-right: 0.5rem;
-    color: var(--sweetgrass);
-    font-size: 1rem;
-  }
-}
-@keyframes spin {
-  0% {
-    content: '⠋';
-  }
-  12.5% {
-    content: '⠙';
-  }
-  25% {
-    content: '⠹';
-  }
-  37.5% {
-    content: '⠸';
-  }
-  50% {
-    content: '⠼';
-  }
-  62.5% {
-    content: '⠴';
-  }
-  75% {
-    content: '⠦';
-  }
-  87.5% {
-    content: '⠧';
-  }
-  100% {
-    content: '⠇';
-  }
-}
 .details-container {
   display: flex;
   flex-direction: column;
@@ -265,7 +223,6 @@
   margin: 1rem;
   width: calc(100% - 2rem);
   height: calc(100% - 2rem);
-  /* background-color: var(--sweetgrass); */
   overflow-y: scroll;
   overscroll-behavior: none;
   -ms-overflow-style: none;
