@@ -123,23 +123,16 @@ const commands = {
     description: 'Express protein or molecule.',
     keywords: ['express', 'receptor', 'protein', 'molecule', 'chimeric', 'antigen', 'car', 'a-folate', 'cd', 'cd19', 'cd20', 'cd22', 'cd30', 'cd33', 'egfr', 'gd2', 'her2', 'l1cam', 'l1', 'adhesion', 'show', 'display', 'add'],
     icon: 'sparkles',
-    suggestions: [
-      {
+    suggestions: {
+      default: {
         command: 'x car',
         description: 'Express chimeric antigen receptor.',
         return: 'You have successfully expressed chimeric antigen receptor.',
       },
-    ],
+    },
     run: (input, arg) => {
       returnInput(input);
-      let argResult;
-      for (let argument in commands['x'].arguments) {
-        if (commands['x'].arguments[argument].name.toLowerCase() === arg.toLowerCase()) {
-          argResult = commands['x'].arguments[argument].return;
-        } else {
-          argResult = 'You have successfully expressed CAR against ' + arg + '.';
-        }
-      }
+      let argResult = 'You have successfully expressed CAR against ' + arg + '.';
       clearZetsu();
       let output = creatOutputDiv(argResult);
       returnOutput(output, outputDelay[1]);
@@ -153,13 +146,13 @@ const commands = {
     description: 'Inhibit checkpoint.',
     keywords: ['inhibit', 'block', 'prevent', 'checkpoint', 'pd-1', 'ctla-4', 'activate', 'bind', 'binding'],
     icon: 'inhibit',
-    suggestions: [
-      {
+    suggestions: {
+      default: {
         command: 'i checkpoint',
         description: 'Inhibit checkpoint.',
         return: 'You have successfully inhibited checkpoint.',
       },
-    ],
+    },
     run: (input, arg) => {
       returnInput(input);
       let output = creatOutputDiv('You have successfully inhibited ' + arg + '.');
@@ -195,38 +188,38 @@ const commands = {
       'eat',
     ],
     icon: 'magnifying-glass',
-    suggestions: [
-      {
+    suggestions: {
+      default: {
         command: 'sd',
         description: 'Search the system for antigens and phagocytose them.',
         return: 'You have successfully searched the system for antigens and phagocytosed them.',
       },
-    ],
+    },
     run: (input, arg) => {
       returnInput(input);
       let output = creatOutputDiv('You have successfully checked mhc + peptide.');
       returnOutput(output, outputDelay[1]);
     },
   },
-  restore: {
-    meta: true,
-    nickname: 'restore',
-    name: 'Revert state',
-    title: 'Restore',
-    description: 'Revert to previous receptor or inhibitor state',
-    keywords: ['restore', 'revert', 'version', 'history', 'go back'],
-    icon: 'undo',
-    suggestions: [
-      {
-        command: 'restore',
-        description: 'Revert to previous receptor or inhibitor state.',
-        return: 'You have successfully reverted to previous receptor or inhibitor state.',
-      },
-    ],
-    run: (input, arg) => {
-      thread.innerHTML = '';
-    },
-  },
+  // restore: {
+  //   meta: true,
+  //   nickname: 'restore',
+  //   name: 'Revert state',
+  //   title: 'Restore',
+  //   description: 'Revert to previous receptor or inhibitor state',
+  //   keywords: ['restore', 'revert', 'version', 'history', 'go back'],
+  //   icon: 'undo',
+  //   suggestions: {
+  //     default: {
+  //       command: 'restore',
+  //       description: 'Revert to previous receptor or inhibitor state.',
+  //       return: 'You have successfully reverted to previous receptor or inhibitor state.',
+  //     },
+  //   },
+  //   run: (input, arg) => {
+  //     thread.innerHTML = '';
+  //   },
+  // },
   clear: {
     meta: true,
     nickname: 'clear',
@@ -235,13 +228,13 @@ const commands = {
     description: 'Reset the system... a fresh start.',
     keywords: ['reset', 'clear', 'restart', 'refresh', 'start over', 'reset all'],
     icon: 'undo',
-    suggestions: [
-      {
+    suggestions: {
+      default: {
         command: 'clear',
         description: 'Reset the system... a fresh start.',
         return: 'You have successfully reset the system.',
       },
-    ],
+    },
     run: (input, arg) => {
       thread.innerHTML = '';
     },
@@ -254,38 +247,23 @@ const commands = {
     description: 'Get help.',
     keywords: ['h', 'help', 'about', 'project', 'zetsu', 'immune system', 'immunity', 'commands', 'info'],
     icon: 'info-circle',
-    suggestions: [
-      {
+    suggestions: {
+      default: {
         command: 'h',
         description: 'Get help.',
         return: 'You have successfully gotten help.',
-      },
-    ],
-    arguments: {
-      _zetsu: {
-        name: '_zetsu',
-        description: 'About Zetsu.',
-        return: `<div class="thread-text">A reimagined terminal experience to orchestrate Killer T Cells</div>
-          <div class="thread-text small">Fuzzy search executables as you type. Don't remember a command or argument? Try describing it.</div>
-          <div class="thread-text small"><span style="color: var(--lilac)">Ninja</span>: hunt down and kill specific threats. Use <span style="color: var(--sweetgrass)">exp</span> to express chimeric antigen receptors so cancel cells can't hide.</div>
-          <div class="thread-text small"><span style="color: var(--honey)">Berserker</span>: open up a can of whoopass on all they asses. Use <span style="color: var(--sweetgrass)">inh</span> to prevent cancer cells from mellowing you out.</div>
-          <div class="thread-text stone small">-- Not what you're looking for? Check out <a href="https://github.com/DangelaLansbury/zetsu">the docs</a> for more info.</div>`,
       },
     },
     run: () => {
       thread.innerHTML = '';
       let output = document.createElement('div');
       output.innerHTML = `
-        <div class="logo-container">
-          <div class="logo">
-            <img src="public/images/logo.svg" class="logo-svg" alt="logo" />
-            <div class="logo-text">
-              <h1>Zetsu</h1>
-            </div>
-          </div>
-        </div>
         <div class="thread-block">
-          ${commands['h'].arguments._zetsu.return}
+          <div class="thread-text">A reimagined terminal experience to orchestrate Killer T Cells</div>
+          <div class="thread-text small">Fuzzy search executables as you type. Don't remember a command or argument? Try describing it.</div>
+          <div class="thread-text small"><span style="color: var(--lilac)">Ninja</span>: hunt down and kill specific threats. Use <span style="color: var(--sweetgrass)">exp</span> to express chimeric antigen receptors so cancel cells can't hide.</div>
+          <div class="thread-text small"><span style="color: var(--honey)">Berserker</span>: open up a can of whoopass on all they asses. Use <span style="color: var(--sweetgrass)">inh</span> to prevent cancer cells from mellowing you out.</div>
+          <div class="thread-text stone small">-- Not what you're looking for? Check out <a href="https://github.com/DangelaLansbury/zetsu">the docs</a> for more info.</div>
         </div>
         `;
       returnOutput(output, 0);

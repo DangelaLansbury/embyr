@@ -108,15 +108,6 @@ const displayDetails = (command) => {
   let cmd = command.split(' ')[0];
   details.innerHTML = '';
   populateDetails(commands[cmd].title, commands[cmd].description);
-  // if (command.split(' ').length > 1) {
-  //   let arg = command.slice(cmd.length + 1);
-  //   let argDesc = commands[cmd].arguments[arg].description;
-  //   details.innerHTML = '';
-  //   populateDetails(arg, argDesc);
-  // } else {
-  //   details.innerHTML = '';
-  //   populateDetails(commands[cmd].title, commands[cmd].description);
-  // }
 };
 
 // --- OUTPUTS ---
@@ -204,12 +195,6 @@ zetsu.addEventListener('input', function () {
   details.innerHTML = '';
   suggestions = [];
   let inputWords = input.split(' ');
-  // for (let command in commands) {
-  //   let commandName = commands[command].nickname;
-  //   if (commandName.startsWith(input)) {
-  //     populateSuggestion(commandName);
-  //   }
-  // }
   suggestions = document.querySelectorAll('.suggestion');
   let suggestionsArray = [];
   for (let command in commands) {
@@ -220,22 +205,14 @@ zetsu.addEventListener('input', function () {
         let levDist = levenshteinDistance(inputWords[i], keywords[j]);
         let similarity = 1 - levDist / Math.max(inputWords[i].length, keywords[j].length);
         if (similarity > 0.66) {
-          let fullCommand = commands[command].suggestions[0].command;
-          // let fullCommand = commands[command].nickname;
-          // check to see if keyword matches any arguments
-          // for (let arg in commands[command].arguments) {
-          //   let argName = commands[command].arguments[arg].name;
-          //   if (!argName.startsWith('_') && argName.toLowerCase() == keywords[j]) {
-          //     fullCommand = commands[command].nickname + ' ' + argName;
-          //   }
-          // }
+          let fullCommand = commands[command].suggestions['default'].command;
           let alreadySuggested = false;
           for (let k = 0; k < suggestionsArray.length; k++) {
             if (suggestionsArray[k].command.toLowerCase() === fullCommand.toLowerCase()) {
               alreadySuggested = true;
             }
           }
-          if (!alreadySuggested && fullCommand !== inputWords[0]) {
+          if (!alreadySuggested) {
             populateSuggestion(fullCommand);
             let suggestion = {
               command: fullCommand,
@@ -356,7 +333,7 @@ zetsu.addEventListener('input', function () {
   });
   // Reset suggestion index when user presses space or continues to type or hits enter
   zetsu.addEventListener('keydown', function (e) {
-    if (e.key === ' ' || e.key === 'Backspace') {
+    if (e.key === ' ' || e.key === 'Backspace' || e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
       suggestionIndex = -1;
     } else if (e.key === 'Enter') {
       input = '';
@@ -378,32 +355,6 @@ zetsu.addEventListener('input', function () {
   }
   return suggestionsArray;
 });
-
-// Make a suggestion active if clicked
-// suggestionsList.addEventListener('click', function (e) {
-//   if (e.target.classList.contains('suggestion')) {
-//     // Remove active class from all suggestions
-//     for (let i = 0; i < suggestions.length; i++) {
-//       suggestions[i].classList.remove('active');
-//     }
-//     // Add active class to clicked suggestion
-//     e.target.classList.add('active');
-//     let suggestedCommand = e.target.querySelector('.suggestion-command').innerText;
-//     zetsu.innerText = suggestedCommand;
-//     // Display suggestion details
-//     details.innerHTML = '';
-//     displayDetails(suggestedCommand);
-//     // Set suggestion index to clicked suggestion
-//     suggestionIndex = Array.from(suggestions).indexOf(e.target);
-//     // Scroll to suggestion
-//     suggestions[suggestionIndex].scrollIntoView({
-//       block: 'nearest',
-//       inline: 'end',
-//       behavior: 'smooth',
-//     });
-//     focusAtEnd();
-//   }
-// });
 
 // Clear editor if user presses enter, refocus on editor, and show fake cursor
 const clearZetsu = () => {
