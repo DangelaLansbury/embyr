@@ -192,7 +192,7 @@ main {
   width: 100%;
   height: 2.25rem;
   min-height: 2.25rem;
-  font-size: 0.75rem;
+  font-size: var(--xSmallSize);
   line-height: 1.25rem;
 }
 .help-bar-left {

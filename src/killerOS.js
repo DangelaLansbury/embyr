@@ -86,9 +86,13 @@ const adaptive = {
 // --- STATUS ---
 
 const status = {
-  targetIsSelf: true,
-  targetIsAltered: false,
-  tCellActive: false,
+  cancerCells: {
+    antigens: ['a-folate', 'CD19', 'CD20', 'CD22', 'CD30', 'CD33', 'EGFR', 'GD2', 'HER2', 'L1CAM'],
+    ligands: ['PD-L1', 'CD80'],
+  },
+  normalCells: {
+    status: 'normal',
+  },
 };
 
 // --- COMMANDS ---
@@ -102,6 +106,13 @@ const commands = {
     description: 'Express protein or molecule.',
     keywords: ['express', 'receptor', 'protein', 'molecule', 'chimeric', 'antigen', 'car', 'a-folate', 'cd', 'cd19', 'cd20', 'cd22', 'cd30', 'cd33', 'egfr', 'gd2', 'her2', 'l1cam', 'l1', 'adhesion', 'show', 'display', 'add'],
     icon: 'killer-t-cell',
+    suggestions: [
+      {
+        command: 'x car',
+        description: 'Express chimeric antigen receptor.',
+        return: 'You have successfully expressed chimeric antigen receptor.',
+      },
+    ],
     arguments: {
       'a-folate': {
         name: 'a-folate',
@@ -133,6 +144,11 @@ const commands = {
         description: 'Express chimeric antigen receptor to activate T cell against L1 cell adhesion molecule.',
         return: 'You have successfully expressed CAR against L1 cell adhesion molecule.',
       },
+      car: {
+        name: 'car',
+        description: 'Express chimeric antigen receptor.',
+        return: 'You have successfully expressed chimeric antigen receptor.',
+      },
     },
     run: (input, arg) => {
       returnInput(input);
@@ -155,8 +171,15 @@ const commands = {
     name: 'Inhibit',
     title: 'Inhibit checkpoint',
     description: 'Inhibit checkpoint.',
-    keywords: ['inhibit', 'block', 'prevent', 'checkpoint', 'pd-1', 'ctla-4', 'kill', 'activate', 'rage'],
+    keywords: ['inhibit', 'block', 'prevent', 'checkpoint', 'pd-1', 'ctla-4', 'activate', 'bind', 'binding'],
     icon: 'inhibit',
+    suggestions: [
+      {
+        command: 'i checkpoint',
+        description: 'Inhibit checkpoint.',
+        return: 'You have successfully inhibited checkpoint.',
+      },
+    ],
     arguments: {
       'PD-1': {
         name: 'PD-1',
@@ -167,6 +190,11 @@ const commands = {
         name: 'CTLA-4',
         description: 'Inhibit CTLA-4 to prevent it from binding to CD80 and preventing T cell activation.',
         return: 'You have successfully inhibited CTLA-4.',
+      },
+      checkpoint: {
+        name: 'checkpoint',
+        description: 'Inhibit checkpoint.',
+        return: 'You have successfully inhibited checkpoint.',
       },
     },
     run: (input, arg) => {
@@ -181,8 +209,36 @@ const commands = {
     name: 'Search & Destroy',
     title: 'Find and kill antigens',
     description: 'Search the system for antigens and phagocytose them.',
-    keywords: ['chk', 'detect', 'evaluate', 'interpret', 'check', 'see', 'mhc', 'class i', 'class 1', 'class one', 'histocompatibility', 'histocompatibility complex', 'self', 'peptide', 'antigen'],
+    keywords: [
+      'detect',
+      'evaluate',
+      'interpret',
+      'check',
+      'see',
+      'mhc',
+      'class i',
+      'class 1',
+      'class one',
+      'histocompatibility',
+      'histocompatibility complex',
+      'self',
+      'peptide',
+      'antigen',
+      'search',
+      'destroy',
+      'kill',
+      'phagocytosis',
+      'phagocytose',
+      'eat',
+    ],
     icon: 'magnifying-glass',
+    suggestions: [
+      {
+        command: 'sd',
+        description: 'Search the system for antigens and phagocytose them.',
+        return: 'You have successfully searched the system for antigens and phagocytosed them.',
+      },
+    ],
     arguments: {
       _mhc: {
         name: '_mhc',
@@ -209,6 +265,13 @@ const commands = {
     description: 'Revert to previous receptor or inhibitor state',
     keywords: ['return', 'revert', 'version', 'history', 'go back'],
     icon: 'undo',
+    suggestions: [
+      {
+        command: 'restore',
+        description: 'Revert to previous receptor or inhibitor state.',
+        return: 'You have successfully reverted to previous receptor or inhibitor state.',
+      },
+    ],
     arguments: {
       _receptors: {
         name: '_receptors',
@@ -233,6 +296,13 @@ const commands = {
     description: 'Reset the system... a fresh start.',
     keywords: ['reset', 'clear', 'restart', 'refresh'],
     icon: 'undo',
+    suggestions: [
+      {
+        command: 'clear',
+        description: 'Reset the system... a fresh start.',
+        return: 'You have successfully reset the system.',
+      },
+    ],
     arguments: {
       _receptors: {
         name: '_receptors',
@@ -257,6 +327,13 @@ const commands = {
     description: 'Get help.',
     keywords: ['h', 'help', 'about', 'project', 'zetsu', 'immune system', 'immunity', 'commands', 'info'],
     icon: 'info-circle',
+    suggestions: [
+      {
+        command: 'h',
+        description: 'Get help.',
+        return: 'You have successfully gotten help.',
+      },
+    ],
     arguments: {
       _zetsu: {
         name: '_zetsu',

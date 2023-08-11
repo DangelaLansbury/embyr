@@ -217,12 +217,13 @@ zetsu.addEventListener('input', function () {
         let levDist = levenshteinDistance(inputWords[i], keywords[j]);
         let similarity = 1 - levDist / Math.max(inputWords[i].length, keywords[j].length);
         if (similarity > 0.66) {
-          let fullCommand = commands[command].nickname;
+          let fullCommand = commands[command].suggestions[0].command;
+          // let fullCommand = commands[command].nickname;
           // check to see if keyword matches any arguments
           for (let arg in commands[command].arguments) {
             let argName = commands[command].arguments[arg].name;
             if (!argName.startsWith('_') && argName.toLowerCase() == keywords[j]) {
-              fullCommand += ' ' + argName;
+              fullCommand = commands[command].nickname + ' ' + argName;
             }
           }
           let alreadySuggested = false;
