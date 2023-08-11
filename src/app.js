@@ -9,6 +9,7 @@ let help2 = document.querySelector('#help2'); // Help container for second set o
 // Zetsu components
 let zetsuContainer = document.querySelector('.zetsu-container'); // Full Zetsu container for input, suggestions, and details
 let zetsuInit = document.querySelector('.zetsu-init'); // Zetsu init content
+let firstTime = document.querySelector('.first-time'); // First time hint
 let meetZetsu = document.querySelector('#meetZetsuHint'); // Meet Zetsu hint in init footer
 let zetsuHelper = document.querySelector('.zetsu-helper'); // Zetsu suggestions and description container
 // Zetsu input
@@ -81,18 +82,25 @@ const displayHelpCommands = (commands) => {
   }
 };
 
+// --- SUGGESTIONS ---
+
+// toggle zetsu helper display between init and suggestions if there are suggestions
+const hideZetsuInit = () => {
+  zetsuInit.classList.add('hidden');
+  zetsuHelper.classList.remove('hidden');
+};
+
+const showZetsuInit = () => {
+  zetsuInit.classList.remove('hidden');
+  zetsuHelper.classList.add('hidden');
+};
+
 // display suggestions and detail
 const populateSuggestion = (command) => {
   let suggestion = document.createElement('div');
   let cmd = command.split(' ')[0];
-  // let arg = command.split(' ')[1];
   suggestion.className = 'suggestion';
   suggestion.innerHTML = `<div class="suggestion-command">${command}</div>`;
-  // if (arg) {
-  //   suggestion.innerHTML = `<div class="suggestion-command">${cmd} <span class="suggestion-arg">${arg}</span></div>`;
-  // } else {
-  //   suggestion.innerHTML = `<div class="suggestion-command">${cmd}</div>`;
-  // }
   suggestion.style.setProperty('--command-icon', `url(../images/${commands[cmd].icon}.svg)`);
   suggestionsList.appendChild(suggestion);
 };
@@ -187,6 +195,8 @@ zetsu.addEventListener('input', function () {
   // Check if input is empty
   if (input !== '') {
     cursor.style.display = 'none';
+    firstTime.classList.add('hidden');
+    hideZetsuInit();
   } else {
     cursor.style.display = 'inline-flex';
   }
@@ -238,6 +248,13 @@ zetsu.addEventListener('input', function () {
     }
   }
   suggestions = document.querySelectorAll('.suggestion');
+  if (suggestions.length !== 0) {
+    if (!zetsuInit.classList.contains('hidden')) {
+      hideZetsuInit();
+    }
+  } else {
+    showZetsuInit();
+  }
   suggestionsArray = [];
   let suggestionIndex = -1;
   // Listening for up and down arrow keys to cycle through suggestions
@@ -348,12 +365,12 @@ zetsu.addEventListener('input', function () {
       suggestionsList.innerHTML = '';
       details.innerHTML = '';
       suggestions = [];
+      showZetsuInit();
     }
   });
   if (zetsu.innerText.trim().length == 0) {
     clearZetsu();
   }
-  return suggestionsArray;
 });
 
 // Clear editor if user presses enter, refocus on editor, and show fake cursor
@@ -364,6 +381,7 @@ const clearZetsu = () => {
   suggestionsList.innerHTML = '';
   details.innerHTML = '';
   suggestions = [];
+  showZetsuInit();
 };
 
 // Listening for command and executing function when user presses enter

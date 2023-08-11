@@ -23,6 +23,9 @@
 .stone {
   color: var(--stone);
 }
+.sweetgrass {
+  color: var(--sweetgrass);
+}
 
 /* --- FONT VARIABLES --- */
 
@@ -85,10 +88,10 @@ a:hover {
   text-decoration: underline;
   color: var(--sweetgrass);
 }
-.stone a:hover {
+.stone a {
   color: var(--wheat);
 }
-.soil-x-lt a:hover {
+.soil-x-lt a {
   color: var(--stone);
 }
 main {

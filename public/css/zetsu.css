@@ -79,6 +79,8 @@
 .zetsu-init-content {
   margin: auto;
   text-align: center;
+  font-size: var(--xSmallSize);
+  line-height: 1.25rem;
 }
 .zetsu-init-footer {
   display: flex;
@@ -236,7 +238,6 @@
 }
 /* logo */
 .logo-container {
-  cursor: pointer;
   display: flex;
   flex-direction: row;
   align-items: center;
