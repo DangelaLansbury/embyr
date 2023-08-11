@@ -204,12 +204,12 @@ zetsu.addEventListener('input', function () {
   details.innerHTML = '';
   suggestions = [];
   let inputWords = input.split(' ');
-  for (let command in commands) {
-    let commandName = commands[command].nickname;
-    if (commandName.startsWith(input)) {
-      populateSuggestion(commandName);
-    }
-  }
+  // for (let command in commands) {
+  //   let commandName = commands[command].nickname;
+  //   if (commandName.startsWith(input)) {
+  //     populateSuggestion(commandName);
+  //   }
+  // }
   suggestions = document.querySelectorAll('.suggestion');
   let suggestionsArray = [];
   for (let command in commands) {

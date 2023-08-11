@@ -86,12 +86,29 @@ const adaptive = {
 // --- STATUS ---
 
 const status = {
-  cancerCells: {
-    antigens: ['a-folate', 'CD19', 'CD20', 'CD22', 'CD30', 'CD33', 'EGFR', 'GD2', 'HER2', 'L1CAM'],
-    ligands: ['PD-L1', 'CD80'],
-  },
   normalCells: {
-    status: 'normal',
+    self: true,
+    altered: false,
+    visibleToKillers: false,
+    immuneBrakes: true,
+  },
+  solidTumorCells: {
+    self: true,
+    altered: true,
+    visibleToKillers: false,
+    immuneBrakes: false,
+  },
+  liquidTumorCells: {
+    self: true,
+    altered: true,
+    visibleToKillers: true,
+    immuneBrakes: true,
+  },
+  foreignCells: {
+    self: false,
+    altered: false,
+    visibleToKillers: true,
+    immuneBrakes: false,
   },
 };
 
