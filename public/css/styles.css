@@ -265,7 +265,74 @@ main {
     padding: 1.5rem 2.5rem;
   }
 }
-/* loading */
+/* ---- LOADING ---- */
+/* .progress-bar-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  height: 1.5rem;
+  min-height: 1.5rem;
+  &:before {
+    animation: update-progress 3s linear;
+    content: 'Done!';
+    width: 3rem;
+    margin-right: 0 0.5rem;
+    color: var(--wheat);
+  }
+}
+.progress-bar {
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  background-image: radial-gradient(circle farthest-corner at 10% 20%, rgba(131, 165, 152, 1) 0%, rgba(142, 192, 124, 1) 90%);
+  animation: progress 3s linear;
+}
+@keyframes progress {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+@keyframes update-progress {
+  0% {
+    content: '0%';
+  }
+  10% {
+    content: '10%';
+  }
+  20% {
+    content: '20%';
+  }
+  30% {
+    content: '30%';
+  }
+  40% {
+    content: '40%';
+  }
+  50% {
+    content: '50%';
+  }
+  60% {
+    content: '60%';
+  }
+  70% {
+    content: '70%';
+  }
+  80% {
+    content: '80%';
+  }
+  90% {
+    content: '90%';
+  }
+  100% {
+    content: 'Done!';
+  }
+} */
+
 /* .loading-text {
   display: inline-flex;
   margin: 1rem 1.75rem;
