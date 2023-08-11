@@ -94,39 +94,13 @@ const status = {
 // --- COMMANDS ---
 
 const commands = {
-  chk: {
+  x: {
     meta: false,
-    nickname: 'chk',
-    name: 'Check',
-    title: 'Check characteristics',
-    description: 'Evaluate or interpret something in the system.',
-    keywords: ['chk', 'detect', 'evaluate', 'interpret', 'check', 'see', 'mhc', 'class i', 'class 1', 'class one', 'histocompatibility', 'histocompatibility complex', 'self', 'peptide', 'antigen'],
-    icon: 'magnifying-glass',
-    arguments: {
-      _mhc: {
-        name: '_mhc',
-        description: 'Detect MHC class I molecules to check for self.',
-        return: 'mhc',
-      },
-      _peptide: {
-        name: '_peptide',
-        description: 'Detect peptides to check for altered self.',
-        return: 'peptide',
-      },
-    },
-    run: (input, arg) => {
-      returnInput(input);
-      let output = creatOutputDiv('You have successfully checked mhc + peptide.');
-      returnOutput(output, outputDelay[1]);
-    },
-  },
-  exp: {
-    meta: false,
-    nickname: 'exp',
+    nickname: 'x',
     name: 'Express',
     title: 'Express chimeric antigen receptor',
     description: 'Express protein or molecule.',
-    keywords: ['express', 'receptor', 'protein', 'molecule', 'chimeric', 'antigen', 'car', 'a-folate', 'cd', 'cd19', 'cd20', 'cd22', 'cd30', 'cd33', 'egfr', 'gd2', 'her2', 'l1cam', 'l1', 'adhesion', 'kill', 'seek', 'find', 'ninja', 'hunt'],
+    keywords: ['express', 'receptor', 'protein', 'molecule', 'chimeric', 'antigen', 'car', 'a-folate', 'cd', 'cd19', 'cd20', 'cd22', 'cd30', 'cd33', 'egfr', 'gd2', 'her2', 'l1cam', 'l1', 'adhesion', 'show', 'display', 'add'],
     icon: 'killer-t-cell',
     arguments: {
       'a-folate': {
@@ -163,9 +137,9 @@ const commands = {
     run: (input, arg) => {
       returnInput(input);
       let argResult;
-      for (let argument in commands['exp'].arguments) {
-        if (commands['exp'].arguments[argument].name.toLowerCase() === arg.toLowerCase()) {
-          argResult = commands['exp'].arguments[argument].return;
+      for (let argument in commands['x'].arguments) {
+        if (commands['x'].arguments[argument].name.toLowerCase() === arg.toLowerCase()) {
+          argResult = commands['x'].arguments[argument].return;
         } else {
           argResult = 'You have successfully expressed CAR against ' + arg + '.';
         }
@@ -175,13 +149,13 @@ const commands = {
       returnOutput(output, outputDelay[1]);
     },
   },
-  inh: {
+  i: {
     meta: false,
-    nickname: 'inh',
+    nickname: 'i',
     name: 'Inhibit',
     title: 'Inhibit checkpoint',
     description: 'Inhibit checkpoint.',
-    keywords: ['inhibit', 'block', 'prevent', 'checkpoint', 'pd-1', 'ctla-4', 'kill', 'activate', 'rage', 'berserker'],
+    keywords: ['inhibit', 'block', 'prevent', 'checkpoint', 'pd-1', 'ctla-4', 'kill', 'activate', 'rage'],
     icon: 'inhibit',
     arguments: {
       'PD-1': {
@@ -201,13 +175,63 @@ const commands = {
       returnOutput(output, outputDelay[1]);
     },
   },
-  r: {
+  sd: {
+    meta: false,
+    nickname: 'sd',
+    name: 'Search & Destroy',
+    title: 'Find and kill antigens',
+    description: 'Search the system for antigens and phagocytose them.',
+    keywords: ['chk', 'detect', 'evaluate', 'interpret', 'check', 'see', 'mhc', 'class i', 'class 1', 'class one', 'histocompatibility', 'histocompatibility complex', 'self', 'peptide', 'antigen'],
+    icon: 'magnifying-glass',
+    arguments: {
+      _mhc: {
+        name: '_mhc',
+        description: 'Detect MHC class I molecules to check for self.',
+        return: 'mhc',
+      },
+      _peptide: {
+        name: '_peptide',
+        description: 'Detect peptides to check for altered self.',
+        return: 'peptide',
+      },
+    },
+    run: (input, arg) => {
+      returnInput(input);
+      let output = creatOutputDiv('You have successfully checked mhc + peptide.');
+      returnOutput(output, outputDelay[1]);
+    },
+  },
+  restore: {
     meta: true,
-    nickname: 'r',
-    name: 'Reset',
-    title: 'Reset system',
+    nickname: 'restore',
+    name: 'Revert state',
+    title: 'Restore',
+    description: 'Revert to previous receptor or inhibitor state',
+    keywords: ['return', 'revert', 'version', 'history', 'go back'],
+    icon: 'undo',
+    arguments: {
+      _receptors: {
+        name: '_receptors',
+        description: 'Reset receptors.',
+        return: 'You have successfully reset receptors.',
+      },
+      _inhibitors: {
+        name: '_inhibitors',
+        description: 'Reset inhibitors.',
+        return: 'You have successfully reset inhibitors.',
+      },
+    },
+    run: (input, arg) => {
+      thread.innerHTML = '';
+    },
+  },
+  clear: {
+    meta: true,
+    nickname: 'clear',
+    name: 'Reset all',
+    title: 'Clear thread and reset system',
     description: 'Reset the system... a fresh start.',
-    keywords: ['r', 'reset', 'clear', 'restart', 'refresh'],
+    keywords: ['reset', 'clear', 'restart', 'refresh'],
     icon: 'undo',
     arguments: {
       _receptors: {
