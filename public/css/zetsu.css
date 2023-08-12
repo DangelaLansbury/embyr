@@ -10,6 +10,12 @@
   width: calc(100% - 5rem);
   border-top: 1px solid var(--soil-lt);
 }
+/* adjust input top margin on mobile */
+@media (max-width: 600px) {
+  .zetsu-input {
+    margin-top: 1rem;
+  }
+}
 .zetsu-input-text {
   display: inline-flex;
   margin: auto 0;
@@ -62,7 +68,7 @@
   background-color: var(--soil);
 }
 /* hide zetsu container on mobile */
-@media (max-width: 768px) {
+@media (max-width: 960px) {
   .zetsu-container {
     display: none;
   }
@@ -242,31 +248,33 @@
   cursor: pointer;
   position: absolute;
   top: 6%;
-  right: 14%;
+  right: 18%;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: flex-end;
   margin: 0;
-  padding: 0.75rem 2.5rem;
+  padding: 1rem 2rem;
 }
 .logo {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--soil-dk);
 }
 .logo-svg {
   display: inline-block;
   width: 2.25rem;
   height: 2.25rem;
   margin: 0;
+  background-color: var(--soil-dk);
+  border-radius: 0.25rem;
 }
 .logo-text {
   display: inline-block;
   padding: 0 0.375rem;
   opacity: 0;
   transition: 0.6s;
+  background-color: var(--soil-dk);
   border-radius: 0.25rem;
 }
 /* reveal logo text when user hovers over logo-container */
@@ -274,10 +282,18 @@
 .logo:hover > .logo-text {
   opacity: 1;
 }
-/* adjust logo-container position on mobile */
-@media (max-width: 768px) {
+/* adjust logo-container position on medium screens */
+@media (max-width: 960px) {
   .logo-container {
-    padding: 1rem 2rem;
+    right: 6%;
+  }
+}
+/* adjust logo-container position on mobile */
+@media only screen and (max-width: 600px) {
+  .logo-container {
+    top: 0;
+    right: 0;
+    padding: 1.5rem 2rem 0.5rem 2rem;
     width: calc(100% - 4rem);
     background-color: var(--soil-dk);
   }

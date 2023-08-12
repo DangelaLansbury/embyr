@@ -112,14 +112,21 @@ main {
   align-items: flex-start;
   justify-content: flex-end;
   height: 88%;
-  width: 72%;
-  max-width: 72%;
+  width: 64%;
+  max-width: 64%;
   margin: auto;
   background-color: var(--soil-dk);
   border-radius: 16px;
   border: 1px solid var(--soil-lt);
   box-shadow: 0px 8px 16px 0px #0a0909;
   overflow: hidden;
+}
+/* make workbook take up more space on medium screen */
+@media (max-width: 960px) {
+  .workbook {
+    width: 88%;
+    max-width: 88%;
+  }
 }
 /* make workbook take up full window on mobile */
 @media only screen and (max-width: 600px) {
@@ -160,6 +167,13 @@ main {
   overflow-y: scroll;
   overscroll-behavior: none;
   -ms-overflow-style: none;
+}
+/* adjust thread padding on mobile */
+@media only screen and (max-width: 600px) {
+  .thread {
+    padding: 0 1.5rem;
+    width: calc(100% - 3rem);
+  }
 }
 .thread-block {
   display: flex;
@@ -262,10 +276,6 @@ main {
 @media (max-width: 960px) {
   .help-bar {
     display: none;
-  }
-  .zetsu-input {
-    margin-top: 2.5rem;
-    padding: 1.5rem 2.5rem;
   }
 }
 /* ---- LOADING ---- */
