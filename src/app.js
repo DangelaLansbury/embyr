@@ -3,7 +3,7 @@
 // Workbook components
 let workbook = document.querySelector('.workbook'); // Main container
 // Terminal components
-let thread = document.querySelector('.thread'); // Thread container
+let thread = document.querySelector('.thread'); // Thread
 let help1 = document.querySelector('#help1'); // Help container for first set of commands
 let help2 = document.querySelector('#help2'); // Help container for second set of commands
 // Zetsu components
@@ -45,7 +45,11 @@ const focusAtEnd = () => {
 
 // Listening for click and focusing at end of editor
 workbook.addEventListener('click', function (e) {
-  zetsu.focus();
+  // Zetsu on zetsu if target is not thread text
+  if (!e.target.classList.contains('thread-text')) {
+    zetsu.focus();
+  }
+  // zetsu.focus();
   // Set cursor at end of editor if target is not zetsu
   if (e.target !== zetsu && zetsu.innerText.toString().trim().length > 0) {
     focusAtEnd();
@@ -195,7 +199,6 @@ zetsu.addEventListener('input', function () {
   // Check if input is empty
   if (input !== '') {
     cursor.style.display = 'none';
-    firstTime.classList.add('hidden');
     hideZetsuInit();
   } else {
     cursor.style.display = 'inline-flex';
@@ -249,6 +252,7 @@ zetsu.addEventListener('input', function () {
   }
   suggestions = document.querySelectorAll('.suggestion');
   if (suggestions.length !== 0) {
+    firstTime.classList.add('hidden');
     if (!zetsuInit.classList.contains('hidden')) {
       hideZetsuInit();
     }
