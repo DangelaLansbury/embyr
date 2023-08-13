@@ -8,14 +8,15 @@ let help1 = document.querySelector('#help1'); // Help container for first set of
 let help2 = document.querySelector('#help2'); // Help container for second set of commands
 // Zetsu components
 let zetsuContainer = document.querySelector('.zetsu-container'); // Full Zetsu container for input, suggestions, and details
-let zetsuInit = document.querySelector('.zetsu-init'); // Zetsu init content
-let firstTime = document.querySelector('.first-time'); // First time hint
-let meetZetsu = document.querySelector('#meetZetsuHint'); // Meet Zetsu hint in init footer
+let zetsuInit = document.querySelector('.zetsu-init'); // Zetsu init container
+let zetsuInitContent = document.querySelector('.zetsu-init-content'); // Zetsu init text
+let firstTime = document.querySelector('#firstTime'); // First time hint
 let zetsuHelper = document.querySelector('.zetsu-helper'); // Zetsu suggestions and description container
 // Zetsu input
 let zetsuBar = document.querySelector('.zetsu-input');
 let zetsu = document.querySelector('.zetsu-input-text'); // Zetsu input field
 let cursor = document.querySelector('.cursor'); // Zetsu input fake cursor
+let running = document.querySelector('.running'); // Zetsu running indicator
 // Suggestions and suggestion details
 let suggestionsContainer = document.querySelector('.suggestions-container');
 let suggestionsListContainer = document.querySelector('.suggestions-list-container');
@@ -32,6 +33,7 @@ let detailsSyntax = document.querySelector('.details-syntax');
 window.onload = () => {
   zetsu.focus();
   displayHelpCommands(commands);
+  zetsuInitContent.innerHTML = `Welcome to Zetsu. First time here? Use '<span class="sweetgrass thicc">h</span>' for help.`;
 };
 
 const focusAtEnd = () => {
@@ -49,7 +51,6 @@ workbook.addEventListener('click', function (e) {
   if (!e.target.classList.contains('thread-text')) {
     zetsu.focus();
   }
-  // zetsu.focus();
   // Set cursor at end of editor if target is not zetsu
   if (e.target !== zetsu && zetsu.innerText.toString().trim().length > 0) {
     focusAtEnd();
@@ -70,7 +71,18 @@ zetsu.addEventListener('focus', function (e) {
 
 // --- POPULATING CONTENT ---
 
-const nullThread = `<div class="thread-text">Shoot, I don't recognize that command.</div>`;
+const generateNullThread = (command) => {
+  let nullThread = `Shoot, I don't recognize the command '<span class="honey thicc"">${command}</span>'.`;
+  return nullThread;
+};
+
+const helpThread = `Use '<span class="sweetgrass thicc">h</span>' to see a list of commands I know.`;
+
+const returnNullAndHelp = (command, delay) => {
+  let nullThread = generateNullThread(command);
+  returnOutput(createOutputDiv(nullThread, 'stone'), delay);
+  returnOutput(createOutputDiv(helpThread, 'wheat'), delay);
+};
 
 // populate help bar with commands
 const displayHelpCommands = (commands) => {
@@ -104,29 +116,23 @@ const populateSuggestion = (command) => {
   let suggestion = document.createElement('div');
   let cmd = command.split(' ')[0];
   suggestion.className = 'suggestion';
-  suggestion.innerHTML = `<div class="suggestion-command">${command}</div>`;
-  suggestion.style.setProperty('--command-icon', `url(../images/${commands[cmd].icon}.svg)`);
+  suggestion.innerHTML = `<div class="cmd-icon"><img src="public/icons/${cmd}.svg" class="icon-svg" alt="icon for ${cmd}" /></div><div class="suggestion-command">${command}</div>`;
   suggestionsList.appendChild(suggestion);
 };
 
-const populateDetails = (name, description) => {
+const displayDetails = (title, description) => {
+  details.innerHTML = '';
   let newDetails = document.createElement('div');
   newDetails.className = 'suggestion-details';
-  newDetails.innerHTML = `<div class="details-name">${name}</div><div class="details-description">${description}</div>`;
+  newDetails.innerHTML = `<div class="title sweetgrass medium">${title}</div><div class="description">${description}</div>`;
   details.appendChild(newDetails);
-};
-
-const displayDetails = (command) => {
-  let cmd = command.split(' ')[0];
-  details.innerHTML = '';
-  populateDetails(commands[cmd].title, commands[cmd].description);
 };
 
 // --- OUTPUTS ---
 
-const creatOutputDiv = (text) => {
+const createOutputDiv = (text, classParam) => {
   let output = document.createElement('div');
-  output.className = 'thread-text';
+  output.className = 'thread-text ' + classParam;
   output.innerHTML = text;
   return output;
 };
@@ -139,13 +145,60 @@ const returnOutput = (output, time) => {
   }, time);
 };
 
+// const returnExecutions = (action, executionsArray, totalRuntime) => {
+//   let totalTime = totalRuntime;
+//   let runTime = totalTime - 200;
+//   let runTimePassed = 0;
+//   let timePassed = 0;
+//   let percentComplete = 0;
+//   let percentCompleteOutput = createOutputDiv(`${action}: ${percentComplete}%`, `wheat`);
+//   returnOutput(percentCompleteOutput, 0);
+//   // Update percent complete every fraction of runTime
+//   let interval = runTime / 25;
+//   let percentCompleteInterval = setInterval(() => {
+//     if (timePassed >= runTime) {
+//       clearInterval(percentCompleteInterval);
+//       percentCompleteOutput.innerHTML = `${action}: 100%`;
+//     } else {
+//       percentComplete += (interval / runTime) * 100;
+//       percentCompleteOutput.innerHTML = `${action}: ${percentComplete}%`;
+//       timePassed += interval;
+//     }
+//   }, interval);
+//   let currentOp = createOutputDiv('Initializing...', `stone`);
+//   returnOutput(currentOp, 200);
+//   for (let i = 0; i < executionsArray.length; i++) {
+//     if (runTimePassed >= runTime) {
+//       currentOp.innerHTML = executionsArray[i].text;
+//       let output = createOutputDiv('Here is a suggestion...', `wheat`);
+//       returnOutput(output, totalTime);
+//       break;
+//     } else {
+//       if (executionsArray[i].pass) {
+//         let percentOfRun = executionsArray[i].speed * runTime;
+//         runTimePassed += percentOfRun;
+//         setTimeout(() => {
+//           currentOp.innerHTML = executionsArray[i].text;
+//         }, runTimePassed);
+//       } else {
+//         let percentOfRun = executionsArray[i].speed * runTime;
+//         let output = createOutputDiv(executionsArray[i].error, `stone error`);
+//         runTimePassed += percentOfRun;
+//         returnOutput(output, runTimePassed);
+//         break;
+//       }
+//     }
+//   }
+// };
+
 const returnInput = (input) => {
-  let output = creatOutputDiv(input);
-  output.classList.add('cmd');
+  let output = createOutputDiv(input, 'cmd');
   returnOutput(output, 0);
 };
 
-const outputDelay = [600, 800, 1000, 1200, 1400, 1600, 1800, 2000];
+const outputDelay = [400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000, 2200, 2400];
+
+const runSpeed = [1600, 2400, 3200, 4000, 4800, 5600, 6400, 7200, 8000];
 
 // --- ADDING EVENT LISTENERS ---
 
@@ -199,7 +252,7 @@ zetsu.addEventListener('input', function () {
   // Check if input is empty
   if (input !== '') {
     cursor.style.display = 'none';
-    hideZetsuInit();
+    // hideZetsuInit();
   } else {
     cursor.style.display = 'inline-flex';
   }
@@ -252,7 +305,7 @@ zetsu.addEventListener('input', function () {
   }
   suggestions = document.querySelectorAll('.suggestion');
   if (suggestions.length !== 0) {
-    firstTime.classList.add('hidden');
+    zetsuInitContent.innerHTML = 'Command suggestions and info will appear here.';
     if (!zetsuInit.classList.contains('hidden')) {
       hideZetsuInit();
     }
@@ -288,10 +341,12 @@ zetsu.addEventListener('input', function () {
         } else if (suggestionIndex !== -1) {
           suggestions[suggestionIndex].classList.add('active');
           let suggestedCommand = suggestions[suggestionIndex].querySelector('.suggestion-command').innerText;
+          let title = commands[suggestedCommand.split(' ')[0]].suggestions['default'].title;
+          let description = commands[suggestedCommand.split(' ')[0]].suggestions['default'].description;
           zetsu.innerText = suggestedCommand;
           // Display suggestion details
           if (suggestions.length !== 0 && suggestionIndex !== -1) {
-            displayDetails(suggestedCommand);
+            displayDetails(title, description);
           } else {
             details.innerHTML = '';
           }
@@ -329,10 +384,12 @@ zetsu.addEventListener('input', function () {
         if (suggestionIndex !== -1) {
           suggestions[suggestionIndex].classList.add('active');
           let suggestedCommand = suggestions[suggestionIndex].querySelector('.suggestion-command').innerText;
+          let title = commands[suggestedCommand.split(' ')[0]].suggestions['default'].title;
+          let description = commands[suggestedCommand.split(' ')[0]].suggestions['default'].description;
           zetsu.innerText = suggestedCommand;
           // Display suggestion details
           if (suggestions.length !== 0 && suggestionIndex !== -1) {
-            displayDetails(suggestedCommand);
+            displayDetails(title, description);
           } else {
             details.innerHTML = '';
           }
@@ -398,13 +455,11 @@ zetsu.addEventListener('keydown', function (e) {
       clearZetsu();
       let parts = input.split(' ');
       let command = parts[0].toLowerCase();
-      let args = parts.slice(1);
-      let arg = args.join(' ');
       if (commands[command]) {
-        commands[command].run(input, arg);
+        commands[command].run(input);
       } else {
         returnInput(input);
-        returnOutput(creatOutputDiv(nullThread), 0);
+        returnNullAndHelp(command, outputDelay[0]);
       }
     }
   }

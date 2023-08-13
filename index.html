@@ -9,7 +9,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500;700&display=swap" rel="stylesheet" />
     <!-- Stylesheet -->
     <link rel="stylesheet" href="public/css/styles.css" />
     <link rel="stylesheet" href="public/css/zetsu.css" />
@@ -18,9 +18,7 @@
     <!-- HTML -->
     <main>
       <div class="logo-container">
-        <div class="logo-text">
-          <h1>Zetsu</h1>
-        </div>
+        <div class="logo-text">Zetsu</div>
         <div class="logo">
           <img src="public/images/logo.svg" class="logo-svg" alt="logo" />
         </div>
@@ -32,10 +30,10 @@
           <div class="help-bar">
             <div class="help-bar-left hidden" id="help1"></div>
             <div class="help-bar-left hidden" id="help2">
-              <!-- <div class="help-bar-hint">
+              <div class="help-bar-hint">
                 <div class="help-bar-cmd">&#x2191;/&#x2193;</div>
-                <div class="help-bar-text">cycle search hints</div>
-              </div> -->
+                <div class="help-bar-text">suggestions</div>
+              </div>
             </div>
             <div class="help-bar-right">
               <div class="help-bar-hint">
@@ -44,12 +42,10 @@
               </div>
             </div>
           </div>
-          <div class="zetsu-input cmd">
+          <div class="zetsu-input">
+            <div class="cmd-icon"><img src="public/icons/sparkles.svg" class="icon-svg" alt="sparkle icon for input" /></div>
             <div class="zetsu-input-text" contenteditable="true" spellcheck="false" autocomplete="off"></div>
             <div class="cursor"></div>
-            <!-- <div class="progress-bar-container">
-              <div class="progress-bar"></div>
-            </div> -->
           </div>
         </div>
         <div class="zetsu-container">
@@ -69,10 +65,7 @@
             </div>
           </div>
           <div class="zetsu-init">
-            <div class="zetsu-init-content stone">
-              Command suggestions will appear here. Try describing what you'd like to do.<br />
-              <div class="first-time stone">First time? Use '<span class="sweetgrass" style="font-weight: 600">h</span>' for help or view <a href="https://github.com/DangelaLansbury/zetsu">the docs</a>.</div>
-            </div>
+            <div class="zetsu-init-content xSmall stone"></div>
           </div>
         </div>
       </div>

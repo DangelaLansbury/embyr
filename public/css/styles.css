@@ -1,11 +1,12 @@
 /* --- COLOR VARIABLES --- */
 /* Chai theme */
 :root {
-  --soil-x-lt: #5a5958;
-  --soil-lt: #3c3a39;
+  --soil-x-lt: #7a7370;
+  --soil-lt: #32302e;
   --soil: #282625;
   --soil-dk: #1e1d1c;
   --soil-x-dk: #141312;
+  --soil-xx-dk: #0a0909;
   --wheat: #ebdbb2;
   --clay: #fd6d5c;
   --honey: #fabd2f;
@@ -14,23 +15,71 @@
   --river: #83a598;
   --lilac: #d3869b;
   --stone: #a79c8f;
-  --xSmallSize: 0.75rem;
+  --xSmallSize: 0.813rem;
   --smallSize: 0.875rem;
-  --normalSize: 1rem;
-  --bigSize: 1.125em;
+  --mediumSize: 1rem;
+  --bigSize: 1.25em;
+  --xBigSize: 1.5rem;
+  --xxBigSize: 2rem;
+  --megaBigSize: 2.5rem;
 }
 
-.stone {
-  color: var(--stone);
+/* --- COLOR CLASSES --- */
+.soil-x-lt {
+  color: var(--soil-x-lt);
+}
+.soil-lt {
+  color: var(--soil-lt);
+}
+.soil {
+  color: var(--soil);
+}
+.soil-dk {
+  color: var(--soil-dk);
+}
+.soil-x-dk {
+  color: var(--soil-x-dk);
+}
+.wheat {
+  color: var(--wheat);
+}
+.clay {
+  color: var(--clay);
+}
+.honey {
+  color: var(--honey);
+}
+.swamp {
+  color: var(--swamp);
 }
 .sweetgrass {
   color: var(--sweetgrass);
 }
+.river {
+  color: var(--river);
+}
+.lilac {
+  color: var(--lilac);
+}
+.stone {
+  color: var(--stone);
+}
 
-/* --- FONT VARIABLES --- */
-
+/* --- FONT CLASSES --- */
+.xSmall {
+  font-size: var(--xSmallSize);
+}
 .small {
   font-size: var(--smallSize);
+}
+.medium {
+  font-size: var(--mediumSize);
+}
+.big {
+  font-size: var(--bigSize);
+}
+.thicc {
+  font-weight: 700;
 }
 
 /* --- GLOBAL --- */
@@ -50,11 +99,11 @@ body {
 body {
   margin: 0;
   font-family: 'Source Code Pro', monospace;
-  font-size: var(--smallSize);
+  font-size: 16px;
   font-weight: 500;
-  line-height: 1.5rem;
+  line-height: var(--xBigSize);
   color: var(--wheat);
-  background-color: var(--soil-x-dk);
+  background-color: var(--soil-xx-dk);
 }
 h1 {
   margin: 0;
@@ -99,6 +148,7 @@ main {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  font-size: var(--smallSize);
   height: 100%;
   width: 100%;
 }
@@ -115,28 +165,11 @@ main {
   width: 64%;
   max-width: 64%;
   margin: auto;
-  background-color: var(--soil-dk);
+  background-color: var(--soil-x-dk);
   border-radius: 16px;
   border: 1px solid var(--soil-lt);
-  box-shadow: 0px 8px 16px 0px #0a0909;
+  box-shadow: 0px 8px 16px 0px #000000;
   overflow: hidden;
-}
-/* make workbook take up more space on medium screen */
-@media (max-width: 960px) {
-  .workbook {
-    width: 88%;
-    max-width: 88%;
-  }
-}
-/* make workbook take up full window on mobile */
-@media only screen and (max-width: 600px) {
-  .workbook {
-    height: 100%;
-    width: 100%;
-    max-width: 100%;
-    border-radius: 0;
-    margin: 0;
-  }
 }
 /* header at top of workbook, outside of flex flow */
 .workbook-header {
@@ -144,7 +177,7 @@ main {
   width: 100%;
   height: 1.25rem;
   min-height: 1.25rem;
-  background-color: var(--soil-dk);
+  background-color: var(--soil-x-dk);
   margin-bottom: 0.75rem;
 }
 /* output thread */
@@ -168,13 +201,6 @@ main {
   overscroll-behavior: none;
   -ms-overflow-style: none;
 }
-/* adjust thread padding on mobile */
-@media only screen and (max-width: 600px) {
-  .thread {
-    padding: 0 1.5rem;
-    width: calc(100% - 3rem);
-  }
-}
 .thread-block {
   display: flex;
   flex-direction: column;
@@ -183,22 +209,36 @@ main {
   width: 100%;
   margin: 0.5rem 0;
 }
-.thread-text {
-  display: block;
-  max-width: 90%;
-  margin: 0.25rem 0 0 0;
-}
-.thread-text.stone {
-  color: var(--stone);
-}
-.thread-text.soil-x-lt {
-  color: var(--soil-x-lt);
-}
 .cmd::before {
   content: '>';
   color: var(--sweetgrass);
-  font-weight: 900;
+  font-weight: 700;
+  margin-right: 0.75rem;
+}
+.thread-text {
+  display: inline-block;
+  max-width: 90%;
+  margin: 0.25rem 0 0 0;
+}
+.thread-text::before {
   margin-right: 0.5rem;
+}
+.thread-text.cmd::before {
+  content: '>';
+  color: var(--sweetgrass);
+}
+.thread-text.running::after {
+  content: '...';
+  font-weight: 700;
+  color: var(--river);
+}
+.thread-text.done::before {
+  content: 'Done';
+  color: var(--swamp);
+}
+.thread-text.error::before {
+  content: 'Error';
+  color: var(--clay);
 }
 /* help bar */
 .help-bar {
@@ -217,7 +257,7 @@ main {
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  width: 80%;
+  width: 75%;
   height: 100%;
   margin-left: 2.5rem;
 }
@@ -229,6 +269,7 @@ main {
 #help1::after {
   content: '...';
   color: var(--soil-x-lt);
+  font-size: 0.75rem;
 }
 #help2::before {
   content: '2/2';
@@ -240,7 +281,7 @@ main {
   flex-direction: row;
   align-items: center;
   justify-content: flex-end;
-  width: 20%;
+  width: 25%;
   height: 100%;
   margin-right: 1.5rem;
 }
@@ -256,7 +297,7 @@ main {
   align-items: center;
   justify-content: center;
   margin-right: 0.5rem;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--stone);
 }
 .hotkey {
@@ -268,85 +309,106 @@ main {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 100%;
   font-weight: 400;
   color: var(--soil-x-lt);
 }
-/* hide help bar on medium screens */
-@media (max-width: 960px) {
-  .help-bar {
-    display: none;
-  }
-}
-/* ---- LOADING ---- */
-/* .progress-bar-container {
+
+/* ---- LOGO ---- */
+/* header at top of workbook, outside of flex flow */
+.logo-container {
+  cursor: pointer;
+  position: absolute;
+  top: 6%;
+  right: 18%;
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: flex-start;
-  width: 100%;
-  height: 1.5rem;
-  min-height: 1.5rem;
-  &:before {
-    animation: update-progress 3s linear;
-    content: 'Done!';
-    width: 3rem;
-    margin-right: 0 0.5rem;
-    color: var(--wheat);
-  }
+  justify-content: flex-end;
+  margin: 0;
+  padding: 1.25rem 2.25rem;
 }
-.progress-bar {
-  width: 100%;
-  height: 100%;
-  min-height: 100%;
-  background-image: radial-gradient(circle farthest-corner at 10% 20%, rgba(131, 165, 152, 1) 0%, rgba(142, 192, 124, 1) 90%);
-  animation: progress 3s linear;
+.logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
-@keyframes progress {
-  0% {
-    width: 0%;
-  }
-  100% {
-    width: 100%;
-  }
+.logo-svg {
+  display: inline-block;
+  width: 2.375rem;
+  height: 2.375rem;
+  margin: 0;
+  background-color: var(--soil-x-dk);
+  border-radius: 0.25rem;
 }
-@keyframes update-progress {
-  0% {
-    content: '0%';
-  }
-  10% {
-    content: '10%';
-  }
-  20% {
-    content: '20%';
-  }
-  30% {
-    content: '30%';
-  }
-  40% {
-    content: '40%';
-  }
-  50% {
-    content: '50%';
-  }
-  60% {
-    content: '60%';
-  }
-  70% {
-    content: '70%';
-  }
-  80% {
-    content: '80%';
-  }
-  90% {
-    content: '90%';
-  }
-  100% {
-    content: 'Done!';
-  }
-} */
-
+.logo-text {
+  display: inline-block;
+  padding: 0 0.375rem;
+  opacity: 0;
+  transition: 0.6s;
+  background-color: var(--soil-x-dk);
+  border-radius: 0.25rem;
+  font-size: 2.75rem;
+  line-height: 3.25rem;
+  font-family: 'gelica-black';
+  font-weight: 400;
+}
+/* reveal logo text when user hovers over logo-container */
+.logo-container:hover > .logo-text {
+  opacity: 1;
+}
 /* ---- HIDING ---- */
 .hidden {
   display: none !important;
+}
+
+/* ---- SCREEN SIZE HANDLING ---- */
+@media (max-width: 960px) {
+  .workbook {
+    height: 100%;
+    width: 100%;
+    max-width: 100%;
+    border: none;
+    border-radius: 0;
+    margin: 0;
+  }
+  .workbook-header {
+    height: 0.75rem;
+    min-height: 0.75rem;
+  }
+  .logo-container {
+    top: 0;
+    right: 0;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .logo-container {
+    top: 0;
+    right: 0;
+    padding: 1rem 1.25rem 0 1.25rem;
+    background-color: var(--soil-x-dk);
+  }
+  .logo-svg {
+    width: var(--xxBigSize);
+    height: var(--xxBigSize);
+  }
+  .logo-text {
+    padding: 0 0.25rem;
+    font-size: var(--xxBigSize);
+    line-height: 2.25rem;
+    opacity: 1;
+  }
+  .workbook-header {
+    height: 3rem;
+    min-height: 3rem;
+    margin-bottom: 0.75rem;
+  }
+  .thread {
+    padding: 0 1.25rem;
+    width: calc(100% - 2.5rem);
+    font-size: var(--xSmallSize);
+    line-height: 1.25rem;
+  }
+  .help-bar {
+    display: none;
+  }
 }
