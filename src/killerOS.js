@@ -113,11 +113,11 @@ const commands = {
           },
         ];
         // returnExecutions(`Expressing ${intendedCAR.toUpperCase()}`, executions, runSpeed[3]);
-        returnOutput(createOutputDiv(executions[executions.length - 1].text, 'wheat'), outputDelay[1]);
+        returnOutput(createOutputDiv(executions[executions.length - 1].text, 'wheat'), outputDelay[0]);
         if (secondCommand !== '') {
           setTimeout(() => {
             commands[secondCommand].run(input);
-          }, outputDelay[2]);
+          }, outputDelay[1]);
         }
       } else {
         returnNullAndHelp(intendedCAR);
