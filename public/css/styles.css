@@ -23,6 +23,20 @@
   --xxBigSize: 2rem;
   --megaBigSize: 2.5rem;
 }
+/* --soil-x-lt: #7a7370;
+  --soil-lt: #32302e;
+  --soil: #282625;
+  --soil-dk: #1e1d1c;
+  --soil-x-dk: #141312;
+  --soil-xx-dk: #0a0909;
+  --wheat: #ebdbb2;
+  --clay: #fd6d5c;
+  --honey: #fabd2f;
+  --swamp: #b8bb26;
+  --sweetgrass: #8ec07c;
+  --river: #83a598;
+  --lilac: #d3869b;
+  --stone: #a79c8f; */
 
 /* --- COLOR CLASSES --- */
 .soil-x-lt {
@@ -79,7 +93,26 @@
   font-size: var(--bigSize);
 }
 .thicc {
-  font-weight: 700;
+  font-family: 'CamingoCode-Bold';
+  font-weight: bold;
+}
+@font-face {
+  font-family: 'gelica-black';
+  src: url('gelica-black-webfont.woff2') format('woff2'), url('gelica-black-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'CamingoCode-Regular';
+  src: url('CamingoCode-Regular.woff2') format('woff2'), url('CamingoCode-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'CamingoCode-Bold';
+  src: url('CamingoCode-Bold.woff2') format('woff2'), url('CamingoCode-Bold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
 }
 
 /* --- GLOBAL --- */
@@ -90,17 +123,11 @@ body {
   overflow: -moz-hidden-unscrollable;
   overflow: hidden;
 }
-@font-face {
-  font-family: 'gelica-black';
-  src: url('gelica-black-webfont.woff2') format('woff2'), url('gelica-black-webfont.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
 body {
   margin: 0;
-  font-family: 'Source Code Pro', monospace;
+  font-family: 'CamingoCode-Regular', 'CamingoCode-Bold', monospace;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: normal;
   line-height: var(--xBigSize);
   color: var(--wheat);
   background-color: var(--soil-xx-dk);
@@ -212,7 +239,7 @@ main {
 .cmd::before {
   content: '>';
   color: var(--sweetgrass);
-  font-weight: 700;
+  font-weight: bold;
   margin-right: 0.75rem;
 }
 .thread-text {
@@ -222,10 +249,6 @@ main {
 }
 .thread-text::before {
   margin-right: 0.5rem;
-}
-.thread-text.cmd::before {
-  content: '>';
-  color: var(--sweetgrass);
 }
 .thread-text.running::after {
   content: '...';
@@ -297,7 +320,6 @@ main {
   align-items: center;
   justify-content: center;
   margin-right: 0.5rem;
-  font-weight: 500;
   color: var(--stone);
 }
 .hotkey {
@@ -309,7 +331,6 @@ main {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-weight: 400;
   color: var(--soil-x-lt);
 }
 

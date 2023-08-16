@@ -33,7 +33,7 @@ let detailsSyntax = document.querySelector('.details-syntax');
 window.onload = () => {
   zetsu.focus();
   displayHelpCommands(commands);
-  zetsuInitContent.innerHTML = `Welcome to Zetsu. First time here? Use '<span class="sweetgrass thicc">h</span>' for help.`;
+  zetsuInitContent.innerHTML = `Hi there. First time? Use '<span class="sweetgrass thicc">h</span>' for help.`;
 };
 
 const focusAtEnd = () => {
@@ -89,7 +89,7 @@ const displayHelpCommands = (commands) => {
   for (let command in commands) {
     let commandHint = document.createElement('div');
     commandHint.className = 'help-bar-hint';
-    commandHint.innerHTML = `<div class="help-bar-cmd">${command}</div><div class="help-bar-text">${commands[command].name.toLowerCase()}</div>`;
+    commandHint.innerHTML = `<div class="help-bar-cmd thicc">${command}</div><div class="help-bar-text">${commands[command].name.toLowerCase()}</div>`;
     if (commands[command].meta === false) {
       help1.appendChild(commandHint);
     } else {
@@ -124,7 +124,7 @@ const displayDetails = (title, description) => {
   details.innerHTML = '';
   let newDetails = document.createElement('div');
   newDetails.className = 'suggestion-details';
-  newDetails.innerHTML = `<div class="title sweetgrass medium">${title}</div><div class="description">${description}</div>`;
+  newDetails.innerHTML = `<div class="title sweetgrass medium thicc">${title}</div><div class="description">${description}</div>`;
   details.appendChild(newDetails);
 };
 
@@ -145,60 +145,22 @@ const returnOutput = (output, time) => {
   }, time);
 };
 
-// const returnExecutions = (action, executionsArray, totalRuntime) => {
-//   let totalTime = totalRuntime;
-//   let runTime = totalTime - 200;
-//   let runTimePassed = 0;
-//   let timePassed = 0;
-//   let percentComplete = 0;
-//   let percentCompleteOutput = createOutputDiv(`${action}: ${percentComplete}%`, `wheat`);
-//   returnOutput(percentCompleteOutput, 0);
-//   // Update percent complete every fraction of runTime
-//   let interval = runTime / 25;
-//   let percentCompleteInterval = setInterval(() => {
-//     if (timePassed >= runTime) {
-//       clearInterval(percentCompleteInterval);
-//       percentCompleteOutput.innerHTML = `${action}: 100%`;
-//     } else {
-//       percentComplete += (interval / runTime) * 100;
-//       percentCompleteOutput.innerHTML = `${action}: ${percentComplete}%`;
-//       timePassed += interval;
-//     }
-//   }, interval);
-//   let currentOp = createOutputDiv('Initializing...', `stone`);
-//   returnOutput(currentOp, 200);
-//   for (let i = 0; i < executionsArray.length; i++) {
-//     if (runTimePassed >= runTime) {
-//       currentOp.innerHTML = executionsArray[i].text;
-//       let output = createOutputDiv('Here is a suggestion...', `wheat`);
-//       returnOutput(output, totalTime);
-//       break;
-//     } else {
-//       if (executionsArray[i].pass) {
-//         let percentOfRun = executionsArray[i].speed * runTime;
-//         runTimePassed += percentOfRun;
-//         setTimeout(() => {
-//           currentOp.innerHTML = executionsArray[i].text;
-//         }, runTimePassed);
-//       } else {
-//         let percentOfRun = executionsArray[i].speed * runTime;
-//         let output = createOutputDiv(executionsArray[i].error, `stone error`);
-//         runTimePassed += percentOfRun;
-//         returnOutput(output, runTimePassed);
-//         break;
-//       }
-//     }
-//   }
-// };
-
 const returnInput = (input) => {
+  // Check if first word is command
+  let inputWords = input.split(' ');
+  let commandColors = ['sweetgrass', 'river', 'lilac'];
+  for (let i = 0; i < inputWords.length; i++) {
+    let command = inputWords[i].toLowerCase();
+    if (commands[command]) {
+      inputWords[i] = `<span class="${commandColors[i % 3]} thicc">${command}</span>`;
+    }
+  }
+  input = inputWords.join(' ');
   let output = createOutputDiv(input, 'cmd');
   returnOutput(output, 0);
 };
 
-const outputDelay = [400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000, 2200, 2400];
-
-const runSpeed = [1600, 2400, 3200, 4000, 4800, 5600, 6400, 7200, 8000];
+const outputDelay = [0, 200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000, 2200, 2400];
 
 // --- ADDING EVENT LISTENERS ---
 

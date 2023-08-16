@@ -2,6 +2,7 @@
 let receptors = ['a-folate', 'cd19', 'cd20', 'cd22', 'cd30', 'cd33', 'egfr', 'gd2', 'her2', 'l1cam'];
 let ligands = ['cd80', 'pd-l1', 'pd-l2'];
 let randomReceptor = receptors[Math.floor(Math.random() * receptors.length)];
+let randomLigand = ligands[Math.floor(Math.random() * ligands.length)];
 
 // --- STATUS ---
 
@@ -17,12 +18,16 @@ const status = {
     altered: true,
     visibleToKillers: false,
     immuneBrakes: false,
+    cloak: randomReceptor,
+    braking: null,
   },
   liquidTumorCells: {
     self: true,
     altered: true,
     visibleToKillers: true,
     immuneBrakes: true,
+    cloak: null,
+    braking: randomLigand,
   },
   foreignCells: {
     self: false,
@@ -45,11 +50,11 @@ const commands = {
       default: {
         command: 'x car sd',
         title: 'Express chimeric antigen receptor',
-        description: 'Express CARs on cell surface to recognize covert cancer cells.',
+        description: 'Show CAR on cell surface to recognize and kill covert cancer cells.',
       },
     },
     run: (input) => {
-      returnInput(input);
+      // returnInput(input);
       let intendedCAR = input.split(' ')[1].toLowerCase();
       let secondCommand = '';
       // Check if there's a second command
@@ -137,10 +142,23 @@ const commands = {
         description: 'Release the brakes on killer T cells and the immune system.',
       },
     },
-    run: (input, arg) => {
-      returnInput(input);
-      let output = createOutputDiv('You have successfully inhibited ' + arg + '.');
-      returnOutput(output, outputDelay[1]);
+    run: (input) => {
+      // returnInput(input);
+      let intendedInhibitor = input.split(' ')[1].toLowerCase();
+      if (intendedInhibitor === '--h') {
+        let output = createOutputDiv(`Inhibitors: <span class="sweetgrass" style="font-weight: 600">${ligands.join(', ').toUpperCase()}</span>`, 'wheat');
+        returnOutput(output, 0);
+        return;
+      }
+      if (ligands.includes(intendedInhibitor) || intendedInhibitor === 'chkpt') {
+        if (intendedInhibitor === 'chkpt') {
+          intendedInhibitor = randomLigand;
+        }
+        let output = createOutputDiv('You have successfully inhibited ' + intendedInhibitor.toUpperCase() + '.');
+        returnOutput(output, outputDelay[1]);
+      } else {
+        returnNullAndHelp(intendedInhibitor);
+      }
     },
   },
   sd: {

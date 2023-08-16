@@ -160,7 +160,7 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  margin: 1rem;
+  margin: 0.75rem 1rem 1rem;
   width: calc(100% - 2rem);
   height: calc(100% - 2rem);
   overflow-y: scroll;
