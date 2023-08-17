@@ -6,7 +6,7 @@ let randomLigand = ligands[Math.floor(Math.random() * ligands.length)];
 
 // --- STATUS ---
 
-const status = {
+const sysStatus = {
   normalCells: {
     self: true,
     altered: false,
@@ -18,16 +18,14 @@ const status = {
     altered: true,
     visibleToKillers: false,
     immuneBrakes: false,
-    cloak: randomReceptor,
-    braking: null,
+    culprit: randomReceptor,
   },
   liquidTumorCells: {
     self: true,
     altered: true,
     visibleToKillers: true,
     immuneBrakes: true,
-    cloak: null,
-    braking: randomLigand,
+    culprit: randomLigand,
   },
   foreignCells: {
     self: false,
@@ -79,50 +77,58 @@ const commands = {
         let executions = [
           {
             id: 1,
-            text: `Extract T cells`,
+            text: `Extract T cells...`,
             speed: 0.2,
             error: `Failed to extract T cells`,
+            class: 'stone',
             pass: true,
           },
           {
             id: 2,
-            text: `Engineer cells to express ${intendedCAR.toUpperCase()}`,
+            text: `Engineer cells to express <span class="thicc">${intendedCAR.toUpperCase()}</span>...`,
             speed: 0.3,
             error: `Failed to express ${intendedCAR}`,
+            class: 'stone',
             pass: true,
           },
           {
             id: 3,
-            text: `Culture and multiply ${intendedCAR.toUpperCase()}+ cells`,
+            text: `Culture and multiply <span class="thicc">${intendedCAR.toUpperCase()}</span>+ cells...`,
             speed: 0.4,
             error: `Failed to culture cells.`,
+            class: 'stone',
             pass: true,
           },
           {
             id: 4,
-            text: `Administer conditioning chemotherapy`,
+            text: `Administer conditioning chemotherapy...`,
             speed: 0.05,
             error: `Failed to administer conditioning chemotherapy`,
+            class: 'stone',
             pass: true,
           },
           {
             id: 5,
-            text: `Infuse ${intendedCAR.toUpperCase()}+ CAR T cells`,
+            text: `Infuse <span class="thicc">${intendedCAR.toUpperCase()}</span>+ CAR T cells...`,
             speed: 0.05,
             error: `Failed to infuse CAR T cells`,
+            class: 'stone',
             pass: true,
           },
           {
             id: 6,
-            text: `Nice! You've successfully expressed ${intendedCAR.toUpperCase()}.`,
+            text: `Nice! You've successfully expressed <span class="thicc">${intendedCAR.toUpperCase()}</span>.`,
+            class: 'wheat',
           },
         ];
-        // returnExecutions(`Expressing ${intendedCAR.toUpperCase()}`, executions, runSpeed[3]);
-        returnOutput(createOutputDiv(executions[executions.length - 1].text, 'wheat'), outputDelay[0]);
+        executions.forEach((execution) => {
+          returnOutput(createOutputDiv(execution.text, execution.class), outputDelay[execution.id - 1]);
+        });
+        sysStatus.solidTumorCells.visibleToKillers = true;
         if (secondCommand !== '') {
           setTimeout(() => {
             commands[secondCommand].run(input);
-          }, outputDelay[1]);
+          }, outputDelay[executions.length]);
         }
       } else {
         returnNullAndHelp(intendedCAR);
@@ -143,7 +149,6 @@ const commands = {
       },
     },
     run: (input) => {
-      // returnInput(input);
       let intendedInhibitor = input.split(' ')[1].toLowerCase();
       if (intendedInhibitor === '--h') {
         let output = createOutputDiv(`Inhibitors: <span class="sweetgrass" style="font-weight: 600">${ligands.join(', ').toUpperCase()}</span>`, 'wheat');
@@ -154,8 +159,39 @@ const commands = {
         if (intendedInhibitor === 'chkpt') {
           intendedInhibitor = randomLigand;
         }
-        let output = createOutputDiv('You have successfully inhibited ' + intendedInhibitor.toUpperCase() + '.');
-        returnOutput(output, outputDelay[1]);
+        let target = '';
+        if (intendedInhibitor === 'pd-l1') {
+          target = 'pd-1';
+        } else if (intendedInhibitor === 'pd-l2') {
+          target = 'pd-1';
+        } else if (intendedInhibitor === 'cd80') {
+          target = 'ctla-4';
+        }
+        let executions = [
+          {
+            id: 1,
+            text: `Administering checkpoint inhibitor drug...`,
+            error: `Failed to administer checkpoint inhibitor drug`,
+            class: 'stone',
+            pass: true,
+          },
+          {
+            id: 2,
+            text: `Binding <span class="thicc">${intendedInhibitor.toUpperCase()}</span> to <span class="thicc">${target.toUpperCase()}</span>...`,
+            error: `Failed to bind ${intendedInhibitor} to ${target}`,
+            class: 'stone',
+            pass: true,
+          },
+          {
+            id: 3,
+            text: `Nice! You've successfully inhibited <span class="thicc">${intendedInhibitor.toUpperCase()}</span>.`,
+            class: 'wheat',
+          },
+        ];
+        executions.forEach((execution) => {
+          returnOutput(createOutputDiv(execution.text, execution.class), outputDelay[execution.id - 1]);
+        });
+        sysStatus.liquidTumorCells.immuneBrakes = false;
       } else {
         returnNullAndHelp(intendedInhibitor);
       }
@@ -195,12 +231,26 @@ const commands = {
         description: 'Search the system for antigens and phagocytose them.',
       },
     },
-    run: (input, arg) => {
-      if (input.split(' ')[1] === 'sd') {
-        returnInput(input);
+    run: () => {
+      clearZetsu();
+      let output = createOutputDiv('Searching for cancer cells...', 'stone');
+      returnOutput(output, outputDelay[0]);
+      if (sysStatus.solidTumorCells.visibleToKillers === true && sysStatus.liquidTumorCells.immuneBrakes === false) {
+        output = createOutputDiv('Found and eliminated 100% of cancer cells.', 'wheat');
+        returnOutput(output, outputDelay[1]);
+      } else if (sysStatus.solidTumorCells.visibleToKillers === true && sysStatus.liquidTumorCells.immuneBrakes === true) {
+        output = createOutputDiv('Found and eliminated 50% of cancer cells.', 'wheat');
+        returnOutput(output, outputDelay[1]);
+      } else if (sysStatus.solidTumorCells.visibleToKillers === false && sysStatus.liquidTumorCells.immuneBrakes === false) {
+        output = createOutputDiv('Found and eliminated 50% of cancer cells.', 'wheat');
+        returnOutput(output, outputDelay[1]);
+      } else if (sysStatus.solidTumorCells.visibleToKillers === false && sysStatus.liquidTumorCells.immuneBrakes === true) {
+        output = createOutputDiv('Found and eliminated 0% of cancer cells.', 'wheat');
+        returnOutput(output, outputDelay[1]);
+      } else {
+        output = createOutputDiv('Found and eliminated 0% of cancer cells.', 'wheat');
+        returnOutput(output, outputDelay[1]);
       }
-      let output = createOutputDiv('You have successfully searched and destroyed.');
-      returnOutput(output, outputDelay[1]);
     },
   },
   // restore: {

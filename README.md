@@ -4,4 +4,4 @@ Command Line Immunity.
 
 ## User Guide
 
-Documentation
+A glitzy command line tool for orchestrating Killer T Cells.
