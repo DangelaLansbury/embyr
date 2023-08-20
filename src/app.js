@@ -234,31 +234,33 @@ zetsu.addEventListener('input', function () {
         let levDist = levenshteinDistance(inputWords[i], keywords[j]);
         let similarity = 1 - levDist / Math.max(inputWords[i].length, keywords[j].length);
         if (similarity > 0.66) {
-          let fullCommand = commands[command].suggestions['default'].command;
-          let alreadySuggested = false;
-          for (let k = 0; k < suggestionsArray.length; k++) {
-            if (suggestionsArray[k].command.toLowerCase() === fullCommand.toLowerCase()) {
-              alreadySuggested = true;
+          for (let hint in commands[command].defaultHints) {
+            let fullCommand = commands[command].defaultHints[hint].command;
+            let alreadySuggested = false;
+            for (let k = 0; k < suggestionsArray.length; k++) {
+              if (suggestionsArray[k].command.toLowerCase() === fullCommand.toLowerCase()) {
+                alreadySuggested = true;
+              }
             }
-          }
-          if (!alreadySuggested) {
-            populateSuggestion(fullCommand);
-            let suggestion = {
-              command: fullCommand,
-              similarity: similarity,
-            };
-            suggestionsArray.push(suggestion);
-            // Reorder suggestions in order of similarity
-            if (suggestionsArray.length > 0) {
-              suggestionsArray.sort((a, b) => {
-                const nameA = a.similarity;
-                const nameB = b.similarity;
-                return nameB - nameA;
-              });
-              // Populate suggestions list with new order
-              suggestionsList.innerHTML = '';
-              for (let k = 0; k < suggestionsArray.length; k++) {
-                populateSuggestion(suggestionsArray[k].command);
+            if (!alreadySuggested) {
+              populateSuggestion(fullCommand);
+              let suggestion = {
+                command: fullCommand,
+                similarity: similarity,
+              };
+              suggestionsArray.push(suggestion);
+              // Reorder suggestions in order of similarity
+              if (suggestionsArray.length > 0) {
+                suggestionsArray.sort((a, b) => {
+                  const nameA = a.similarity;
+                  const nameB = b.similarity;
+                  return nameB - nameA;
+                });
+                // Populate suggestions list with new order
+                suggestionsList.innerHTML = '';
+                for (let k = 0; k < suggestionsArray.length; k++) {
+                  populateSuggestion(suggestionsArray[k].command);
+                }
               }
             }
           }
@@ -304,8 +306,8 @@ zetsu.addEventListener('input', function () {
         } else if (suggestionIndex !== -1) {
           suggestions[suggestionIndex].classList.add('active');
           let suggestedCommand = suggestions[suggestionIndex].querySelector('.suggestion-command').innerText;
-          let title = commands[suggestedCommand.split(' ')[0]].suggestions['default'].title;
-          let description = commands[suggestedCommand.split(' ')[0]].suggestions['default'].description;
+          let title = commands[suggestedCommand.split(' ')[0]].defaultHints[suggestedCommand].title;
+          let description = commands[suggestedCommand.split(' ')[0]].defaultHints[suggestedCommand].description;
           zetsu.innerText = suggestedCommand;
           // Display suggestion details
           if (suggestions.length !== 0 && suggestionIndex !== -1) {
@@ -347,8 +349,8 @@ zetsu.addEventListener('input', function () {
         if (suggestionIndex !== -1) {
           suggestions[suggestionIndex].classList.add('active');
           let suggestedCommand = suggestions[suggestionIndex].querySelector('.suggestion-command').innerText;
-          let title = commands[suggestedCommand.split(' ')[0]].suggestions['default'].title;
-          let description = commands[suggestedCommand.split(' ')[0]].suggestions['default'].description;
+          let title = commands[suggestedCommand.split(' ')[0]].defaultHints[suggestedCommand].title;
+          let description = commands[suggestedCommand.split(' ')[0]].defaultHints[suggestedCommand].description;
           zetsu.innerText = suggestedCommand;
           // Display suggestion details
           if (suggestions.length !== 0 && suggestionIndex !== -1) {

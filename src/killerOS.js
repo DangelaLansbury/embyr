@@ -44,11 +44,16 @@ const commands = {
     name: 'Express',
     description: 'Express chimeric antigen receptor.',
     keywords: ['express', 'receptor', 'protein', 'molecule', 'chimeric', 'antigen', 'car', 'show', 'display', 'add', 'unmask', 'unveil', 'reveal'],
-    suggestions: {
-      default: {
+    defaultHints: {
+      'x car': {
+        command: 'x <span class="regular lilac">car</span>',
+        title: 'Express CAR',
+        description: 'Show chimeric antigen receptor on cell surface to recognize covert cancer cells.',
+      },
+      'x car sd': {
         command: 'x <span class="regular lilac">car</span> <span class="clay">sd</span>',
-        title: 'Express chimeric antigen receptor',
-        description: 'Show CAR on cell surface to recognize and kill covert cancer cells.',
+        title: 'Express CAR then hunt',
+        description: 'Show chimeric antigen receptor on cell surface to recognize covert cancer cells, then set modified Killer T Cells on the hunt.',
       },
     },
     run: (input) => {
@@ -142,11 +147,16 @@ const commands = {
     name: 'Block',
     description: 'Release the brakes on killer T cells and the immune system.',
     keywords: ['inhibit', 'cpt', 'block', 'prevent', 'checkpoint', 'pd-1', 'ctla-4', 'activate', 'bind', 'binding'],
-    suggestions: {
-      default: {
-        command: `b <span class="regular lilac">cpt</span> <span class="clay">sd</span>`,
+    defaultHints: {
+      'b cpt': {
+        command: `b <span class="regular lilac">cpt</span>`,
         title: 'Inhibit checkpoint',
-        description: 'Release the brakes on killer T cells and the immune system.',
+        description: 'Release the brakes on killer T cells.',
+      },
+      'b cpt sd': {
+        command: `b <span class="regular lilac">cpt</span> <span class="clay">sd</span>`,
+        title: 'Inhibit checkpoint then hunt',
+        description: 'Release the brakes on killer T cells, then set them on the loose.',
       },
     },
     run: (input) => {
@@ -227,8 +237,8 @@ const commands = {
       'phagocytose',
       'eat',
     ],
-    suggestions: {
-      default: {
+    defaultHints: {
+      sd: {
         command: 'sd',
         title: 'Find and destroy antigens',
         description: 'Search the system for antigens and phagocytose them.',
@@ -281,8 +291,8 @@ const commands = {
     name: 'Reset all',
     description: 'Reset the system... a fresh start.',
     keywords: ['reset', 'clear', 'restart', 'refresh', 'start over', 'reset all'],
-    suggestions: {
-      default: {
+    defaultHints: {
+      r: {
         command: 'r',
         title: 'Clear thread and reset system',
         description: 'Reset the system... a fresh start.',
@@ -298,8 +308,8 @@ const commands = {
     name: 'More help',
     description: 'Get help.',
     keywords: ['h', 'help', 'about', 'project', 'zetsu', 'immune system', 'immunity', 'commands', 'info'],
-    suggestions: {
-      default: {
+    defaultHints: {
+      h: {
         command: 'h',
         title: 'Show information about how to use Zetsu',
         description: 'Get help.',
