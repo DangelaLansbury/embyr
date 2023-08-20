@@ -92,6 +92,19 @@
 .big {
   font-size: var(--bigSize);
 }
+.xBig {
+  font-size: var(--xBigSize);
+}
+.xxBig {
+  font-size: var(--xxBigSize);
+}
+.megaBig {
+  font-size: var(--megaBigSize);
+}
+.regular {
+  font-family: 'CamingoCode-Regular';
+  font-weight: normal;
+}
 .thicc {
   font-family: 'CamingoCode-Bold';
   font-weight: bold;
@@ -192,7 +205,7 @@ main {
   width: 64%;
   max-width: 64%;
   margin: auto;
-  background-color: var(--soil-x-dk);
+  background-color: var(--soil-dk);
   border-radius: 16px;
   border: 1px solid var(--soil-lt);
   box-shadow: 0px 8px 16px 0px #000000;
@@ -204,7 +217,7 @@ main {
   width: 100%;
   height: 1.25rem;
   min-height: 1.25rem;
-  background-color: var(--soil-x-dk);
+  background-color: var(--soil-dk);
   margin-bottom: 0.75rem;
 }
 /* output thread */
@@ -358,7 +371,7 @@ main {
   width: 2.375rem;
   height: 2.375rem;
   margin: 0;
-  background-color: var(--soil-x-dk);
+  background-color: var(--soil-dk);
   border-radius: 0.25rem;
 }
 .logo-text {
@@ -366,7 +379,7 @@ main {
   padding: 0 0.375rem;
   opacity: 0;
   transition: 0.6s;
-  background-color: var(--soil-x-dk);
+  background-color: var(--soil-dk);
   border-radius: 0.25rem;
   font-size: 2.75rem;
   line-height: 3.25rem;
@@ -406,7 +419,7 @@ main {
     top: 0;
     right: 0;
     padding: 1rem 1.25rem 0 1.25rem;
-    background-color: var(--soil-x-dk);
+    background-color: var(--soil-dk);
   }
   .logo-svg {
     width: var(--xxBigSize);

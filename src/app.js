@@ -114,9 +114,10 @@ const showZetsuInit = () => {
 // display suggestions and detail
 const populateSuggestion = (command) => {
   let suggestion = document.createElement('div');
-  let cmd = command.split(' ')[0];
-  suggestion.className = 'suggestion';
+  let cmd = command.split(' ')[0].toLowerCase();
+  suggestion.className = 'suggestion thicc sweetgrass';
   suggestion.innerHTML = `<div class="cmd-icon"><img src="public/icons/${cmd}.svg" class="icon-svg" alt="icon for ${cmd}" /></div><div class="suggestion-command">${command}</div>`;
+  // suggestion.innerHTML = `<div class="suggestion-command">${command}</div>`;
   suggestionsList.appendChild(suggestion);
 };
 
@@ -160,7 +161,7 @@ const returnInput = (input) => {
   returnOutput(output, 0);
 };
 
-const outputDelay = [0, 200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000, 2200, 2400];
+const outputDelay = [200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000, 2200, 2400];
 
 // --- ADDING EVENT LISTENERS ---
 

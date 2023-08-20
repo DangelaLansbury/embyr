@@ -46,7 +46,7 @@ const commands = {
     keywords: ['express', 'receptor', 'protein', 'molecule', 'chimeric', 'antigen', 'car', 'show', 'display', 'add', 'unmask', 'unveil', 'reveal'],
     suggestions: {
       default: {
-        command: 'x car sd',
+        command: 'x <span class="regular lilac">car</span> <span class="clay">sd</span>',
         title: 'Express chimeric antigen receptor',
         description: 'Show CAR on cell surface to recognize and kill covert cancer cells.',
       },
@@ -65,6 +65,7 @@ const commands = {
         }
       }
       clearZetsu();
+      thread.innerHTML = '';
       if (intendedCAR === '--h') {
         let output = createOutputDiv(`Receptors: <span class="lilac" style="font-weight: 600">${receptors.join(', ').toUpperCase()}</span>`, 'wheat');
         returnOutput(output, 0);
@@ -117,7 +118,7 @@ const commands = {
           },
           {
             id: 6,
-            text: `Nice! You've successfully expressed <span class="thicc">${intendedCAR.toUpperCase()}</span>.`,
+            text: `Nice! You've successfully expressed <span class="thicc swamp">${intendedCAR.toUpperCase()}</span> on killer t cells.`,
             class: 'wheat',
           },
         ];
@@ -140,23 +141,25 @@ const commands = {
     nickname: 'b',
     name: 'Block',
     description: 'Release the brakes on killer T cells and the immune system.',
-    keywords: ['inhibit', 'chkpt', 'block', 'prevent', 'checkpoint', 'pd-1', 'ctla-4', 'activate', 'bind', 'binding'],
+    keywords: ['inhibit', 'cpt', 'block', 'prevent', 'checkpoint', 'pd-1', 'ctla-4', 'activate', 'bind', 'binding'],
     suggestions: {
       default: {
-        command: 'b chkpt sd',
+        command: `b <span class="regular lilac">cpt</span> <span class="clay">sd</span>`,
         title: 'Inhibit checkpoint',
         description: 'Release the brakes on killer T cells and the immune system.',
       },
     },
     run: (input) => {
       let intendedInhibitor = input.split(' ')[1].toLowerCase();
+      clearZetsu();
+      thread.innerHTML = '';
       if (intendedInhibitor === '--h') {
         let output = createOutputDiv(`Inhibitors: <span class="sweetgrass" style="font-weight: 600">${ligands.join(', ').toUpperCase()}</span>`, 'wheat');
         returnOutput(output, 0);
         return;
       }
-      if (ligands.includes(intendedInhibitor) || intendedInhibitor === 'chkpt') {
-        if (intendedInhibitor === 'chkpt') {
+      if (ligands.includes(intendedInhibitor) || intendedInhibitor === 'cpt') {
+        if (intendedInhibitor === 'cpt') {
           intendedInhibitor = randomLigand;
         }
         let target = '';
@@ -184,7 +187,7 @@ const commands = {
           },
           {
             id: 3,
-            text: `Nice! You've successfully inhibited <span class="thicc">${intendedInhibitor.toUpperCase()}</span>.`,
+            text: `Nice! You've successfully inhibited <span class="thicc lilac">${target.toUpperCase()}</span>.`,
             class: 'wheat',
           },
         ];
