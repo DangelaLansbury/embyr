@@ -57,7 +57,6 @@ const commands = {
       },
     },
     run: (input) => {
-      // returnInput(input);
       let intendedCAR = input.split(' ')[1].toLowerCase();
       let secondCommand = '';
       // Check if there's a second command
@@ -190,14 +189,14 @@ const commands = {
           },
           {
             id: 2,
-            text: `Binding <span class="thicc">${intendedInhibitor.toUpperCase()}</span> to <span class="thicc">${target.toUpperCase()}</span>...`,
+            text: `Binding to <span class="thicc">${intendedInhibitor.toUpperCase()}</span>...`,
             error: `Failed to bind ${intendedInhibitor} to ${target}`,
             class: 'stone',
             pass: true,
           },
           {
             id: 3,
-            text: `Nice! You've successfully inhibited <span class="thicc lilac">${target.toUpperCase()}</span>.`,
+            text: `Nice! You've successfully blocked Killer <span class="thicc lilac">${target.toUpperCase()}</span> from binding with <span class="thicc honey">${intendedInhibitor.toUpperCase()}</span>.`,
             class: 'wheat',
           },
         ];
