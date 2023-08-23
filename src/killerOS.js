@@ -83,7 +83,6 @@ const commands = {
           {
             id: 1,
             text: `Extract T cells...`,
-            speed: 0.2,
             error: `Failed to extract T cells`,
             class: 'stone',
             pass: true,
@@ -91,7 +90,6 @@ const commands = {
           {
             id: 2,
             text: `Engineer cells to express <span class="thicc">${intendedCAR.toUpperCase()}</span>...`,
-            speed: 0.3,
             error: `Failed to express ${intendedCAR}`,
             class: 'stone',
             pass: true,
@@ -99,7 +97,6 @@ const commands = {
           {
             id: 3,
             text: `Culture and multiply <span class="thicc">${intendedCAR.toUpperCase()}</span>+ cells...`,
-            speed: 0.4,
             error: `Failed to culture cells.`,
             class: 'stone',
             pass: true,
@@ -107,7 +104,6 @@ const commands = {
           {
             id: 4,
             text: `Administer conditioning chemotherapy...`,
-            speed: 0.05,
             error: `Failed to administer conditioning chemotherapy`,
             class: 'stone',
             pass: true,
@@ -115,7 +111,6 @@ const commands = {
           {
             id: 5,
             text: `Infuse <span class="thicc">${intendedCAR.toUpperCase()}</span>+ CAR T cells...`,
-            speed: 0.05,
             error: `Failed to infuse CAR T cells`,
             class: 'stone',
             pass: true,
@@ -196,7 +191,7 @@ const commands = {
           },
           {
             id: 3,
-            text: `Nice! You've successfully blocked Killer <span class="thicc lilac">${target.toUpperCase()}</span> from binding with <span class="thicc honey">${intendedInhibitor.toUpperCase()}</span>.`,
+            text: `Nice! You've successfully blocked killer <span class="thicc lilac">${target.toUpperCase()}</span> from binding with <span class="thicc honey">${intendedInhibitor.toUpperCase()}</span>.`,
             class: 'wheat',
           },
         ];
@@ -245,6 +240,7 @@ const commands = {
     },
     run: () => {
       clearZetsu();
+      thread.innerHTML = '';
       let output = createOutputDiv('Searching for cancer cells...', 'stone');
       returnOutput(output, outputDelay[0]);
       if (sysStatus.solidTumorCells.visibleToKillers === true && sysStatus.liquidTumorCells.immuneBrakes === false) {
@@ -265,25 +261,33 @@ const commands = {
       }
     },
   },
-  // restore: {
-  //   meta: true,
-  //   nickname: 'restore',
-  //   name: 'Revert state',
-  //   title: 'Restore',
-  //   description: 'Revert to previous receptor or inhibitor state',
-  //   keywords: ['restore', 'revert', 'version', 'history', 'go back'],
-  //   icon: 'undo',
-  //   suggestions: {
-  //     default: {
-  //       command: 'restore',
-  //       description: 'Revert to previous receptor or inhibitor state.',
-  //       return: 'You have successfully reverted to previous receptor or inhibitor state.',
-  //     },
-  //   },
-  //   run: (input, arg) => {
-  //     thread.innerHTML = '';
-  //   },
-  // },
+  '%': {
+    meta: false,
+    nickname: '%',
+    name: 'Status',
+    description: 'Check the status of the system.',
+    keywords: ['status', 'check', 'system', 'health', 'health check', 'healthcheck', 'health-check', 'health status', 'health-status', 'healthstatus'],
+    defaultHints: {
+      status: {
+        command: 'status',
+        title: 'Check status',
+        description: 'Check the status of the system.',
+      },
+    },
+    run: () => {
+      clearZetsu();
+      thread.innerHTML = '';
+      let output = createOutputDiv('Checking system status...', 'stone');
+      returnOutput(output, 0);
+      if (sysStatus.solidTumorCells.visibleToKillers === true && sysStatus.liquidTumorCells.immuneBrakes === false) {
+        output = createOutputDiv('System status: <span class="wheat">Healthy</span>', 'wheat');
+        returnOutput(output, outputDelay[0]);
+      } else {
+        output = createOutputDiv('System status: <span class="wheat">Unhealthy</span>', 'wheat');
+        returnOutput(output, outputDelay[1]);
+      }
+    },
+  },
   r: {
     meta: true,
     nickname: 'r',
