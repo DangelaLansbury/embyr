@@ -50,8 +50,8 @@ const commands = {
         title: 'Express CAR',
         description: 'Show chimeric antigen receptor on cell surface to recognize covert cancer cells.',
       },
-      'x car sd': {
-        command: 'x <span class="regular lilac">car</span> <span class="clay">sd</span>',
+      'x car hunt': {
+        command: 'x <span class="regular lilac">car</span> <span class="clay">hunt</span>',
         title: 'Express CAR then hunt',
         description: 'Show chimeric antigen receptor on cell surface to recognize covert cancer cells, then set modified Killer T Cells on the hunt.',
       },
@@ -147,8 +147,8 @@ const commands = {
         title: 'Inhibit checkpoint',
         description: 'Release the brakes on killer T cells.',
       },
-      'b cpt sd': {
-        command: `b <span class="regular lilac">cpt</span> <span class="clay">sd</span>`,
+      'b cpt hunt': {
+        command: `b <span class="regular lilac">cpt</span> <span class="clay">hunt</span>`,
         title: 'Inhibit checkpoint then hunt',
         description: 'Release the brakes on killer T cells, then set them on the loose.',
       },
@@ -204,12 +204,13 @@ const commands = {
       }
     },
   },
-  sd: {
+  hunt: {
     meta: false,
-    nickname: 'sd',
+    nickname: 'hunt',
     name: 'Search & Destroy',
     description: 'Search the system for antigens and phagocytose them.',
     keywords: [
+      'hunt',
       'detect',
       'evaluate',
       'interpret',
@@ -232,8 +233,8 @@ const commands = {
       'eat',
     ],
     defaultHints: {
-      sd: {
-        command: 'sd',
+      hunt: {
+        command: 'hunt',
         title: 'Find and destroy antigens',
         description: 'Search the system for antigens and phagocytose them.',
       },
@@ -261,33 +262,33 @@ const commands = {
       }
     },
   },
-  '%': {
-    meta: false,
-    nickname: '%',
-    name: 'Status',
-    description: 'Check the status of the system.',
-    keywords: ['status', 'check', 'system', 'health', 'health check', 'healthcheck', 'health-check', 'health status', 'health-status', 'healthstatus'],
-    defaultHints: {
-      status: {
-        command: 'status',
-        title: 'Check status',
-        description: 'Check the status of the system.',
-      },
-    },
-    run: () => {
-      clearZetsu();
-      thread.innerHTML = '';
-      let output = createOutputDiv('Checking system status...', 'stone');
-      returnOutput(output, 0);
-      if (sysStatus.solidTumorCells.visibleToKillers === true && sysStatus.liquidTumorCells.immuneBrakes === false) {
-        output = createOutputDiv('System status: <span class="wheat">Healthy</span>', 'wheat');
-        returnOutput(output, outputDelay[0]);
-      } else {
-        output = createOutputDiv('System status: <span class="wheat">Unhealthy</span>', 'wheat');
-        returnOutput(output, outputDelay[1]);
-      }
-    },
-  },
+  // '%': {
+  //   meta: false,
+  //   nickname: '%',
+  //   name: 'Status',
+  //   description: 'Check the status of the system.',
+  //   keywords: ['status', 'check', 'system', 'health', 'health check', 'healthcheck', 'health-check', 'health status', 'health-status', 'healthstatus'],
+  //   defaultHints: {
+  //     status: {
+  //       command: 'status',
+  //       title: 'Check status',
+  //       description: 'Check the status of the system.',
+  //     },
+  //   },
+  //   run: () => {
+  //     clearZetsu();
+  //     thread.innerHTML = '';
+  //     let output = createOutputDiv('Checking system status...', 'stone');
+  //     returnOutput(output, 0);
+  //     if (sysStatus.solidTumorCells.visibleToKillers === true && sysStatus.liquidTumorCells.immuneBrakes === false) {
+  //       output = createOutputDiv('System status: <span class="wheat">Healthy</span>', 'wheat');
+  //       returnOutput(output, outputDelay[0]);
+  //     } else {
+  //       output = createOutputDiv('System status: <span class="wheat">Unhealthy</span>', 'wheat');
+  //       returnOutput(output, outputDelay[1]);
+  //     }
+  //   },
+  // },
   r: {
     meta: true,
     nickname: 'r',
@@ -305,15 +306,15 @@ const commands = {
       thread.innerHTML = '';
     },
   },
-  h: {
+  help: {
     meta: true,
-    nickname: 'h',
+    nickname: 'help',
     name: 'More help',
     description: 'Get help.',
     keywords: ['h', 'help', 'about', 'project', 'zetsu', 'immune system', 'immunity', 'commands', 'info'],
     defaultHints: {
-      h: {
-        command: 'h',
+      help: {
+        command: 'help',
         title: 'Show information about how to use Zetsu',
         description: 'Get help.',
       },
