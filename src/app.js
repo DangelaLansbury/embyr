@@ -33,7 +33,8 @@ let detailsSyntax = document.querySelector('.details-syntax');
 window.onload = () => {
   zetsu.focus();
   displayHelpCommands(commands);
-  zetsuInitContent.innerHTML = `Hi there. First time? Use '<span class="sweetgrass thicc">h</span>' for help.`;
+  // zetsuInitContent.innerHTML = `Hi there. First time? Use '<span class="sweetgrass thicc">h</span>' for help.`;
+  zetsuInitContent.innerHTML = `Command suggestions and info will appear here.`;
 };
 
 const focusAtEnd = () => {
@@ -234,35 +235,26 @@ zetsu.addEventListener('input', function () {
         let levDist = levenshteinDistance(inputWords[i], keywords[j]);
         let similarity = 1 - levDist / Math.max(inputWords[i].length, keywords[j].length);
         if (similarity > 0.66) {
-          for (let hint in commands[command].defaultHints) {
-            let fullCommand = commands[command].defaultHints[hint].command;
-            let alreadySuggested = false;
-            for (let k = 0; k < suggestionsArray.length; k++) {
-              if (suggestionsArray[k].command.toLowerCase() === fullCommand.toLowerCase()) {
-                alreadySuggested = true;
-              }
-            }
-            if (!alreadySuggested) {
-              populateSuggestion(fullCommand);
-              let suggestion = {
-                command: fullCommand,
-                similarity: similarity,
-              };
-              suggestionsArray.push(suggestion);
-              // Reorder suggestions in order of similarity
-              if (suggestionsArray.length > 0) {
-                suggestionsArray.sort((a, b) => {
-                  const nameA = a.similarity;
-                  const nameB = b.similarity;
-                  return nameB - nameA;
-                });
-                // Populate suggestions list with new order
-                suggestionsList.innerHTML = '';
-                for (let k = 0; k < suggestionsArray.length; k++) {
-                  populateSuggestion(suggestionsArray[k].command);
-                }
-              }
-            }
+          let fullCommand = commands[command].hints['default'].command;
+          if (receptors.includes(inputWords[i]) || ligands.includes(inputWords[i])) {
+            fullCommand = fullCommand + ' ' + inputWords[i].toUpperCase();
+            similarity++;
+          }
+          populateSuggestion(fullCommand);
+          let suggestion = {
+            command: fullCommand,
+            similarity: similarity,
+          };
+          suggestionsArray.push(suggestion);
+          if (suggestionsArray.length > 0) {
+            suggestionsArray.sort((a, b) => {
+              const nameA = a.similarity;
+              const nameB = b.similarity;
+              return nameB - nameA;
+            });
+            // Only display most similar suggestion
+            suggestionsList.innerHTML = '';
+            populateSuggestion(suggestionsArray[0].command);
           }
         }
       }
@@ -270,7 +262,7 @@ zetsu.addEventListener('input', function () {
   }
   suggestions = document.querySelectorAll('.suggestion');
   if (suggestions.length !== 0) {
-    zetsuInitContent.innerHTML = 'Command suggestions and info will appear here.';
+    // zetsuInitContent.innerHTML = 'Command suggestions and info will appear here.';
     if (!zetsuInit.classList.contains('hidden')) {
       hideZetsuInit();
     }
@@ -306,8 +298,8 @@ zetsu.addEventListener('input', function () {
         } else if (suggestionIndex !== -1) {
           suggestions[suggestionIndex].classList.add('active');
           let suggestedCommand = suggestions[suggestionIndex].querySelector('.suggestion-command').innerText;
-          let title = commands[suggestedCommand.split(' ')[0]].defaultHints[suggestedCommand].title;
-          let description = commands[suggestedCommand.split(' ')[0]].defaultHints[suggestedCommand].description;
+          let title = commands[suggestedCommand.split(' ')[0]].hints['default'].title;
+          let description = commands[suggestedCommand.split(' ')[0]].hints['default'].description;
           zetsu.innerText = suggestedCommand;
           // Display suggestion details
           if (suggestions.length !== 0 && suggestionIndex !== -1) {
@@ -349,8 +341,8 @@ zetsu.addEventListener('input', function () {
         if (suggestionIndex !== -1) {
           suggestions[suggestionIndex].classList.add('active');
           let suggestedCommand = suggestions[suggestionIndex].querySelector('.suggestion-command').innerText;
-          let title = commands[suggestedCommand.split(' ')[0]].defaultHints[suggestedCommand].title;
-          let description = commands[suggestedCommand.split(' ')[0]].defaultHints[suggestedCommand].description;
+          let title = commands[suggestedCommand.split(' ')[0]].hints['default'].title;
+          let description = commands[suggestedCommand.split(' ')[0]].hints['default'].description;
           zetsu.innerText = suggestedCommand;
           // Display suggestion details
           if (suggestions.length !== 0 && suggestionIndex !== -1) {

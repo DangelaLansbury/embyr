@@ -38,22 +38,83 @@ const sysStatus = {
 // --- COMMANDS ---
 
 const commands = {
+  b: {
+    meta: false,
+    nickname: 'b',
+    name: 'Block checkpoint',
+    description: 'Release the brakes on killer T cells and the immune system.',
+    keywords: ['inhibit', 'cpt', 'block', 'prevent', 'checkpoint', 'pd-1', 'ctla-4', 'activate', 'bind', 'binding', 'cd80', 'pd-l1', 'pd-l2'],
+    hints: {
+      default: {
+        command: `b`,
+        title: 'Inhibit checkpoint',
+        description: 'Release the brakes on killer T cells.',
+        placeholder: 'cpt',
+      },
+    },
+    run: (input) => {
+      let intendedInhibitor = input.split(' ')[1].toLowerCase();
+      clearZetsu();
+      thread.innerHTML = '';
+      if (intendedInhibitor === '--h') {
+        let output = createOutputDiv(`Inhibitors: <span class="sweetgrass" style="font-weight: 600">${ligands.join(', ').toUpperCase()}</span>`, 'wheat');
+        returnOutput(output, 0);
+        return;
+      }
+      if (ligands.includes(intendedInhibitor) || intendedInhibitor === 'cpt') {
+        if (intendedInhibitor === 'cpt') {
+          intendedInhibitor = randomLigand;
+        }
+        let target = '';
+        if (intendedInhibitor === 'pd-l1') {
+          target = 'pd-1';
+        } else if (intendedInhibitor === 'pd-l2') {
+          target = 'pd-1';
+        } else if (intendedInhibitor === 'cd80') {
+          target = 'ctla-4';
+        }
+        let executions = [
+          {
+            id: 1,
+            text: `Administering checkpoint inhibitor drug...`,
+            error: `Failed to administer checkpoint inhibitor drug`,
+            class: 'stone',
+            pass: true,
+          },
+          {
+            id: 2,
+            text: `Binding <span class="thicc">${intendedInhibitor.toUpperCase()}</span> to <span class="thicc">${target.toUpperCase()}</span>...`,
+            error: `Failed to bind ${intendedInhibitor} to ${target}`,
+            class: 'stone',
+            pass: true,
+          },
+          {
+            id: 3,
+            text: `Nice! You've successfully blocked killer <span class="thicc lilac">${target.toUpperCase()}</span> from binding with <span class="thicc honey">${intendedInhibitor.toUpperCase()}</span>.`,
+            class: 'wheat',
+          },
+        ];
+        executions.forEach((execution) => {
+          returnOutput(createOutputDiv(execution.text, execution.class), outputDelay[execution.id - 1]);
+        });
+        sysStatus.liquidTumorCells.immuneBrakes = false;
+      } else {
+        returnNullAndHelp(intendedInhibitor);
+      }
+    },
+  },
   x: {
     meta: false,
     nickname: 'x',
-    name: 'Express',
+    name: 'Express CAR',
     description: 'Express chimeric antigen receptor.',
-    keywords: ['express', 'receptor', 'protein', 'molecule', 'chimeric', 'antigen', 'car', 'show', 'display', 'add', 'unmask', 'unveil', 'reveal'],
-    defaultHints: {
-      'x car': {
-        command: 'x <span class="regular lilac">car</span>',
+    keywords: ['express', 'receptor', 'protein', 'molecule', 'chimeric', 'antigen', 'car', 'show', 'display', 'add', 'unmask', 'unveil', 'reveal', 'a-folate', 'cd19', 'cd20', 'cd22', 'cd30', 'cd33', 'egfr', 'gd2', 'her2', 'l1cam'],
+    hints: {
+      default: {
+        command: 'x',
         title: 'Express CAR',
         description: 'Show chimeric antigen receptor on cell surface to recognize covert cancer cells.',
-      },
-      'x car hunt': {
-        command: 'x <span class="regular lilac">car</span> <span class="clay">hunt</span>',
-        title: 'Express CAR then hunt',
-        description: 'Show chimeric antigen receptor on cell surface to recognize covert cancer cells, then set modified Killer T Cells on the hunt.',
+        placeholder: 'car',
       },
     },
     run: (input) => {
@@ -135,188 +196,36 @@ const commands = {
       }
     },
   },
-  b: {
-    meta: false,
-    nickname: 'b',
-    name: 'Block',
-    description: 'Release the brakes on killer T cells and the immune system.',
-    keywords: ['inhibit', 'cpt', 'block', 'prevent', 'checkpoint', 'pd-1', 'ctla-4', 'activate', 'bind', 'binding'],
-    defaultHints: {
-      'b cpt': {
-        command: `b <span class="regular lilac">cpt</span>`,
-        title: 'Inhibit checkpoint',
-        description: 'Release the brakes on killer T cells.',
-      },
-      'b cpt hunt': {
-        command: `b <span class="regular lilac">cpt</span> <span class="clay">hunt</span>`,
-        title: 'Inhibit checkpoint then hunt',
-        description: 'Release the brakes on killer T cells, then set them on the loose.',
-      },
-    },
-    run: (input) => {
-      let intendedInhibitor = input.split(' ')[1].toLowerCase();
-      clearZetsu();
-      thread.innerHTML = '';
-      if (intendedInhibitor === '--h') {
-        let output = createOutputDiv(`Inhibitors: <span class="sweetgrass" style="font-weight: 600">${ligands.join(', ').toUpperCase()}</span>`, 'wheat');
-        returnOutput(output, 0);
-        return;
-      }
-      if (ligands.includes(intendedInhibitor) || intendedInhibitor === 'cpt') {
-        if (intendedInhibitor === 'cpt') {
-          intendedInhibitor = randomLigand;
-        }
-        let target = '';
-        if (intendedInhibitor === 'pd-l1') {
-          target = 'pd-1';
-        } else if (intendedInhibitor === 'pd-l2') {
-          target = 'pd-1';
-        } else if (intendedInhibitor === 'cd80') {
-          target = 'ctla-4';
-        }
-        let executions = [
-          {
-            id: 1,
-            text: `Administering checkpoint inhibitor drug...`,
-            error: `Failed to administer checkpoint inhibitor drug`,
-            class: 'stone',
-            pass: true,
-          },
-          {
-            id: 2,
-            text: `Binding to <span class="thicc">${intendedInhibitor.toUpperCase()}</span>...`,
-            error: `Failed to bind ${intendedInhibitor} to ${target}`,
-            class: 'stone',
-            pass: true,
-          },
-          {
-            id: 3,
-            text: `Nice! You've successfully blocked killer <span class="thicc lilac">${target.toUpperCase()}</span> from binding with <span class="thicc honey">${intendedInhibitor.toUpperCase()}</span>.`,
-            class: 'wheat',
-          },
-        ];
-        executions.forEach((execution) => {
-          returnOutput(createOutputDiv(execution.text, execution.class), outputDelay[execution.id - 1]);
-        });
-        sysStatus.liquidTumorCells.immuneBrakes = false;
-      } else {
-        returnNullAndHelp(intendedInhibitor);
-      }
-    },
-  },
-  hunt: {
-    meta: false,
-    nickname: 'hunt',
-    name: 'Search & Destroy',
-    description: 'Search the system for antigens and phagocytose them.',
-    keywords: [
-      'hunt',
-      'detect',
-      'evaluate',
-      'interpret',
-      'look',
-      'see',
-      'mhc',
-      'class i',
-      'class 1',
-      'class one',
-      'histocompatibility',
-      'histocompatibility complex',
-      'self',
-      'peptide',
-      'antigen',
-      'search',
-      'destroy',
-      'kill',
-      'phagocytosis',
-      'phagocytose',
-      'eat',
-    ],
-    defaultHints: {
-      hunt: {
-        command: 'hunt',
-        title: 'Find and destroy antigens',
-        description: 'Search the system for antigens and phagocytose them.',
-      },
-    },
-    run: () => {
-      clearZetsu();
-      thread.innerHTML = '';
-      let output = createOutputDiv('Searching for cancer cells...', 'stone');
-      returnOutput(output, outputDelay[0]);
-      if (sysStatus.solidTumorCells.visibleToKillers === true && sysStatus.liquidTumorCells.immuneBrakes === false) {
-        output = createOutputDiv('Found and eliminated 100% of cancer cells.', 'wheat');
-        returnOutput(output, outputDelay[1]);
-      } else if (sysStatus.solidTumorCells.visibleToKillers === true && sysStatus.liquidTumorCells.immuneBrakes === true) {
-        output = createOutputDiv('Found and eliminated 50% of cancer cells.', 'wheat');
-        returnOutput(output, outputDelay[1]);
-      } else if (sysStatus.solidTumorCells.visibleToKillers === false && sysStatus.liquidTumorCells.immuneBrakes === false) {
-        output = createOutputDiv('Found and eliminated 50% of cancer cells.', 'wheat');
-        returnOutput(output, outputDelay[1]);
-      } else if (sysStatus.solidTumorCells.visibleToKillers === false && sysStatus.liquidTumorCells.immuneBrakes === true) {
-        output = createOutputDiv('Found and eliminated 0% of cancer cells.', 'wheat');
-        returnOutput(output, outputDelay[1]);
-      } else {
-        output = createOutputDiv('Found and eliminated 0% of cancer cells.', 'wheat');
-        returnOutput(output, outputDelay[1]);
-      }
-    },
-  },
-  // '%': {
-  //   meta: false,
-  //   nickname: '%',
-  //   name: 'Status',
-  //   description: 'Check the status of the system.',
-  //   keywords: ['status', 'check', 'system', 'health', 'health check', 'healthcheck', 'health-check', 'health status', 'health-status', 'healthstatus'],
-  //   defaultHints: {
-  //     status: {
-  //       command: 'status',
-  //       title: 'Check status',
-  //       description: 'Check the status of the system.',
-  //     },
-  //   },
-  //   run: () => {
-  //     clearZetsu();
-  //     thread.innerHTML = '';
-  //     let output = createOutputDiv('Checking system status...', 'stone');
-  //     returnOutput(output, 0);
-  //     if (sysStatus.solidTumorCells.visibleToKillers === true && sysStatus.liquidTumorCells.immuneBrakes === false) {
-  //       output = createOutputDiv('System status: <span class="wheat">Healthy</span>', 'wheat');
-  //       returnOutput(output, outputDelay[0]);
-  //     } else {
-  //       output = createOutputDiv('System status: <span class="wheat">Unhealthy</span>', 'wheat');
-  //       returnOutput(output, outputDelay[1]);
-  //     }
-  //   },
-  // },
   r: {
     meta: true,
     nickname: 'r',
     name: 'Reset all',
     description: 'Reset the system... a fresh start.',
     keywords: ['reset', 'clear', 'restart', 'refresh', 'start over', 'reset all'],
-    defaultHints: {
-      r: {
+    hints: {
+      default: {
         command: 'r',
         title: 'Clear thread and reset system',
         description: 'Reset the system... a fresh start.',
+        placeholder: '',
       },
     },
     run: (input, arg) => {
       thread.innerHTML = '';
     },
   },
-  help: {
+  h: {
     meta: true,
-    nickname: 'help',
+    nickname: 'h',
     name: 'More help',
     description: 'Get help.',
     keywords: ['h', 'help', 'about', 'project', 'zetsu', 'immune system', 'immunity', 'commands', 'info'],
-    defaultHints: {
-      help: {
-        command: 'help',
+    hints: {
+      default: {
+        command: 'h',
         title: 'Show information about how to use Zetsu',
         description: 'Get help.',
+        placeholder: '',
       },
     },
     run: () => {
