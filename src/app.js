@@ -236,8 +236,8 @@ zetsu.addEventListener('input', function () {
         let similarity = 1 - levDist / Math.max(inputWords[i].length, keywords[j].length);
         if (similarity > 0.66) {
           let fullCommand = commands[command].hints['default'].command;
-          if (receptors.includes(inputWords[i]) || ligands.includes(inputWords[i])) {
-            fullCommand = fullCommand + ' ' + inputWords[i].toUpperCase();
+          if (acceptedArgs.includes(keywords[j])) {
+            fullCommand = fullCommand + ' ' + keywords[j].toUpperCase();
             similarity++;
           }
           populateSuggestion(fullCommand);

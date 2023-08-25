@@ -1,6 +1,7 @@
 // --- RECEPTORS & LIGANDS ---
 let receptors = ['a-folate', 'cd19', 'cd20', 'cd22', 'cd30', 'cd33', 'egfr', 'gd2', 'her2', 'l1cam'];
 let ligands = ['cd80', 'pd-l1', 'pd-l2'];
+let acceptedArgs = [...receptors, ...ligands];
 let randomReceptor = receptors[Math.floor(Math.random() * receptors.length)];
 let randomLigand = ligands[Math.floor(Math.random() * ligands.length)];
 
@@ -17,13 +18,11 @@ const sysStatus = {
     self: true,
     altered: true,
     visibleToKillers: false,
-    immuneBrakes: false,
     culprit: randomReceptor,
   },
   liquidTumorCells: {
     self: true,
     altered: true,
-    visibleToKillers: true,
     immuneBrakes: true,
     culprit: randomLigand,
   },
