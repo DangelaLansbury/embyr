@@ -1,9 +1,8 @@
-// --- RECEPTORS & LIGANDS ---
+// --- RECEPTORS & inhibitors ---
 let receptors = ['a-folate', 'cd19', 'cd20', 'cd22', 'cd30', 'cd33', 'egfr', 'gd2', 'her2', 'l1cam'];
-let ligands = ['cd80', 'pd-l1', 'pd-l2'];
-let acceptedArgs = [...receptors, ...ligands];
+let inhibitors = ['cd80', 'pd-l1', 'pd-l2', 'ctla-4', 'pd-1'];
 let randomReceptor = receptors[Math.floor(Math.random() * receptors.length)];
-let randomLigand = ligands[Math.floor(Math.random() * ligands.length)];
+let randomInhibitor = inhibitors[Math.floor(Math.random() * inhibitors.length)];
 
 // --- STATUS ---
 
@@ -24,7 +23,7 @@ const sysStatus = {
     self: true,
     altered: true,
     immuneBrakes: true,
-    culprit: randomLigand,
+    culprit: randomInhibitor,
   },
   foreignCells: {
     self: false,
@@ -42,7 +41,8 @@ const commands = {
     nickname: 'b',
     name: 'Block checkpoint',
     description: 'Release the brakes on killer T cells and the immune system.',
-    keywords: ['inhibit', 'cpt', 'block', 'prevent', 'checkpoint', 'pd-1', 'ctla-4', 'activate', 'bind', 'binding', 'cd80', 'pd-l1', 'pd-l2'],
+    keywords: ['inhibit', 'cpt', 'block', 'prevent', 'checkpoint', ...inhibitors],
+    acceptedArgs: inhibitors,
     hints: {
       default: {
         command: `b`,
@@ -56,11 +56,11 @@ const commands = {
       clearZetsu();
       thread.innerHTML = '';
       if (intendedInhibitor === '--h') {
-        let output = createOutputDiv(`Inhibitors: <span class="sweetgrass" style="font-weight: 600">${ligands.join(', ').toUpperCase()}</span>`, 'wheat');
+        let output = createOutputDiv(`Inhibitors: <span class="sweetgrass" style="font-weight: 600">${inhibitors.join(', ').toUpperCase()}</span>`, 'wheat');
         returnOutput(output, 0);
         return;
       }
-      if (ligands.includes(intendedInhibitor) || intendedInhibitor === 'cpt') {
+      if (inhibitors.includes(intendedInhibitor) || intendedInhibitor === 'cpt') {
         if (intendedInhibitor === 'cpt') {
           intendedInhibitor = randomLigand;
         }
@@ -71,6 +71,10 @@ const commands = {
           target = 'pd-1';
         } else if (intendedInhibitor === 'cd80') {
           target = 'ctla-4';
+        } else if (intendedInhibitor === 'ctla-4') {
+          target = 'cd80';
+        } else if (intendedInhibitor === 'pd-1') {
+          target = 'pd-l1';
         }
         let executions = [
           {
@@ -107,7 +111,8 @@ const commands = {
     nickname: 'x',
     name: 'Express CAR',
     description: 'Express chimeric antigen receptor.',
-    keywords: ['express', 'receptor', 'protein', 'molecule', 'chimeric', 'antigen', 'car', 'show', 'display', 'add', 'unmask', 'unveil', 'reveal', 'a-folate', 'cd19', 'cd20', 'cd22', 'cd30', 'cd33', 'egfr', 'gd2', 'her2', 'l1cam'],
+    keywords: ['express', 'receptor', 'protein', 'molecule', 'chimeric', 'antigen', 'car', 'show', 'display', 'add', 'unmask', 'unveil', 'reveal', ...receptors],
+    acceptedArgs: receptors,
     hints: {
       default: {
         command: 'x',
@@ -201,6 +206,7 @@ const commands = {
     name: 'Reset all',
     description: 'Reset the system... a fresh start.',
     keywords: ['reset', 'clear', 'restart', 'refresh', 'start over', 'reset all'],
+    acceptedArgs: [],
     hints: {
       default: {
         command: 'r',
@@ -219,6 +225,7 @@ const commands = {
     name: 'More help',
     description: 'Get help.',
     keywords: ['h', 'help', 'about', 'project', 'zetsu', 'immune system', 'immunity', 'commands', 'info'],
+    acceptedArgs: [],
     hints: {
       default: {
         command: 'h',
