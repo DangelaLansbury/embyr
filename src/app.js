@@ -234,7 +234,7 @@ zetsu.addEventListener('input', function () {
       for (let j = 0; j < keywords.length; j++) {
         let levDist = levenshteinDistance(inputWords[i], keywords[j]);
         let similarity = 1 - levDist / Math.max(inputWords[i].length, keywords[j].length);
-        if (similarity > 0.66) {
+        if (similarity > 0.55) {
           let fullCommand = command;
           let argument = '';
           // check if input contains any accepted arguments
@@ -243,12 +243,12 @@ zetsu.addEventListener('input', function () {
             // fuzzy search accepted args
             let levDist = levenshteinDistance(inputWords[i], arg);
             let similarity = 1 - levDist / Math.max(inputWords[i].length, arg.length);
-            if (similarity > 0.66) {
+            if (similarity > 0.55) {
               argument = arg;
             }
           });
           if (argument !== '') {
-            fullCommand = fullCommand + ' ' + argument.toUpperCase();
+            fullCommand = fullCommand + ' ' + `<span class="lilac">${argument.toUpperCase()}</span>`;
             similarity++;
           }
           populateSuggestion(fullCommand);

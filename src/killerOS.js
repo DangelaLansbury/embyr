@@ -184,7 +184,7 @@ const commands = {
           },
           {
             id: 3,
-            text: `Nice! You've successfully blocked killer <span class="thicc lilac">${target.toUpperCase()}</span> from binding with <span class="thicc honey">${intendedInhibitor.toUpperCase()}</span>.`,
+            text: `Nice! You've successfully blocked killer <span class="thicc river">${target.toUpperCase()}</span> from binding with <span class="thicc swamp">${intendedInhibitor.toUpperCase()}</span>.`,
             class: 'wheat',
           },
         ];
