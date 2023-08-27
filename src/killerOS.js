@@ -36,86 +36,15 @@ const sysStatus = {
 // --- COMMANDS ---
 
 const commands = {
-  b: {
+  add: {
     meta: false,
-    nickname: 'b',
-    name: 'Block checkpoint',
-    description: 'Release the brakes on killer T cells and the immune system.',
-    keywords: ['inhibit', 'cpt', 'block', 'prevent', 'checkpoint', ...inhibitors],
-    acceptedArgs: inhibitors,
-    hints: {
-      default: {
-        command: `b`,
-        title: 'Inhibit checkpoint',
-        description: 'Release the brakes on killer T cells.',
-        placeholder: 'cpt',
-      },
-    },
-    run: (input) => {
-      let intendedInhibitor = input.split(' ')[1].toLowerCase();
-      clearZetsu();
-      thread.innerHTML = '';
-      if (intendedInhibitor === '--h') {
-        let output = createOutputDiv(`Inhibitors: <span class="sweetgrass" style="font-weight: 600">${inhibitors.join(', ').toUpperCase()}</span>`, 'wheat');
-        returnOutput(output, 0);
-        return;
-      }
-      if (inhibitors.includes(intendedInhibitor) || intendedInhibitor === 'cpt') {
-        if (intendedInhibitor === 'cpt') {
-          intendedInhibitor = randomLigand;
-        }
-        let target = '';
-        if (intendedInhibitor === 'pd-l1') {
-          target = 'pd-1';
-        } else if (intendedInhibitor === 'pd-l2') {
-          target = 'pd-1';
-        } else if (intendedInhibitor === 'cd80') {
-          target = 'ctla-4';
-        } else if (intendedInhibitor === 'ctla-4') {
-          target = 'cd80';
-        } else if (intendedInhibitor === 'pd-1') {
-          target = 'pd-l1';
-        }
-        let executions = [
-          {
-            id: 1,
-            text: `Administering checkpoint inhibitor drug...`,
-            error: `Failed to administer checkpoint inhibitor drug`,
-            class: 'stone',
-            pass: true,
-          },
-          {
-            id: 2,
-            text: `Binding <span class="thicc">${intendedInhibitor.toUpperCase()}</span> to <span class="thicc">${target.toUpperCase()}</span>...`,
-            error: `Failed to bind ${intendedInhibitor} to ${target}`,
-            class: 'stone',
-            pass: true,
-          },
-          {
-            id: 3,
-            text: `Nice! You've successfully blocked killer <span class="thicc lilac">${target.toUpperCase()}</span> from binding with <span class="thicc honey">${intendedInhibitor.toUpperCase()}</span>.`,
-            class: 'wheat',
-          },
-        ];
-        executions.forEach((execution) => {
-          returnOutput(createOutputDiv(execution.text, execution.class), outputDelay[execution.id - 1]);
-        });
-        sysStatus.liquidTumorCells.immuneBrakes = false;
-      } else {
-        returnNullAndHelp(intendedInhibitor);
-      }
-    },
-  },
-  x: {
-    meta: false,
-    nickname: 'x',
+    nickname: 'add',
     name: 'Express CAR',
     description: 'Express chimeric antigen receptor.',
     keywords: ['express', 'receptor', 'protein', 'molecule', 'chimeric', 'antigen', 'car', 'show', 'display', 'add', 'unmask', 'unveil', 'reveal', ...receptors],
     acceptedArgs: receptors,
     hints: {
       default: {
-        command: 'x',
         title: 'Express CAR',
         description: 'Show chimeric antigen receptor on cell surface to recognize covert cancer cells.',
         placeholder: 'car',
@@ -200,6 +129,74 @@ const commands = {
       }
     },
   },
+  block: {
+    meta: false,
+    name: 'Inhibit checkpoint',
+    description: 'Release the brakes on killer T cells and the immune system.',
+    keywords: ['inhibit', 'cpt', 'block', 'prevent', 'checkpoint', ...inhibitors],
+    acceptedArgs: inhibitors,
+    hints: {
+      default: {
+        title: 'Inhibit checkpoint',
+        description: 'Release the brakes on killer T cells.',
+        placeholder: 'cpt',
+      },
+    },
+    run: (input) => {
+      let intendedInhibitor = input.split(' ')[1].toLowerCase();
+      clearZetsu();
+      thread.innerHTML = '';
+      if (intendedInhibitor === '--h') {
+        let output = createOutputDiv(`Inhibitors: <span class="sweetgrass" style="font-weight: 600">${inhibitors.join(', ').toUpperCase()}</span>`, 'wheat');
+        returnOutput(output, 0);
+        return;
+      }
+      if (inhibitors.includes(intendedInhibitor) || intendedInhibitor === 'cpt') {
+        if (intendedInhibitor === 'cpt') {
+          intendedInhibitor = randomLigand;
+        }
+        let target = '';
+        if (intendedInhibitor === 'pd-l1') {
+          target = 'pd-1';
+        } else if (intendedInhibitor === 'pd-l2') {
+          target = 'pd-1';
+        } else if (intendedInhibitor === 'cd80') {
+          target = 'ctla-4';
+        } else if (intendedInhibitor === 'ctla-4') {
+          target = 'cd80';
+        } else if (intendedInhibitor === 'pd-1') {
+          target = 'pd-l1';
+        }
+        let executions = [
+          {
+            id: 1,
+            text: `Administering checkpoint inhibitor drug...`,
+            error: `Failed to administer checkpoint inhibitor drug`,
+            class: 'stone',
+            pass: true,
+          },
+          {
+            id: 2,
+            text: `Binding <span class="thicc">${intendedInhibitor.toUpperCase()}</span> to <span class="thicc">${target.toUpperCase()}</span>...`,
+            error: `Failed to bind ${intendedInhibitor} to ${target}`,
+            class: 'stone',
+            pass: true,
+          },
+          {
+            id: 3,
+            text: `Nice! You've successfully blocked killer <span class="thicc lilac">${target.toUpperCase()}</span> from binding with <span class="thicc honey">${intendedInhibitor.toUpperCase()}</span>.`,
+            class: 'wheat',
+          },
+        ];
+        executions.forEach((execution) => {
+          returnOutput(createOutputDiv(execution.text, execution.class), outputDelay[execution.id - 1]);
+        });
+        sysStatus.liquidTumorCells.immuneBrakes = false;
+      } else {
+        returnNullAndHelp(intendedInhibitor);
+      }
+    },
+  },
   r: {
     meta: true,
     nickname: 'r',
@@ -209,7 +206,6 @@ const commands = {
     acceptedArgs: [],
     hints: {
       default: {
-        command: 'r',
         title: 'Clear thread and reset system',
         description: 'Reset the system... a fresh start.',
         placeholder: '',
@@ -219,16 +215,15 @@ const commands = {
       thread.innerHTML = '';
     },
   },
-  h: {
+  help: {
     meta: true,
-    nickname: 'h',
-    name: 'More help',
+    nickname: 'help',
+    name: 'More commands',
     description: 'Get help.',
     keywords: ['h', 'help', 'about', 'project', 'zetsu', 'immune system', 'immunity', 'commands', 'info'],
     acceptedArgs: [],
     hints: {
       default: {
-        command: 'h',
         title: 'Show information about how to use Zetsu',
         description: 'Get help.',
         placeholder: '',

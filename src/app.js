@@ -235,7 +235,7 @@ zetsu.addEventListener('input', function () {
         let levDist = levenshteinDistance(inputWords[i], keywords[j]);
         let similarity = 1 - levDist / Math.max(inputWords[i].length, keywords[j].length);
         if (similarity > 0.66) {
-          let fullCommand = commands[command].hints['default'].command;
+          let fullCommand = command;
           let argument = '';
           // check if input contains any accepted arguments
           acceptedArgs = commands[command].acceptedArgs;
