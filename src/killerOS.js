@@ -1,7 +1,7 @@
 // --- RECEPTORS & inhibitors ---
-let receptors = ['a-folate', 'cd19', 'cd20', 'cd22', 'cd30', 'cd33', 'egfr', 'gd2', 'her2', 'l1cam'];
+let TAAs = ['a-folate', 'cd19', 'cd20', 'cd22', 'cd30', 'cd33', 'egfr', 'gd2', 'her2', 'l1cam'];
 let inhibitors = ['cd80', 'pd-l1', 'pd-l2', 'ctla-4', 'pd-1'];
-let randomReceptor = receptors[Math.floor(Math.random() * receptors.length)];
+let randomReceptor = TAAs[Math.floor(Math.random() * TAAs.length)];
 let randomInhibitor = inhibitors[Math.floor(Math.random() * inhibitors.length)];
 
 // --- STATUS ---
@@ -36,13 +36,13 @@ const sysStatus = {
 // --- COMMANDS ---
 
 const commands = {
-  add: {
+  hunt: {
     meta: false,
-    nickname: 'add',
-    name: 'Express CAR',
-    description: 'Express chimeric antigen receptor.',
-    keywords: ['express', 'receptor', 'protein', 'molecule', 'chimeric', 'antigen', 'car', 'show', 'display', 'add', 'unmask', 'unveil', 'reveal', ...receptors],
-    acceptedArgs: receptors,
+    nickname: 'hunt',
+    name: 'Recognize & Kill',
+    description: 'Express chimeric antigen receptor to recognize Tumor-Associated Antigens and kill cancer cells.',
+    keywords: ['express', 'hunt', 'find', 'receptor', 'protein', 'molecule', 'chimeric', 'antigen', 'car', 'show', 'display', 'add', 'unmask', 'unveil', 'reveal', ...TAAs],
+    acceptedArgs: TAAs,
     hints: {
       default: {
         title: 'Express CAR',
@@ -65,11 +65,11 @@ const commands = {
       clearZetsu();
       thread.innerHTML = '';
       if (intendedCAR === '--h') {
-        let output = createOutputDiv(`Receptors: <span class="lilac" style="font-weight: 600">${receptors.join(', ').toUpperCase()}</span>`, 'wheat');
+        let output = createOutputDiv(`TAAs: <span class="lilac" style="font-weight: 600">${receptors.join(', ').toUpperCase()}</span>`, 'wheat');
         returnOutput(output, 0);
         return;
       }
-      if (receptors.includes(intendedCAR) || intendedCAR === 'car') {
+      if (TAAs.includes(intendedCAR) || intendedCAR === 'car') {
         if (intendedCAR === 'car') {
           intendedCAR = randomReceptor;
         }
