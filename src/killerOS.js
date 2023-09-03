@@ -83,7 +83,7 @@ const commands = {
           },
           {
             id: 2,
-            text: `Engineer cells to express <span class="thicc">${intendedCAR.toUpperCase()}</span>...`,
+            text: `Engineer cells to express <span class="thicc">${intendedCAR.toUpperCase()}</span> receptors...`,
             error: `Failed to express ${intendedCAR}`,
             class: 'stone',
             pass: true,
@@ -111,7 +111,7 @@ const commands = {
           },
           {
             id: 6,
-            text: `Nice! You've successfully expressed <span class="thicc swamp">${intendedCAR.toUpperCase()}</span> on killer t cells.`,
+            text: `Booyah. Successfully hunted tumor cells expressing <span class="thicc swamp">${intendedCAR.toUpperCase()}</span> and phagocytosed them.`,
             class: 'wheat',
           },
         ];
