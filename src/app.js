@@ -283,102 +283,121 @@ zetsu.addEventListener('input', function () {
     showZetsuInit();
   }
   suggestionsArray = [];
-  let suggestionIndex = -1;
-  // Listening for up and down arrow keys to cycle through suggestions
+  // Listen for tab to replace input with suggestion
   zetsu.addEventListener('keydown', function (e) {
-    for (let i = 0; i < suggestions.length; i++) {
-      suggestions[i].classList.remove('active');
-    }
-    // Check if suggestions are present
-    if (suggestions.length !== 0) {
-      if (e.key === 'ArrowDown') {
-        e.preventDefault();
-        details.innerHTML = '';
-        if (cursor.style.display === 'inline-flex') {
-          cursor.style.display = 'none';
-        }
-        if (suggestionIndex !== -1) {
-          suggestions[suggestionIndex].classList.remove('active');
-        }
-        suggestionIndex++;
-        if (suggestionIndex > suggestions.length - 1) {
-          suggestionIndex = -1;
-          if (input !== '') {
-            zetsu.innerText = input;
-          } else {
-            zetsu.innerText = '';
-          }
-        } else if (suggestionIndex !== -1) {
-          suggestions[suggestionIndex].classList.add('active');
-          let suggestedCommand = suggestions[suggestionIndex].querySelector('.suggestion-command').innerText;
-          let title = commands[suggestedCommand.split(' ')[0]].hints['default'].title;
-          let description = commands[suggestedCommand.split(' ')[0]].hints['default'].description;
-          zetsu.innerText = suggestedCommand;
-          // Display suggestion details
-          if (suggestions.length !== 0 && suggestionIndex !== -1) {
-            displayDetails(title, description);
-          } else {
-            details.innerHTML = '';
-          }
-          suggestions[suggestionIndex].scrollIntoView({
-            block: 'nearest',
-            inline: 'end',
-            behavior: 'smooth',
-          });
-        }
-        if (zetsu.innerText !== '') {
-          focusAtEnd();
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      if (suggestions.length !== 0) {
+        let suggestedCommand = suggestions[0].querySelector('.suggestion-command').innerText;
+        zetsu.innerText = suggestedCommand;
+        // Display suggestion details
+        let title = commands[suggestedCommand.split(' ')[0]].hints['default'].title;
+        let description = commands[suggestedCommand.split(' ')[0]].hints['default'].description;
+        if (suggestions.length !== 0) {
+          displayDetails(title, description);
         } else {
-          cursor.style.display = 'inline-flex';
+          details.innerHTML = '';
         }
-      } else if (e.key === 'ArrowUp') {
-        e.preventDefault();
-        details.innerHTML = '';
-        if (cursor.style.display === 'inline-flex') {
-          cursor.style.display = 'none';
-        }
-        if (suggestionIndex !== -1) {
-          suggestions[suggestionIndex].classList.remove('active');
-        }
-        suggestionIndex--;
-        if (suggestionIndex === -1) {
-          if (input !== '') {
-            zetsu.innerText = input;
-          } else {
-            zetsu.innerText = '';
-          }
-        }
-        if (suggestionIndex < -1) {
-          suggestionIndex = suggestions.length - 1;
-        }
-        if (suggestionIndex !== -1) {
-          suggestions[suggestionIndex].classList.add('active');
-          let suggestedCommand = suggestions[suggestionIndex].querySelector('.suggestion-command').innerText;
-          let title = commands[suggestedCommand.split(' ')[0]].hints['default'].title;
-          let description = commands[suggestedCommand.split(' ')[0]].hints['default'].description;
-          zetsu.innerText = suggestedCommand;
-          // Display suggestion details
-          if (suggestions.length !== 0 && suggestionIndex !== -1) {
-            displayDetails(title, description);
-          } else {
-            details.innerHTML = '';
-          }
-          suggestions[suggestionIndex].scrollIntoView({
-            block: 'nearest',
-            inline: 'end',
-            behavior: 'smooth',
-          });
-        }
-        if (zetsu.innerText !== '') {
-          focusAtEnd();
-        } else {
-          cursor.style.display = 'inline-flex';
-        }
+        focusAtEnd();
       }
-    } else {
-      suggestionIndex = -1;
     }
   });
+  let suggestionIndex = -1;
+  // // Listening for up and down arrow keys to cycle through suggestions
+  // zetsu.addEventListener('keydown', function (e) {
+  //   for (let i = 0; i < suggestions.length; i++) {
+  //     suggestions[i].classList.remove('active');
+  //   }
+  //   // Check if suggestions are present
+  //   if (suggestions.length !== 0) {
+  //     if (e.key === 'ArrowDown') {
+  //       e.preventDefault();
+  //       details.innerHTML = '';
+  //       if (cursor.style.display === 'inline-flex') {
+  //         cursor.style.display = 'none';
+  //       }
+  //       if (suggestionIndex !== -1) {
+  //         suggestions[suggestionIndex].classList.remove('active');
+  //       }
+  //       suggestionIndex++;
+  //       if (suggestionIndex > suggestions.length - 1) {
+  //         suggestionIndex = -1;
+  //         if (input !== '') {
+  //           zetsu.innerText = input;
+  //         } else {
+  //           zetsu.innerText = '';
+  //         }
+  //       } else if (suggestionIndex !== -1) {
+  //         suggestions[suggestionIndex].classList.add('active');
+  //         let suggestedCommand = suggestions[suggestionIndex].querySelector('.suggestion-command').innerText;
+  //         let title = commands[suggestedCommand.split(' ')[0]].hints['default'].title;
+  //         let description = commands[suggestedCommand.split(' ')[0]].hints['default'].description;
+  //         zetsu.innerText = suggestedCommand;
+  //         // Display suggestion details
+  //         if (suggestions.length !== 0 && suggestionIndex !== -1) {
+  //           displayDetails(title, description);
+  //         } else {
+  //           details.innerHTML = '';
+  //         }
+  //         suggestions[suggestionIndex].scrollIntoView({
+  //           block: 'nearest',
+  //           inline: 'end',
+  //           behavior: 'smooth',
+  //         });
+  //       }
+  //       if (zetsu.innerText !== '') {
+  //         focusAtEnd();
+  //       } else {
+  //         cursor.style.display = 'inline-flex';
+  //       }
+  //     } else if (e.key === 'ArrowUp') {
+  //       e.preventDefault();
+  //       details.innerHTML = '';
+  //       if (cursor.style.display === 'inline-flex') {
+  //         cursor.style.display = 'none';
+  //       }
+  //       if (suggestionIndex !== -1) {
+  //         suggestions[suggestionIndex].classList.remove('active');
+  //       }
+  //       suggestionIndex--;
+  //       if (suggestionIndex === -1) {
+  //         if (input !== '') {
+  //           zetsu.innerText = input;
+  //         } else {
+  //           zetsu.innerText = '';
+  //         }
+  //       }
+  //       if (suggestionIndex < -1) {
+  //         suggestionIndex = suggestions.length - 1;
+  //       }
+  //       if (suggestionIndex !== -1) {
+  //         suggestions[suggestionIndex].classList.add('active');
+  //         let suggestedCommand = suggestions[suggestionIndex].querySelector('.suggestion-command').innerText;
+  //         let title = commands[suggestedCommand.split(' ')[0]].hints['default'].title;
+  //         let description = commands[suggestedCommand.split(' ')[0]].hints['default'].description;
+  //         zetsu.innerText = suggestedCommand;
+  //         // Display suggestion details
+  //         if (suggestions.length !== 0 && suggestionIndex !== -1) {
+  //           displayDetails(title, description);
+  //         } else {
+  //           details.innerHTML = '';
+  //         }
+  //         suggestions[suggestionIndex].scrollIntoView({
+  //           block: 'nearest',
+  //           inline: 'end',
+  //           behavior: 'smooth',
+  //         });
+  //       }
+  //       if (zetsu.innerText !== '') {
+  //         focusAtEnd();
+  //       } else {
+  //         cursor.style.display = 'inline-flex';
+  //       }
+  //     }
+  //   } else {
+  //     suggestionIndex = -1;
+  //   }
+  // });
   // Reset suggestion index when user presses space or continues to type or hits enter
   zetsu.addEventListener('keydown', function (e) {
     if (e.key === ' ' || e.key === 'Backspace' || e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
