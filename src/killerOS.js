@@ -47,7 +47,10 @@ const commands = {
       default: {
         title: 'Express CAR',
         description: 'Show chimeric antigen receptor on cell surface to recognize covert cancer cells.',
-        placeholder: 'car',
+      },
+      egfr: {
+        title: 'Express EGFR',
+        description: 'Show chimeric antigen receptor for EGFR on cell surface to recognize covert cancer cells.',
       },
     },
     run: (input) => {
