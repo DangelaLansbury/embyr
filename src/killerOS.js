@@ -52,6 +52,10 @@ const commands = {
         title: 'Express EGFR',
         description: 'Show chimeric antigen receptor for EGFR on cell surface to recognize covert cancer cells.',
       },
+      cd19: {
+        title: 'Express CD19',
+        description: 'Show chimeric antigen receptor for CD19 on cell surface to recognize covert cancer cells.',
+      },
     },
     run: (input) => {
       let intendedCAR = input.split(' ')[1].toLowerCase();
@@ -142,7 +146,14 @@ const commands = {
       default: {
         title: 'Inhibit checkpoint',
         description: 'Release the brakes on killer T cells.',
-        placeholder: 'cpt',
+      },
+      'pd-1': {
+        title: 'Inhibit PD-1',
+        description: 'Release the brakes on killer T cells by blocking PD-1.',
+      },
+      'ctla-4': {
+        title: 'Inhibit CTLA-4',
+        description: 'Release the brakes on killer T cells by blocking CTLA-4.',
       },
     },
     run: (input) => {
