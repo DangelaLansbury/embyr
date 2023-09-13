@@ -238,6 +238,7 @@ zetsu.addEventListener('input', function () {
         if (similarity > 0.55) {
           let fullCommand = command;
           let argument = '';
+          let commandToDisplay = command;
           let idToPass = 'default';
           // check if input contains any accepted arguments
           acceptedArgs = commands[command].acceptedArgs;
@@ -250,7 +251,8 @@ zetsu.addEventListener('input', function () {
             }
           });
           if (argument !== '') {
-            fullCommand = fullCommand + ' ' + `<span class="lilac">${argument.toUpperCase()}</span>`;
+            fullCommand = fullCommand + ' ' + argument.toUpperCase();
+            commandToDisplay = commandToDisplay + ' ' + `<span class="lilac">${argument.toUpperCase()}</span>`;
             idToPass = argument.toLowerCase();
             similarity++;
           }
@@ -261,9 +263,10 @@ zetsu.addEventListener('input', function () {
             }
           }
           if (!alreadySuggested) {
-            populateSuggestion(fullCommand, idToPass);
+            // populateSuggestion(fullCommand, idToPass);
             let suggestion = {
-              command: fullCommand,
+              raw: fullCommand,
+              command: commandToDisplay,
               id: idToPass,
               similarity: similarity,
             };
@@ -278,7 +281,9 @@ zetsu.addEventListener('input', function () {
             }
             // Display top suggestion
             suggestionsList.innerHTML = '';
-            populateSuggestion(suggestionsArray[0].command);
+            if (zetsu.innerText.trim() !== suggestionsArray[0].raw) {
+              populateSuggestion(suggestionsArray[0].command, suggestionsArray[0].id);
+            }
           }
         }
       }
@@ -302,6 +307,8 @@ zetsu.addEventListener('input', function () {
         let suggestedCommand = suggestions[0].querySelector('.suggestion-command').innerText;
         zetsu.innerText = suggestedCommand;
         focusAtEnd();
+        suggestions = [];
+        showZetsuInit();
       }
     }
   });

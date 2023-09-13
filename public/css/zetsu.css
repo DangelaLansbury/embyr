@@ -56,8 +56,8 @@
   align-items: flex-start;
   margin: 0;
   width: 100%;
-  height: calc(10rem + 2px);
-  min-height: calc(10rem + 2px);
+  height: calc(8rem + 2px);
+  min-height: calc(8rem + 2px);
   overflow: hidden;
   background-color: var(--soil);
 }
