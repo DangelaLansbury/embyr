@@ -92,9 +92,7 @@ const displayHelpCommands = (commands) => {
     let commandHint = document.createElement('div');
     commandHint.className = 'help-bar-hint';
     commandHint.innerHTML = `<div class="help-bar-cmd thicc">${command}</div><div class="help-bar-text">${commands[command].name.toLowerCase()}</div>`;
-    if (commands[command].meta === false) {
-      help1.appendChild(commandHint);
-    } else {
+    if (commands[command].meta === true) {
       help2.appendChild(commandHint);
     }
   }
