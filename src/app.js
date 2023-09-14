@@ -239,7 +239,7 @@ zetsu.addEventListener('input', function () {
           let commandToDisplay = command;
           let idToPass = 'default';
           // check if input contains any accepted arguments
-          acceptedArgs = commands[command].acceptedArgs;
+          let acceptedArgs = commands[command].acceptedArgs;
           acceptedArgs.forEach((arg) => {
             // fuzzy search accepted args
             let levDist = levenshteinDistance(inputWords[i], arg);
@@ -279,7 +279,7 @@ zetsu.addEventListener('input', function () {
             }
             // Display top suggestion
             suggestionsList.innerHTML = '';
-            if (zetsu.innerText.trim() !== suggestionsArray[0].raw) {
+            if (!zetsu.innerText.trim().startsWith(suggestionsArray[0].raw)) {
               populateSuggestion(suggestionsArray[0].command, suggestionsArray[0].id);
             }
           }
