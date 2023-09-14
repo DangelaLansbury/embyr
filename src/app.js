@@ -219,6 +219,10 @@ zetsu.addEventListener('input', function () {
   } else {
     cursor.style.display = 'inline-flex';
   }
+  // Break if input starts with asterisk
+  if (input.startsWith('*')) {
+    return;
+  }
   // Clear suggestions and details
   suggestionsList.innerHTML = '';
   details.innerHTML = '';
