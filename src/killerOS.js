@@ -36,10 +36,9 @@ const sysStatus = {
 // --- COMMANDS ---
 
 const commands = {
-  hunt: {
+  exp: {
     meta: false,
-    nickname: 'hunt',
-    name: 'Recognize & Kill',
+    name: 'express CAR',
     description: 'Express chimeric antigen receptor to recognize Tumor-Associated Antigens and kill cancer cells.',
     keywords: ['express', 'hunt', 'find', 'receptor', 'protein', 'molecule', 'chimeric', 'antigen', 'car', 'show', 'display', 'add', 'unmask', 'unveil', 'reveal', ...TAAs],
     acceptedArgs: TAAs,
@@ -136,7 +135,7 @@ const commands = {
       }
     },
   },
-  block: {
+  inh: {
     meta: false,
     name: 'Inhibit checkpoint',
     description: 'Release the brakes on killer T cells and the immune system.',
@@ -213,7 +212,6 @@ const commands = {
   },
   r: {
     meta: true,
-    nickname: 'r',
     name: 'Reset all',
     description: 'Reset the system... a fresh start.',
     keywords: ['reset', 'clear', 'restart', 'refresh', 'start over', 'reset all'],
@@ -222,7 +220,6 @@ const commands = {
       default: {
         title: 'Clear thread and reset system',
         description: 'Reset the system... a fresh start.',
-        placeholder: '',
       },
     },
     run: (input, arg) => {
@@ -231,7 +228,6 @@ const commands = {
   },
   help: {
     meta: true,
-    nickname: 'help',
     name: 'More commands',
     description: 'Get help.',
     keywords: ['h', 'help', 'about', 'project', 'zetsu', 'immune system', 'immunity', 'commands', 'info'],
@@ -240,7 +236,6 @@ const commands = {
       default: {
         title: 'Show information about how to use Zetsu',
         description: 'Get help.',
-        placeholder: '',
       },
     },
     run: () => {

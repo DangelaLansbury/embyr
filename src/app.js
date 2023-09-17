@@ -17,7 +17,7 @@ let zetsuBar = document.querySelector('.zetsu-input');
 let zetsu = document.querySelector('.zetsu-input-text'); // Zetsu input field
 let cursor = document.querySelector('.cursor'); // Zetsu input fake cursor
 let running = document.querySelector('.running'); // Zetsu running indicator
-let inputs = []; // Zetsu input history
+let prevInputs = []; // Zetsu input history
 // Suggestions and suggestion details
 let suggestionsContainer = document.querySelector('.suggestions-container');
 let suggestionsListContainer = document.querySelector('.suggestions-list-container');
@@ -455,9 +455,9 @@ zetsu.addEventListener('keydown', function (e) {
     let input = zetsu.innerText.trim();
     // Execute commands and return output
     if (input !== '') {
-      inputs.push(input);
-      localStorage.setItem('inputs', JSON.stringify(inputs));
-      console.log(inputs);
+      prevInputs.push(input);
+      localStorage.setItem('prevInputs', JSON.stringify(prevInputs));
+      console.log(prevInputs);
       clearZetsu();
       let parts = input.split(' ');
       let command = parts[0].toLowerCase();
