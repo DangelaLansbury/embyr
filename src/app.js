@@ -285,6 +285,7 @@ zetsu.addEventListener('input', function () {
             suggestionsList.innerHTML = '';
             if (!zetsu.innerText.trim().startsWith(suggestionsArray[0].raw)) {
               populateSuggestion(suggestionsArray[0].command, suggestionsArray[0].id);
+              displayDetails(commands[command].hints[suggestionsArray[0].id].title, commands[command].hints[suggestionsArray[0].id].description);
             }
           }
         }
