@@ -308,6 +308,10 @@ zetsu.addEventListener('input', function () {
       e.preventDefault();
       if (suggestions.length !== 0) {
         let suggestedCommand = suggestions[0].querySelector('.suggestion-command').innerText;
+        // If suggestion is only one word, add space after
+        if (suggestedCommand.split(' ').length === 1) {
+          suggestedCommand = suggestedCommand + ' ';
+        }
         zetsu.innerText = suggestedCommand;
         focusAtEnd();
         suggestions = [];
