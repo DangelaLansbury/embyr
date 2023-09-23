@@ -117,7 +117,7 @@ const commands = {
           },
           {
             id: 6,
-            text: `Booyah. Successfully hunted tumor cells expressing <span class="thicc swamp">${intendedCAR.toUpperCase()}</span> and phagocytosed them.`,
+            text: `Success. You can now recognize and phagocytose TAA expressing <span class="thicc swamp">${intendedCAR.toUpperCase()}</span>.`,
             class: 'wheat',
           },
         ];
