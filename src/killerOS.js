@@ -1,37 +1,9 @@
 // --- RECEPTORS & inhibitors ---
 let TAAs = ['a-folate', 'cd19', 'cd20', 'cd22', 'cd30', 'cd33', 'egfr', 'gd2', 'her2', 'l1cam'];
+let CSDomains = ['CD28', '4-1BB', 'OX40', 'ICOS'];
 let inhibitors = ['cd80', 'pd-l1', 'pd-l2', 'ctla-4', 'pd-1'];
 let randomReceptor = TAAs[Math.floor(Math.random() * TAAs.length)];
 let randomInhibitor = inhibitors[Math.floor(Math.random() * inhibitors.length)];
-
-// --- STATUS ---
-
-const sysStatus = {
-  normalCells: {
-    self: true,
-    altered: false,
-    visibleToKillers: false,
-    immuneBrakes: true,
-  },
-  solidTumorCells: {
-    self: true,
-    altered: true,
-    visibleToKillers: false,
-    culprit: randomReceptor,
-  },
-  liquidTumorCells: {
-    self: true,
-    altered: true,
-    immuneBrakes: true,
-    culprit: randomInhibitor,
-  },
-  foreignCells: {
-    self: false,
-    altered: false,
-    visibleToKillers: true,
-    immuneBrakes: false,
-  },
-};
 
 // --- COMMANDS ---
 
@@ -42,6 +14,7 @@ const commands = {
     description: 'Express chimeric antigen receptor to recognize Tumor-Associated Antigens and kill cancer cells.',
     keywords: ['express', 'hunt', 'find', 'receptor', 'protein', 'molecule', 'chimeric', 'antigen', 'car', 'show', 'display', 'add', 'unmask', 'unveil', 'reveal', ...TAAs],
     acceptedArgs: TAAs,
+    acceptedMods: CSDomains,
     hints: {
       default: {
         title: 'Express CAR',
@@ -55,19 +28,13 @@ const commands = {
         title: 'Express CD19',
         description: 'Show chimeric antigen receptor for CD19 on cell surface to recognize covert cancer cells.',
       },
+      'egfr cd28': {
+        title: 'Express EGFR with CD28',
+        description: 'Show chimeric antigen receptor for EGFR on cell surface to recognize covert cancer cells. Express CD28 costimulatory domain to enhance T cell activation.',
+      },
     },
     run: (input) => {
       let intendedCAR = input.split(' ')[1].toLowerCase();
-      let secondCommand = '';
-      // Check if there's a second command
-      if (input.split(' ')[2]) {
-        if (commands[input.split(' ')[2]]) {
-          secondCommand = input.split(' ')[2];
-        } else {
-          returnNullAndHelp(input.split(' ')[2], outputDelay[0]);
-          return;
-        }
-      }
       clearZetsu();
       thread.innerHTML = '';
       if (intendedCAR === '--h') {
@@ -117,19 +84,13 @@ const commands = {
           },
           {
             id: 6,
-            text: `Success. You can now recognize and phagocytose TAA expressing <span class="thicc swamp">${intendedCAR.toUpperCase()}</span>.`,
+            text: `<span class="thicc swamp">Success</span>. You can now recognize and phagocytose TAAs expressing <span class="thicc swamp">${intendedCAR.toUpperCase()}</span>.`,
             class: 'wheat',
           },
         ];
         executions.forEach((execution) => {
           returnOutput(createOutputDiv(execution.text, execution.class), outputDelay[execution.id - 1]);
         });
-        sysStatus.solidTumorCells.visibleToKillers = true;
-        if (secondCommand !== '') {
-          setTimeout(() => {
-            commands[secondCommand].run(input);
-          }, outputDelay[executions.length]);
-        }
       } else {
         returnNullAndHelp(intendedCAR);
       }

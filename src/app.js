@@ -240,6 +240,7 @@ zetsu.addEventListener('input', function () {
         if (similarity > 0.55) {
           let fullCommand = command;
           let argument = '';
+          let modifier = '';
           let commandToDisplay = command;
           let idToPass = 'default';
           // check if input contains any accepted arguments
@@ -269,6 +270,8 @@ zetsu.addEventListener('input', function () {
             let suggestion = {
               raw: fullCommand,
               command: commandToDisplay,
+              commandOnly: command,
+              argOnly: argument,
               id: idToPass,
               similarity: similarity,
             };
