@@ -1,6 +1,6 @@
 // --- RECEPTORS & inhibitors ---
 let TAAs = ['a-folate', 'cd19', 'cd20', 'cd22', 'cd30', 'cd33', 'egfr', 'gd2', 'her2', 'l1cam'];
-let CSDomains = ['CD28', '4-1BB', 'OX40', 'ICOS'];
+let CSDomains = ['cd28', '4-1bb', 'ox40', 'icos'];
 let inhibitors = ['cd80', 'pd-l1', 'pd-l2', 'ctla-4', 'pd-1'];
 let randomReceptor = TAAs[Math.floor(Math.random() * TAAs.length)];
 let randomInhibitor = inhibitors[Math.floor(Math.random() * inhibitors.length)];
@@ -14,7 +14,7 @@ const commands = {
     description: 'Express chimeric antigen receptor to recognize Tumor-Associated Antigens and kill cancer cells.',
     keywords: ['express', 'hunt', 'find', 'receptor', 'protein', 'molecule', 'chimeric', 'antigen', 'car', 'show', 'display', 'add', 'unmask', 'unveil', 'reveal', ...TAAs],
     acceptedArgs: TAAs,
-    acceptedMods: CSDomains,
+    acceptedMods: ['--h', ...CSDomains],
     hints: {
       default: {
         title: 'Express CAR',
@@ -27,10 +27,6 @@ const commands = {
       cd19: {
         title: 'Express CD19',
         description: 'Show chimeric antigen receptor for CD19 on cell surface to recognize covert cancer cells.',
-      },
-      'egfr cd28': {
-        title: 'Express EGFR with CD28',
-        description: 'Show chimeric antigen receptor for EGFR on cell surface to recognize covert cancer cells. Express CD28 costimulatory domain to enhance T cell activation.',
       },
     },
     run: (input) => {
@@ -84,7 +80,7 @@ const commands = {
           },
           {
             id: 6,
-            text: `<span class="thicc swamp">Success</span>. You can now recognize and phagocytose TAAs expressing <span class="thicc swamp">${intendedCAR.toUpperCase()}</span>.`,
+            text: `<span class="thicc swamp">Success</span>. You can now recognize and phagocytose TAAs expressing <span class="thicc river">${intendedCAR.toUpperCase()}</span>.`,
             class: 'wheat',
           },
         ];
@@ -102,6 +98,7 @@ const commands = {
     description: 'Release the brakes on killer T cells and the immune system.',
     keywords: ['inhibit', 'cpt', 'block', 'prevent', 'checkpoint', ...inhibitors],
     acceptedArgs: inhibitors,
+    acceptedMods: ['--h'],
     hints: {
       default: {
         title: 'Inhibit checkpoint',
@@ -165,7 +162,6 @@ const commands = {
         executions.forEach((execution) => {
           returnOutput(createOutputDiv(execution.text, execution.class), outputDelay[execution.id - 1]);
         });
-        sysStatus.liquidTumorCells.immuneBrakes = false;
       } else {
         returnNullAndHelp(intendedInhibitor);
       }
@@ -177,6 +173,7 @@ const commands = {
     description: 'Reset the system... a fresh start.',
     keywords: ['reset', 'clear', 'restart', 'refresh', 'start over', 'reset all'],
     acceptedArgs: [],
+    acceptedMods: [],
     hints: {
       default: {
         title: 'Clear thread and reset system',
@@ -193,6 +190,7 @@ const commands = {
     description: 'Get help.',
     keywords: ['h', 'help', 'about', 'project', 'zetsu', 'immune system', 'immunity', 'commands', 'info'],
     acceptedArgs: [],
+    acceptedMods: [],
     hints: {
       default: {
         title: 'Show information about how to use Zetsu',
