@@ -264,7 +264,6 @@ zetsu.addEventListener('input', function () {
             }
           }
           if (!alreadySuggested) {
-            // populateSuggestion(fullCommand, idToPass);
             let suggestion = {
               raw: fullCommand,
               command: commandToDisplay,
@@ -272,20 +271,6 @@ zetsu.addEventListener('input', function () {
               similarity: similarity,
             };
             suggestionsArray.push(suggestion);
-            // // Sort suggestions by similarity
-            // if (suggestionsArray.length > 0) {
-            //   suggestionsArray.sort((a, b) => {
-            //     const nameA = a.similarity;
-            //     const nameB = b.similarity;
-            //     return nameB - nameA;
-            //   });
-            // }
-            // // Display top suggestion
-            // suggestionsList.innerHTML = '';
-            // if (!zetsu.innerText.trim().startsWith(suggestionsArray[0].raw)) {
-            //   populateSuggestion(suggestionsArray[0].command, suggestionsArray[0].id);
-            //   displayDetails(commands[command].hints[suggestionsArray[0].id].title, commands[command].hints[suggestionsArray[0].id].description);
-            // }
             // Reorder suggestions in order of similarity
             if (suggestionsArray.length > 0) {
               suggestionsArray.sort((a, b) => {
@@ -316,23 +301,6 @@ zetsu.addEventListener('input', function () {
     showZetsuInit();
   }
   suggestionsArray = [];
-  // listen for tab key to use suggestion
-  // zetsu.addEventListener('keydown', function (e) {
-  //   if (e.key === 'Tab') {
-  //     e.preventDefault();
-  //     if (suggestions.length !== 0) {
-  //       let suggestedCommand = suggestions[0].querySelector('.suggestion-command').innerText;
-  //       // If suggestion is only one word, add space after
-  //       if (suggestedCommand.split(' ').length === 1) {
-  //         suggestedCommand = suggestedCommand + ' ';
-  //       }
-  //       zetsu.innerText = suggestedCommand;
-  //       focusAtEnd();
-  //       suggestions = [];
-  //       showZetsuInit();
-  //     }
-  //   }
-  // });
   let suggestionIndex = -1;
   // Listening for up and down arrow keys to cycle through suggestions
   zetsu.addEventListener('keydown', function (e) {
