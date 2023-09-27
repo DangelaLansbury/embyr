@@ -236,7 +236,7 @@ zetsu.addEventListener('input', function () {
       for (let j = 0; j < keywords.length; j++) {
         let levDist = levenshteinDistance(inputWords[i], keywords[j]);
         let similarity = 1 - levDist / Math.max(inputWords[i].length, keywords[j].length);
-        if (similarity > 0.55) {
+        if (similarity > 0.6) {
           let fullCommand = command;
           let argument = '';
           let commandToDisplay = command;
@@ -247,7 +247,7 @@ zetsu.addEventListener('input', function () {
             // fuzzy search accepted args
             let levDist = levenshteinDistance(inputWords[i], arg);
             let similarity = 1 - levDist / Math.max(inputWords[i].length, arg.length);
-            if (similarity > 0.55) {
+            if (similarity > 0.6) {
               argument = arg;
             }
           });
@@ -281,7 +281,7 @@ zetsu.addEventListener('input', function () {
               // Populate suggestions list with new order
               suggestionsList.innerHTML = '';
               for (let k = 0; k < suggestionsArray.length; k++) {
-                if (!zetsu.innerText.startsWith(suggestionsArray[0].raw + ' ')) {
+                if (!zetsu.innerText.startsWith(suggestionsArray[k].raw + ' ')) {
                   populateSuggestion(suggestionsArray[k].command, suggestionsArray[k].id);
                 }
               }

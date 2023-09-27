@@ -14,7 +14,6 @@ const commands = {
     description: 'Express chimeric antigen receptor to recognize Tumor-Associated Antigens and kill cancer cells.',
     keywords: ['express', 'hunt', 'find', 'receptor', 'protein', 'molecule', 'chimeric', 'antigen', 'car', 'show', 'display', 'add', 'unmask', 'unveil', 'reveal', ...TAAs],
     acceptedArgs: TAAs,
-    acceptedMods: ['--h', ...CSDomains],
     hints: {
       default: {
         title: 'Express CAR',
@@ -33,8 +32,8 @@ const commands = {
       let intendedCAR = input.split(' ')[1].toLowerCase();
       clearZetsu();
       thread.innerHTML = '';
-      if (intendedCAR === '--h') {
-        let output = createOutputDiv(`TAAs: <span class="lilac" style="font-weight: 600">${receptors.join(', ').toUpperCase()}</span>`, 'wheat');
+      if (input.includes('--h')) {
+        let output = createOutputDiv(`TAAs: <span class="lilac" style="font-weight: 600">${TAAs.join(', ').toUpperCase()}</span>`, 'wheat');
         returnOutput(output, 0);
         return;
       }
@@ -98,7 +97,6 @@ const commands = {
     description: 'Release the brakes on killer T cells and the immune system.',
     keywords: ['inhibit', 'cpt', 'block', 'prevent', 'checkpoint', ...inhibitors],
     acceptedArgs: inhibitors,
-    acceptedMods: ['--h'],
     hints: {
       default: {
         title: 'Inhibit checkpoint',
@@ -173,7 +171,6 @@ const commands = {
     description: 'Reset the system... a fresh start.',
     keywords: ['reset', 'clear', 'restart', 'refresh', 'start over', 'reset all'],
     acceptedArgs: [],
-    acceptedMods: [],
     hints: {
       default: {
         title: 'Clear thread and reset system',
@@ -190,7 +187,6 @@ const commands = {
     description: 'Get help.',
     keywords: ['h', 'help', 'about', 'project', 'zetsu', 'immune system', 'immunity', 'commands', 'info'],
     acceptedArgs: [],
-    acceptedMods: [],
     hints: {
       default: {
         title: 'Show information about how to use Zetsu',
