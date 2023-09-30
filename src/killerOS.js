@@ -29,14 +29,14 @@ const commands = {
       },
     },
     run: (input) => {
-      let intendedCAR = input.split(' ')[1].toLowerCase();
       clearZetsu();
       thread.innerHTML = '';
-      if (input.includes('--h')) {
+      if (input.includes('--h') || input.includes('--help') || input === 'exp') {
         let output = createOutputDiv(`TAAs: <span class="lilac" style="font-weight: 600">${TAAs.join(', ').toUpperCase()}</span>`, 'wheat');
         returnOutput(output, 0);
         return;
       }
+      intendedCAR = input.split(' ')[1].toLowerCase();
       if (TAAs.includes(intendedCAR) || intendedCAR === 'car') {
         if (intendedCAR === 'car') {
           intendedCAR = randomReceptor;
