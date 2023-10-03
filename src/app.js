@@ -17,7 +17,7 @@ let zetsuBar = document.querySelector('.zetsu-input');
 let zetsu = document.querySelector('.zetsu-input-text'); // Zetsu input field
 let cursor = document.querySelector('.cursor'); // Zetsu input fake cursor
 let running = document.querySelector('.running'); // Zetsu running indicator
-let prevInputs = []; // Zetsu input history
+let history = []; // Zetsu input history
 // Suggestions and suggestion details
 let suggestionsContainer = document.querySelector('.suggestions-container');
 let suggestionsListContainer = document.querySelector('.suggestions-list-container');
@@ -33,8 +33,6 @@ let detailsSyntax = document.querySelector('.details-syntax');
 
 window.onload = () => {
   zetsu.focus();
-  // displayHelpCommands(commands);
-  // zetsuInitContent.innerHTML = `Hi there. First time? Use '<span class="sweetgrass thicc">h</span>' for help.`;
   zetsuInitContent.innerHTML = `Command suggestions and info will appear here.`;
 };
 
@@ -49,7 +47,7 @@ const focusAtEnd = () => {
 
 // Listening for click and focusing at end of editor
 workbook.addEventListener('click', function (e) {
-  // Zetsu on zetsu if target is not thread text
+  // Focus on zetsu if target is not thread text
   if (!e.target.classList.contains('thread-text')) {
     zetsu.focus();
   }
@@ -235,26 +233,37 @@ zetsu.addEventListener('input', function () {
             // remove hyphens from input word and argument
             argCheckInput = inputWords[i].replace(/-/g, '');
             argCheckArg = arg.replace(/-/g, '');
-            // fuzzy search accepted args
-            let levDist = levenshteinDistance(argCheckInput, argCheckArg);
-            let similarity = 1 - levDist / Math.max(argCheckInput.length, argCheckArg.length);
-            // if input word is similar to argument, add argument to command
-            if (similarity > 0.66) {
+            // if input word matches argument, add argument to command
+            if (argCheckInput.toLowerCase() === argCheckArg.toLowerCase()) {
               argument = arg;
             }
           });
+          let alreadySuggested = false;
           if (argument !== '') {
+            // check suggestions array for existing suggestion with same raw command and remove it from array
+            for (let k = 0; k < suggestionsArray.length; k++) {
+              if (suggestionsArray[k].raw.toLowerCase() === fullCommand.toLowerCase()) {
+                suggestionsArray.splice(k, 1);
+              }
+            }
             fullCommand = fullCommand + ' ' + argument.toUpperCase();
             commandToDisplay = commandToDisplay + ' ' + `<span class="lilac">${argument.toUpperCase()}</span>`;
             idToPass = argument.toLowerCase();
             similarity++;
+          } else {
+            // Check if suggestions array contains the same command but with an argument
           }
-          let alreadySuggested = false;
           for (let k = 0; k < suggestionsArray.length; k++) {
+            // check suggestions array for existing suggestion
             if (suggestionsArray[k].raw.toLowerCase() === fullCommand.toLowerCase()) {
               alreadySuggested = true;
             }
+            // Check if suggestions array contains the same command but with an argument
+            if (argument === '' && suggestionsArray[k].raw.toLowerCase() === fullCommand.toLowerCase() + ' ' + suggestionsArray[k].id.toLowerCase()) {
+              alreadySuggested = true;
+            }
           }
+          // Add suggestion to suggestions array if it hasn't already been suggested
           if (!alreadySuggested) {
             let suggestion = {
               raw: fullCommand,
@@ -292,13 +301,9 @@ zetsu.addEventListener('input', function () {
   } else {
     showZetsuInit();
   }
-  suggestionsArray = [];
   let suggestionIndex = -1;
-  // Listening for up and down arrow keys to cycle through suggestions
+  // Listen for up and down arrow keys to cycle through suggestions
   zetsu.addEventListener('keydown', function (e) {
-    for (let i = 0; i < suggestions.length; i++) {
-      suggestions[i].classList.remove('active');
-    }
     // Check if suggestions are present
     if (suggestions.length !== 0) {
       if (e.key === 'ArrowDown') {
@@ -434,9 +439,9 @@ zetsu.addEventListener('keydown', function (e) {
     let input = zetsu.innerText.trim();
     // Execute commands and return output
     if (input !== '') {
-      prevInputs.push(input);
-      localStorage.setItem('prevInputs', JSON.stringify(prevInputs));
-      console.log(prevInputs);
+      history.push(input);
+      localStorage.setItem('history', JSON.stringify(history));
+      console.log(history);
       clearZetsu();
       let parts = input.split(' ');
       let command = parts[0].toLowerCase();

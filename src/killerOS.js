@@ -205,7 +205,16 @@ const commands = {
 
 // Run help command if user clicks on logo
 logoBtn.addEventListener('click', () => {
-  commands.help.run();
-  // Focus on input after help command is run
+  // check if help was the last command run
+  if (history[history.length - 1] !== 'help') {
+    // if not, add help to history and run help
+    history.push('help');
+    commands.help.run();
+  } else {
+    // if so, clear thread and remove help from history
+    history.pop();
+    thread.innerHTML = '';
+  }
   zetsu.focus();
+  focusAtEnd();
 });
