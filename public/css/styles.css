@@ -442,7 +442,7 @@ main {
     margin-bottom: 0.75rem;
   }
   .thread {
-    padding: 0 1.25rem;
+    padding: 0 1.25rem 0.5rem 1.25rem;
     width: calc(100% - 2.5rem);
     font-size: var(--xSmallSize);
     line-height: 1.25rem;
