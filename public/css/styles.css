@@ -361,6 +361,11 @@ main {
   margin: 0;
   padding: 1.25rem 2.25rem;
 }
+/* change color of logo text when actively clicking */
+.logo-container:active > .logo-text {
+  color: var(--sweetgrass);
+  transition: none;
+}
 .logo {
   display: inline-flex;
   align-items: center;

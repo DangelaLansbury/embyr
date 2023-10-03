@@ -4,6 +4,7 @@ let CSDomains = ['cd28', '4-1bb', 'ox40', 'icos'];
 let inhibitors = ['cd80', 'pd-l1', 'pd-l2', 'ctla-4', 'pd-1'];
 let randomReceptor = TAAs[Math.floor(Math.random() * TAAs.length)];
 let randomInhibitor = inhibitors[Math.floor(Math.random() * inhibitors.length)];
+let logoBtn = document.querySelector('.logo-container');
 
 // --- COMMANDS ---
 
@@ -209,3 +210,8 @@ const commands = {
     },
   },
 };
+
+// Run help command if user clicks on logo
+logoBtn.addEventListener('click', () => {
+  commands.help.run();
+});
