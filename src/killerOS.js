@@ -8,9 +8,9 @@ let randomInhibitor = inhibitors[Math.floor(Math.random() * inhibitors.length)];
 // --- COMMANDS ---
 
 const commands = {
-  exp: {
+  express: {
     meta: false,
-    name: 'express CAR',
+    chain: false,
     description: 'Express chimeric antigen receptor to recognize Tumor-Associated Antigens and kill cancer cells.',
     keywords: ['express', 'hunt', 'find', 'receptor', 'protein', 'molecule', 'chimeric', 'antigen', 'car', 'show', 'display', 'add', 'unmask', 'unveil', 'reveal', ...TAAs],
     acceptedArgs: TAAs,
@@ -91,9 +91,9 @@ const commands = {
       }
     },
   },
-  inh: {
+  inhibit: {
     meta: false,
-    name: 'Inhibit checkpoint',
+    chain: false,
     description: 'Release the brakes on killer T cells and the immune system.',
     keywords: ['inhibit', 'cpt', 'block', 'prevent', 'checkpoint', ...inhibitors],
     acceptedArgs: inhibitors,
@@ -167,7 +167,7 @@ const commands = {
   },
   r: {
     meta: true,
-    name: 'Reset all',
+    chain: false,
     description: 'Reset the system... a fresh start.',
     keywords: ['reset', 'clear', 'restart', 'refresh', 'start over', 'reset all'],
     acceptedArgs: [],
@@ -183,9 +183,9 @@ const commands = {
   },
   help: {
     meta: true,
-    name: 'More commands',
+    chain: false,
     description: 'Get help.',
-    keywords: ['h', 'help', 'about', 'project', 'zetsu', 'immune system', 'immunity', 'commands', 'info'],
+    keywords: ['h', 'help', 'about', 'project', 'zetsu', 'commands', 'info'],
     acceptedArgs: [],
     hints: {
       default: {
