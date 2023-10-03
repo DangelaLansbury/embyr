@@ -10,7 +10,6 @@ let logoBtn = document.querySelector('.logo-container');
 
 const commands = {
   express: {
-    meta: false,
     description: 'Express chimeric antigen receptor to recognize Tumor-Associated Antigens and kill cancer cells.',
     keywords: ['express', 'hunt', 'find', 'receptor', 'protein', 'molecule', 'chimeric', 'antigen', 'car', 'show', 'display', 'add', 'unmask', 'unveil', 'reveal', ...TAAs],
     acceptedArgs: TAAs,
@@ -92,7 +91,6 @@ const commands = {
     },
   },
   inhibit: {
-    meta: false,
     description: 'Release the brakes on killer T cells and the immune system.',
     keywords: ['inhibit', 'cpt', 'block', 'prevent', 'checkpoint', ...inhibitors],
     acceptedArgs: inhibitors,
@@ -165,7 +163,6 @@ const commands = {
     },
   },
   r: {
-    meta: true,
     description: 'Reset the system... a fresh start.',
     keywords: ['reset', 'clear', 'restart', 'refresh', 'start over', 'reset all'],
     acceptedArgs: [],
@@ -175,12 +172,11 @@ const commands = {
         description: 'Reset the system... a fresh start.',
       },
     },
-    run: (input, arg) => {
+    run: () => {
       thread.innerHTML = '';
     },
   },
   help: {
-    meta: true,
     description: 'Get help.',
     keywords: ['h', 'help', 'about', 'project', 'zetsu', 'commands', 'info'],
     acceptedArgs: [],

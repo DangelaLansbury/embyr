@@ -86,18 +86,6 @@ const returnNullAndHelp = (command, delay) => {
   returnOutput(createOutputDiv(helpThread, 'wheat'), delay);
 };
 
-// // populate help bar with commands
-// const displayHelpCommands = (commands) => {
-//   for (let command in commands) {
-//     let commandHint = document.createElement('div');
-//     commandHint.className = 'help-bar-hint';
-//     commandHint.innerHTML = `<div class="help-bar-cmd thicc">${command}</div><div class="help-bar-text">${commands[command].name.toLowerCase()}</div>`;
-//     if (commands[command].meta === true) {
-//       help2.appendChild(commandHint);
-//     }
-//   }
-// };
-
 // --- SUGGESTIONS ---
 
 // toggle zetsu helper display between init and suggestions if there are suggestions
@@ -236,7 +224,7 @@ zetsu.addEventListener('input', function () {
       for (let j = 0; j < keywords.length; j++) {
         let levDist = levenshteinDistance(inputWords[i], keywords[j]);
         let similarity = 1 - levDist / Math.max(inputWords[i].length, keywords[j].length);
-        if (similarity > 0.6) {
+        if (similarity > 0.66) {
           let fullCommand = command;
           let argument = '';
           let commandToDisplay = command;
@@ -244,10 +232,14 @@ zetsu.addEventListener('input', function () {
           // check if input contains any accepted arguments
           let acceptedArgs = commands[command].acceptedArgs;
           acceptedArgs.forEach((arg) => {
+            // remove hyphens from input word and argument
+            argCheckInput = inputWords[i].replace(/-/g, '');
+            argCheckArg = arg.replace(/-/g, '');
             // fuzzy search accepted args
-            let levDist = levenshteinDistance(inputWords[i], arg);
-            let similarity = 1 - levDist / Math.max(inputWords[i].length, arg.length);
-            if (similarity > 0.6) {
+            let levDist = levenshteinDistance(argCheckInput, argCheckArg);
+            let similarity = 1 - levDist / Math.max(argCheckInput.length, argCheckArg.length);
+            // if input word is similar to argument, add argument to command
+            if (similarity > 0.66) {
               argument = arg;
             }
           });
