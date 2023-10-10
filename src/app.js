@@ -447,6 +447,7 @@ zetsu.addEventListener('keydown', function (e) {
       let parts = input.split(' ');
       let command = parts[0].toLowerCase();
       if (commands[command]) {
+        thread.innerHTML = '';
         commands[command].run(input);
       } else {
         returnInput(input);

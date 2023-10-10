@@ -28,13 +28,13 @@ const commands = {
       },
     },
     run: (input) => {
-      thread.innerHTML = '';
+      returnInput(input);
+      let intendedCAR = input.split(' ')[1].toLowerCase();
       if (input.includes('--h') || input.includes('--help') || input === 'car') {
         let output = createOutputDiv(`TAAs: <span class="lilac" style="font-weight: 600">${TAAs.join(', ').toUpperCase()}</span>`, 'wheat');
         returnOutput(output, 0);
         return;
       }
-      intendedCAR = input.split(' ')[1].toLowerCase();
       if (TAAs.includes(intendedCAR) || intendedCAR === 'car') {
         if (intendedCAR === 'car') {
           intendedCAR = randomReceptor;
@@ -110,8 +110,8 @@ const commands = {
       },
     },
     run: (input) => {
+      returnInput(input);
       let intendedInhibitor = input.split(' ')[1].toLowerCase();
-      thread.innerHTML = '';
       if (intendedInhibitor === '--h') {
         let output = createOutputDiv(`Inhibitors: <span class="sweetgrass" style="font-weight: 600">${inhibitors.join(', ').toUpperCase()}</span>`, 'wheat');
         returnOutput(output, 0);
