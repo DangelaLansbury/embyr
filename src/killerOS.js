@@ -9,7 +9,7 @@ let logoBtn = document.querySelector('.logo-container');
 // --- COMMANDS ---
 
 const commands = {
-  express: {
+  car: {
     description: 'Express chimeric antigen receptor to recognize Tumor-Associated Antigens and kill cancer cells.',
     keywords: ['express', 'hunt', 'find', 'receptor', 'protein', 'molecule', 'chimeric', 'antigen', 'car', 'show', 'display', 'add', 'unmask', 'unveil', 'reveal', ...TAAs],
     acceptedArgs: TAAs,
@@ -30,7 +30,7 @@ const commands = {
     run: (input) => {
       clearZetsu();
       thread.innerHTML = '';
-      if (input.includes('--h') || input.includes('--help') || input === 'exp') {
+      if (input.includes('--h') || input.includes('--help') || input === 'car') {
         let output = createOutputDiv(`TAAs: <span class="lilac" style="font-weight: 600">${TAAs.join(', ').toUpperCase()}</span>`, 'wheat');
         returnOutput(output, 0);
         return;
@@ -85,6 +85,8 @@ const commands = {
         executions.forEach((execution) => {
           returnOutput(createOutputDiv(execution.text, execution.class), outputDelay[execution.id - 1]);
         });
+        populateSuggestion('inhibit pd-1', 'pd-1');
+        hideZetsuInit();
       } else {
         returnNullAndHelp(intendedCAR);
       }

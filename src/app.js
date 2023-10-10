@@ -57,6 +57,8 @@ workbook.addEventListener('click', function (e) {
   }
 });
 
+// --- CURSOR ---
+
 // Hide cursor if input loses focus
 zetsu.addEventListener('blur', function (e) {
   cursor.style.display = 'none';
@@ -95,6 +97,18 @@ const hideZetsuInit = () => {
 const showZetsuInit = () => {
   zetsuInit.classList.remove('hidden');
   zetsuHelper.classList.add('hidden');
+};
+
+const toggleZetsuInit = () => {
+  suggestions = document.querySelectorAll('.suggestion');
+  if (suggestions.length !== 0) {
+    // zetsuInitContent.innerHTML = 'Command suggestions and info will appear here.';
+    if (!zetsuInit.classList.contains('hidden')) {
+      hideZetsuInit();
+    }
+  } else {
+    showZetsuInit();
+  }
 };
 
 // display suggestions and detail
@@ -200,7 +214,6 @@ zetsu.addEventListener('input', function () {
   // Check if input is empty
   if (input !== '') {
     cursor.style.display = 'none';
-    // hideZetsuInit();
   } else {
     cursor.style.display = 'inline-flex';
   }
@@ -292,19 +305,12 @@ zetsu.addEventListener('input', function () {
       }
     }
   }
-  suggestions = document.querySelectorAll('.suggestion');
-  if (suggestions.length !== 0) {
-    // zetsuInitContent.innerHTML = 'Command suggestions and info will appear here.';
-    if (!zetsuInit.classList.contains('hidden')) {
-      hideZetsuInit();
-    }
-  } else {
-    showZetsuInit();
-  }
+  toggleZetsuInit();
   let suggestionIndex = -1;
   // Listen for up and down arrow keys to cycle through suggestions
   zetsu.addEventListener('keydown', function (e) {
     // Check if suggestions are present
+    suggestions = document.querySelectorAll('.suggestion');
     if (suggestions.length !== 0) {
       if (e.key === 'ArrowDown') {
         e.preventDefault();
