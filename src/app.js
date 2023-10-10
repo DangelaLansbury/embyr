@@ -414,12 +414,7 @@ zetsu.addEventListener('input', function () {
   // Reset suggestions if all text is deleted at once
   zetsu.addEventListener('keydown', function (e) {
     if (e.key === 'Backspace' && zetsu.innerText.trim().length == 1) {
-      zetsu.innerText = '';
-      cursor.style.display = 'inline-flex';
-      suggestionsList.innerHTML = '';
-      details.innerHTML = '';
-      suggestions = [];
-      showZetsuInit();
+      clearZetsu();
     }
   });
   if (zetsu.innerText.trim().length == 0) {

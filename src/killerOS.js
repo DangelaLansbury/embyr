@@ -28,7 +28,6 @@ const commands = {
       },
     },
     run: (input) => {
-      clearZetsu();
       thread.innerHTML = '';
       if (input.includes('--h') || input.includes('--help') || input === 'car') {
         let output = createOutputDiv(`TAAs: <span class="lilac" style="font-weight: 600">${TAAs.join(', ').toUpperCase()}</span>`, 'wheat');
@@ -112,7 +111,6 @@ const commands = {
     },
     run: (input) => {
       let intendedInhibitor = input.split(' ')[1].toLowerCase();
-      clearZetsu();
       thread.innerHTML = '';
       if (intendedInhibitor === '--h') {
         let output = createOutputDiv(`Inhibitors: <span class="sweetgrass" style="font-weight: 600">${inhibitors.join(', ').toUpperCase()}</span>`, 'wheat');
