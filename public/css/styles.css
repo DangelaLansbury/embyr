@@ -251,7 +251,7 @@ main {
 }
 .cmd::before {
   content: '>';
-  color: var(--sweetgrass);
+  color: var(--wheat);
   font-weight: bold;
   margin-right: 0.75rem;
 }
@@ -350,7 +350,6 @@ main {
 /* ---- LOGO ---- */
 /* header at top of workbook, outside of flex flow */
 .logo-container {
-  cursor: pointer;
   position: absolute;
   top: 6%;
   right: 18%;
@@ -359,7 +358,7 @@ main {
   align-items: center;
   justify-content: flex-end;
   margin: 0;
-  padding: 1.25rem 2.25rem;
+  padding: 1.25rem 2rem;
 }
 /* change color of logo text when actively clicking */
 .logo-container:active > .logo-text {

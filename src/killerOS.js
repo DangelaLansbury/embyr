@@ -84,8 +84,8 @@ const commands = {
         executions.forEach((execution) => {
           returnOutput(createOutputDiv(execution.text, execution.class), outputDelay[execution.id - 1]);
         });
-        populateSuggestion('inhibit pd-1', 'pd-1');
-        hideZetsuInit();
+        populateSuggestion('inhibit PD-1', 'pd-1');
+        toggleZetsuInit();
       } else {
         returnNullAndHelp(intendedCAR);
       }
@@ -193,8 +193,6 @@ const commands = {
         <div class="thread-block">
           <div class="thread-text">A reimagined terminal experience to orchestrate Killer T Cells</div>
           <div class="thread-text small">Fuzzy search executables as you type. Don't remember a command or argument? Try describing it.</div>
-          <div class="thread-text small"><span style="color: var(--lilac)">Ninja</span>: hunt down and kill specific threats. Use <span style="color: var(--sweetgrass)">exp</span> to express chimeric antigen receptors so cancel cells can't hide.</div>
-          <div class="thread-text small"><span style="color: var(--honey)">Berserker</span>: open up a can of whoopass on all they asses. Use <span style="color: var(--sweetgrass)">inh</span> to prevent cancer cells from mellowing you out.</div>
           <div class="thread-text stone small">-- Not what you're looking for? Check out <a href="https://github.com/DangelaLansbury/zetsu">the docs</a> for more info.</div>
         </div>
         `;
@@ -202,19 +200,3 @@ const commands = {
     },
   },
 };
-
-// Run help command if user clicks on logo
-logoBtn.addEventListener('click', () => {
-  // check if help was the last command run
-  if (history[history.length - 1] !== 'help') {
-    // if not, add help to history and run help
-    history.push('help');
-    commands.help.run();
-  } else {
-    // if so, clear thread and remove help from history
-    history.pop();
-    thread.innerHTML = '';
-  }
-  zetsu.focus();
-  focusAtEnd();
-});
