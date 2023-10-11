@@ -200,3 +200,29 @@ const commands = {
     },
   },
 };
+
+function cycleActiveColor() {
+  let currentClass = logoBtn.classList[1];
+  let nextClass = '';
+  if (currentClass === 'active-color-1') {
+    nextClass = 'active-color-2';
+  } else if (currentClass === 'active-color-2') {
+    nextClass = 'active-color-3';
+  } else if (currentClass === 'active-color-3') {
+    nextClass = 'active-color-4';
+  } else if (currentClass === 'active-color-4') {
+    nextClass = 'active-color-5';
+  } else if (currentClass === 'active-color-5') {
+    nextClass = 'active-color-6';
+  } else if (currentClass === 'active-color-6') {
+    nextClass = 'active-color-1';
+  } else if (currentClass === 'active-color-7') {
+    nextClass = 'active-color-1';
+  } else {
+    nextClass = 'active-color-1';
+  }
+  logoBtn.classList.remove(currentClass);
+  logoBtn.classList.add(nextClass);
+}
+
+logoBtn.addEventListener('click', cycleActiveColor);

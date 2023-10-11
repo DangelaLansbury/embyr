@@ -350,6 +350,7 @@ main {
 /* ---- LOGO ---- */
 /* header at top of workbook, outside of flex flow */
 .logo-container {
+  cursor: pointer;
   position: absolute;
   top: 6%;
   right: 18%;
@@ -361,9 +362,26 @@ main {
   padding: 1.25rem 2rem;
 }
 /* change color of logo text when actively clicking */
-.logo-container:active > .logo-text {
+.logo-container.active-color-1 > .logo-text {
+  color: var(--wheat);
+}
+.logo-container.active-color-2 > .logo-text {
+  color: var(--clay);
+}
+.logo-container.active-color-3 > .logo-text {
   color: var(--sweetgrass);
-  transition: none;
+}
+.logo-container.active-color-4 > .logo-text {
+  color: var(--honey);
+}
+.logo-container.active-color-5 > .logo-text {
+  color: var(--river);
+}
+.logo-container.active-color-6 > .logo-text {
+  color: var(--lilac);
+}
+.logo-container.active-color-7 > .logo-text {
+  color: var(--swamp);
 }
 .logo {
   display: inline-flex;
