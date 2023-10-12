@@ -223,6 +223,10 @@ function cycleActiveColor() {
   }
   logoBtn.classList.remove(currentClass);
   logoBtn.classList.add(nextClass);
+  zetsu.focus();
+  if (zetsu.innerText.toString().trim().length > 0) {
+    focusAtEnd();
+  }
 }
 
 logoBtn.addEventListener('click', cycleActiveColor);
