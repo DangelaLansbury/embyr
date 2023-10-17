@@ -11,7 +11,7 @@ let logoBtn = document.querySelector('.logo-container');
 const commands = {
   car: {
     description: 'Express chimeric antigen receptor to recognize Tumor-Associated Antigens and kill cancer cells.',
-    keywords: ['express', 'hunt', 'find', 'receptor', 'protein', 'molecule', 'chimeric', 'antigen', 'car', 'show', 'display', 'add', 'unmask', 'unveil', 'reveal', ...TAAs],
+    keywords: ['express', 'hunt', 'find', 'receptor', 'protein', 'molecule', 'chimeric', 'antigen', 'car', 'show', 'display', 'unmask', 'unveil', 'reveal', ...TAAs],
     acceptedArgs: TAAs,
     hints: {
       default: {

@@ -153,6 +153,20 @@ const returnInput = (input) => {
     let command = inputWords[i].toLowerCase();
     if (commands[command]) {
       inputWords[i] = `<span class="${commandColors[i % 3]} thicc">${command}</span>`;
+      // Check if command has accepted arguments
+      let acceptedArgs = commands[command].acceptedArgs;
+      if (acceptedArgs.length > 0) {
+        // Check if input contains any accepted arguments
+        acceptedArgs.forEach((arg) => {
+          // remove hyphens from input word and argument
+          argCheckInput = inputWords[i + 1].replace(/-/g, '');
+          argCheckArg = arg.replace(/-/g, '');
+          // if input word matches argument, add argument to command
+          if (argCheckInput.toLowerCase() === argCheckArg.toLowerCase()) {
+            inputWords[i + 1] = `<span class="lilac">${arg.toUpperCase()}</span>`;
+          }
+        });
+      }
     }
   }
   input = inputWords.join(' ');
