@@ -215,7 +215,7 @@ function cycleActiveColor() {
   } else if (currentClass === 'active-color-5') {
     nextClass = 'active-color-6';
   } else if (currentClass === 'active-color-6') {
-    nextClass = 'active-color-1';
+    nextClass = 'active-color-7';
   } else if (currentClass === 'active-color-7') {
     nextClass = 'active-color-1';
   } else {
