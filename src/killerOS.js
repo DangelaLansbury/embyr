@@ -39,7 +39,7 @@ const commands = {
         cursor.classList.add('hidden');
         zetsu.classList.add('hidden');
         running.classList.remove('hidden');
-        runningContent.innerHTML = `Expressing ${intendedCAR.toUpperCase()} chimeric antigen receptor...`;
+        runningContent.innerHTML = `Genetically engineering T cells...`;
         if (intendedCAR === 'car') {
           intendedCAR = randomReceptor;
         }
@@ -93,7 +93,6 @@ const commands = {
           running.classList.add('hidden');
           zetsu.classList.remove('hidden');
           zetsu.focus();
-          focusAtEnd();
           cursor.classList.remove('hidden');
         }, outputDelay[executions.length - 1]);
       } else {
@@ -101,7 +100,7 @@ const commands = {
       }
     },
   },
-  inhibit: {
+  block: {
     description: 'Release the brakes on killer T cells and the immune system.',
     keywords: ['inhibit', 'cpt', 'block', 'prevent', 'checkpoint', ...inhibitors],
     acceptedArgs: inhibitors,

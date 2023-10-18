@@ -13,7 +13,6 @@
 .zetsu-input-text.cmd::before {
   content: 'killa@zetsu:~$';
   color: var(--sweetgrass);
-  margin-right: 0.75rem;
 }
 .zetsu-input-text {
   display: inline-flex;
@@ -35,7 +34,6 @@
   display: inline-flex;
   width: 0.563rem;
   height: 1.125rem;
-  /* border-bottom: 2px solid var(--sweetgrass); */
   background-color: var(--sweetgrass);
   animation: blink 1s infinite;
   margin: auto 0;
@@ -47,7 +45,13 @@
   0% {
     opacity: 0;
   }
+  20% {
+    opacity: 0;
+  }
   50% {
+    opacity: 1;
+  }
+  80% {
     opacity: 1;
   }
   100% {
@@ -74,8 +78,8 @@
   align-items: flex-start;
   margin: 0;
   width: 100%;
-  height: calc(6rem + 1px);
-  min-height: calc(6rem + 1px);
+  height: calc(9rem + 1px);
+  min-height: calc(9rem + 1px);
   overflow: hidden;
   background-color: var(--soil);
 }

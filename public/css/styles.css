@@ -177,12 +177,6 @@ a:hover {
   text-decoration: underline;
   color: var(--sweetgrass);
 }
-.stone a {
-  color: var(--wheat);
-}
-.soil-x-lt a {
-  color: var(--stone);
-}
 main {
   display: flex;
   flex-direction: column;
