@@ -11,7 +11,9 @@
   border-top: 1px solid var(--soil-lt);
 }
 .zetsu-input.cmd::before {
+  content: 'killa@zetsu:~$';
   color: var(--sweetgrass);
+  margin-right: 0.5rem;
 }
 .zetsu-input-text {
   display: inline-flex;
@@ -31,9 +33,10 @@
 }
 .cursor {
   display: inline-flex;
-  width: 0.75rem;
-  height: 1.25rem;
-  border-bottom: 2px solid var(--sweetgrass);
+  width: 0.563rem;
+  height: 1.125rem;
+  /* border-bottom: 2px solid var(--sweetgrass); */
+  background-color: var(--sweetgrass);
   animation: blink 1s infinite;
   margin: auto 0;
   z-index: 1;
@@ -59,8 +62,8 @@
   align-items: flex-start;
   margin: 0;
   width: 100%;
-  height: calc(9rem + 1px);
-  min-height: calc(9rem + 1px);
+  height: calc(6rem + 1px);
+  min-height: calc(6rem + 1px);
   overflow: hidden;
   background-color: var(--soil);
 }
@@ -160,9 +163,9 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  margin: 0.75rem 1rem 1rem;
+  margin: 0.75rem 1rem 0.75rem;
   width: calc(100% - 2rem);
-  height: calc(100% - 2rem);
+  height: calc(100% - 1.5rem);
   overflow-y: scroll;
   overscroll-behavior: none;
   -ms-overflow-style: none;

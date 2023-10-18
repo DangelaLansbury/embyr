@@ -366,22 +366,22 @@ main {
   color: var(--wheat);
 }
 .logo-container.active-color-2 > .logo-text {
-  color: var(--clay);
+  color: var(--honey);
 }
 .logo-container.active-color-3 > .logo-text {
   color: var(--sweetgrass);
 }
 .logo-container.active-color-4 > .logo-text {
-  color: var(--honey);
+  color: var(--clay);
 }
 .logo-container.active-color-5 > .logo-text {
   color: var(--river);
 }
 .logo-container.active-color-6 > .logo-text {
-  color: var(--lilac);
+  color: var(--swamp);
 }
 .logo-container.active-color-7 > .logo-text {
-  color: var(--swamp);
+  color: var(--lilac);
 }
 .logo {
   display: inline-flex;

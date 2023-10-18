@@ -84,8 +84,8 @@ const commands = {
         executions.forEach((execution) => {
           returnOutput(createOutputDiv(execution.text, execution.class), outputDelay[execution.id - 1]);
         });
-        populateSuggestion('inhibit PD-1', 'pd-1');
-        toggleZetsuInit();
+        // populateSuggestion('inhibit PD-1', 'pd-1');
+        // toggleZetsuInit();
       } else {
         returnNullAndHelp(intendedCAR);
       }
@@ -178,7 +178,7 @@ const commands = {
   },
   help: {
     description: 'Get help.',
-    keywords: ['h', 'help', 'about', 'project', 'zetsu', 'commands', 'info'],
+    keywords: ['help', 'about', 'project', 'zetsu', 'commands', 'info'],
     acceptedArgs: [],
     hints: {
       default: {
