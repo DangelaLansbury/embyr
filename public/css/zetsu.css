@@ -10,10 +10,10 @@
   width: calc(100% - 5rem);
   border-top: 1px solid var(--soil-lt);
 }
-.zetsu-input.cmd::before {
+.zetsu-input-text.cmd::before {
   content: 'killa@zetsu:~$';
   color: var(--sweetgrass);
-  margin-right: 0.5rem;
+  margin-right: 0.75rem;
 }
 .zetsu-input-text {
   display: inline-flex;
@@ -41,7 +41,7 @@
   margin: auto 0;
   z-index: 1;
   position: relative;
-  left: -0.25rem;
+  left: -0.125rem;
 }
 @keyframes blink {
   0% {
@@ -53,6 +53,18 @@
   100% {
     opacity: 0;
   }
+}
+.running {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  height: 1.5rem;
+  min-height: 1.5rem;
+  min-width: 0.25rem;
+}
+.running-content {
+  display: inline-flex;
 }
 /* ---- COPILOT ---- */
 .zetsu-container {

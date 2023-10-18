@@ -17,6 +17,7 @@ let zetsuBar = document.querySelector('.zetsu-input');
 let zetsu = document.querySelector('.zetsu-input-text'); // Zetsu input field
 let cursor = document.querySelector('.cursor'); // Zetsu input fake cursor
 let running = document.querySelector('.running'); // Zetsu running indicator
+let runningContent = document.querySelector('.running-content'); // Zetsu running text
 let history = []; // Zetsu input history
 // Suggestions and suggestion details
 let suggestionsContainer = document.querySelector('.suggestions-container');
@@ -37,12 +38,14 @@ window.onload = () => {
 };
 
 const focusAtEnd = () => {
-  let range = document.createRange();
-  let sel = window.getSelection();
-  range.setStart(zetsu.childNodes[0], zetsu.innerText.length);
-  range.collapse(true);
-  sel.removeAllRanges();
-  sel.addRange(range);
+  if (zetsu.innerText.toString().trim().length > 0) {
+    let range = document.createRange();
+    let sel = window.getSelection();
+    range.setStart(zetsu.childNodes[0], zetsu.innerText.length);
+    range.collapse(true);
+    sel.removeAllRanges();
+    sel.addRange(range);
+  }
 };
 
 // Listening for click and focusing at end of editor
@@ -52,7 +55,7 @@ workbook.addEventListener('click', function (e) {
     zetsu.focus();
   }
   // Set cursor at end of editor if target is not zetsu
-  if (e.target !== zetsu && zetsu.innerText.toString().trim().length > 0) {
+  if (e.target !== zetsu) {
     focusAtEnd();
   }
 });

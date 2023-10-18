@@ -36,6 +36,10 @@ const commands = {
         return;
       }
       if (TAAs.includes(intendedCAR) || intendedCAR === 'car') {
+        cursor.classList.add('hidden');
+        zetsu.classList.add('hidden');
+        running.classList.remove('hidden');
+        runningContent.innerHTML = `Expressing ${intendedCAR.toUpperCase()} chimeric antigen receptor...`;
         if (intendedCAR === 'car') {
           intendedCAR = randomReceptor;
         }
@@ -84,8 +88,14 @@ const commands = {
         executions.forEach((execution) => {
           returnOutput(createOutputDiv(execution.text, execution.class), outputDelay[execution.id - 1]);
         });
-        // populateSuggestion('inhibit PD-1', 'pd-1');
-        // toggleZetsuInit();
+        // show zetsu again after delay
+        setTimeout(() => {
+          running.classList.add('hidden');
+          zetsu.classList.remove('hidden');
+          zetsu.focus();
+          focusAtEnd();
+          cursor.classList.remove('hidden');
+        }, outputDelay[executions.length - 1]);
       } else {
         returnNullAndHelp(intendedCAR);
       }
