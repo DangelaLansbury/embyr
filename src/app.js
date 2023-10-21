@@ -248,6 +248,72 @@ zetsu.addEventListener('input', function () {
   for (let command in commands) {
     // fuzzy search keywords in each command
     let keywords = commands[command].keywords;
+    // check if input is the beginning of a command
+    if (command.startsWith(inputWords[0].toLowerCase())) {
+      let fullCommand = command;
+      let argument = '';
+      let commandToDisplay = command;
+      let idToPass = 'default';
+      // check if input contains any accepted arguments
+      let acceptedArgs = commands[command].acceptedArgs;
+      acceptedArgs.forEach((arg) => {
+        // remove hyphens from input word and argument
+        argCheckInput = inputWords[0].replace(/-/g, '');
+        argCheckArg = arg.replace(/-/g, '');
+        // if input word matches argument, add argument to command
+        if (argCheckInput.toLowerCase() === argCheckArg.toLowerCase()) {
+          argument = arg;
+        }
+      });
+      let alreadySuggested = false;
+      if (argument !== '') {
+        // check suggestions array for existing suggestion with same raw command and remove it from array
+        for (let k = 0; k < suggestionsArray.length; k++) {
+          if (suggestionsArray[k].raw.toLowerCase() === fullCommand.toLowerCase()) {
+            suggestionsArray.splice(k, 1);
+          }
+        }
+        fullCommand = fullCommand + ' ' + argument.toUpperCase();
+        commandToDisplay = commandToDisplay + ' ' + `<span class="lilac">${argument.toUpperCase()}</span>`;
+        idToPass = argument.toLowerCase();
+      }
+      for (let k = 0; k < suggestionsArray.length; k++) {
+        // check suggestions array for existing suggestion
+        if (suggestionsArray[k].raw.toLowerCase() === fullCommand.toLowerCase()) {
+          alreadySuggested = true;
+        }
+        // Check if suggestions array contains the same command but with an argument
+        if (argument === '' && suggestionsArray[k].raw.toLowerCase() === fullCommand.toLowerCase() + ' ' + suggestionsArray[k].id.toLowerCase()) {
+          alreadySuggested = true;
+        }
+      }
+      // Add suggestion to suggestions array if it hasn't already been suggested
+      if (!alreadySuggested) {
+        let suggestion = {
+          raw: fullCommand,
+          command: commandToDisplay,
+          id: idToPass,
+          similarity: 1,
+        };
+        suggestionsArray.push(suggestion);
+        // Reorder suggestions in order of similarity
+        if (suggestionsArray.length > 0) {
+          suggestionsArray.sort((a, b) => {
+            const nameA = a.similarity;
+            const nameB = b.similarity;
+            return nameB - nameA;
+          });
+          // Populate suggestions list with new order
+          suggestionsList.innerHTML = '';
+          for (let k = 0; k < suggestionsArray.length; k++) {
+            if (!zetsu.innerText.startsWith(suggestionsArray[k].raw + ' ')) {
+              populateSuggestion(suggestionsArray[k].command, suggestionsArray[k].id);
+            }
+          }
+        }
+      }
+    }
+    // Fuzzy search commands and keywords
     for (let i = 0; i < inputWords.length; i++) {
       for (let j = 0; j < keywords.length; j++) {
         let levDist = levenshteinDistance(inputWords[i], keywords[j]);

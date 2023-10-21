@@ -46,42 +46,42 @@ const commands = {
         let executions = [
           {
             id: 1,
-            text: `Extract T cells...`,
+            text: `Extracting T cells`,
             error: `Failed to extract T cells`,
             class: 'stone',
             pass: true,
           },
           {
             id: 2,
-            text: `Engineer cells to express <span class="thicc">${intendedCAR.toUpperCase()}</span> receptors...`,
+            text: `Engineering cells to express <span class="thicc">${intendedCAR.toUpperCase()}</span> receptors`,
             error: `Failed to express ${intendedCAR}`,
             class: 'stone',
             pass: true,
           },
           {
             id: 3,
-            text: `Culture and multiply <span class="thicc">${intendedCAR.toUpperCase()}</span>+ cells...`,
+            text: `Culturing <span class="thicc">${intendedCAR.toUpperCase()}</span>+ cells`,
             error: `Failed to culture cells.`,
             class: 'stone',
             pass: true,
           },
           {
             id: 4,
-            text: `Administer conditioning chemotherapy...`,
+            text: `Administering conditioning chemotherapy`,
             error: `Failed to administer conditioning chemotherapy`,
             class: 'stone',
             pass: true,
           },
           {
             id: 5,
-            text: `Infuse <span class="thicc">${intendedCAR.toUpperCase()}</span>+ CAR T cells...`,
+            text: `Infusing <span class="thicc">${intendedCAR.toUpperCase()}</span>+ CAR T cells`,
             error: `Failed to infuse CAR T cells`,
             class: 'stone',
             pass: true,
           },
           {
             id: 6,
-            text: `<span class="thicc swamp">Success</span>. You can now recognize and phagocytose TAAs expressing <span class="thicc river">${intendedCAR.toUpperCase()}</span>.`,
+            text: `<span class="thicc swamp">Success!</span> You can now recognize and phagocytose TAAs expressing <span class="thicc river">${intendedCAR.toUpperCase()}</span>.`,
             class: 'wheat',
           },
         ];
@@ -201,8 +201,8 @@ const commands = {
       output.innerHTML = `
         <div class="thread-block">
           <div class="thread-text">A reimagined terminal experience to orchestrate Killer T Cells</div>
-          <div class="thread-text small">Fuzzy search executables as you type. Don't remember a command or argument? Try describing it.</div>
-          <div class="thread-text stone small">-- Not what you're looking for? Check out <a href="https://github.com/DangelaLansbury/zetsu">the docs</a> for more info.</div>
+          <div class="thread-text">Fuzzy search executables as you type. Don't remember a command or argument? Try describing it.</div>
+          <div class="thread-text">Not what you're looking for? Check out <a href="https://github.com/DangelaLansbury/zetsu">the docs</a> for more info.</div>
         </div>
         `;
       returnOutput(output, 0);
