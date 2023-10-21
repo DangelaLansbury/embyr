@@ -246,9 +246,9 @@ zetsu.addEventListener('input', function () {
   suggestions = document.querySelectorAll('.suggestion');
   let suggestionsArray = [];
   for (let command in commands) {
-    // fuzzy search keywords in each command
+    // Search commands and keywords
     let keywords = commands[command].keywords;
-    // check if input is the beginning of a command
+    // Check if input is the beginning of a command
     if (command.startsWith(inputWords[0].toLowerCase())) {
       let fullCommand = command;
       let argument = '';

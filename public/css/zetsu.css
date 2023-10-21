@@ -12,7 +12,7 @@
 }
 .zetsu-input-text.cmd::before {
   content: 'killa@zetsu:~$';
-  color: var(--sweetgrass);
+  color: var(--wheat);
 }
 .zetsu-input-text {
   display: inline-flex;
@@ -21,7 +21,7 @@
   min-height: 1.5rem;
   min-width: 0.25rem;
   white-space: pre-wrap;
-  caret-color: #8ec07c;
+  caret-color: var(--sweetgrass);
 }
 .zetsu-input-text:focus {
   border: none;
@@ -148,7 +148,6 @@
   height: 2rem;
   min-height: 2rem;
   transition: 0.2s;
-  /* --command-icon: url('../images/terminal.svg'); */
 }
 .cmd-icon {
   display: inline-flex;
