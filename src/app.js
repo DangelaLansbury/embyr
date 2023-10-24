@@ -210,8 +210,9 @@ const levenshteinDistance = (str1, str2) => {
 };
 
 // Populating suggestions container with suggestions based on input
+let input = '';
 zetsu.addEventListener('input', function () {
-  let input = this.innerText;
+  input = this.innerText;
   // Check if input is empty
   if (input !== '') {
     cursor.style.display = 'none';
@@ -300,123 +301,123 @@ zetsu.addEventListener('input', function () {
     }
   }
   toggleZetsuInit();
-  let suggestionIndex = -1;
-  // Listen for up and down arrow keys to cycle through suggestions
-  zetsu.addEventListener('keydown', function (e) {
-    // Check if suggestions are present
-    suggestions = document.querySelectorAll('.suggestion');
-    if (suggestions.length !== 0) {
-      if (e.key === 'ArrowDown') {
-        e.preventDefault();
-        details.innerHTML = '';
-        if (cursor.style.display === 'inline-flex') {
-          cursor.style.display = 'none';
-        }
-        if (suggestionIndex !== -1) {
-          suggestions[suggestionIndex].classList.remove('active');
-        }
-        suggestionIndex++;
-        if (suggestionIndex > suggestions.length - 1) {
-          suggestionIndex = -1;
-          if (input !== '') {
-            zetsu.innerText = input;
-          } else {
-            zetsu.innerText = '';
-          }
-        } else if (suggestionIndex !== -1) {
-          suggestions[suggestionIndex].classList.add('active');
-          let suggCmd = suggestions[suggestionIndex].querySelector('.suggestion-command').innerText;
-          let suggCmdPar = suggestions[suggestionIndex].querySelector('.suggestion-command').dataset.cmd;
-          let suggCmdSub = suggestions[suggestionIndex].querySelector('.suggestion-command').dataset.sub;
-          let suggCmdArg = suggestions[suggestionIndex].querySelector('.suggestion-command').dataset.arg;
-          console.log(suggestionsArray, suggCmdPar, suggCmdSub, suggCmdArg);
-          let title = commands[suggCmdPar].ops[suggCmdSub].title;
-          let description = commands[suggCmdPar].ops[suggCmdSub].description;
-          zetsu.innerText = suggCmd;
-          // Display suggestion details
-          if (suggestions.length !== 0 && suggestionIndex !== -1) {
-            displayDetails(title, description);
-          } else {
-            details.innerHTML = '';
-          }
-          suggestions[suggestionIndex].scrollIntoView({
-            block: 'nearest',
-            inline: 'end',
-            behavior: 'smooth',
-          });
-        }
-        if (zetsu.innerText !== '') {
-          focusAtEnd();
+});
+
+// Listen for up and down arrow keys to cycle through suggestions
+let suggestionIndex = -1;
+zetsu.addEventListener('keydown', function (e) {
+  // Check if suggestions are present
+  suggestions = document.querySelectorAll('.suggestion');
+  if (suggestions.length !== 0) {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      details.innerHTML = '';
+      if (cursor.style.display === 'inline-flex') {
+        cursor.style.display = 'none';
+      }
+      if (suggestionIndex !== -1) {
+        suggestions[suggestionIndex].classList.remove('active');
+      }
+      suggestionIndex++;
+      if (suggestionIndex > suggestions.length - 1) {
+        suggestionIndex = -1;
+        if (input !== '') {
+          zetsu.innerText = input;
         } else {
-          cursor.style.display = 'inline-flex';
+          zetsu.innerText = '';
         }
-      } else if (e.key === 'ArrowUp') {
-        e.preventDefault();
-        details.innerHTML = '';
-        if (cursor.style.display === 'inline-flex') {
-          cursor.style.display = 'none';
-        }
-        if (suggestionIndex !== -1) {
-          suggestions[suggestionIndex].classList.remove('active');
-        }
-        suggestionIndex--;
-        if (suggestionIndex === -1) {
-          if (input !== '') {
-            zetsu.innerText = input;
-          } else {
-            zetsu.innerText = '';
-          }
-        }
-        if (suggestionIndex < -1) {
-          suggestionIndex = suggestions.length - 1;
-        }
-        if (suggestionIndex !== -1) {
-          suggestions[suggestionIndex].classList.add('active');
-          let suggCmd = suggestions[suggestionIndex].querySelector('.suggestion-command').innerText;
-          let suggCmdPar = suggestions[suggestionIndex].querySelector('.suggestion-command').dataset.cmd;
-          let suggCmdSub = suggestions[suggestionIndex].querySelector('.suggestion-command').dataset.sub;
-          let suggCmdArg = suggestions[suggestionIndex].querySelector('.suggestion-command').dataset.arg;
-          let title = commands[suggCmdPar].ops[suggCmdSub].title;
-          let description = commands[suggCmdPar].ops[suggCmdSub].description;
-          zetsu.innerText = suggCmd;
-          // Display suggestion details
-          if (suggestions.length !== 0 && suggestionIndex !== -1) {
-            displayDetails(title, description);
-          } else {
-            details.innerHTML = '';
-          }
-          suggestions[suggestionIndex].scrollIntoView({
-            block: 'nearest',
-            inline: 'end',
-            behavior: 'smooth',
-          });
-        }
-        if (zetsu.innerText !== '') {
-          focusAtEnd();
+      } else if (suggestionIndex !== -1) {
+        suggestions[suggestionIndex].classList.add('active');
+        let suggCmd = suggestions[suggestionIndex].querySelector('.suggestion-command').innerText;
+        let suggCmdPar = suggestions[suggestionIndex].querySelector('.suggestion-command').dataset.cmd;
+        let suggCmdSub = suggestions[suggestionIndex].querySelector('.suggestion-command').dataset.sub;
+        let suggCmdArg = suggestions[suggestionIndex].querySelector('.suggestion-command').dataset.arg;
+        console.log(suggCmdPar, suggCmdSub, suggCmdArg);
+        let title = commands[suggCmdPar].ops[suggCmdSub].title;
+        let description = commands[suggCmdPar].ops[suggCmdSub].description;
+        zetsu.innerText = suggCmd;
+        // Display suggestion details
+        if (suggestions.length !== 0 && suggestionIndex !== -1) {
+          displayDetails(title, description);
         } else {
-          cursor.style.display = 'inline-flex';
+          details.innerHTML = '';
+        }
+        suggestions[suggestionIndex].scrollIntoView({
+          block: 'nearest',
+          inline: 'end',
+          behavior: 'smooth',
+        });
+      }
+      if (zetsu.innerText !== '') {
+        focusAtEnd();
+      } else {
+        cursor.style.display = 'inline-flex';
+      }
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      details.innerHTML = '';
+      if (cursor.style.display === 'inline-flex') {
+        cursor.style.display = 'none';
+      }
+      if (suggestionIndex !== -1) {
+        suggestions[suggestionIndex].classList.remove('active');
+      }
+      suggestionIndex--;
+      if (suggestionIndex === -1) {
+        if (input !== '') {
+          zetsu.innerText = input;
+        } else {
+          zetsu.innerText = '';
         }
       }
-    } else {
-      suggestionIndex = -1;
+      if (suggestionIndex < -1) {
+        suggestionIndex = suggestions.length - 1;
+      }
+      if (suggestionIndex !== -1) {
+        suggestions[suggestionIndex].classList.add('active');
+        let suggCmd = suggestions[suggestionIndex].querySelector('.suggestion-command').innerText;
+        let suggCmdPar = suggestions[suggestionIndex].querySelector('.suggestion-command').dataset.cmd;
+        let suggCmdSub = suggestions[suggestionIndex].querySelector('.suggestion-command').dataset.sub;
+        let suggCmdArg = suggestions[suggestionIndex].querySelector('.suggestion-command').dataset.arg;
+        let title = commands[suggCmdPar].ops[suggCmdSub].title;
+        let description = commands[suggCmdPar].ops[suggCmdSub].description;
+        zetsu.innerText = suggCmd;
+        // Display suggestion details
+        if (suggestions.length !== 0 && suggestionIndex !== -1) {
+          displayDetails(title, description);
+        } else {
+          details.innerHTML = '';
+        }
+        suggestions[suggestionIndex].scrollIntoView({
+          block: 'nearest',
+          inline: 'end',
+          behavior: 'smooth',
+        });
+      }
+      if (zetsu.innerText !== '') {
+        focusAtEnd();
+      } else {
+        cursor.style.display = 'inline-flex';
+      }
     }
-  });
-  // Reset suggestion index when user presses space or continues to type or hits enter
-  zetsu.addEventListener('keydown', function (e) {
-    if (e.key === ' ' || e.key === 'Backspace' || e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
-      suggestionIndex = -1;
-    } else if (e.key === 'Enter') {
-      input = '';
-      suggestionIndex = -1;
-    }
-  });
-  // Reset suggestions if all text is deleted at once
-  zetsu.addEventListener('keydown', function (e) {
-    if (e.key === 'Backspace' && zetsu.innerText.trim().length == 1) {
-      clearZetsu();
-    }
-  });
-  if (zetsu.innerText.trim().length == 0) {
+  } else {
+    suggestionIndex = -1;
+  }
+});
+
+// Reset suggestion index when user presses space or continues to type or hits enter
+zetsu.addEventListener('keydown', function (e) {
+  if (e.key === ' ' || e.key === 'Backspace' || e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+    suggestionIndex = -1;
+  } else if (e.key === 'Enter') {
+    input = '';
+    suggestionIndex = -1;
+  }
+});
+
+// Reset suggestions if all text is deleted at once
+zetsu.addEventListener('keydown', function (e) {
+  if (e.key === 'Backspace' && zetsu.innerText.trim().length == 1) {
     clearZetsu();
   }
 });

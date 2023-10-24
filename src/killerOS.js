@@ -39,13 +39,6 @@ const commands = {
         title: 'Build cell',
         do: 'make',
         description: 'Genetically engineer a new killer T cell.',
-        // hints: {
-        //   default: {
-        //     title: 'Build cell',
-        //     do: 'make',
-        //     description: 'Genetically engineer a new killer T cell.',
-        //   },
-        // },
       },
       car: {
         keywords: [...carKeywords],
@@ -54,23 +47,6 @@ const commands = {
         title: 'Express chimeric antigen receptor',
         do: 'make car',
         description: 'Show CAR on cell surface to recognize covert cancer cells.',
-        // hints: {
-        //   default: {
-        //     title: 'Express CAR',
-        //     do: 'make car',
-        //     description: 'Show chimeric antigen receptor on cell surface to recognize covert cancer cells.',
-        //   },
-        //   egfr: {
-        //     title: 'Express EGFR',
-        //     do: 'make car -EGFR',
-        //     description: 'Show chimeric antigen receptor for EGFR on cell surface to recognize covert cancer cells.',
-        //   },
-        //   cd19: {
-        //     title: 'Express CD19',
-        //     do: 'make car -CD19',
-        //     description: 'Show chimeric antigen receptor for CD19 on cell surface to recognize covert cancer cells.',
-        //   },
-        // },
       },
     },
     run: (input) => {
