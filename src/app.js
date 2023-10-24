@@ -114,11 +114,10 @@ const toggleZetsuInit = () => {
 };
 
 // display suggestions and detail
-const populateSuggestion = (command, id) => {
+const populateSuggestion = (command, parent, sub, arg) => {
   let suggestion = document.createElement('div');
-  let cmd = command.split(' ')[0].toLowerCase();
   suggestion.className = 'suggestion thicc sweetgrass';
-  suggestion.innerHTML = `<div class="cmd-icon"><img src="public/icons/${cmd}.svg" class="icon-svg" alt="icon for ${cmd}" /></div><div class="suggestion-command" data-id="${id}">${command}</div>`;
+  suggestion.innerHTML = `<div class="cmd-icon"><img src="public/icons/${parent}.svg" class="icon-svg" alt="icon for ${parent}" /></div><div class="suggestion-command" data-cmd="${parent}" data-sub="${sub}" data-arg=${arg}>${command}</div>`;
   suggestionsList.appendChild(suggestion);
 };
 
@@ -155,20 +154,6 @@ const returnInput = (input) => {
     let command = inputWords[i].toLowerCase();
     if (commands[command]) {
       inputWords[i] = `<span class="${commandColors[i % 3]} thicc">${command}</span>`;
-      // Check if command has accepted arguments
-      // let acceptedArgs = commands[command].acceptedArgs;
-      // if (acceptedArgs.length > 0) {
-      //   // Check if input contains any accepted arguments
-      //   acceptedArgs.forEach((arg) => {
-      //     // remove hyphens from input word and argument
-      //     let argCheckInput = inputWords[i + 1].replace(/-/g, '');
-      //     let argCheckArg = arg.replace(/-/g, '');
-      //     // if input word matches argument, add argument to command
-      //     if (argCheckInput.toLowerCase() === argCheckArg.toLowerCase()) {
-      //       inputWords[i + 1] = `<span class="lilac">${arg.toUpperCase()}</span>`;
-      //     }
-      //   });
-      // }
     }
   }
   input = inputWords.join(' ');
@@ -245,76 +230,67 @@ zetsu.addEventListener('input', function () {
   suggestions = document.querySelectorAll('.suggestion');
   let suggestionsArray = [];
   for (let command in commands) {
-    // Fuzzy search commands and keywords
-    let keywords = commands[command].keywords;
-    let subCommands = commands[command].subCommands;
-    for (let i = 0; i < inputWords.length; i++) {
-      for (let j = 0; j < keywords.length; j++) {
-        // Check if first input word is the start of a command
-        let levDist = levenshteinDistance(inputWords[i], keywords[j]);
-        let similarity = 1 - levDist / Math.max(inputWords[i].length, keywords[j].length);
-        if (similarity > 0.66) {
-          let fullCommand = commands[command].hints['default'].exe;
-          let argument = '';
-          // let commandToDisplay = commands[command].hints['default'].exe;
-          let idToPass = 'default';
-          // Check if input contains a subcommand and then check if input contains any accepted arguments for subcommand
-          for (let sub in subCommands) {
-            // check if input equals a subcommand
-            if (keywords[j].toLowerCase() === sub.toLowerCase()) {
-              argument = sub.toLowerCase();
-            }
-            let subArgs = subCommands[sub].acceptedArgs;
-            subArgs.forEach((arg) => {
+    // Search through ops object for each command
+    for (let op in commands[command].ops) {
+      let keywords = commands[command].ops[op].keywords;
+      for (let i = 0; i < inputWords.length; i++) {
+        for (let j = 0; j < keywords.length; j++) {
+          // Fuzzy search input and keywords
+          let levDist = levenshteinDistance(inputWords[i], keywords[j]);
+          let similarity = 1 - levDist / Math.max(inputWords[i].length, keywords[j].length);
+          if (similarity > 0.66) {
+            let toDo = commands[command].ops[op].do;
+            let argument = '';
+            // check if input contains any accepted arguments
+            let acceptedArgs = commands[command].ops[op].acceptedArgs;
+            acceptedArgs.forEach((arg) => {
               // remove hyphens from input word and argument
-              let argCheckInput = inputWords[i].replace(/-/g, '');
-              let argCheckArg = arg.replace(/-/g, '');
+              argCheckInput = inputWords[i].replace(/-/g, '');
+              argCheckArg = arg.replace(/-/g, '');
               // if input word matches argument, add argument to command
               if (argCheckInput.toLowerCase() === argCheckArg.toLowerCase()) {
-                argument = arg.toLowerCase();
+                argument = arg;
+                // check suggestions array for existing suggestion with same raw command and remove it from array
+                for (let k = 0; k < suggestionsArray.length; k++) {
+                  if (suggestionsArray[k].command.toLowerCase() === toDo.toLowerCase()) {
+                    suggestionsArray.splice(k, 1);
+                  }
+                }
+                let modifier = commands[command].ops[op].argModifier;
+                toDo += ` ${modifier}${arg.toUpperCase()}`;
+                similarity++;
               }
             });
-          }
-          if (argument !== '') {
-            // check suggestions array for existing suggestion with same raw command and remove it from array
+            let alreadySuggested = false;
             for (let k = 0; k < suggestionsArray.length; k++) {
-              if (suggestionsArray[k].raw.toLowerCase() === fullCommand.toLowerCase()) {
-                suggestionsArray.splice(k, 1);
+              // check suggestions array for existing suggestion
+              if (suggestionsArray[k].command.toLowerCase() === toDo.toLowerCase()) {
+                alreadySuggested = true;
               }
             }
-            fullCommand = commands[command].hints[argument.toLowerCase()].exe;
-            // commandToDisplay = commands[command].hints[argument.toLowerCase()].exe;
-            idToPass = argument.toLowerCase();
-            similarity++;
-          }
-          let alreadySuggested = false;
-          for (let k = 0; k < suggestionsArray.length; k++) {
-            // check suggestions array for existing suggestion
-            if (suggestionsArray[k].raw.toLowerCase() === fullCommand.toLowerCase()) {
-              alreadySuggested = true;
-            }
-          }
-          // Add suggestion to suggestions array if it hasn't already been suggested
-          if (!alreadySuggested) {
-            let suggestion = {
-              raw: fullCommand,
-              command: fullCommand,
-              id: idToPass,
-              similarity: similarity,
-            };
-            suggestionsArray.push(suggestion);
-            // Reorder suggestions in order of similarity
-            if (suggestionsArray.length > 0) {
-              suggestionsArray.sort((a, b) => {
-                const nameA = a.similarity;
-                const nameB = b.similarity;
-                return nameB - nameA;
-              });
-              // Populate suggestions list with new order
-              suggestionsList.innerHTML = '';
-              for (let k = 0; k < suggestionsArray.length; k++) {
-                if (!zetsu.innerText.startsWith(suggestionsArray[k].raw + ' ')) {
-                  populateSuggestion(suggestionsArray[k].command, suggestionsArray[k].id);
+            // Add suggestion to suggestions array if it hasn't already been suggested
+            if (!alreadySuggested) {
+              let suggestion = {
+                command: toDo,
+                parentCommand: command,
+                subCommand: op,
+                argument: argument,
+                similarity: similarity,
+              };
+              suggestionsArray.push(suggestion);
+              // Reorder suggestions in order of similarity
+              if (suggestionsArray.length > 0) {
+                suggestionsArray.sort((a, b) => {
+                  const nameA = a.similarity;
+                  const nameB = b.similarity;
+                  return nameB - nameA;
+                });
+                // Populate suggestions list with new order
+                suggestionsList.innerHTML = '';
+                for (let k = 0; k < suggestionsArray.length; k++) {
+                  if (!zetsu.innerText.startsWith(suggestionsArray[k].command + ' ')) {
+                    populateSuggestion(suggestionsArray[k].command, suggestionsArray[k].parentCommand, suggestionsArray[k].subCommand, suggestionsArray[k].argument);
+                  }
                 }
               }
             }
@@ -349,11 +325,14 @@ zetsu.addEventListener('input', function () {
           }
         } else if (suggestionIndex !== -1) {
           suggestions[suggestionIndex].classList.add('active');
-          let suggestedCommand = suggestions[suggestionIndex].querySelector('.suggestion-command').innerText;
-          let suggestedCommandID = suggestions[suggestionIndex].querySelector('.suggestion-command').dataset.id;
-          let title = commands[suggestedCommand.split(' ')[0]].hints[suggestedCommandID].title;
-          let description = commands[suggestedCommand.split(' ')[0]].hints[suggestedCommandID].description;
-          zetsu.innerText = suggestedCommand;
+          let suggCmd = suggestions[suggestionIndex].querySelector('.suggestion-command').innerText;
+          let suggCmdPar = suggestions[suggestionIndex].querySelector('.suggestion-command').dataset.cmd;
+          let suggCmdSub = suggestions[suggestionIndex].querySelector('.suggestion-command').dataset.sub;
+          let suggCmdArg = suggestions[suggestionIndex].querySelector('.suggestion-command').dataset.arg;
+          console.log(suggestionsArray, suggCmdPar, suggCmdSub, suggCmdArg);
+          let title = commands[suggCmdPar].ops[suggCmdSub].title;
+          let description = commands[suggCmdPar].ops[suggCmdSub].description;
+          zetsu.innerText = suggCmd;
           // Display suggestion details
           if (suggestions.length !== 0 && suggestionIndex !== -1) {
             displayDetails(title, description);
@@ -393,11 +372,13 @@ zetsu.addEventListener('input', function () {
         }
         if (suggestionIndex !== -1) {
           suggestions[suggestionIndex].classList.add('active');
-          let suggestedCommand = suggestions[suggestionIndex].querySelector('.suggestion-command').innerText;
-          let suggestedCommandID = suggestions[suggestionIndex].querySelector('.suggestion-command').dataset.id;
-          let title = commands[suggestedCommand.split(' ')[0]].hints[suggestedCommandID].title;
-          let description = commands[suggestedCommand.split(' ')[0]].hints[suggestedCommandID].description;
-          zetsu.innerText = suggestedCommand;
+          let suggCmd = suggestions[suggestionIndex].querySelector('.suggestion-command').innerText;
+          let suggCmdPar = suggestions[suggestionIndex].querySelector('.suggestion-command').dataset.cmd;
+          let suggCmdSub = suggestions[suggestionIndex].querySelector('.suggestion-command').dataset.sub;
+          let suggCmdArg = suggestions[suggestionIndex].querySelector('.suggestion-command').dataset.arg;
+          let title = commands[suggCmdPar].ops[suggCmdSub].title;
+          let description = commands[suggCmdPar].ops[suggCmdSub].description;
+          zetsu.innerText = suggCmd;
           // Display suggestion details
           if (suggestions.length !== 0 && suggestionIndex !== -1) {
             displayDetails(title, description);

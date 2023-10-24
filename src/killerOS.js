@@ -11,8 +11,9 @@ let inhibitors = ['cd80', 'pd-l1', 'pd-l2', 'ctla-4', 'pd-1'];
 
 // Make
 const makeSubs = ['car'];
-const carKeywords = ['express', 'hunt', 'find', 'receptor', 'protein', 'molecule', 'chimeric', 'antigen', 'show', 'display', 'unmask', 'unveil', 'reveal'];
-const carArgs = ['car', ...TAAs];
+const makeKeywords = ['make', 'build', 'new', 'construct', 'engineer', 'manufacture'];
+const carKeywords = ['car', 'express', 'hunt', 'find', 'receptor', 'protein', 'molecule', 'chimeric', 'antigen', 'show', 'display', 'unmask', 'unveil', 'reveal', ...TAAs, ...CSDomains];
+const carArgs = [...TAAs];
 
 let randomReceptor = TAAs[Math.floor(Math.random() * TAAs.length)];
 let randomInhibitor = inhibitors[Math.floor(Math.random() * inhibitors.length)];
@@ -29,32 +30,47 @@ function toggleForRun() {
 const commands = {
   make: {
     description: 'Express chimeric antigen receptor to recognize Tumor-Associated Antigens and kill cancer cells.',
-    keywords: ['make', 'build', 'new', 'construct', 'engineer', 'manufacture', ...TAAs, ...carKeywords, ...makeSubs],
-    subCommands: {
-      car: {
-        acceptedArgs: [...carArgs],
-      },
-    },
-    hints: {
-      default: {
+    // keywords: ['make', 'build', 'new', 'construct', 'engineer', 'manufacture', ...TAAs, ...carKeywords, ...makeSubs],
+    ops: {
+      make: {
+        keywords: makeKeywords,
+        acceptedArgs: [],
+        argModifier: '',
         title: 'Build cell',
-        exe: 'make',
+        do: 'make',
         description: 'Genetically engineer a new killer T cell.',
+        // hints: {
+        //   default: {
+        //     title: 'Build cell',
+        //     do: 'make',
+        //     description: 'Genetically engineer a new killer T cell.',
+        //   },
+        // },
       },
       car: {
-        title: 'Express CAR',
-        exe: 'make car',
-        description: 'Show chimeric antigen receptor on cell surface to recognize covert cancer cells.',
-      },
-      egfr: {
-        title: 'Express EGFR',
-        exe: 'make car -EGFR',
-        description: 'Show chimeric antigen receptor for EGFR on cell surface to recognize covert cancer cells.',
-      },
-      cd19: {
-        title: 'Express CD19',
-        exe: 'make car -CD19',
-        description: 'Show chimeric antigen receptor for CD19 on cell surface to recognize covert cancer cells.',
+        keywords: [...carKeywords],
+        acceptedArgs: [...carArgs],
+        argModifier: '-',
+        title: 'Express chimeric antigen receptor',
+        do: 'make car',
+        description: 'Show CAR on cell surface to recognize covert cancer cells.',
+        // hints: {
+        //   default: {
+        //     title: 'Express CAR',
+        //     do: 'make car',
+        //     description: 'Show chimeric antigen receptor on cell surface to recognize covert cancer cells.',
+        //   },
+        //   egfr: {
+        //     title: 'Express EGFR',
+        //     do: 'make car -EGFR',
+        //     description: 'Show chimeric antigen receptor for EGFR on cell surface to recognize covert cancer cells.',
+        //   },
+        //   cd19: {
+        //     title: 'Express CD19',
+        //     do: 'make car -CD19',
+        //     description: 'Show chimeric antigen receptor for CD19 on cell surface to recognize covert cancer cells.',
+        //   },
+        // },
       },
     },
     run: (input) => {
@@ -129,17 +145,17 @@ const commands = {
   //   hints: {
   //     default: {
   //       title: 'Inhibit checkpoint',
-  //       exe: 'block',
+  //       do: 'block',
   //       description: 'Release the brakes on killer T cells.',
   //     },
   //     'pd-1': {
   //       title: 'Inhibit PD-1',
-  //       exe: 'block PD-1',
+  //       do: 'block PD-1',
   //       description: 'Release the brakes on killer T cells by blocking PD-1.',
   //     },
   //     'ctla-4': {
   //       title: 'Inhibit CTLA-4',
-  //       exe: 'block CTLA-4',
+  //       do: 'block CTLA-4',
   //       description: 'Release the brakes on killer T cells by blocking CTLA-4.',
   //     },
   //   },
@@ -198,13 +214,22 @@ const commands = {
   // },
   r: {
     description: 'Reset the system... a fresh start.',
-    keywords: ['reset', 'clear', 'restart', 'refresh', 'start over', 'reset all'],
-    subCommands: {},
-    hints: {
-      default: {
+    // keywords: ['reset', 'clear', 'restart', 'refresh', 'start over', 'reset all'],
+    ops: {
+      r: {
+        keywords: ['reset', 'clear', 'restart', 'refresh', 'start over', 'reset all'],
+        acceptedArgs: [],
+        argModifier: '',
         title: 'Clear thread and reset system',
-        exe: 'r',
+        do: 'r',
         description: 'Reset the system... a fresh start.',
+        // hints: {
+        //   default: {
+        //     title: 'Clear thread and reset system',
+        //     do: 'r',
+        //     description: 'Reset the system... a fresh start.',
+        //   },
+        // },
       },
     },
     run: () => {
@@ -213,13 +238,22 @@ const commands = {
   },
   help: {
     description: 'Get help.',
-    keywords: ['help', 'about', 'project', 'zetsu', 'commands', 'info'],
-    subCommands: {},
-    hints: {
-      default: {
-        title: 'Show information about how to use Zetsu',
-        exe: 'help',
-        description: 'Get help.',
+    // keywords: ['help', 'about', 'project', 'zetsu', 'commands', 'info'],
+    ops: {
+      help: {
+        keywords: ['help', 'about', 'project', 'zetsu', 'commands', 'info'],
+        acceptedArgs: [],
+        argModifier: '',
+        title: 'Get help.',
+        do: 'help',
+        description: 'Show information about how to use Zetsu',
+        // hints: {
+        //   default: {
+        //     title: 'Show information about how to use Zetsu',
+        //     do: 'help',
+        //     description: 'Get help.',
+        //   },
+        // },
       },
     },
     run: () => {
@@ -228,7 +262,7 @@ const commands = {
       output.innerHTML = `
         <div class="thread-block">
           <div class="thread-text">A reimagined terminal experience to orchestrate Killer T Cells</div>
-          <div class="thread-text">Fuzzy search executables as you type. Don't remember a command or argument? Try describing it.</div>
+          <div class="thread-text">Fuzzy search commands as you type. Don't remember a command or argument? Try describing it.</div>
           <div class="thread-text">Not what you're looking for? Check out <a href="https://github.com/DangelaLansbury/zetsu">the docs</a> for more info.</div>
         </div>
         `;
