@@ -30,7 +30,6 @@ function toggleForRun() {
 const commands = {
   make: {
     description: 'Express chimeric antigen receptor to recognize Tumor-Associated Antigens and kill cancer cells.',
-    // keywords: ['make', 'build', 'new', 'construct', 'engineer', 'manufacture', ...TAAs, ...carKeywords, ...makeSubs],
     ops: {
       make: {
         keywords: makeKeywords,
@@ -51,66 +50,80 @@ const commands = {
     },
     run: (input) => {
       returnInput(input);
-      let intendedCAR = input.split(' ')[1].toLowerCase();
+      // Check for help
       if (input.includes('--h') || input.includes('--help') || input === 'make') {
         let output = createOutputDiv(`TAAs: <span class="lilac" style="font-weight: 600">${TAAs.join(', ').toUpperCase()}</span>`, 'wheat');
         returnOutput(output, 0);
         return;
       }
-      if (TAAs.includes(intendedCAR)) {
-        toggleForRun();
-        let executions = [
-          {
-            id: 1,
-            text: `Extracting T cells`,
-            error: `Failed to extract T cells`,
-            class: 'stone',
-            pass: true,
-          },
-          {
-            id: 2,
-            text: `Engineering cells to express <span class="thicc">${intendedCAR.toUpperCase()}</span> receptors`,
-            error: `Failed to express ${intendedCAR}`,
-            class: 'stone',
-            pass: true,
-          },
-          {
-            id: 3,
-            text: `Culturing <span class="thicc">${intendedCAR.toUpperCase()}</span>+ cells`,
-            error: `Failed to culture cells.`,
-            class: 'stone',
-            pass: true,
-          },
-          {
-            id: 4,
-            text: `Administering conditioning chemotherapy`,
-            error: `Failed to administer conditioning chemotherapy`,
-            class: 'stone',
-            pass: true,
-          },
-          {
-            id: 5,
-            text: `Infusing <span class="thicc">${intendedCAR.toUpperCase()}</span>+ CAR T cells`,
-            error: `Failed to infuse CAR T cells`,
-            class: 'stone',
-            pass: true,
-          },
-          {
-            id: 6,
-            text: `<span class="thicc swamp">Success!</span> You can now recognize and phagocytose TAAs expressing <span class="thicc river">${intendedCAR.toUpperCase()}</span>.`,
-            class: 'wheat',
-          },
-        ];
-        executions.forEach((execution) => {
-          returnOutput(createOutputDiv(execution.text, execution.class), outputDelay[execution.id - 1]);
-        });
-        // show zetsu again after delay
-        setTimeout(() => {
-          toggleForRun();
-          zetsu.focus();
-        }, outputDelay[executions.length - 1]);
+      // Check if subcommand is in this command's ops
+      let inputWords = input.split(' ');
+      let subCmd = inputWords[1];
+      if (subCmd === undefined) {
+        returnNullAndHelp(subCmd);
+        return;
+      } else if (subCmd === 'car') {
+        // Set intendedCAR to the first word prepended by a dash
+        let intendedCAR = inputWords
+          .filter((word) => word.startsWith('-'))[0]
+          .replace('-', '')
+          .toLowerCase();
+        if (intendedCAR === undefined) {
+          returnNullAndHelp(intendedCAR);
+          return;
+        } else if (carArgs.includes(intendedCAR)) {
+          let executions = [
+            {
+              id: 1,
+              text: `Extracting T cells`,
+              error: `Failed to extract T cells`,
+              class: 'stone',
+              pass: true,
+            },
+            {
+              id: 2,
+              text: `Engineering cells to express <span class="thicc">${intendedCAR.toUpperCase()}</span> receptors`,
+              error: `Failed to express ${intendedCAR}`,
+              class: 'stone',
+              pass: true,
+            },
+            {
+              id: 3,
+              text: `Culturing <span class="thicc">${intendedCAR.toUpperCase()}</span>+ cells`,
+              error: `Failed to culture cells.`,
+              class: 'stone',
+              pass: true,
+            },
+            {
+              id: 4,
+              text: `Administering conditioning chemotherapy`,
+              error: `Failed to administer conditioning chemotherapy`,
+              class: 'stone',
+              pass: true,
+            },
+            {
+              id: 5,
+              text: `Infusing <span class="thicc">${intendedCAR.toUpperCase()}</span>+ CAR T cells`,
+              error: `Failed to infuse CAR T cells`,
+              class: 'stone',
+              pass: true,
+            },
+            {
+              id: 6,
+              text: `<span class="thicc swamp">Success!</span> You can now recognize and phagocytose TAAs expressing <span class="thicc river">${intendedCAR.toUpperCase()}</span>.`,
+              class: 'wheat',
+            },
+          ];
+          executions.forEach((execution) => {
+            returnOutput(createOutputDiv(execution.text, execution.class), outputDelay[execution.id - 1]);
+          });
+        } else {
+          returnNullAndHelp(intendedCAR);
+          return;
+        }
       } else {
-        returnNullAndHelp(intendedCAR);
+        returnNullAndHelp(subCmd);
+        return;
       }
     },
   },
@@ -190,7 +203,6 @@ const commands = {
   // },
   r: {
     description: 'Reset the system... a fresh start.',
-    // keywords: ['reset', 'clear', 'restart', 'refresh', 'start over', 'reset all'],
     ops: {
       r: {
         keywords: ['reset', 'clear', 'restart', 'refresh', 'start over', 'reset all'],
@@ -199,13 +211,6 @@ const commands = {
         title: 'Clear thread and reset system',
         do: 'r',
         description: 'Reset the system... a fresh start.',
-        // hints: {
-        //   default: {
-        //     title: 'Clear thread and reset system',
-        //     do: 'r',
-        //     description: 'Reset the system... a fresh start.',
-        //   },
-        // },
       },
     },
     run: () => {
@@ -214,7 +219,6 @@ const commands = {
   },
   help: {
     description: 'Get help.',
-    // keywords: ['help', 'about', 'project', 'zetsu', 'commands', 'info'],
     ops: {
       help: {
         keywords: ['help', 'about', 'project', 'zetsu', 'commands', 'info'],
@@ -223,13 +227,6 @@ const commands = {
         title: 'Get help.',
         do: 'help',
         description: 'Show information about how to use Zetsu',
-        // hints: {
-        //   default: {
-        //     title: 'Show information about how to use Zetsu',
-        //     do: 'help',
-        //     description: 'Get help.',
-        //   },
-        // },
       },
     },
     run: () => {
