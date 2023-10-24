@@ -318,9 +318,9 @@ zetsu.addEventListener('input', function () {
         let levDist = levenshteinDistance(inputWords[i], keywords[j]);
         let similarity = 1 - levDist / Math.max(inputWords[i].length, keywords[j].length);
         if (similarity > 0.66) {
-          let fullCommand = command;
+          let fullCommand = commands[command].hints['default'].exe;
           let argument = '';
-          let commandToDisplay = command;
+          let commandToDisplay = commands[command].hints['default'].exe;
           let idToPass = 'default';
           // check if input contains any accepted arguments
           let acceptedArgs = commands[command].acceptedArgs;
@@ -341,8 +341,8 @@ zetsu.addEventListener('input', function () {
                 suggestionsArray.splice(k, 1);
               }
             }
-            fullCommand = fullCommand + ' ' + argument.toUpperCase();
-            commandToDisplay = commandToDisplay + ' ' + `<span class="lilac">${argument.toUpperCase()}</span>`;
+            fullCommand = commands[command].hints[argument.toLowerCase()].exe;
+            commandToDisplay = commands[command].hints[argument.toLowerCase()].exe;
             idToPass = argument.toLowerCase();
             similarity++;
           } else {

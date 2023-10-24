@@ -1,11 +1,20 @@
-// --- RECEPTORS & inhibitors ---
+// --- DOM DECLARATIONS ---
+let logoBtn = document.querySelector('.logo-container');
+let quitOp = document.querySelector('#quitOp');
+
+// --- KEYWORDS AND ARGUMENTS ---
+
+// Biologics
 let TAAs = ['a-folate', 'cd19', 'cd20', 'cd22', 'cd30', 'cd33', 'egfr', 'gd2', 'her2', 'l1cam'];
 let CSDomains = ['cd28', '4-1bb', 'ox40', 'icos'];
 let inhibitors = ['cd80', 'pd-l1', 'pd-l2', 'ctla-4', 'pd-1'];
+
+// Make
+const carKeywords = ['express', 'hunt', 'find', 'receptor', 'protein', 'molecule', 'chimeric', 'antigen', 'car', 'show', 'display', 'unmask', 'unveil', 'reveal'];
+const carArgs = ['car', ...TAAs];
+
 let randomReceptor = TAAs[Math.floor(Math.random() * TAAs.length)];
 let randomInhibitor = inhibitors[Math.floor(Math.random() * inhibitors.length)];
-let logoBtn = document.querySelector('.logo-container');
-let quitOp = document.querySelector('#quitOp');
 
 // Show/hide toggleHelp + quitOp and running + zetsu
 function toggleForRun() {
@@ -17,21 +26,29 @@ function toggleForRun() {
 // --- COMMANDS ---
 
 const commands = {
-  car: {
+  make: {
     description: 'Express chimeric antigen receptor to recognize Tumor-Associated Antigens and kill cancer cells.',
-    keywords: ['express', 'hunt', 'find', 'receptor', 'protein', 'molecule', 'chimeric', 'antigen', 'car', 'show', 'display', 'unmask', 'unveil', 'reveal', ...TAAs],
-    acceptedArgs: TAAs,
+    keywords: ['express', 'hunt', 'find', 'receptor', 'protein', 'molecule', 'chimeric', 'antigen', 'car', 'show', 'display', 'unmask', 'unveil', 'reveal', ...TAAs, ...carKeywords],
+    acceptedArgs: [...carArgs],
     hints: {
       default: {
+        title: 'Build cell',
+        exe: 'make',
+        description: 'Genetically engineer a new killer T cell.',
+      },
+      car: {
         title: 'Express CAR',
+        exe: 'make car',
         description: 'Show chimeric antigen receptor on cell surface to recognize covert cancer cells.',
       },
       egfr: {
         title: 'Express EGFR',
+        exe: 'make car -EGFR',
         description: 'Show chimeric antigen receptor for EGFR on cell surface to recognize covert cancer cells.',
       },
       cd19: {
         title: 'Express CD19',
+        exe: 'make car -CD19',
         description: 'Show chimeric antigen receptor for CD19 on cell surface to recognize covert cancer cells.',
       },
     },
@@ -43,11 +60,8 @@ const commands = {
         returnOutput(output, 0);
         return;
       }
-      if (TAAs.includes(intendedCAR) || intendedCAR === 'car') {
+      if (TAAs.includes(intendedCAR)) {
         toggleForRun();
-        if (intendedCAR === 'car') {
-          intendedCAR = randomReceptor;
-        }
         let executions = [
           {
             id: 1,
@@ -110,14 +124,17 @@ const commands = {
     hints: {
       default: {
         title: 'Inhibit checkpoint',
+        exe: 'block',
         description: 'Release the brakes on killer T cells.',
       },
       'pd-1': {
         title: 'Inhibit PD-1',
+        exe: 'block PD-1',
         description: 'Release the brakes on killer T cells by blocking PD-1.',
       },
       'ctla-4': {
         title: 'Inhibit CTLA-4',
+        exe: 'block CTLA-4',
         description: 'Release the brakes on killer T cells by blocking CTLA-4.',
       },
     },
