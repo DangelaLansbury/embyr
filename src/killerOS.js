@@ -51,7 +51,7 @@ const commands = {
     run: (input) => {
       returnInput(input);
       // Check for help
-      if (input.includes('--h') || input.includes('--help') || input === 'make') {
+      if (input.includes('-h') || input.includes('-help') || input === 'make') {
         let output = createOutputDiv(`TAAs: <span class="lilac" style="font-weight: 600">${TAAs.join(', ').toUpperCase()}</span>`, 'wheat');
         returnOutput(output, 0);
         return;

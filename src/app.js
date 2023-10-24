@@ -245,9 +245,9 @@ zetsu.addEventListener('input', function () {
             // check if input contains any accepted arguments
             let acceptedArgs = commands[command].ops[op].acceptedArgs;
             acceptedArgs.forEach((arg) => {
-              // remove hyphens from input word and argument
-              argCheckInput = inputWords[i].replace(/-/g, '');
-              argCheckArg = arg.replace(/-/g, '');
+              // remove hyphens and slashes from input word and argument
+              let argCheckInput = inputWords[i].replace(/-/g, '').replace(/\//g, '');
+              let argCheckArg = arg.replace(/-/g, '').replace(/\//g, '');
               // if input word matches argument, add argument to command
               if (argCheckInput.toLowerCase() === argCheckArg.toLowerCase()) {
                 argument = arg;
@@ -293,6 +293,8 @@ zetsu.addEventListener('input', function () {
                     populateSuggestion(suggestionsArray[k].command, suggestionsArray[k].parentCommand, suggestionsArray[k].subCommand, suggestionsArray[k].argument);
                   }
                 }
+                // Display suggestion details for first suggestion
+                displayDetails(commands[suggestionsArray[0].parentCommand].ops[suggestionsArray[0].subCommand].title, commands[suggestionsArray[0].parentCommand].ops[suggestionsArray[0].subCommand].description);
               }
             }
           }
@@ -323,6 +325,14 @@ zetsu.addEventListener('keydown', function (e) {
         suggestionIndex = -1;
         if (input !== '') {
           zetsu.innerText = input;
+          let suggCmd = suggestions[0].querySelector('.suggestion-command').innerText;
+          let suggCmdPar = suggestions[0].querySelector('.suggestion-command').dataset.cmd;
+          let suggCmdSub = suggestions[0].querySelector('.suggestion-command').dataset.sub;
+          let suggCmdArg = suggestions[0].querySelector('.suggestion-command').dataset.arg;
+          console.log(suggCmdPar, suggCmdSub, suggCmdArg);
+          let title = commands[suggCmdPar].ops[suggCmdSub].title;
+          let description = commands[suggCmdPar].ops[suggCmdSub].description;
+          displayDetails(title, description);
         } else {
           zetsu.innerText = '';
         }
@@ -366,6 +376,14 @@ zetsu.addEventListener('keydown', function (e) {
       if (suggestionIndex === -1) {
         if (input !== '') {
           zetsu.innerText = input;
+          let suggCmd = suggestions[0].querySelector('.suggestion-command').innerText;
+          let suggCmdPar = suggestions[0].querySelector('.suggestion-command').dataset.cmd;
+          let suggCmdSub = suggestions[0].querySelector('.suggestion-command').dataset.sub;
+          let suggCmdArg = suggestions[0].querySelector('.suggestion-command').dataset.arg;
+          console.log(suggCmdPar, suggCmdSub, suggCmdArg);
+          let title = commands[suggCmdPar].ops[suggCmdSub].title;
+          let description = commands[suggCmdPar].ops[suggCmdSub].description;
+          displayDetails(title, description);
         } else {
           zetsu.innerText = '';
         }
