@@ -67,6 +67,24 @@
   min-height: 1.5rem;
   min-width: 0.25rem;
 }
+.running-spinner {
+  border: 2px solid var(--soil-dk);
+  border-top: 2px solid var(--sweetgrass);
+  border-radius: 50%;
+  width: var(--mediumSize);
+  height: var(--mediumSize);
+  animation: spin 0.5s linear infinite;
+  margin-right: 0.5rem;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 .running-content {
   display: inline-flex;
 }

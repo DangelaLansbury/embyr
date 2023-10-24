@@ -5,6 +5,14 @@ let inhibitors = ['cd80', 'pd-l1', 'pd-l2', 'ctla-4', 'pd-1'];
 let randomReceptor = TAAs[Math.floor(Math.random() * TAAs.length)];
 let randomInhibitor = inhibitors[Math.floor(Math.random() * inhibitors.length)];
 let logoBtn = document.querySelector('.logo-container');
+let quitOp = document.querySelector('#quitOp');
+
+// Show/hide toggleHelp + quitOp and running + zetsu
+function toggleForRun() {
+  quitOp.classList.toggle('hidden');
+  running.classList.toggle('hidden');
+  zetsu.classList.toggle('hidden');
+}
 
 // --- COMMANDS ---
 
@@ -36,10 +44,7 @@ const commands = {
         return;
       }
       if (TAAs.includes(intendedCAR) || intendedCAR === 'car') {
-        cursor.classList.add('hidden');
-        zetsu.classList.add('hidden');
-        running.classList.remove('hidden');
-        runningContent.innerHTML = `Genetically engineering T cells...`;
+        toggleForRun();
         if (intendedCAR === 'car') {
           intendedCAR = randomReceptor;
         }
@@ -90,10 +95,8 @@ const commands = {
         });
         // show zetsu again after delay
         setTimeout(() => {
-          running.classList.add('hidden');
-          zetsu.classList.remove('hidden');
+          toggleForRun();
           zetsu.focus();
-          cursor.classList.remove('hidden');
         }, outputDelay[executions.length - 1]);
       } else {
         returnNullAndHelp(intendedCAR);
