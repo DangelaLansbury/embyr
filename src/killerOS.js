@@ -10,7 +10,8 @@ let CSDomains = ['cd28', '4-1bb', 'ox40', 'icos'];
 let inhibitors = ['cd80', 'pd-l1', 'pd-l2', 'ctla-4', 'pd-1'];
 
 // Make
-const carKeywords = ['express', 'hunt', 'find', 'receptor', 'protein', 'molecule', 'chimeric', 'antigen', 'car', 'show', 'display', 'unmask', 'unveil', 'reveal'];
+const makeSubs = ['car'];
+const carKeywords = ['express', 'hunt', 'find', 'receptor', 'protein', 'molecule', 'chimeric', 'antigen', 'show', 'display', 'unmask', 'unveil', 'reveal'];
 const carArgs = ['car', ...TAAs];
 
 let randomReceptor = TAAs[Math.floor(Math.random() * TAAs.length)];
@@ -28,8 +29,12 @@ function toggleForRun() {
 const commands = {
   make: {
     description: 'Express chimeric antigen receptor to recognize Tumor-Associated Antigens and kill cancer cells.',
-    keywords: ['express', 'hunt', 'find', 'receptor', 'protein', 'molecule', 'chimeric', 'antigen', 'car', 'show', 'display', 'unmask', 'unveil', 'reveal', ...TAAs, ...carKeywords],
-    acceptedArgs: [...carArgs],
+    keywords: ['make', 'build', 'new', 'construct', 'engineer', 'manufacture', ...TAAs, ...carKeywords, ...makeSubs],
+    subCommands: {
+      car: {
+        acceptedArgs: [...carArgs],
+      },
+    },
     hints: {
       default: {
         title: 'Build cell',
@@ -55,7 +60,7 @@ const commands = {
     run: (input) => {
       returnInput(input);
       let intendedCAR = input.split(' ')[1].toLowerCase();
-      if (input.includes('--h') || input.includes('--help') || input === 'car') {
+      if (input.includes('--h') || input.includes('--help') || input === 'make') {
         let output = createOutputDiv(`TAAs: <span class="lilac" style="font-weight: 600">${TAAs.join(', ').toUpperCase()}</span>`, 'wheat');
         returnOutput(output, 0);
         return;
@@ -117,87 +122,88 @@ const commands = {
       }
     },
   },
-  block: {
-    description: 'Release the brakes on killer T cells and the immune system.',
-    keywords: ['inhibit', 'cpt', 'block', 'prevent', 'checkpoint', ...inhibitors],
-    acceptedArgs: inhibitors,
-    hints: {
-      default: {
-        title: 'Inhibit checkpoint',
-        exe: 'block',
-        description: 'Release the brakes on killer T cells.',
-      },
-      'pd-1': {
-        title: 'Inhibit PD-1',
-        exe: 'block PD-1',
-        description: 'Release the brakes on killer T cells by blocking PD-1.',
-      },
-      'ctla-4': {
-        title: 'Inhibit CTLA-4',
-        exe: 'block CTLA-4',
-        description: 'Release the brakes on killer T cells by blocking CTLA-4.',
-      },
-    },
-    run: (input) => {
-      returnInput(input);
-      let intendedInhibitor = input.split(' ')[1].toLowerCase();
-      if (intendedInhibitor === '--h') {
-        let output = createOutputDiv(`Inhibitors: <span class="sweetgrass" style="font-weight: 600">${inhibitors.join(', ').toUpperCase()}</span>`, 'wheat');
-        returnOutput(output, 0);
-        return;
-      }
-      if (inhibitors.includes(intendedInhibitor) || intendedInhibitor === 'cpt') {
-        if (intendedInhibitor === 'cpt') {
-          intendedInhibitor = randomLigand;
-        }
-        let target = '';
-        if (intendedInhibitor === 'pd-l1') {
-          target = 'pd-1';
-        } else if (intendedInhibitor === 'pd-l2') {
-          target = 'pd-1';
-        } else if (intendedInhibitor === 'cd80') {
-          target = 'ctla-4';
-        } else if (intendedInhibitor === 'ctla-4') {
-          target = 'cd80';
-        } else if (intendedInhibitor === 'pd-1') {
-          target = 'pd-l1';
-        }
-        let executions = [
-          {
-            id: 1,
-            text: `Administering checkpoint inhibitor drug...`,
-            error: `Failed to administer checkpoint inhibitor drug`,
-            class: 'stone',
-            pass: true,
-          },
-          {
-            id: 2,
-            text: `Binding <span class="thicc">${intendedInhibitor.toUpperCase()}</span> to <span class="thicc">${target.toUpperCase()}</span>...`,
-            error: `Failed to bind ${intendedInhibitor} to ${target}`,
-            class: 'stone',
-            pass: true,
-          },
-          {
-            id: 3,
-            text: `Nice! You've successfully blocked <span class="thicc river">${target.toUpperCase()}</span> from binding with <span class="thicc swamp">${intendedInhibitor.toUpperCase()}</span>.`,
-            class: 'wheat',
-          },
-        ];
-        executions.forEach((execution) => {
-          returnOutput(createOutputDiv(execution.text, execution.class), outputDelay[execution.id - 1]);
-        });
-      } else {
-        returnNullAndHelp(intendedInhibitor);
-      }
-    },
-  },
+  // block: {
+  //   description: 'Release the brakes on killer T cells and the immune system.',
+  //   keywords: ['inhibit', 'cpt', 'block', 'prevent', 'checkpoint', ...inhibitors],
+  //   acceptedArgs: inhibitors,
+  //   hints: {
+  //     default: {
+  //       title: 'Inhibit checkpoint',
+  //       exe: 'block',
+  //       description: 'Release the brakes on killer T cells.',
+  //     },
+  //     'pd-1': {
+  //       title: 'Inhibit PD-1',
+  //       exe: 'block PD-1',
+  //       description: 'Release the brakes on killer T cells by blocking PD-1.',
+  //     },
+  //     'ctla-4': {
+  //       title: 'Inhibit CTLA-4',
+  //       exe: 'block CTLA-4',
+  //       description: 'Release the brakes on killer T cells by blocking CTLA-4.',
+  //     },
+  //   },
+  //   run: (input) => {
+  //     returnInput(input);
+  //     let intendedInhibitor = input.split(' ')[1].toLowerCase();
+  //     if (intendedInhibitor === '--h') {
+  //       let output = createOutputDiv(`Inhibitors: <span class="sweetgrass" style="font-weight: 600">${inhibitors.join(', ').toUpperCase()}</span>`, 'wheat');
+  //       returnOutput(output, 0);
+  //       return;
+  //     }
+  //     if (inhibitors.includes(intendedInhibitor) || intendedInhibitor === 'cpt') {
+  //       if (intendedInhibitor === 'cpt') {
+  //         intendedInhibitor = randomLigand;
+  //       }
+  //       let target = '';
+  //       if (intendedInhibitor === 'pd-l1') {
+  //         target = 'pd-1';
+  //       } else if (intendedInhibitor === 'pd-l2') {
+  //         target = 'pd-1';
+  //       } else if (intendedInhibitor === 'cd80') {
+  //         target = 'ctla-4';
+  //       } else if (intendedInhibitor === 'ctla-4') {
+  //         target = 'cd80';
+  //       } else if (intendedInhibitor === 'pd-1') {
+  //         target = 'pd-l1';
+  //       }
+  //       let executions = [
+  //         {
+  //           id: 1,
+  //           text: `Administering checkpoint inhibitor drug...`,
+  //           error: `Failed to administer checkpoint inhibitor drug`,
+  //           class: 'stone',
+  //           pass: true,
+  //         },
+  //         {
+  //           id: 2,
+  //           text: `Binding <span class="thicc">${intendedInhibitor.toUpperCase()}</span> to <span class="thicc">${target.toUpperCase()}</span>...`,
+  //           error: `Failed to bind ${intendedInhibitor} to ${target}`,
+  //           class: 'stone',
+  //           pass: true,
+  //         },
+  //         {
+  //           id: 3,
+  //           text: `Nice! You've successfully blocked <span class="thicc river">${target.toUpperCase()}</span> from binding with <span class="thicc swamp">${intendedInhibitor.toUpperCase()}</span>.`,
+  //           class: 'wheat',
+  //         },
+  //       ];
+  //       executions.forEach((execution) => {
+  //         returnOutput(createOutputDiv(execution.text, execution.class), outputDelay[execution.id - 1]);
+  //       });
+  //     } else {
+  //       returnNullAndHelp(intendedInhibitor);
+  //     }
+  //   },
+  // },
   r: {
     description: 'Reset the system... a fresh start.',
     keywords: ['reset', 'clear', 'restart', 'refresh', 'start over', 'reset all'],
-    acceptedArgs: [],
+    subCommands: {},
     hints: {
       default: {
         title: 'Clear thread and reset system',
+        exe: 'r',
         description: 'Reset the system... a fresh start.',
       },
     },
@@ -208,10 +214,11 @@ const commands = {
   help: {
     description: 'Get help.',
     keywords: ['help', 'about', 'project', 'zetsu', 'commands', 'info'],
-    acceptedArgs: [],
+    subCommands: {},
     hints: {
       default: {
         title: 'Show information about how to use Zetsu',
+        exe: 'help',
         description: 'Get help.',
       },
     },

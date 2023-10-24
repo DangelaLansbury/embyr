@@ -156,19 +156,19 @@ const returnInput = (input) => {
     if (commands[command]) {
       inputWords[i] = `<span class="${commandColors[i % 3]} thicc">${command}</span>`;
       // Check if command has accepted arguments
-      let acceptedArgs = commands[command].acceptedArgs;
-      if (acceptedArgs.length > 0) {
-        // Check if input contains any accepted arguments
-        acceptedArgs.forEach((arg) => {
-          // remove hyphens from input word and argument
-          argCheckInput = inputWords[i + 1].replace(/-/g, '');
-          argCheckArg = arg.replace(/-/g, '');
-          // if input word matches argument, add argument to command
-          if (argCheckInput.toLowerCase() === argCheckArg.toLowerCase()) {
-            inputWords[i + 1] = `<span class="lilac">${arg.toUpperCase()}</span>`;
-          }
-        });
-      }
+      // let acceptedArgs = commands[command].acceptedArgs;
+      // if (acceptedArgs.length > 0) {
+      //   // Check if input contains any accepted arguments
+      //   acceptedArgs.forEach((arg) => {
+      //     // remove hyphens from input word and argument
+      //     let argCheckInput = inputWords[i + 1].replace(/-/g, '');
+      //     let argCheckArg = arg.replace(/-/g, '');
+      //     // if input word matches argument, add argument to command
+      //     if (argCheckInput.toLowerCase() === argCheckArg.toLowerCase()) {
+      //       inputWords[i + 1] = `<span class="lilac">${arg.toUpperCase()}</span>`;
+      //     }
+      //   });
+      // }
     }
   }
   input = inputWords.join(' ');
@@ -245,95 +245,36 @@ zetsu.addEventListener('input', function () {
   suggestions = document.querySelectorAll('.suggestion');
   let suggestionsArray = [];
   for (let command in commands) {
-    // Search commands and keywords
-    let keywords = commands[command].keywords;
-    // Check if input is the beginning of a command
-    if (command.startsWith(inputWords[0].toLowerCase())) {
-      let fullCommand = command;
-      let argument = '';
-      let commandToDisplay = command;
-      let idToPass = 'default';
-      // check if input contains any accepted arguments
-      let acceptedArgs = commands[command].acceptedArgs;
-      acceptedArgs.forEach((arg) => {
-        // remove hyphens from input word and argument
-        argCheckInput = inputWords[0].replace(/-/g, '');
-        argCheckArg = arg.replace(/-/g, '');
-        // if input word matches argument, add argument to command
-        if (argCheckInput.toLowerCase() === argCheckArg.toLowerCase()) {
-          argument = arg;
-        }
-      });
-      let alreadySuggested = false;
-      if (argument !== '') {
-        // check suggestions array for existing suggestion with same raw command and remove it from array
-        for (let k = 0; k < suggestionsArray.length; k++) {
-          if (suggestionsArray[k].raw.toLowerCase() === fullCommand.toLowerCase()) {
-            suggestionsArray.splice(k, 1);
-          }
-        }
-        fullCommand = fullCommand + ' ' + argument.toUpperCase();
-        commandToDisplay = commandToDisplay + ' ' + `<span class="lilac">${argument.toUpperCase()}</span>`;
-        idToPass = argument.toLowerCase();
-      }
-      for (let k = 0; k < suggestionsArray.length; k++) {
-        // check suggestions array for existing suggestion
-        if (suggestionsArray[k].raw.toLowerCase() === fullCommand.toLowerCase()) {
-          alreadySuggested = true;
-        }
-        // Check if suggestions array contains the same command but with an argument
-        if (argument === '' && suggestionsArray[k].raw.toLowerCase() === fullCommand.toLowerCase() + ' ' + suggestionsArray[k].id.toLowerCase()) {
-          alreadySuggested = true;
-        }
-      }
-      // Add suggestion to suggestions array if it hasn't already been suggested
-      if (!alreadySuggested) {
-        let suggestion = {
-          raw: fullCommand,
-          command: commandToDisplay,
-          id: idToPass,
-          similarity: 1,
-        };
-        suggestionsArray.push(suggestion);
-        // Reorder suggestions in order of similarity
-        if (suggestionsArray.length > 0) {
-          suggestionsArray.sort((a, b) => {
-            const nameA = a.similarity;
-            const nameB = b.similarity;
-            return nameB - nameA;
-          });
-          // Populate suggestions list with new order
-          suggestionsList.innerHTML = '';
-          for (let k = 0; k < suggestionsArray.length; k++) {
-            if (!zetsu.innerText.startsWith(suggestionsArray[k].raw + ' ')) {
-              populateSuggestion(suggestionsArray[k].command, suggestionsArray[k].id);
-            }
-          }
-        }
-      }
-    }
     // Fuzzy search commands and keywords
+    let keywords = commands[command].keywords;
+    let subCommands = commands[command].subCommands;
     for (let i = 0; i < inputWords.length; i++) {
       for (let j = 0; j < keywords.length; j++) {
+        // Check if first input word is the start of a command
         let levDist = levenshteinDistance(inputWords[i], keywords[j]);
         let similarity = 1 - levDist / Math.max(inputWords[i].length, keywords[j].length);
         if (similarity > 0.66) {
           let fullCommand = commands[command].hints['default'].exe;
           let argument = '';
-          let commandToDisplay = commands[command].hints['default'].exe;
+          // let commandToDisplay = commands[command].hints['default'].exe;
           let idToPass = 'default';
-          // check if input contains any accepted arguments
-          let acceptedArgs = commands[command].acceptedArgs;
-          acceptedArgs.forEach((arg) => {
-            // remove hyphens from input word and argument
-            argCheckInput = inputWords[i].replace(/-/g, '');
-            argCheckArg = arg.replace(/-/g, '');
-            // if input word matches argument, add argument to command
-            if (argCheckInput.toLowerCase() === argCheckArg.toLowerCase()) {
-              argument = arg;
+          // Check if input contains a subcommand and then check if input contains any accepted arguments for subcommand
+          for (let sub in subCommands) {
+            // check if input equals a subcommand
+            if (keywords[j].toLowerCase() === sub.toLowerCase()) {
+              argument = sub.toLowerCase();
             }
-          });
-          let alreadySuggested = false;
+            let subArgs = subCommands[sub].acceptedArgs;
+            subArgs.forEach((arg) => {
+              // remove hyphens from input word and argument
+              let argCheckInput = inputWords[i].replace(/-/g, '');
+              let argCheckArg = arg.replace(/-/g, '');
+              // if input word matches argument, add argument to command
+              if (argCheckInput.toLowerCase() === argCheckArg.toLowerCase()) {
+                argument = arg.toLowerCase();
+              }
+            });
+          }
           if (argument !== '') {
             // check suggestions array for existing suggestion with same raw command and remove it from array
             for (let k = 0; k < suggestionsArray.length; k++) {
@@ -342,19 +283,14 @@ zetsu.addEventListener('input', function () {
               }
             }
             fullCommand = commands[command].hints[argument.toLowerCase()].exe;
-            commandToDisplay = commands[command].hints[argument.toLowerCase()].exe;
+            // commandToDisplay = commands[command].hints[argument.toLowerCase()].exe;
             idToPass = argument.toLowerCase();
             similarity++;
-          } else {
-            // Check if suggestions array contains the same command but with an argument
           }
+          let alreadySuggested = false;
           for (let k = 0; k < suggestionsArray.length; k++) {
             // check suggestions array for existing suggestion
             if (suggestionsArray[k].raw.toLowerCase() === fullCommand.toLowerCase()) {
-              alreadySuggested = true;
-            }
-            // Check if suggestions array contains the same command but with an argument
-            if (argument === '' && suggestionsArray[k].raw.toLowerCase() === fullCommand.toLowerCase() + ' ' + suggestionsArray[k].id.toLowerCase()) {
               alreadySuggested = true;
             }
           }
@@ -362,7 +298,7 @@ zetsu.addEventListener('input', function () {
           if (!alreadySuggested) {
             let suggestion = {
               raw: fullCommand,
-              command: commandToDisplay,
+              command: fullCommand,
               id: idToPass,
               similarity: similarity,
             };
