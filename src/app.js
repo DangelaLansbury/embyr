@@ -17,8 +17,6 @@ let zetsuBar = document.querySelector('.zetsu-input');
 let zetsu = document.querySelector('.zetsu-input-text'); // Zetsu input field
 let cursor = document.querySelector('.cursor'); // Zetsu input fake cursor
 let running = document.querySelector('.running'); // Zetsu running indicator
-let runningIcon = document.querySelector('.running-icon'); // Zetsu running icon
-let runningContent = document.querySelector('.running-content'); // Zetsu running text
 let history = []; // Zetsu input history
 // Suggestions and suggestion details
 let suggestionsContainer = document.querySelector('.suggestions-container');
@@ -540,16 +538,3 @@ zetsu.addEventListener('keydown', function (e) {
     }
   }
 });
-
-// Loading animation cycling between emojis
-const loadingAnimation = (interval) => {
-  const loadingEmoji = ['🤔', '🤨', '😐', '😑', '😶', '🙄'];
-  let loadingIndex = 0;
-  setInterval(() => {
-    runningIcon.innerHTML = loadingEmoji[loadingIndex];
-    loadingIndex++;
-    if (loadingIndex > loadingEmoji.length - 1) {
-      loadingIndex = 0;
-    }
-  }, interval);
-};
