@@ -28,11 +28,12 @@ function toggleForRun() {
 // --- COMMANDS ---
 
 const commands = {
-  make: {
+  killa: {
     description: 'Express chimeric antigen receptor to recognize Tumor-Associated Antigens and kill cancer cells.',
+    keywords: [...makeKeywords, ...carKeywords],
     ops: {
       make: {
-        keywords: makeKeywords,
+        keywords: [...makeKeywords],
         acceptedArgs: [],
         argModifier: '',
         title: 'Build cell',
@@ -56,189 +57,8 @@ const commands = {
         returnOutput(output, 0);
         return;
       }
-      // Check if subcommand is in this command's ops
-      let inputWords = input.split(' ');
-      let subCmd = inputWords[1];
-      if (subCmd === undefined) {
-        returnNullAndHelp(subCmd);
-        return;
-      } else if (subCmd === 'car') {
-        // Set intendedCAR to the first word prepended by a dash
-        let intendedCAR = inputWords
-          .filter((word) => word.startsWith('-'))[0]
-          .replace('-', '')
-          .toLowerCase();
-        if (intendedCAR === undefined) {
-          returnNullAndHelp(intendedCAR);
-          return;
-        } else if (carArgs.includes(intendedCAR)) {
-          let executions = [
-            {
-              id: 1,
-              text: `Extracting T cells`,
-              error: `Failed to extract T cells`,
-              class: 'stone',
-              pass: true,
-            },
-            {
-              id: 2,
-              text: `Engineering cells to express <span class="thicc">${intendedCAR.toUpperCase()}</span> receptors`,
-              error: `Failed to express ${intendedCAR}`,
-              class: 'stone',
-              pass: true,
-            },
-            {
-              id: 3,
-              text: `Culturing <span class="thicc">${intendedCAR.toUpperCase()}</span>+ cells`,
-              error: `Failed to culture cells.`,
-              class: 'stone',
-              pass: true,
-            },
-            {
-              id: 4,
-              text: `Administering conditioning chemotherapy`,
-              error: `Failed to administer conditioning chemotherapy`,
-              class: 'stone',
-              pass: true,
-            },
-            {
-              id: 5,
-              text: `Infusing <span class="thicc">${intendedCAR.toUpperCase()}</span>+ CAR T cells`,
-              error: `Failed to infuse CAR T cells`,
-              class: 'stone',
-              pass: true,
-            },
-            {
-              id: 6,
-              text: `<span class="thicc swamp">Success!</span> You can now recognize and phagocytose TAAs expressing <span class="thicc river">${intendedCAR.toUpperCase()}</span>.`,
-              class: 'wheat',
-            },
-          ];
-          executions.forEach((execution) => {
-            returnOutput(createOutputDiv(execution.text, execution.class), outputDelay[execution.id - 1]);
-          });
-        } else {
-          returnNullAndHelp(intendedCAR);
-          return;
-        }
-      } else {
-        returnNullAndHelp(subCmd);
-        return;
-      }
-    },
-  },
-  // block: {
-  //   description: 'Release the brakes on killer T cells and the immune system.',
-  //   keywords: ['inhibit', 'cpt', 'block', 'prevent', 'checkpoint', ...inhibitors],
-  //   acceptedArgs: inhibitors,
-  //   hints: {
-  //     default: {
-  //       title: 'Inhibit checkpoint',
-  //       do: 'block',
-  //       description: 'Release the brakes on killer T cells.',
-  //     },
-  //     'pd-1': {
-  //       title: 'Inhibit PD-1',
-  //       do: 'block PD-1',
-  //       description: 'Release the brakes on killer T cells by blocking PD-1.',
-  //     },
-  //     'ctla-4': {
-  //       title: 'Inhibit CTLA-4',
-  //       do: 'block CTLA-4',
-  //       description: 'Release the brakes on killer T cells by blocking CTLA-4.',
-  //     },
-  //   },
-  //   run: (input) => {
-  //     returnInput(input);
-  //     let intendedInhibitor = input.split(' ')[1].toLowerCase();
-  //     if (intendedInhibitor === '--h') {
-  //       let output = createOutputDiv(`Inhibitors: <span class="sweetgrass" style="font-weight: 600">${inhibitors.join(', ').toUpperCase()}</span>`, 'wheat');
-  //       returnOutput(output, 0);
-  //       return;
-  //     }
-  //     if (inhibitors.includes(intendedInhibitor) || intendedInhibitor === 'cpt') {
-  //       if (intendedInhibitor === 'cpt') {
-  //         intendedInhibitor = randomLigand;
-  //       }
-  //       let target = '';
-  //       if (intendedInhibitor === 'pd-l1') {
-  //         target = 'pd-1';
-  //       } else if (intendedInhibitor === 'pd-l2') {
-  //         target = 'pd-1';
-  //       } else if (intendedInhibitor === 'cd80') {
-  //         target = 'ctla-4';
-  //       } else if (intendedInhibitor === 'ctla-4') {
-  //         target = 'cd80';
-  //       } else if (intendedInhibitor === 'pd-1') {
-  //         target = 'pd-l1';
-  //       }
-  //       let executions = [
-  //         {
-  //           id: 1,
-  //           text: `Administering checkpoint inhibitor drug...`,
-  //           error: `Failed to administer checkpoint inhibitor drug`,
-  //           class: 'stone',
-  //           pass: true,
-  //         },
-  //         {
-  //           id: 2,
-  //           text: `Binding <span class="thicc">${intendedInhibitor.toUpperCase()}</span> to <span class="thicc">${target.toUpperCase()}</span>...`,
-  //           error: `Failed to bind ${intendedInhibitor} to ${target}`,
-  //           class: 'stone',
-  //           pass: true,
-  //         },
-  //         {
-  //           id: 3,
-  //           text: `Nice! You've successfully blocked <span class="thicc river">${target.toUpperCase()}</span> from binding with <span class="thicc swamp">${intendedInhibitor.toUpperCase()}</span>.`,
-  //           class: 'wheat',
-  //         },
-  //       ];
-  //       executions.forEach((execution) => {
-  //         returnOutput(createOutputDiv(execution.text, execution.class), outputDelay[execution.id - 1]);
-  //       });
-  //     } else {
-  //       returnNullAndHelp(intendedInhibitor);
-  //     }
-  //   },
-  // },
-  r: {
-    description: 'Reset the system... a fresh start.',
-    ops: {
-      r: {
-        keywords: ['reset', 'clear', 'restart', 'refresh', 'start over', 'reset all'],
-        acceptedArgs: [],
-        argModifier: '',
-        title: 'Clear thread and reset system',
-        do: 'r',
-        description: 'Reset the system... a fresh start.',
-      },
-    },
-    run: () => {
-      thread.innerHTML = '';
-    },
-  },
-  help: {
-    description: 'Get help.',
-    ops: {
-      help: {
-        keywords: ['help', 'about', 'project', 'zetsu', 'commands', 'info'],
-        acceptedArgs: [],
-        argModifier: '',
-        title: 'Get help.',
-        do: 'help',
-        description: 'Show information about how to use Zetsu',
-      },
-    },
-    run: () => {
-      thread.innerHTML = '';
-      let output = document.createElement('div');
-      output.innerHTML = `
-        <div class="thread-block">
-          <div class="thread-text">A reimagined terminal experience to orchestrate Killer T Cells</div>
-          <div class="thread-text">Fuzzy search commands as you type. Don't remember a command or argument? Try describing it.</div>
-          <div class="thread-text">Not what you're looking for? Check out <a href="https://github.com/DangelaLansbury/zetsu">the docs</a> for more info.</div>
-        </div>
-        `;
+      // return success message
+      let output = createOutputDiv(`CAR successfully expressed to recognize <span class="lilac" style="font-weight: 600">${randomReceptor.toUpperCase()}</span>`, 'wheat');
       returnOutput(output, 0);
     },
   },

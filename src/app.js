@@ -117,7 +117,7 @@ const toggleZetsuInit = () => {
 const populateSuggestion = (command, parent, sub, arg) => {
   let suggestion = document.createElement('div');
   suggestion.className = 'suggestion thicc sweetgrass';
-  suggestion.innerHTML = `<div class="cmd-icon"><img src="public/icons/${parent}.svg" class="icon-svg" alt="icon for ${parent}" /></div><div class="suggestion-command" data-cmd="${parent}" data-sub="${sub}" data-arg=${arg}>${command}</div>`;
+  suggestion.innerHTML = `<div class="cmd-icon"><img src="public/icons/${sub}.svg" class="icon-svg" alt="icon for ${sub}" /></div><div class="suggestion-command" data-cmd="${parent}" data-sub="${sub}" data-arg=${arg}>${command}</div>`;
   suggestionsList.appendChild(suggestion);
 };
 
@@ -219,10 +219,6 @@ zetsu.addEventListener('input', function () {
   } else {
     cursor.style.display = 'inline-flex';
   }
-  // Break if input starts with asterisk
-  if (input.startsWith('*')) {
-    return;
-  }
   // Clear suggestions and details
   suggestionsList.innerHTML = '';
   details.innerHTML = '';
@@ -230,20 +226,20 @@ zetsu.addEventListener('input', function () {
   let inputWords = input.split(' ');
   suggestions = document.querySelectorAll('.suggestion');
   let suggestionsArray = [];
-  for (let command in commands) {
+  for (let cmd in commands) {
     // Search through ops object for each command
-    for (let op in commands[command].ops) {
-      let keywords = commands[command].ops[op].keywords;
+    for (let op in commands[cmd].ops) {
+      let keywords = commands[cmd].ops[op].keywords;
       for (let i = 0; i < inputWords.length; i++) {
         for (let j = 0; j < keywords.length; j++) {
           // Fuzzy search input and keywords
           let levDist = levenshteinDistance(inputWords[i], keywords[j]);
           let similarity = 1 - levDist / Math.max(inputWords[i].length, keywords[j].length);
           if (similarity > 0.66) {
-            let toDo = commands[command].ops[op].do;
+            let toDo = commands[cmd].ops[op].do;
             let argument = '';
             // check if input contains any accepted arguments
-            let acceptedArgs = commands[command].ops[op].acceptedArgs;
+            let acceptedArgs = commands[cmd].ops[op].acceptedArgs;
             acceptedArgs.forEach((arg) => {
               // remove hyphens and slashes from input word and argument
               let argCheckInput = inputWords[i].replace(/-/g, '').replace(/\//g, '');
@@ -257,7 +253,7 @@ zetsu.addEventListener('input', function () {
                     suggestionsArray.splice(k, 1);
                   }
                 }
-                let modifier = commands[command].ops[op].argModifier;
+                let modifier = commands[cmd].ops[op].argModifier;
                 toDo += ` ${modifier}${arg.toUpperCase()}`;
                 similarity++;
               }
@@ -273,7 +269,7 @@ zetsu.addEventListener('input', function () {
             if (!alreadySuggested) {
               let suggestion = {
                 command: toDo,
-                parentCommand: command,
+                parentCommand: cmd,
                 subCommand: op,
                 argument: argument,
                 similarity: similarity,
@@ -305,8 +301,29 @@ zetsu.addEventListener('input', function () {
   toggleZetsuInit();
 });
 
-// Listen for up and down arrow keys to cycle through suggestions
+// --- POPULATING SUGGESTIONs ---
+
 let suggestionIndex = -1;
+// Function to grab data from active suggestion
+const grabSuggestionData = (indexToUse) => {
+  suggestions = document.querySelectorAll('.suggestion');
+  let suggCmd = suggestions[indexToUse].querySelector('.suggestion-command').innerText;
+  let suggCmdPar = suggestions[indexToUse].querySelector('.suggestion-command').dataset.cmd;
+  let suggCmdSub = suggestions[indexToUse].querySelector('.suggestion-command').dataset.sub;
+  let suggCmdArg = suggestions[indexToUse].querySelector('.suggestion-command').dataset.arg;
+  console.log(suggCmdPar, suggCmdSub, suggCmdArg);
+  let title = commands[suggCmdPar].ops[suggCmdSub].title;
+  let description = commands[suggCmdPar].ops[suggCmdSub].description;
+  displayDetails(title, description);
+  // Replace input with suggestion if user wants it
+  if (indexToUse === 0 && suggestionIndex === -1) {
+    zetsu.innerText = input;
+  } else {
+    zetsu.innerText = suggCmd;
+    focusAtEnd();
+  }
+};
+// Listen for up and down arrow keys to cycle through suggestions
 zetsu.addEventListener('keydown', function (e) {
   // Check if suggestions are present
   suggestions = document.querySelectorAll('.suggestion');
@@ -325,33 +342,13 @@ zetsu.addEventListener('keydown', function (e) {
         suggestionIndex = -1;
         if (input !== '') {
           zetsu.innerText = input;
-          let suggCmd = suggestions[0].querySelector('.suggestion-command').innerText;
-          let suggCmdPar = suggestions[0].querySelector('.suggestion-command').dataset.cmd;
-          let suggCmdSub = suggestions[0].querySelector('.suggestion-command').dataset.sub;
-          let suggCmdArg = suggestions[0].querySelector('.suggestion-command').dataset.arg;
-          console.log(suggCmdPar, suggCmdSub, suggCmdArg);
-          let title = commands[suggCmdPar].ops[suggCmdSub].title;
-          let description = commands[suggCmdPar].ops[suggCmdSub].description;
-          displayDetails(title, description);
+          grabSuggestionData(0);
         } else {
           zetsu.innerText = '';
         }
       } else if (suggestionIndex !== -1) {
         suggestions[suggestionIndex].classList.add('active');
-        let suggCmd = suggestions[suggestionIndex].querySelector('.suggestion-command').innerText;
-        let suggCmdPar = suggestions[suggestionIndex].querySelector('.suggestion-command').dataset.cmd;
-        let suggCmdSub = suggestions[suggestionIndex].querySelector('.suggestion-command').dataset.sub;
-        let suggCmdArg = suggestions[suggestionIndex].querySelector('.suggestion-command').dataset.arg;
-        console.log(suggCmdPar, suggCmdSub, suggCmdArg);
-        let title = commands[suggCmdPar].ops[suggCmdSub].title;
-        let description = commands[suggCmdPar].ops[suggCmdSub].description;
-        zetsu.innerText = suggCmd;
-        // Display suggestion details
-        if (suggestions.length !== 0 && suggestionIndex !== -1) {
-          displayDetails(title, description);
-        } else {
-          details.innerHTML = '';
-        }
+        grabSuggestionData(suggestionIndex);
         suggestions[suggestionIndex].scrollIntoView({
           block: 'nearest',
           inline: 'end',
@@ -376,14 +373,7 @@ zetsu.addEventListener('keydown', function (e) {
       if (suggestionIndex === -1) {
         if (input !== '') {
           zetsu.innerText = input;
-          let suggCmd = suggestions[0].querySelector('.suggestion-command').innerText;
-          let suggCmdPar = suggestions[0].querySelector('.suggestion-command').dataset.cmd;
-          let suggCmdSub = suggestions[0].querySelector('.suggestion-command').dataset.sub;
-          let suggCmdArg = suggestions[0].querySelector('.suggestion-command').dataset.arg;
-          console.log(suggCmdPar, suggCmdSub, suggCmdArg);
-          let title = commands[suggCmdPar].ops[suggCmdSub].title;
-          let description = commands[suggCmdPar].ops[suggCmdSub].description;
-          displayDetails(title, description);
+          grabSuggestionData(0);
         } else {
           zetsu.innerText = '';
         }
@@ -393,19 +383,7 @@ zetsu.addEventListener('keydown', function (e) {
       }
       if (suggestionIndex !== -1) {
         suggestions[suggestionIndex].classList.add('active');
-        let suggCmd = suggestions[suggestionIndex].querySelector('.suggestion-command').innerText;
-        let suggCmdPar = suggestions[suggestionIndex].querySelector('.suggestion-command').dataset.cmd;
-        let suggCmdSub = suggestions[suggestionIndex].querySelector('.suggestion-command').dataset.sub;
-        let suggCmdArg = suggestions[suggestionIndex].querySelector('.suggestion-command').dataset.arg;
-        let title = commands[suggCmdPar].ops[suggCmdSub].title;
-        let description = commands[suggCmdPar].ops[suggCmdSub].description;
-        zetsu.innerText = suggCmd;
-        // Display suggestion details
-        if (suggestions.length !== 0 && suggestionIndex !== -1) {
-          displayDetails(title, description);
-        } else {
-          details.innerHTML = '';
-        }
+        grabSuggestionData(suggestionIndex);
         suggestions[suggestionIndex].scrollIntoView({
           block: 'nearest',
           inline: 'end',
