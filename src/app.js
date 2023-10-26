@@ -114,10 +114,10 @@ const toggleZetsuInit = () => {
 };
 
 // display suggestions and detail
-const populateSuggestion = (command, parent, sub, arg) => {
+const populateSuggestion = (command, parent, sub, op, arg) => {
   let suggestion = document.createElement('div');
   suggestion.className = 'suggestion thicc sweetgrass';
-  suggestion.innerHTML = `<div class="cmd-icon"><img src="public/icons/${sub}.svg" class="icon-svg" alt="icon for ${sub}" /></div><div class="suggestion-command" data-cmd="${parent}" data-sub="${sub}" data-arg=${arg}>${command}</div>`;
+  suggestion.innerHTML = `<div class="cmd-icon"><img src="public/icons/${op}.svg" class="icon-svg" alt="icon for ${op}" /></div><div class="suggestion-command" data-cmd="${parent}" data-sub="${sub}" data-op="${op}" data-arg=${arg}>${command}</div>`;
   suggestionsList.appendChild(suggestion);
 };
 
@@ -227,70 +227,93 @@ zetsu.addEventListener('input', function () {
   suggestions = document.querySelectorAll('.suggestion');
   let suggestionsArray = [];
   for (let cmd in commands) {
-    // Search through ops object for each command
-    for (let op in commands[cmd].ops) {
-      let keywords = commands[cmd].ops[op].keywords;
-      for (let i = 0; i < inputWords.length; i++) {
-        for (let j = 0; j < keywords.length; j++) {
-          // Fuzzy search input and keywords
-          let levDist = levenshteinDistance(inputWords[i], keywords[j]);
-          let similarity = 1 - levDist / Math.max(inputWords[i].length, keywords[j].length);
-          if (similarity > 0.66) {
-            let toDo = commands[cmd].ops[op].do;
-            let argument = '';
-            // check if input contains any accepted arguments
-            let acceptedArgs = commands[cmd].ops[op].acceptedArgs;
-            acceptedArgs.forEach((arg) => {
-              // remove hyphens and slashes from input word and argument
-              let argCheckInput = inputWords[i].replace(/-/g, '').replace(/\//g, '');
-              let argCheckArg = arg.replace(/-/g, '').replace(/\//g, '');
-              // if input word matches argument, add argument to command
-              if (argCheckInput.toLowerCase() === argCheckArg.toLowerCase()) {
-                argument = arg;
-                // check suggestions array for existing suggestion with same raw command and remove it from array
-                for (let k = 0; k < suggestionsArray.length; k++) {
-                  if (suggestionsArray[k].command.toLowerCase() === toDo.toLowerCase()) {
-                    suggestionsArray.splice(k, 1);
+    let keywords = commands[cmd].keywords;
+    // Fuzzy search input and keywords
+    for (let i = 0; i < inputWords.length; i++) {
+      for (let j = 0; j < keywords.length; j++) {
+        let levDist = levenshteinDistance(inputWords[i], keywords[j]);
+        let similarity = 1 - levDist / Math.max(inputWords[i].length, keywords[j].length);
+        if (similarity > 0.66) {
+          // Search through subcommands object for each command
+          let subs = commands[cmd].subCommands;
+          for (let sub in subs) {
+            let ops = subs[sub].ops;
+            let subKeywords = subs[sub].keywords;
+            // Fuzzy search input and subKeywords
+            for (let i = 0; i < inputWords.length; i++) {
+              for (let j = 0; j < subKeywords.length; j++) {
+                let levDist = levenshteinDistance(inputWords[i], subKeywords[j]);
+                let similarity = 1 - levDist / Math.max(inputWords[i].length, subKeywords[j].length);
+                if (similarity > 0.66) {
+                  // Search through ops object for each command
+                  for (let op in ops) {
+                    let opsKeywords = ops[op].keywords;
+                    for (let i = 0; i < inputWords.length; i++) {
+                      for (let j = 0; j < opsKeywords.length; j++) {
+                        // Fuzzy search input and opsKeywords
+                        let levDist = levenshteinDistance(inputWords[i], opsKeywords[j]);
+                        let similarity = 1 - levDist / Math.max(inputWords[i].length, opsKeywords[j].length);
+                        if (similarity > 0.66) {
+                          let toDo = ops[op].do;
+                          let argument = '';
+                          // check if input contains any accepted arguments
+                          let acceptedArgs = ops[op].acceptedArgs;
+                          acceptedArgs.forEach((arg) => {
+                            // remove hyphens and slashes from input word and argument
+                            let argCheckInput = inputWords[i].replace(/-/g, '').replace(/\//g, '');
+                            let argCheckArg = arg.replace(/-/g, '').replace(/\//g, '');
+                            // if input word matches argument, add argument to command
+                            if (argCheckInput.toLowerCase() === argCheckArg.toLowerCase()) {
+                              argument = arg;
+                              toDo += ` ${arg.toUpperCase()}`;
+                              similarity++;
+                            }
+                          });
+                          let alreadySuggested = false;
+                          for (let k = 0; k < suggestionsArray.length; k++) {
+                            // check suggestions array for existing suggestion
+                            if (suggestionsArray[k].command.toLowerCase() === toDo.toLowerCase()) {
+                              alreadySuggested = true;
+                            }
+                          }
+                          console.log(suggestionsArray);
+                          // Add suggestion to suggestions array if it hasn't already been suggested
+                          if (!alreadySuggested) {
+                            let suggestion = {
+                              command: toDo,
+                              parentCommand: cmd,
+                              subCommand: sub,
+                              op: op,
+                              argument: argument,
+                              similarity: similarity,
+                            };
+                            suggestionsArray.push(suggestion);
+                            // Reorder suggestions in order of similarity
+                            if (suggestionsArray.length > 0) {
+                              suggestionsArray.sort((a, b) => {
+                                const nameA = a.similarity;
+                                const nameB = b.similarity;
+                                return nameB - nameA;
+                              });
+                              // Populate suggestions list with new order
+                              suggestionsList.innerHTML = '';
+                              for (let k = 0; k < suggestionsArray.length; k++) {
+                                if (!zetsu.innerText.startsWith(suggestionsArray[k].command + ' ')) {
+                                  populateSuggestion(suggestionsArray[k].command, suggestionsArray[k].parentCommand, suggestionsArray[k].subCommand, suggestionsArray[k].op, suggestionsArray[k].argument);
+                                }
+                              }
+                              // Display suggestion details for first suggestion
+                              displayDetails(
+                                commands[suggestionsArray[0].parentCommand].subCommands[suggestionsArray[0].subCommand].ops[suggestionsArray[0].op].title,
+                                commands[suggestionsArray[0].parentCommand].subCommands[suggestionsArray[0].subCommand].ops[suggestionsArray[0].op].description
+                              );
+                            }
+                          }
+                        }
+                      }
+                    }
                   }
                 }
-                let modifier = commands[cmd].ops[op].argModifier;
-                toDo += ` ${modifier}${arg.toUpperCase()}`;
-                similarity++;
-              }
-            });
-            let alreadySuggested = false;
-            for (let k = 0; k < suggestionsArray.length; k++) {
-              // check suggestions array for existing suggestion
-              if (suggestionsArray[k].command.toLowerCase() === toDo.toLowerCase()) {
-                alreadySuggested = true;
-              }
-            }
-            // Add suggestion to suggestions array if it hasn't already been suggested
-            if (!alreadySuggested) {
-              let suggestion = {
-                command: toDo,
-                parentCommand: cmd,
-                subCommand: op,
-                argument: argument,
-                similarity: similarity,
-              };
-              suggestionsArray.push(suggestion);
-              // Reorder suggestions in order of similarity
-              if (suggestionsArray.length > 0) {
-                suggestionsArray.sort((a, b) => {
-                  const nameA = a.similarity;
-                  const nameB = b.similarity;
-                  return nameB - nameA;
-                });
-                // Populate suggestions list with new order
-                suggestionsList.innerHTML = '';
-                for (let k = 0; k < suggestionsArray.length; k++) {
-                  if (!zetsu.innerText.startsWith(suggestionsArray[k].command + ' ')) {
-                    populateSuggestion(suggestionsArray[k].command, suggestionsArray[k].parentCommand, suggestionsArray[k].subCommand, suggestionsArray[k].argument);
-                  }
-                }
-                // Display suggestion details for first suggestion
-                displayDetails(commands[suggestionsArray[0].parentCommand].ops[suggestionsArray[0].subCommand].title, commands[suggestionsArray[0].parentCommand].ops[suggestionsArray[0].subCommand].description);
               }
             }
           }
@@ -301,7 +324,7 @@ zetsu.addEventListener('input', function () {
   toggleZetsuInit();
 });
 
-// --- POPULATING SUGGESTIONs ---
+// --- POPULATING SUGGESTION DETAILS ---
 
 let suggestionIndex = -1;
 // Function to grab data from active suggestion
@@ -310,10 +333,11 @@ const grabSuggestionData = (indexToUse) => {
   let suggCmd = suggestions[indexToUse].querySelector('.suggestion-command').innerText;
   let suggCmdPar = suggestions[indexToUse].querySelector('.suggestion-command').dataset.cmd;
   let suggCmdSub = suggestions[indexToUse].querySelector('.suggestion-command').dataset.sub;
+  let suggCmdOp = suggestions[indexToUse].querySelector('.suggestion-command').dataset.op;
   let suggCmdArg = suggestions[indexToUse].querySelector('.suggestion-command').dataset.arg;
   console.log(suggCmdPar, suggCmdSub, suggCmdArg);
-  let title = commands[suggCmdPar].ops[suggCmdSub].title;
-  let description = commands[suggCmdPar].ops[suggCmdSub].description;
+  let title = commands[suggCmdPar].subCommands[suggCmdSub].ops[suggCmdOp].title;
+  let description = commands[suggCmdPar].subCommands[suggCmdSub].ops[suggCmdOp].description;
   displayDetails(title, description);
   // Replace input with suggestion if user wants it
   if (indexToUse === 0 && suggestionIndex === -1) {
@@ -452,3 +476,50 @@ zetsu.addEventListener('keydown', function (e) {
     }
   }
 });
+
+// Bonsai thing
+// HTML:
+// <div class="hidden" id="bonsaiContainer"></div>
+// CSS:
+// #bonsaiContainer {
+//   font-family: 'Courier New', monospace;
+//   position: relative;
+//   width: 400px;
+//   height: 400px;
+//   background-color: #1e1e1e;
+// }
+// .char {
+//   position: absolute;
+//   transition: opacity 0.2s;
+// }
+// // JS:
+// const bonsaiData = [
+//   [' ', ' ', ' ', '#', ' ', ' ', ' '],
+//   [' ', ' ', '/', '|', '\\', ' ', ' '],
+//   [' ', '/', ' ', '|', ' ', '\\', ' '],
+//   ['/', ' ', ' ', '|', ' ', ' ', '\\'],
+// ];
+
+// const container = document.getElementById('bonsaiContainer');
+// container.classList.remove('hidden');
+// const charWidth = 20;
+// const charHeight = 20;
+
+// let delay = 0;
+// for (let y = 0; y < bonsaiData.length; y++) {
+//   for (let x = 0; x < bonsaiData[y].length; x++) {
+//     const char = bonsaiData[y][x];
+//     const charDiv = document.createElement('div');
+//     charDiv.classList.add('char');
+//     charDiv.style.left = x * charWidth + 'px';
+//     charDiv.style.top = y * charHeight + 'px';
+//     charDiv.style.opacity = 0;
+//     charDiv.textContent = char;
+//     container.appendChild(charDiv);
+
+//     setTimeout(() => {
+//       charDiv.style.opacity = 1;
+//     }, delay);
+//     delay += 50; // Increase for slower animation
+//   }
+// }

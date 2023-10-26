@@ -31,28 +31,36 @@ const commands = {
   killa: {
     description: 'Express chimeric antigen receptor to recognize Tumor-Associated Antigens and kill cancer cells.',
     keywords: [...makeKeywords, ...carKeywords],
-    ops: {
+    subCommands: {
       make: {
-        keywords: [...makeKeywords],
-        acceptedArgs: [],
-        argModifier: '',
+        keywords: [...makeKeywords, ...carKeywords],
         title: 'Build cell',
-        do: 'make',
+        do: 'killa make',
         description: 'Genetically engineer a new killer T cell.',
-      },
-      car: {
-        keywords: [...carKeywords],
-        acceptedArgs: [...carArgs],
-        argModifier: '-',
-        title: 'Express chimeric antigen receptor',
-        do: 'make car',
-        description: 'Show CAR on cell surface to recognize covert cancer cells.',
+        ops: {
+          // make: {
+          //   keywords: [...makeKeywords],
+          //   acceptedArgs: [],
+          //   argModifier: '',
+          //   title: 'Build cell',
+          //   do: 'killa make',
+          //   description: 'Genetically engineer a new killer T cell.',
+          // },
+          car: {
+            keywords: [...carKeywords],
+            acceptedArgs: [...carArgs],
+            argModifier: '-',
+            title: 'Express chimeric antigen receptor',
+            do: 'killa make car -t',
+            description: 'Show CAR on cell surface to recognize covert cancer cells.',
+          },
+        },
       },
     },
     run: (input) => {
       returnInput(input);
       // Check for help
-      if (input.includes('-h') || input.includes('-help') || input === 'make') {
+      if (input.includes('-h') || input.includes('-help')) {
         let output = createOutputDiv(`TAAs: <span class="lilac" style="font-weight: 600">${TAAs.join(', ').toUpperCase()}</span>`, 'wheat');
         returnOutput(output, 0);
         return;
