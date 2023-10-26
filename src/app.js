@@ -16,6 +16,7 @@ let zetsuHelper = document.querySelector('.zetsu-helper'); // Zetsu suggestions 
 let zetsuBar = document.querySelector('.zetsu-input');
 let zetsu = document.querySelector('.zetsu-input-text'); // Zetsu input field
 let cursor = document.querySelector('.cursor'); // Zetsu input fake cursor
+let ghost = document.querySelector('.ghost-input'); // Zetsu input ghost text
 let running = document.querySelector('.running'); // Zetsu running indicator
 let history = []; // Zetsu input history
 // Suggestions and suggestion details
@@ -224,6 +225,56 @@ zetsu.addEventListener('input', function () {
   details.innerHTML = '';
   suggestions = [];
   let inputWords = input.split(' ');
+  // Ghost input
+  for (let cmd in commands) {
+    // Check if command starts with input
+    if (cmd.startsWith(inputWords[0].toLowerCase()) && inputWords[0] !== '') {
+      // insert remaining command characters into ghost-input
+      let remainingCmd = cmd.substring(inputWords[0].length);
+      ghost.innerText = remainingCmd;
+    } else {
+      ghost.innerText = '';
+    }
+    // Check if input matches command
+    if (inputWords[0].toLowerCase() === cmd) {
+      ghost.innerText = '';
+      // Check if command has subcommands
+      if (commands[cmd].subCommands) {
+        if (inputWords[1] !== undefined && inputWords[1] !== '') {
+          // Check if subcommand starts with input
+          for (let sub in commands[cmd].subCommands) {
+            if (sub.startsWith(inputWords[1].toLowerCase())) {
+              // insert remaining subcommand characters into ghost-input
+              let remainingSub = sub.substring(inputWords[1].length);
+              ghost.innerText = remainingSub;
+            } else {
+              ghost.innerText = '';
+            }
+            // Check if input matches any ops
+            if (inputWords[1].toLowerCase() === sub) {
+              ghost.innerText = '';
+              // Check if op has arguments
+              if (commands[cmd].subCommands[sub].ops) {
+                if (inputWords[2] !== undefined && inputWords[2] !== '') {
+                  // Check if op starts with input
+                  for (let op in commands[cmd].subCommands[sub].ops) {
+                    if (op.startsWith(inputWords[2].toLowerCase())) {
+                      // insert remaining op characters into ghost-input
+                      let remainingOp = op.substring(inputWords[2].length);
+                      ghost.innerText = remainingOp;
+                    } else {
+                      ghost.innerText = '';
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  // Suggestions
   suggestions = document.querySelectorAll('.suggestion');
   let suggestionsArray = [];
   for (let cmd in commands) {
@@ -324,6 +375,17 @@ zetsu.addEventListener('input', function () {
     }
   }
   toggleZetsuInit();
+});
+// Listen for tab and add whatever's in ghost-input to input
+zetsu.addEventListener('keydown', function (e) {
+  if (e.key === 'Tab') {
+    e.preventDefault();
+    if (ghost.innerText !== '') {
+      zetsu.innerText += ghost.innerText;
+      focusAtEnd();
+      ghost.innerText = '';
+    }
+  }
 });
 
 // --- POPULATING SUGGESTION DETAILS ---
@@ -447,6 +509,7 @@ zetsu.addEventListener('keydown', function (e) {
 // Clear editor if user presses enter, refocus on editor, and show fake cursor
 const clearZetsu = () => {
   zetsu.innerText = '';
+  ghost.innerText = '';
   zetsu.focus();
   cursor.style.display = 'inline-flex';
   suggestionsList.innerHTML = '';
