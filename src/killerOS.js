@@ -31,12 +31,13 @@ function toggleForRun() {
 
 const commands = {
   killa: {
+    title: 'Killer T Cell',
     description: 'Express chimeric antigen receptor to recognize Tumor-Associated Antigens and kill cancer cells.',
     keywords: [...buildKeywords, ...carKeywords, ...inhibitorKeywords],
     subCommands: {
       build: {
         keywords: [...buildKeywords, ...carKeywords, ...inhibitorKeywords],
-        title: 'Build cell',
+        title: 'Build cell or molecule',
         do: 'killa build',
         description: 'Genetically engineer a new killer T cell.',
         ops: {

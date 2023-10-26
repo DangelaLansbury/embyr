@@ -110,7 +110,7 @@ const toggleZetsuInit = () => {
       hideZetsuInit();
     }
   } else {
-    showZetsuInit();
+    // showZetsuInit();
   }
 };
 
@@ -183,6 +183,7 @@ const populateSuggestion = (command, parent, sub, op, arg) => {
 };
 
 const displayDetails = (title, description) => {
+  toggleZetsuInit();
   details.innerHTML = '';
   let newDetails = document.createElement('div');
   newDetails.className = 'suggestion-details';
@@ -231,43 +232,41 @@ zetsu.addEventListener('input', function () {
   let inputWords = input.split(' ');
   // Ghost input
   let ghostInput = '';
-  if (inputWords.length === 1) {
-    for (let cmd in commands) {
-      // Check if command starts with input
-      if (inputWords[0].toLowerCase() !== cmd) {
-        if (cmd.startsWith(inputWords[0].toLowerCase()) && inputWords[0] !== '') {
-          // insert remaining command characters into ghost-input
-          let remainingCmd = cmd.substring(inputWords[0].length);
-          ghostInput = remainingCmd;
-        }
+  for (let cmd in commands) {
+    // Check if command starts with input
+    if (inputWords[0].toLowerCase() !== cmd) {
+      if (cmd.startsWith(inputWords[0].toLowerCase()) && inputWords[0] !== '') {
+        // insert remaining command characters into ghost-input
+        let remainingCmd = cmd.substring(inputWords[0].length);
+        ghostInput = remainingCmd;
+        displayDetails(commands[cmd].title, commands[cmd].description);
       }
-    }
-  } else if (inputWords.length === 2) {
-    for (let cmd in commands) {
+    } else if (inputWords[0].toLowerCase() === cmd) {
+      details.innerHTML = '';
       let subs = commands[cmd].subCommands;
       for (let sub in subs) {
         // Check if subCommand starts with input
-        if (inputWords[1].toLowerCase() !== sub && input.trim() !== cmd) {
+        if (inputWords[1].toLowerCase() !== sub) {
           if (sub.startsWith(inputWords[1].toLowerCase()) && inputWords[1] !== '') {
             // insert remaining command characters into ghost-input
             let remainingCmd = sub.substring(inputWords[1].length);
             ghostInput = remainingCmd;
+            let subDetails = subs[sub];
+            displayDetails(subDetails.title, subDetails.description);
           }
-        }
-      }
-    }
-  } else if (inputWords.length > 2) {
-    for (let cmd in commands) {
-      let subs = commands[cmd].subCommands;
-      for (let sub in subs) {
-        let ops = subs[sub].ops;
-        for (let op in ops) {
-          // Check if op starts with input
-          if (inputWords[2].toLowerCase() !== op || input.trim() !== cmd + ' ' + sub) {
-            if (op.startsWith(inputWords[2].toLowerCase()) && inputWords[2] !== '') {
-              // insert remaining command characters into ghost-input
-              let remainingCmd = op.substring(inputWords[2].length);
-              ghostInput = remainingCmd;
+        } else if (inputWords[1].toLowerCase() === sub) {
+          details.innerHTML = '';
+          let ops = subs[sub].ops;
+          for (let op in ops) {
+            // Check if op starts with input
+            if (inputWords[2].toLowerCase() !== op) {
+              if (op.startsWith(inputWords[2].toLowerCase()) && inputWords[2] !== '') {
+                // insert remaining command characters into ghost-input
+                let remainingCmd = op.substring(inputWords[2].length);
+                ghostInput = remainingCmd;
+                let opDetails = ops[op];
+                displayDetails(opDetails.title, opDetails.description);
+              }
             }
           }
         }
@@ -356,11 +355,6 @@ zetsu.addEventListener('input', function () {
                               if (!zetsu.innerText.startsWith(suggestionsArray[0].command + ' ')) {
                                 populateSuggestion(suggestionsArray[0].command, suggestionsArray[0].parentCommand, suggestionsArray[0].subCommand, suggestionsArray[0].op, suggestionsArray[0].argument);
                               }
-                              // for (let k = 0; k < suggestionsArray.length; k++) {
-                              //   if (!zetsu.innerText.startsWith(suggestionsArray[k].command + ' ')) {
-                              //     populateSuggestion(suggestionsArray[k].command, suggestionsArray[k].parentCommand, suggestionsArray[k].subCommand, suggestionsArray[k].op, suggestionsArray[k].argument);
-                              //   }
-                              // }
                               // Display suggestion details for first suggestion
                               let firstSuggestion = commands[suggestionsArray[0].parentCommand].subCommands[suggestionsArray[0].subCommand].ops[suggestionsArray[0].op];
                               displayDetails(firstSuggestion.title, firstSuggestion.description);
