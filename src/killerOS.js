@@ -6,14 +6,16 @@ let quitOp = document.querySelector('#quitOp');
 
 // Biologics
 let TAAs = ['a-folate', 'cd19', 'cd20', 'cd22', 'cd30', 'cd33', 'egfr', 'gd2', 'her2', 'l1cam'];
-let CSDomains = ['cd28', '4-1bb', 'ox40', 'icos'];
 let inhibitors = ['cd80', 'pd-l1', 'pd-l2', 'ctla-4', 'pd-1'];
 
 // build
-const buildSubs = ['car'];
 const buildKeywords = ['make', 'build', 'new', 'construct', 'engineer', 'manufacture'];
-const carKeywords = ['car', 'express', 'hunt', 'find', 'receptor', 'protein', 'molecule', 'chimeric', 'antigen', 'show', 'display', 'unmask', 'unveil', 'reveal', ...TAAs, ...CSDomains];
+// car
+const carKeywords = ['car', 'express', 'hunt', 'find', 'receptor', 'protein', 'molecule', 'chimeric', 'antigen', 'show', 'display', 'unmask', 'unveil', 'reveal', ...TAAs];
 const carArgs = [...TAAs];
+// inhibit
+const inhibitorKeywords = ['inhibit', 'block', 'hide', 'mask', 'conceal', 'cover', 'prevent', 'stop', 'checkpoint', 'suppress', 'regulate', 'regulator', ...inhibitors];
+const inhibitorArgs = [...inhibitors];
 
 let randomReceptor = TAAs[Math.floor(Math.random() * TAAs.length)];
 let randomInhibitor = inhibitors[Math.floor(Math.random() * inhibitors.length)];
@@ -30,10 +32,10 @@ function toggleForRun() {
 const commands = {
   killa: {
     description: 'Express chimeric antigen receptor to recognize Tumor-Associated Antigens and kill cancer cells.',
-    keywords: [...buildKeywords, ...carKeywords],
+    keywords: [...buildKeywords, ...carKeywords, ...inhibitorKeywords],
     subCommands: {
       build: {
-        keywords: [...buildKeywords, ...carKeywords],
+        keywords: [...buildKeywords, ...carKeywords, ...inhibitorKeywords],
         title: 'Build cell',
         do: 'killa build',
         description: 'Genetically engineer a new killer T cell.',
@@ -45,6 +47,14 @@ const commands = {
             title: 'Express chimeric antigen receptor',
             do: 'killa build car',
             description: 'Show CAR on cell surface to recognize covert cancer cells.',
+          },
+          inhibitor: {
+            keywords: [...inhibitorKeywords],
+            acceptedArgs: [...inhibitorArgs],
+            argFlag: '-t',
+            title: 'Inhibit Checkpoint',
+            do: 'killa build inhibitor',
+            description: 'Block checkpoint to release the brakes on the immune system',
           },
         },
       },

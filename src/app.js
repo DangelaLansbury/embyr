@@ -214,8 +214,10 @@ const levenshteinDistance = (str1, str2) => {
 
 // Populating suggestions container with suggestions based on input
 let input = '';
+let suggestionsArray = [];
 zetsu.addEventListener('input', function () {
   input = this.innerText;
+  ghost.innerText = '';
   // Check if input is empty
   if (input !== '') {
     cursor.style.display = 'none';
@@ -228,57 +230,54 @@ zetsu.addEventListener('input', function () {
   suggestions = [];
   let inputWords = input.split(' ');
   // Ghost input
-  for (let cmd in commands) {
-    // Check if command starts with input
-    if (cmd.startsWith(inputWords[0].toLowerCase()) && inputWords[0] !== '') {
-      // insert remaining command characters into ghost-input
-      let remainingCmd = cmd.substring(inputWords[0].length);
-      ghost.innerText = remainingCmd;
-    } else {
-      ghost.innerText = '';
+  let ghostInput = '';
+  if (inputWords.length === 1) {
+    for (let cmd in commands) {
+      // Check if command starts with input
+      if (inputWords[0].toLowerCase() !== cmd) {
+        if (cmd.startsWith(inputWords[0].toLowerCase()) && inputWords[0] !== '') {
+          // insert remaining command characters into ghost-input
+          let remainingCmd = cmd.substring(inputWords[0].length);
+          ghostInput = remainingCmd;
+        }
+      }
     }
-    // Check if input matches command
-    if (inputWords[0].toLowerCase() === cmd) {
-      ghost.innerText = '';
-      // Check if command has subcommands
-      if (commands[cmd].subCommands) {
-        if (inputWords[1] !== undefined && inputWords[1] !== '') {
-          // Check if subcommand starts with input
-          for (let sub in commands[cmd].subCommands) {
-            if (sub.startsWith(inputWords[1].toLowerCase())) {
-              // insert remaining subcommand characters into ghost-input
-              let remainingSub = sub.substring(inputWords[1].length);
-              ghost.innerText = remainingSub;
-            } else {
-              ghost.innerText = '';
-            }
-            // Check if input matches any ops
-            if (inputWords[1].toLowerCase() === sub) {
-              ghost.innerText = '';
-              // Check if op has arguments
-              if (commands[cmd].subCommands[sub].ops) {
-                if (inputWords[2] !== undefined && inputWords[2] !== '') {
-                  // Check if op starts with input
-                  for (let op in commands[cmd].subCommands[sub].ops) {
-                    if (op.startsWith(inputWords[2].toLowerCase())) {
-                      // insert remaining op characters into ghost-input
-                      let remainingOp = op.substring(inputWords[2].length);
-                      ghost.innerText = remainingOp;
-                    } else {
-                      ghost.innerText = '';
-                    }
-                  }
-                }
-              }
+  } else if (inputWords.length === 2) {
+    for (let cmd in commands) {
+      let subs = commands[cmd].subCommands;
+      for (let sub in subs) {
+        // Check if subCommand starts with input
+        if (inputWords[1].toLowerCase() !== sub && input.trim() !== cmd) {
+          if (sub.startsWith(inputWords[1].toLowerCase()) && inputWords[1] !== '') {
+            // insert remaining command characters into ghost-input
+            let remainingCmd = sub.substring(inputWords[1].length);
+            ghostInput = remainingCmd;
+          }
+        }
+      }
+    }
+  } else if (inputWords.length > 2) {
+    for (let cmd in commands) {
+      let subs = commands[cmd].subCommands;
+      for (let sub in subs) {
+        let ops = subs[sub].ops;
+        for (let op in ops) {
+          // Check if op starts with input
+          if (inputWords[2].toLowerCase() !== op || input.trim() !== cmd + ' ' + sub) {
+            if (op.startsWith(inputWords[2].toLowerCase()) && inputWords[2] !== '') {
+              // insert remaining command characters into ghost-input
+              let remainingCmd = op.substring(inputWords[2].length);
+              ghostInput = remainingCmd;
             }
           }
         }
       }
     }
   }
+  ghost.innerText = ghostInput;
   // Suggestions
   suggestions = document.querySelectorAll('.suggestion');
-  let suggestionsArray = [];
+  suggestionsArray = [];
   for (let cmd in commands) {
     let keywords = commands[cmd].keywords;
     // Fuzzy search input and keywords
@@ -354,11 +353,14 @@ zetsu.addEventListener('input', function () {
                               });
                               // Populate suggestions list with new order
                               suggestionsList.innerHTML = '';
-                              for (let k = 0; k < suggestionsArray.length; k++) {
-                                if (!zetsu.innerText.startsWith(suggestionsArray[k].command + ' ')) {
-                                  populateSuggestion(suggestionsArray[k].command, suggestionsArray[k].parentCommand, suggestionsArray[k].subCommand, suggestionsArray[k].op, suggestionsArray[k].argument);
-                                }
+                              if (!zetsu.innerText.startsWith(suggestionsArray[0].command + ' ')) {
+                                populateSuggestion(suggestionsArray[0].command, suggestionsArray[0].parentCommand, suggestionsArray[0].subCommand, suggestionsArray[0].op, suggestionsArray[0].argument);
                               }
+                              // for (let k = 0; k < suggestionsArray.length; k++) {
+                              //   if (!zetsu.innerText.startsWith(suggestionsArray[k].command + ' ')) {
+                              //     populateSuggestion(suggestionsArray[k].command, suggestionsArray[k].parentCommand, suggestionsArray[k].subCommand, suggestionsArray[k].op, suggestionsArray[k].argument);
+                              //   }
+                              // }
                               // Display suggestion details for first suggestion
                               let firstSuggestion = commands[suggestionsArray[0].parentCommand].subCommands[suggestionsArray[0].subCommand].ops[suggestionsArray[0].op];
                               displayDetails(firstSuggestion.title, firstSuggestion.description);
@@ -378,13 +380,16 @@ zetsu.addEventListener('input', function () {
   }
   toggleZetsuInit();
 });
-// Listen for tab and add whatever's in ghost-input to input
+// Listen for tab and whatever's in ghost-input to input, or if there's a suggestion replace the input with the suggested command
 zetsu.addEventListener('keydown', function (e) {
   if (e.key === 'Tab') {
     e.preventDefault();
     if (ghost.innerText !== '') {
       zetsu.innerText += ghost.innerText;
       focusAtEnd();
+      ghost.innerText = '';
+    } else if (suggestions.length !== 0) {
+      grabSuggestionData(0);
       ghost.innerText = '';
     }
   }
@@ -404,92 +409,94 @@ const grabSuggestionData = (indexToUse) => {
   console.log(suggCmdPar, suggCmdSub, suggCmdArg);
   let title = commands[suggCmdPar].subCommands[suggCmdSub].ops[suggCmdOp].title;
   let description = commands[suggCmdPar].subCommands[suggCmdSub].ops[suggCmdOp].description;
-  displayDetails(title, description);
+  zetsu.innerText = suggCmd;
+  focusAtEnd();
+  // displayDetails(suggCmd, description);
   // Replace input with suggestion if user wants it
-  if (indexToUse === 0 && suggestionIndex === -1) {
-    zetsu.innerText = input;
-  } else {
-    zetsu.innerText = suggCmd;
-    focusAtEnd();
-  }
+  // if (indexToUse === 0 && suggestionIndex === -1) {
+  //   zetsu.innerText = input;
+  // } else {
+  //   zetsu.innerText = suggCmd;
+  //   focusAtEnd();
+  // }
 };
 // Listen for up and down arrow keys to cycle through suggestions
-zetsu.addEventListener('keydown', function (e) {
-  // Check if suggestions are present
-  suggestions = document.querySelectorAll('.suggestion');
-  if (suggestions.length !== 0) {
-    if (e.key === 'ArrowDown') {
-      e.preventDefault();
-      details.innerHTML = '';
-      if (cursor.style.display === 'inline-flex') {
-        cursor.style.display = 'none';
-      }
-      if (suggestionIndex !== -1) {
-        suggestions[suggestionIndex].classList.remove('active');
-      }
-      suggestionIndex++;
-      if (suggestionIndex > suggestions.length - 1) {
-        suggestionIndex = -1;
-        if (input !== '') {
-          zetsu.innerText = input;
-          grabSuggestionData(0);
-        } else {
-          zetsu.innerText = '';
-        }
-      } else if (suggestionIndex !== -1) {
-        suggestions[suggestionIndex].classList.add('active');
-        grabSuggestionData(suggestionIndex);
-        suggestions[suggestionIndex].scrollIntoView({
-          block: 'nearest',
-          inline: 'end',
-          behavior: 'smooth',
-        });
-      }
-      if (zetsu.innerText !== '') {
-        focusAtEnd();
-      } else {
-        cursor.style.display = 'inline-flex';
-      }
-    } else if (e.key === 'ArrowUp') {
-      e.preventDefault();
-      details.innerHTML = '';
-      if (cursor.style.display === 'inline-flex') {
-        cursor.style.display = 'none';
-      }
-      if (suggestionIndex !== -1) {
-        suggestions[suggestionIndex].classList.remove('active');
-      }
-      suggestionIndex--;
-      if (suggestionIndex === -1) {
-        if (input !== '') {
-          zetsu.innerText = input;
-          grabSuggestionData(0);
-        } else {
-          zetsu.innerText = '';
-        }
-      }
-      if (suggestionIndex < -1) {
-        suggestionIndex = suggestions.length - 1;
-      }
-      if (suggestionIndex !== -1) {
-        suggestions[suggestionIndex].classList.add('active');
-        grabSuggestionData(suggestionIndex);
-        suggestions[suggestionIndex].scrollIntoView({
-          block: 'nearest',
-          inline: 'end',
-          behavior: 'smooth',
-        });
-      }
-      if (zetsu.innerText !== '') {
-        focusAtEnd();
-      } else {
-        cursor.style.display = 'inline-flex';
-      }
-    }
-  } else {
-    suggestionIndex = -1;
-  }
-});
+// zetsu.addEventListener('keydown', function (e) {
+//   // Check if suggestions are present
+//   suggestions = document.querySelectorAll('.suggestion');
+//   if (suggestions.length !== 0) {
+//     if (e.key === 'ArrowDown') {
+//       e.preventDefault();
+//       details.innerHTML = '';
+//       if (cursor.style.display === 'inline-flex') {
+//         cursor.style.display = 'none';
+//       }
+//       if (suggestionIndex !== -1) {
+//         suggestions[suggestionIndex].classList.remove('active');
+//       }
+//       suggestionIndex++;
+//       if (suggestionIndex > suggestions.length - 1) {
+//         suggestionIndex = -1;
+//         if (input !== '') {
+//           zetsu.innerText = input;
+//           grabSuggestionData(0);
+//         } else {
+//           zetsu.innerText = '';
+//         }
+//       } else if (suggestionIndex !== -1) {
+//         suggestions[suggestionIndex].classList.add('active');
+//         grabSuggestionData(suggestionIndex);
+//         suggestions[suggestionIndex].scrollIntoView({
+//           block: 'nearest',
+//           inline: 'end',
+//           behavior: 'smooth',
+//         });
+//       }
+//       if (zetsu.innerText !== '') {
+//         focusAtEnd();
+//       } else {
+//         cursor.style.display = 'inline-flex';
+//       }
+//     } else if (e.key === 'ArrowUp') {
+//       e.preventDefault();
+//       details.innerHTML = '';
+//       if (cursor.style.display === 'inline-flex') {
+//         cursor.style.display = 'none';
+//       }
+//       if (suggestionIndex !== -1) {
+//         suggestions[suggestionIndex].classList.remove('active');
+//       }
+//       suggestionIndex--;
+//       if (suggestionIndex === -1) {
+//         if (input !== '') {
+//           zetsu.innerText = input;
+//           grabSuggestionData(0);
+//         } else {
+//           zetsu.innerText = '';
+//         }
+//       }
+//       if (suggestionIndex < -1) {
+//         suggestionIndex = suggestions.length - 1;
+//       }
+//       if (suggestionIndex !== -1) {
+//         suggestions[suggestionIndex].classList.add('active');
+//         grabSuggestionData(suggestionIndex);
+//         suggestions[suggestionIndex].scrollIntoView({
+//           block: 'nearest',
+//           inline: 'end',
+//           behavior: 'smooth',
+//         });
+//       }
+//       if (zetsu.innerText !== '') {
+//         focusAtEnd();
+//       } else {
+//         cursor.style.display = 'inline-flex';
+//       }
+//     }
+//   } else {
+//     suggestionIndex = -1;
+//   }
+// });
 
 // Reset suggestion index when user presses space or continues to type or hits enter
 zetsu.addEventListener('keydown', function (e) {

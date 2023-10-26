@@ -92,8 +92,8 @@
   align-items: flex-start;
   margin: 0;
   width: 100%;
-  height: calc(9rem + 1px);
-  min-height: calc(9rem + 1px);
+  height: calc(6rem + 1px);
+  min-height: calc(6rem + 1px);
   overflow: hidden;
   background-color: var(--soil);
 }
