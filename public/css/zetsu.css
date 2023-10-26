@@ -151,7 +151,7 @@
   overscroll-behavior: none;
   -ms-overflow-style: none;
 }
-.suggestion {
+/* .suggestion {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -162,7 +162,7 @@
   height: 2rem;
   min-height: 2rem;
   transition: 0.2s;
-}
+} */
 .cmd-icon {
   display: inline-flex;
   align-items: center;

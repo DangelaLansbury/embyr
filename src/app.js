@@ -103,15 +103,21 @@ const showZetsuInit = () => {
 };
 
 const toggleZetsuInit = () => {
-  suggestions = document.querySelectorAll('.suggestion');
-  if (suggestions.length !== 0) {
-    // zetsuInitContent.innerHTML = 'Command suggestions and info will appear here.';
-    if (!zetsuInit.classList.contains('hidden')) {
-      hideZetsuInit();
-    }
-  } else {
-    // showZetsuInit();
+  if (!zetsuInit.classList.contains('hidden')) {
+    hideZetsuInit();
   }
+  if (details.innerHTML === '') {
+    showZetsuInit();
+  }
+  // suggestions = document.querySelectorAll('.suggestion');
+  // if (suggestions.length !== 0) {
+  //   // zetsuInitContent.innerHTML = 'Command suggestions and info will appear here.';
+  //   if (!zetsuInit.classList.contains('hidden')) {
+  //     hideZetsuInit();
+  //   }
+  // } else {
+  //   // showZetsuInit();
+  // }
 };
 
 // --- OUTPUTS ---
@@ -183,10 +189,11 @@ const populateSuggestion = (command, parent, sub, op, arg) => {
 };
 
 const displayDetails = (title, description) => {
-  toggleZetsuInit();
+  // toggleZetsuInit();
+  hideZetsuInit();
   details.innerHTML = '';
   let newDetails = document.createElement('div');
-  newDetails.className = 'suggestion-details';
+  newDetails.className = 'suggestion-details suggestion';
   newDetails.innerHTML = `<div class="title sweetgrass medium thicc">${title}</div><div class="description">${description}</div>`;
   details.appendChild(newDetails);
 };
@@ -216,6 +223,7 @@ const levenshteinDistance = (str1, str2) => {
 // Populating suggestions container with suggestions based on input
 let input = '';
 let suggestionsArray = [];
+let suggestionAvailable = '';
 zetsu.addEventListener('input', function () {
   input = this.innerText;
   ghost.innerText = '';
@@ -234,33 +242,33 @@ zetsu.addEventListener('input', function () {
   let ghostInput = '';
   for (let cmd in commands) {
     // Check if command starts with input
-    if (inputWords[0].toLowerCase() !== cmd) {
-      if (cmd.startsWith(inputWords[0].toLowerCase()) && inputWords[0] !== '') {
+    if (inputWords[0].toLowerCase() !== cmd && inputWords.length === 1) {
+      if (cmd.startsWith(inputWords[0].toLowerCase()) && inputWords[0]) {
         // insert remaining command characters into ghost-input
         let remainingCmd = cmd.substring(inputWords[0].length);
         ghostInput = remainingCmd;
         displayDetails(commands[cmd].title, commands[cmd].description);
       }
-    } else if (inputWords[0].toLowerCase() === cmd) {
+    } else if (inputWords[0].toLowerCase() === cmd && inputWords.length > 1) {
       details.innerHTML = '';
       let subs = commands[cmd].subCommands;
       for (let sub in subs) {
         // Check if subCommand starts with input
-        if (inputWords[1].toLowerCase() !== sub) {
-          if (sub.startsWith(inputWords[1].toLowerCase()) && inputWords[1] !== '') {
+        if (inputWords[1].toLowerCase() !== sub && inputWords.length === 2) {
+          if (sub.startsWith(inputWords[1].toLowerCase()) && inputWords[1]) {
             // insert remaining command characters into ghost-input
             let remainingCmd = sub.substring(inputWords[1].length);
             ghostInput = remainingCmd;
             let subDetails = subs[sub];
             displayDetails(subDetails.title, subDetails.description);
           }
-        } else if (inputWords[1].toLowerCase() === sub) {
+        } else if (inputWords[1].toLowerCase() === sub && inputWords.length === 3) {
           details.innerHTML = '';
           let ops = subs[sub].ops;
           for (let op in ops) {
             // Check if op starts with input
-            if (inputWords[2].toLowerCase() !== op) {
-              if (op.startsWith(inputWords[2].toLowerCase()) && inputWords[2] !== '') {
+            if (inputWords[2].toLowerCase() !== op && inputWords[2] !== '' && inputWords.length === 3) {
+              if (op.startsWith(inputWords[2].toLowerCase())) {
                 // insert remaining command characters into ghost-input
                 let remainingCmd = op.substring(inputWords[2].length);
                 ghostInput = remainingCmd;
@@ -353,7 +361,7 @@ zetsu.addEventListener('input', function () {
                               // Populate suggestions list with new order
                               suggestionsList.innerHTML = '';
                               if (!zetsu.innerText.startsWith(suggestionsArray[0].command + ' ')) {
-                                populateSuggestion(suggestionsArray[0].command, suggestionsArray[0].parentCommand, suggestionsArray[0].subCommand, suggestionsArray[0].op, suggestionsArray[0].argument);
+                                suggestionAvailable = suggestionsArray[0].command;
                               }
                               // Display suggestion details for first suggestion
                               let firstSuggestion = commands[suggestionsArray[0].parentCommand].subCommands[suggestionsArray[0].subCommand].ops[suggestionsArray[0].op];
@@ -372,8 +380,9 @@ zetsu.addEventListener('input', function () {
       }
     }
   }
-  toggleZetsuInit();
+  // toggleZetsuInit();
 });
+
 // Listen for tab and whatever's in ghost-input to input, or if there's a suggestion replace the input with the suggested command
 zetsu.addEventListener('keydown', function (e) {
   if (e.key === 'Tab') {
@@ -382,9 +391,10 @@ zetsu.addEventListener('keydown', function (e) {
       zetsu.innerText += ghost.innerText;
       focusAtEnd();
       ghost.innerText = '';
-    } else if (suggestions.length !== 0) {
-      grabSuggestionData(0);
+    } else if (suggestionAvailable !== '') {
+      zetsu.innerText = suggestionAvailable;
       ghost.innerText = '';
+      focusAtEnd();
     }
   }
 });
@@ -403,7 +413,7 @@ const grabSuggestionData = (indexToUse) => {
   console.log(suggCmdPar, suggCmdSub, suggCmdArg);
   let title = commands[suggCmdPar].subCommands[suggCmdSub].ops[suggCmdOp].title;
   let description = commands[suggCmdPar].subCommands[suggCmdSub].ops[suggCmdOp].description;
-  zetsu.innerText = suggCmd;
+  zetsu.innerText = 'test';
   focusAtEnd();
   // displayDetails(suggCmd, description);
   // Replace input with suggestion if user wants it
@@ -495,10 +505,10 @@ const grabSuggestionData = (indexToUse) => {
 // Reset suggestion index when user presses space or continues to type or hits enter
 zetsu.addEventListener('keydown', function (e) {
   if (e.key === ' ' || e.key === 'Backspace' || e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
-    suggestionIndex = -1;
+    // suggestionIndex = -1;
   } else if (e.key === 'Enter') {
     input = '';
-    suggestionIndex = -1;
+    // suggestionIndex = -1;
   }
 });
 
@@ -518,7 +528,9 @@ const clearZetsu = () => {
   suggestionsList.innerHTML = '';
   details.innerHTML = '';
   suggestions = [];
-  showZetsuInit();
+  suggestionAvailable = '';
+  // toggleZetsuInit();
+  // showZetsuInit();
 };
 
 // Listening for command and executing function when user presses enter
