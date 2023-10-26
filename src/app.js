@@ -114,22 +114,6 @@ const toggleZetsuInit = () => {
   }
 };
 
-// display suggestions and detail
-const populateSuggestion = (command, parent, sub, op, arg) => {
-  let suggestion = document.createElement('div');
-  suggestion.className = 'suggestion thicc sweetgrass';
-  suggestion.innerHTML = `<div class="cmd-icon"><img src="public/icons/${op}.svg" class="icon-svg" alt="icon for ${op}" /></div><div class="suggestion-command" data-cmd="${parent}" data-sub="${sub}" data-op="${op}" data-arg=${arg}>${command}</div>`;
-  suggestionsList.appendChild(suggestion);
-};
-
-const displayDetails = (title, description) => {
-  details.innerHTML = '';
-  let newDetails = document.createElement('div');
-  newDetails.className = 'suggestion-details';
-  newDetails.innerHTML = `<div class="title sweetgrass medium thicc">${title}</div><div class="description">${description}</div>`;
-  details.appendChild(newDetails);
-};
-
 // --- OUTPUTS ---
 
 const createOutputDiv = (text, classParam) => {
@@ -187,6 +171,24 @@ zetsu.addEventListener('keydown', function (e) {
     e.preventDefault();
   }
 });
+
+// --- SUGGESTIONS ---
+
+// display suggestions and detail
+const populateSuggestion = (command, parent, sub, op, arg) => {
+  let suggestion = document.createElement('div');
+  suggestion.className = 'suggestion thicc sweetgrass';
+  suggestion.innerHTML = `<div class="cmd-icon"><img src="public/icons/${op}.svg" class="icon-svg" alt="icon for ${op}" /></div><div class="suggestion-command" data-cmd="${parent}" data-sub="${sub}" data-op="${op}" data-arg=${arg}>${command}</div>`;
+  suggestionsList.appendChild(suggestion);
+};
+
+const displayDetails = (title, description) => {
+  details.innerHTML = '';
+  let newDetails = document.createElement('div');
+  newDetails.className = 'suggestion-details';
+  newDetails.innerHTML = `<div class="title sweetgrass medium thicc">${title}</div><div class="description">${description}</div>`;
+  details.appendChild(newDetails);
+};
 
 const levenshteinDistance = (str1, str2) => {
   // Convert strings to lowercase
