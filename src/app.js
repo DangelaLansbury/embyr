@@ -265,7 +265,12 @@ zetsu.addEventListener('input', function () {
                             // if input word matches argument, add argument to command
                             if (argCheckInput.toLowerCase() === argCheckArg.toLowerCase()) {
                               argument = arg;
-                              toDo += ` ${arg.toUpperCase()}`;
+                              // check if op has an argFlag
+                              if (ops[op].argFlag !== undefined) {
+                                toDo += ` ${ops[op].argFlag} ${arg}`;
+                              } else {
+                                toDo += ` ${arg}`;
+                              }
                               similarity++;
                             }
                           });
@@ -276,7 +281,6 @@ zetsu.addEventListener('input', function () {
                               alreadySuggested = true;
                             }
                           }
-                          console.log(suggestionsArray);
                           // Add suggestion to suggestions array if it hasn't already been suggested
                           if (!alreadySuggested) {
                             let suggestion = {
@@ -303,10 +307,8 @@ zetsu.addEventListener('input', function () {
                                 }
                               }
                               // Display suggestion details for first suggestion
-                              displayDetails(
-                                commands[suggestionsArray[0].parentCommand].subCommands[suggestionsArray[0].subCommand].ops[suggestionsArray[0].op].title,
-                                commands[suggestionsArray[0].parentCommand].subCommands[suggestionsArray[0].subCommand].ops[suggestionsArray[0].op].description
-                              );
+                              let firstSuggestion = commands[suggestionsArray[0].parentCommand].subCommands[suggestionsArray[0].subCommand].ops[suggestionsArray[0].op];
+                              displayDetails(firstSuggestion.title, firstSuggestion.description);
                             }
                           }
                         }

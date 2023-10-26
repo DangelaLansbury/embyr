@@ -9,9 +9,9 @@ let TAAs = ['a-folate', 'cd19', 'cd20', 'cd22', 'cd30', 'cd33', 'egfr', 'gd2', '
 let CSDomains = ['cd28', '4-1bb', 'ox40', 'icos'];
 let inhibitors = ['cd80', 'pd-l1', 'pd-l2', 'ctla-4', 'pd-1'];
 
-// Make
-const makeSubs = ['car'];
-const makeKeywords = ['make', 'build', 'new', 'construct', 'engineer', 'manufacture'];
+// build
+const buildSubs = ['car'];
+const buildKeywords = ['make', 'build', 'new', 'construct', 'engineer', 'manufacture'];
 const carKeywords = ['car', 'express', 'hunt', 'find', 'receptor', 'protein', 'molecule', 'chimeric', 'antigen', 'show', 'display', 'unmask', 'unveil', 'reveal', ...TAAs, ...CSDomains];
 const carArgs = [...TAAs];
 
@@ -30,28 +30,20 @@ function toggleForRun() {
 const commands = {
   killa: {
     description: 'Express chimeric antigen receptor to recognize Tumor-Associated Antigens and kill cancer cells.',
-    keywords: [...makeKeywords, ...carKeywords],
+    keywords: [...buildKeywords, ...carKeywords],
     subCommands: {
-      make: {
-        keywords: [...makeKeywords, ...carKeywords],
+      build: {
+        keywords: [...buildKeywords, ...carKeywords],
         title: 'Build cell',
-        do: 'killa make',
+        do: 'killa build',
         description: 'Genetically engineer a new killer T cell.',
         ops: {
-          // make: {
-          //   keywords: [...makeKeywords],
-          //   acceptedArgs: [],
-          //   argModifier: '',
-          //   title: 'Build cell',
-          //   do: 'killa make',
-          //   description: 'Genetically engineer a new killer T cell.',
-          // },
           car: {
             keywords: [...carKeywords],
             acceptedArgs: [...carArgs],
-            argModifier: '-',
+            argFlag: '-t',
             title: 'Express chimeric antigen receptor',
-            do: 'killa make car -t',
+            do: 'killa build car',
             description: 'Show CAR on cell surface to recognize covert cancer cells.',
           },
         },
@@ -64,6 +56,35 @@ const commands = {
         let output = createOutputDiv(`TAAs: <span class="lilac" style="font-weight: 600">${TAAs.join(', ').toUpperCase()}</span>`, 'wheat');
         returnOutput(output, 0);
         return;
+      }
+      // Check for build
+      if (input.includes('build')) {
+        // Check for car
+        if (input.includes('car')) {
+          // Check for TAA
+          if (input.includes('-t')) {
+            // check if what follows -t is a TAA
+            let inputArr = input.split(' ');
+            let inputIndex = inputArr.indexOf('-t');
+            let inputArg = inputArr[inputIndex + 1];
+            if (carArgs.includes(inputArg)) {
+              // return success message with TAA
+              let output = createOutputDiv(`CAR successfully expressed to recognize <span class="lilac" style="font-weight: 600">${inputArg.toUpperCase()}</span>`, 'wheat');
+              returnOutput(output, 0);
+              return;
+            } else if (inputArg === undefined) {
+              // return success message with random TAA
+              let output = createOutputDiv(`CAR successfully expressed to recognize <span class="lilac" style="font-weight: 600">${randomReceptor.toUpperCase()}</span>`, 'wheat');
+              returnOutput(output, 0);
+              return;
+            }
+          } else {
+            // return success message with random TAA
+            let output = createOutputDiv(`CAR successfully expressed to recognize <span class="lilac" style="font-weight: 600">${randomReceptor.toUpperCase()}</span>`, 'wheat');
+            returnOutput(output, 0);
+            return;
+          }
+        }
       }
       // return success message
       let output = createOutputDiv(`CAR successfully expressed to recognize <span class="lilac" style="font-weight: 600">${randomReceptor.toUpperCase()}</span>`, 'wheat');
