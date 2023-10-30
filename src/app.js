@@ -103,20 +103,21 @@ const showZetsuInit = () => {
 };
 
 const toggleZetsuInit = () => {
-  if (!zetsuInit.classList.contains('hidden')) {
-    hideZetsuInit();
-  }
   if (details.innerHTML === '') {
+    if (!zetsuInit.classList.contains('hidden')) {
+      hideZetsuInit();
+    }
+  } else {
     showZetsuInit();
   }
   // suggestions = document.querySelectorAll('.suggestion');
-  // if (suggestions.length !== 0) {
+  // if (suggestionAvailable === '') {
   //   // zetsuInitContent.innerHTML = 'Command suggestions and info will appear here.';
   //   if (!zetsuInit.classList.contains('hidden')) {
   //     hideZetsuInit();
   //   }
   // } else {
-  //   // showZetsuInit();
+  //   showZetsuInit();
   // }
 };
 
@@ -226,7 +227,7 @@ let suggestionsArray = [];
 let suggestionAvailable = '';
 zetsu.addEventListener('input', function () {
   input = this.innerText;
-  ghost.innerText = '';
+
   // Check if input is empty
   if (input !== '') {
     cursor.style.display = 'none';
@@ -235,8 +236,10 @@ zetsu.addEventListener('input', function () {
   }
   // Clear suggestions and details
   suggestionsList.innerHTML = '';
+  ghost.innerText = '';
   details.innerHTML = '';
   suggestions = [];
+  suggestionAvailable = '';
   let inputWords = input.split(' ');
   // Ghost input
   let ghostInput = '';
@@ -292,7 +295,7 @@ zetsu.addEventListener('input', function () {
       for (let j = 0; j < keywords.length; j++) {
         let levDist = levenshteinDistance(inputWords[i], keywords[j]);
         let similarity = 1 - levDist / Math.max(inputWords[i].length, keywords[j].length);
-        if (similarity > 0.66) {
+        if (similarity > 0.75) {
           // Search through subcommands object for each command
           let subs = commands[cmd].subCommands;
           for (let sub in subs) {
@@ -303,7 +306,7 @@ zetsu.addEventListener('input', function () {
               for (let j = 0; j < subKeywords.length; j++) {
                 let levDist = levenshteinDistance(inputWords[i], subKeywords[j]);
                 let similarity = 1 - levDist / Math.max(inputWords[i].length, subKeywords[j].length);
-                if (similarity > 0.66) {
+                if (similarity > 0.75) {
                   // Search through ops object for each command
                   for (let op in ops) {
                     let opsKeywords = ops[op].keywords;
@@ -312,7 +315,7 @@ zetsu.addEventListener('input', function () {
                         // Fuzzy search input and opsKeywords
                         let levDist = levenshteinDistance(inputWords[i], opsKeywords[j]);
                         let similarity = 1 - levDist / Math.max(inputWords[i].length, opsKeywords[j].length);
-                        if (similarity > 0.66) {
+                        if (similarity > 0.75) {
                           let toDo = ops[op].do;
                           let argument = '';
                           // check if input contains any accepted arguments
@@ -365,7 +368,7 @@ zetsu.addEventListener('input', function () {
                               }
                               // Display suggestion details for first suggestion
                               let firstSuggestion = commands[suggestionsArray[0].parentCommand].subCommands[suggestionsArray[0].subCommand].ops[suggestionsArray[0].op];
-                              displayDetails(firstSuggestion.title, firstSuggestion.description);
+                              displayDetails(suggestionsArray[0].command, firstSuggestion.description);
                             }
                           }
                         }
@@ -393,6 +396,7 @@ zetsu.addEventListener('keydown', function (e) {
       ghost.innerText = '';
     } else if (suggestionAvailable !== '') {
       zetsu.innerText = suggestionAvailable;
+      suggestionAvailable = '';
       ghost.innerText = '';
       focusAtEnd();
     }

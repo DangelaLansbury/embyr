@@ -30,7 +30,7 @@ function toggleForRun() {
 // --- COMMANDS ---
 
 const commands = {
-  killa: {
+  zetsu: {
     title: 'Killer T Cell',
     description: 'Express chimeric antigen receptor to recognize Tumor-Associated Antigens and kill cancer cells.',
     keywords: [...buildKeywords, ...carKeywords, ...inhibitorKeywords],
@@ -38,7 +38,7 @@ const commands = {
       build: {
         keywords: [...buildKeywords, ...carKeywords, ...inhibitorKeywords],
         title: 'Build cell or molecule',
-        do: 'killa build',
+        do: 'zetsu build',
         description: 'Genetically engineer a new killer T cell.',
         ops: {
           car: {
@@ -46,7 +46,7 @@ const commands = {
             acceptedArgs: [...carArgs],
             argFlag: '-t',
             title: 'Express chimeric antigen receptor',
-            do: 'killa build car',
+            do: 'zetsu build car',
             description: 'Show CAR on cell surface to recognize covert cancer cells.',
           },
           inhibitor: {
@@ -54,7 +54,7 @@ const commands = {
             acceptedArgs: [...inhibitorArgs],
             argFlag: '-t',
             title: 'Inhibit Checkpoint',
-            do: 'killa build inhibitor',
+            do: 'zetsu build inhibitor',
             description: 'Block checkpoint to release the brakes on the immune system',
           },
         },
