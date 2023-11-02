@@ -187,7 +187,7 @@ const displayDetails = (toDo, title, description) => {
   details.innerHTML = '';
   let newDetails = document.createElement('div');
   newDetails.className = 'suggestion-details suggestion';
-  newDetails.innerHTML = `<div class="honey medium thicc cmd">${toDo}</div><div class="title medium thicc">${title}</div><div class="description">${description}</div>`;
+  newDetails.innerHTML = `<div class="sweetgrass medium demo cmd">${toDo}</div><div class="title medium thicc">${title}</div><div class="description">${description}</div>`;
   details.appendChild(newDetails);
 };
 
@@ -360,7 +360,7 @@ zetsu.addEventListener('input', function () {
                               }
                               // Display suggestion details for first suggestion
                               let firstSuggestion = commands[suggestionsArray[0].parentCommand].subCommands[suggestionsArray[0].subCommand].ops[suggestionsArray[0].op];
-                              displayDetails(suggestionsArray[0].command, firstSuggestion.title.firstSuggestion.description);
+                              displayDetails(suggestionsArray[0].command, firstSuggestion.title, firstSuggestion.description);
                             }
                           }
                         }

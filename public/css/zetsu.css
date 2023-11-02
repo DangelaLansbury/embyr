@@ -159,6 +159,16 @@
   overscroll-behavior: none;
   -ms-overflow-style: none; */
 }
+.demo {
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 0.125rem 0.5rem;
+  background-color: var(--soil-x-dk);
+  border-radius: 4%;
+  font-size: var(--smallSize);
+}
 .title {
   display: flex;
   flex-direction: row;
