@@ -263,7 +263,7 @@ zetsu.addEventListener('input', function () {
             let remainingCmd = sub.substring(inputWords[1].length);
             ghostInput = remainingCmd;
             let subDetails = subs[sub];
-            displayDetails(subDetails.title, subDetails.description);
+            displayDetails(subDetails.do, subDetails.description);
           }
         } else if (inputWords[1].toLowerCase() === sub && inputWords.length === 3) {
           details.innerHTML = '';
@@ -276,7 +276,7 @@ zetsu.addEventListener('input', function () {
                 let remainingCmd = op.substring(inputWords[2].length);
                 ghostInput = remainingCmd;
                 let opDetails = ops[op];
-                displayDetails(opDetails.title, opDetails.description);
+                displayDetails(opDetails.do, opDetails.description);
               }
             }
           }

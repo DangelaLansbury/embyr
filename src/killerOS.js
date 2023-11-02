@@ -31,7 +31,7 @@ function toggleForRun() {
 
 const commands = {
   zetsu: {
-    title: 'Killer T Cell',
+    title: 'Use zetsu to orchestrate T cells',
     description: 'Express chimeric antigen receptor to recognize Tumor-Associated Antigens and kill cancer cells.',
     keywords: [...buildKeywords, ...carKeywords, ...inhibitorKeywords],
     subCommands: {
