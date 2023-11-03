@@ -12,7 +12,7 @@
 }
 .zetsu-input-text.cmd::before {
   content: 'killa@zetsu:~$';
-  color: var(--sweetgrass);
+  color: var(--wheat);
 }
 .zetsu-input-text {
   display: inline-flex;

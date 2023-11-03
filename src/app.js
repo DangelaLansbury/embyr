@@ -110,15 +110,6 @@ const toggleZetsuInit = () => {
   } else {
     showZetsuInit();
   }
-  // suggestions = document.querySelectorAll('.suggestion');
-  // if (suggestionAvailable === '') {
-  //   // zetsuInitContent.innerHTML = 'Command suggestions and info will appear here.';
-  //   if (!zetsuInit.classList.contains('hidden')) {
-  //     hideZetsuInit();
-  //   }
-  // } else {
-  //   showZetsuInit();
-  // }
 };
 
 // --- OUTPUTS ---
@@ -182,7 +173,6 @@ zetsu.addEventListener('keydown', function (e) {
 // --- SUGGESTIONS ---
 
 const displayDetails = (toDo, title, description) => {
-  // toggleZetsuInit();
   hideZetsuInit();
   details.innerHTML = '';
   let newDetails = document.createElement('div');
@@ -229,7 +219,6 @@ zetsu.addEventListener('input', function () {
   suggestionsList.innerHTML = '';
   ghost.innerText = '';
   details.innerHTML = '';
-  suggestions = [];
   suggestionAvailable = '';
   let inputWords = input.split(' ');
   // Ghost input
@@ -374,7 +363,6 @@ zetsu.addEventListener('input', function () {
       }
     }
   }
-  // toggleZetsuInit();
 });
 
 // Listen for tab and whatever's in ghost-input to input, or if there's a suggestion replace the input with the suggested command
@@ -396,114 +384,13 @@ zetsu.addEventListener('keydown', function (e) {
 
 // --- POPULATING SUGGESTION DETAILS ---
 
-let suggestionIndex = -1;
-// Function to grab data from active suggestion
-const grabSuggestionData = (indexToUse) => {
-  suggestions = document.querySelectorAll('.suggestion');
-  let suggCmd = suggestions[indexToUse].querySelector('.suggestion-command').innerText;
-  let suggCmdPar = suggestions[indexToUse].querySelector('.suggestion-command').dataset.cmd;
-  let suggCmdSub = suggestions[indexToUse].querySelector('.suggestion-command').dataset.sub;
-  let suggCmdOp = suggestions[indexToUse].querySelector('.suggestion-command').dataset.op;
-  let suggCmdArg = suggestions[indexToUse].querySelector('.suggestion-command').dataset.arg;
-  console.log(suggCmdPar, suggCmdSub, suggCmdArg);
-  let title = commands[suggCmdPar].subCommands[suggCmdSub].ops[suggCmdOp].title;
-  let description = commands[suggCmdPar].subCommands[suggCmdSub].ops[suggCmdOp].description;
-  zetsu.innerText = 'test';
-  focusAtEnd();
-  // displayDetails(suggCmd, description);
-  // Replace input with suggestion if user wants it
-  // if (indexToUse === 0 && suggestionIndex === -1) {
-  //   zetsu.innerText = input;
-  // } else {
-  //   zetsu.innerText = suggCmd;
-  //   focusAtEnd();
-  // }
-};
-// Listen for up and down arrow keys to cycle through suggestions
-// zetsu.addEventListener('keydown', function (e) {
-//   // Check if suggestions are present
-//   suggestions = document.querySelectorAll('.suggestion');
-//   if (suggestions.length !== 0) {
-//     if (e.key === 'ArrowDown') {
-//       e.preventDefault();
-//       details.innerHTML = '';
-//       if (cursor.style.display === 'inline-flex') {
-//         cursor.style.display = 'none';
-//       }
-//       if (suggestionIndex !== -1) {
-//         suggestions[suggestionIndex].classList.remove('active');
-//       }
-//       suggestionIndex++;
-//       if (suggestionIndex > suggestions.length - 1) {
-//         suggestionIndex = -1;
-//         if (input !== '') {
-//           zetsu.innerText = input;
-//           grabSuggestionData(0);
-//         } else {
-//           zetsu.innerText = '';
-//         }
-//       } else if (suggestionIndex !== -1) {
-//         suggestions[suggestionIndex].classList.add('active');
-//         grabSuggestionData(suggestionIndex);
-//         suggestions[suggestionIndex].scrollIntoView({
-//           block: 'nearest',
-//           inline: 'end',
-//           behavior: 'smooth',
-//         });
-//       }
-//       if (zetsu.innerText !== '') {
-//         focusAtEnd();
-//       } else {
-//         cursor.style.display = 'inline-flex';
-//       }
-//     } else if (e.key === 'ArrowUp') {
-//       e.preventDefault();
-//       details.innerHTML = '';
-//       if (cursor.style.display === 'inline-flex') {
-//         cursor.style.display = 'none';
-//       }
-//       if (suggestionIndex !== -1) {
-//         suggestions[suggestionIndex].classList.remove('active');
-//       }
-//       suggestionIndex--;
-//       if (suggestionIndex === -1) {
-//         if (input !== '') {
-//           zetsu.innerText = input;
-//           grabSuggestionData(0);
-//         } else {
-//           zetsu.innerText = '';
-//         }
-//       }
-//       if (suggestionIndex < -1) {
-//         suggestionIndex = suggestions.length - 1;
-//       }
-//       if (suggestionIndex !== -1) {
-//         suggestions[suggestionIndex].classList.add('active');
-//         grabSuggestionData(suggestionIndex);
-//         suggestions[suggestionIndex].scrollIntoView({
-//           block: 'nearest',
-//           inline: 'end',
-//           behavior: 'smooth',
-//         });
-//       }
-//       if (zetsu.innerText !== '') {
-//         focusAtEnd();
-//       } else {
-//         cursor.style.display = 'inline-flex';
-//       }
-//     }
-//   } else {
-//     suggestionIndex = -1;
-//   }
-// });
+// Listen for up and down arrow keys to go back through previous commands
 
 // Reset suggestion index when user presses space or continues to type or hits enter
 zetsu.addEventListener('keydown', function (e) {
   if (e.key === ' ' || e.key === 'Backspace' || e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
-    // suggestionIndex = -1;
   } else if (e.key === 'Enter') {
     input = '';
-    // suggestionIndex = -1;
   }
 });
 
@@ -522,10 +409,7 @@ const clearZetsu = () => {
   cursor.style.display = 'inline-flex';
   suggestionsList.innerHTML = '';
   details.innerHTML = '';
-  suggestions = [];
   suggestionAvailable = '';
-  // toggleZetsuInit();
-  // showZetsuInit();
 };
 
 // Listening for command and executing function when user presses enter
