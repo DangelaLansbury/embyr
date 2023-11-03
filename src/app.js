@@ -187,7 +187,7 @@ const displayDetails = (toDo, title, description) => {
   details.innerHTML = '';
   let newDetails = document.createElement('div');
   newDetails.className = 'suggestion-details suggestion';
-  newDetails.innerHTML = `<div class="sweetgrass medium demo cmd">${toDo}</div><div class="title medium thicc">${title}</div><div class="description">${description}</div>`;
+  newDetails.innerHTML = `<div class="sweetgrass medium thicc cmd">${toDo}</div><div class="title medium thicc">${title}</div><div class="description">${description}</div>`;
   details.appendChild(newDetails);
 };
 
@@ -219,7 +219,6 @@ let suggestionsArray = [];
 let suggestionAvailable = '';
 zetsu.addEventListener('input', function () {
   input = this.innerText;
-
   // Check if input is empty
   if (input !== '') {
     cursor.style.display = 'none';
@@ -285,7 +284,7 @@ zetsu.addEventListener('input', function () {
     // Fuzzy search input and keywords
     for (let i = 0; i < inputWords.length; i++) {
       for (let j = 0; j < keywords.length; j++) {
-        let levDist = levenshteinDistance(inputWords[i], keywords[j]);
+        let levDist = levenshteinDistance(inputWords[i].replace(/-/g, '').replace(/\//g, ''), keywords[j].replace(/-/g, '').replace(/\//g, ''));
         let similarity = 1 - levDist / Math.max(inputWords[i].length, keywords[j].length);
         if (similarity > 0.75) {
           // Search through subcommands object for each command
@@ -296,7 +295,7 @@ zetsu.addEventListener('input', function () {
             // Fuzzy search input and subKeywords
             for (let i = 0; i < inputWords.length; i++) {
               for (let j = 0; j < subKeywords.length; j++) {
-                let levDist = levenshteinDistance(inputWords[i], subKeywords[j]);
+                let levDist = levenshteinDistance(inputWords[i].replace(/-/g, '').replace(/\//g, ''), subKeywords[j].replace(/-/g, '').replace(/\//g, ''));
                 let similarity = 1 - levDist / Math.max(inputWords[i].length, subKeywords[j].length);
                 if (similarity > 0.75) {
                   // Search through ops object for each command
@@ -305,7 +304,7 @@ zetsu.addEventListener('input', function () {
                     for (let i = 0; i < inputWords.length; i++) {
                       for (let j = 0; j < opsKeywords.length; j++) {
                         // Fuzzy search input and opsKeywords
-                        let levDist = levenshteinDistance(inputWords[i], opsKeywords[j]);
+                        let levDist = levenshteinDistance(inputWords[i].replace(/-/g, '').replace(/\//g, ''), opsKeywords[j].replace(/-/g, '').replace(/\//g, ''));
                         let similarity = 1 - levDist / Math.max(inputWords[i].length, opsKeywords[j].length);
                         if (similarity > 0.75) {
                           let toDo = ops[op].do;
