@@ -39,7 +39,7 @@ const commands = {
       build: {
         keywords: [...buildKeywords, ...carKeywords, ...inhibitorKeywords],
         title: 'Build cell or molecule',
-        do: `zetsu build <span class='stone'>[argument]`,
+        do: `zetsu build <span class='stone'>[argument]</span>`,
         description: 'Genetically engineer a new killer T cell.',
         ops: {
           car: {
@@ -48,7 +48,7 @@ const commands = {
             argFlag: '-t',
             title: 'Express chimeric antigen receptor',
             do: 'zetsu build car',
-            description: 'Show CAR on cell surface to recognize covert cancer cells.',
+            description: `Design T cell to express CAR on cell surface and recognize covert cancer cells.`,
           },
           inhibitor: {
             keywords: [...inhibitorKeywords],
@@ -56,7 +56,7 @@ const commands = {
             argFlag: '-t',
             title: 'Inhibit Checkpoint',
             do: 'zetsu build inhibitor',
-            description: 'Block checkpoint to release the brakes on the immune system',
+            description: 'Prevent checkpoint proteins from suppressing T cell activity.',
           },
         },
       },
@@ -78,7 +78,7 @@ const commands = {
             // check if what follows -t is a TAA
             let inputArr = input.split(' ');
             let inputIndex = inputArr.indexOf('-t');
-            let inputArg = inputArr[inputIndex + 1];
+            let inputArg = inputArr[inputIndex + 1].toLowerCase();
             if (carArgs.includes(inputArg)) {
               // return success message with TAA
               let output = createOutputDiv(`CAR successfully expressed to recognize <span class="lilac" style="font-weight: 600">${inputArg.toUpperCase()}</span>`, 'wheat');

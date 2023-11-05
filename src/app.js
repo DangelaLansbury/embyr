@@ -177,7 +177,7 @@ const displayDetails = (toDo, title, description) => {
   details.innerHTML = '';
   let newDetails = document.createElement('div');
   newDetails.className = 'suggestion-details suggestion';
-  newDetails.innerHTML = `<div class="sweetgrass medium thicc cmd">${toDo}</div><div class="title medium thicc">${title}</div><div class="description">${description}</div>`;
+  newDetails.innerHTML = `<div class="sweetgrass thicc cmd">${toDo}</div><div class="title thicc">${title}</div><div class="description">${description}</div>`;
   details.appendChild(newDetails);
 };
 
@@ -309,7 +309,7 @@ zetsu.addEventListener('input', function () {
                               argument = arg;
                               // check if op has an argFlag
                               if (ops[op].argFlag !== undefined) {
-                                toDo += ` ${ops[op].argFlag} ${arg}`;
+                                toDo += ` ${ops[op].argFlag} ${arg.toUpperCase()}`;
                               } else {
                                 toDo += ` ${arg}`;
                               }
@@ -386,14 +386,6 @@ zetsu.addEventListener('keydown', function (e) {
 
 // Listen for up and down arrow keys to go back through previous commands
 
-// Reset suggestion index when user presses space or continues to type or hits enter
-zetsu.addEventListener('keydown', function (e) {
-  if (e.key === ' ' || e.key === 'Backspace' || e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
-  } else if (e.key === 'Enter') {
-    input = '';
-  }
-});
-
 // Reset suggestions if all text is deleted at once
 zetsu.addEventListener('keydown', function (e) {
   if (e.key === 'Backspace' && zetsu.innerText.trim().length == 1) {
@@ -403,11 +395,11 @@ zetsu.addEventListener('keydown', function (e) {
 
 // Clear editor if user presses enter, refocus on editor, and show fake cursor
 const clearZetsu = () => {
+  input = '';
   zetsu.innerText = '';
   ghost.innerText = '';
   zetsu.focus();
   cursor.style.display = 'inline-flex';
-  suggestionsList.innerHTML = '';
   details.innerHTML = '';
   suggestionAvailable = '';
 };
