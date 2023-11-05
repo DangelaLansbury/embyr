@@ -31,15 +31,15 @@ function toggleForRun() {
 
 const commands = {
   zetsu: {
-    title: 'Use zetsu to orchestrate T cells',
-    do: 'zetsu',
-    description: 'Express chimeric antigen receptor to recognize Tumor-Associated Antigens and kill cancer cells.',
+    title: 'Orchestrate T cells',
+    do: `zetsu <span class='stone'>[command] [argument]</span>`,
+    description: `Run zetsu commands to manipulate T cells and immune system responses.`,
     keywords: [...buildKeywords, ...carKeywords, ...inhibitorKeywords],
     subCommands: {
       build: {
         keywords: [...buildKeywords, ...carKeywords, ...inhibitorKeywords],
         title: 'Build cell or molecule',
-        do: 'zetsu build',
+        do: `zetsu build <span class='stone'>[argument]`,
         description: 'Genetically engineer a new killer T cell.',
         ops: {
           car: {
