@@ -13,7 +13,7 @@ let zetsuInitContent = document.querySelector('.zetsu-init-content'); // Zetsu i
 let firstTime = document.querySelector('#firstTime'); // First time hint
 let zetsuHelper = document.querySelector('.zetsu-helper'); // Zetsu suggestions and description container
 // Zetsu input
-let zetsuBar = document.querySelector('.zetsu-input');
+let moniker = document.querySelector('.moniker'); // User moniker
 let zetsu = document.querySelector('.zetsu-input-text'); // Zetsu input field
 let cursor = document.querySelector('.cursor'); // Zetsu input fake cursor
 let ghost = document.querySelector('.ghost-input'); // Zetsu input ghost text
@@ -33,8 +33,27 @@ let detailsSyntax = document.querySelector('.details-syntax');
 // --- FOCUS ON EDITOR ---
 
 window.onload = () => {
+  // Check if user has visited before
+  let visited = localStorage.getItem('visited');
+  if (visited === null) {
+    // Show first time message
+    zetsuInitContent.innerHTML = `Hi there. Welcome to zetsu.<br>Command suggestions and info will appear down here as you type.<br>Not sure what command to run try describing what you want to do and I'll see if I can help.`;
+    // Set visited to true
+    localStorage.setItem('visited', JSON.stringify(true));
+  } else {
+    // Show standard init message
+    zetsuInitContent.innerHTML = `Command suggestions and info will appear here.`;
+  }
+  // Check if user has history
+  let history = localStorage.getItem('history');
+  if (history !== null) {
+    history = JSON.parse(history);
+  } else {
+    history = [];
+  }
+  moniker.innerText = 'killa@zetsu:~$';
+  // Focus on zetsu
   zetsu.focus();
-  zetsuInitContent.innerHTML = `Command suggestions and info will appear here.`;
 };
 
 const focusAtEnd = () => {

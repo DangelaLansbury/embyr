@@ -245,7 +245,7 @@ main {
 }
 .cmd::before {
   content: '>';
-  color: var(--wheat);
+  color: var(--lilac);
   font-weight: bold;
   margin-right: 0.75rem;
 }

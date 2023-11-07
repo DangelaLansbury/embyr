@@ -1,5 +1,8 @@
 /* ---- ZETSU ---- */
 /* ---- INPUT ---- */
+.moniker {
+  margin-right: 0.75rem;
+}
 .zetsu-input {
   display: flex;
   flex-direction: row;
@@ -12,7 +15,7 @@
 }
 .zetsu-input-text.cmd::before {
   content: 'killa@zetsu:~$';
-  color: var(--wheat);
+  /* color: var(--wheat); */
 }
 .zetsu-input-text {
   display: inline-flex;
