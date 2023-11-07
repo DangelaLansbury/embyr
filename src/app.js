@@ -384,7 +384,53 @@ zetsu.addEventListener('keydown', function (e) {
 
 // --- POPULATING SUGGESTION DETAILS ---
 
-// Listen for up and down arrow keys to go back through previous commands
+// Listen for up and down arrow keys to go back through previous commands and insert into zetsu
+let historyIndex = 0;
+zetsu.addEventListener('keydown', function (e) {
+  if (e.key === 'ArrowUp') {
+    if (history.length === 0) {
+      return;
+    }
+    e.preventDefault();
+    if (historyIndex < history.length) {
+      historyIndex++;
+      zetsu.innerText = history[history.length - historyIndex];
+    } else if (historyIndex === history.length) {
+      historyIndex = 0;
+      zetsu.innerText = input;
+    } else {
+      zetsu.innerText = input;
+    }
+    // check if input is empty
+    if (zetsu.innerText.toString().trim().length == 0) {
+      cursor.style.display = 'inline-flex';
+    } else {
+      cursor.style.display = 'none';
+      focusAtEnd();
+    }
+  } else if (e.key === 'ArrowDown') {
+    if (history.length === 0) {
+      return;
+    }
+    e.preventDefault();
+    if (historyIndex > 1) {
+      historyIndex--;
+      zetsu.innerText = history[history.length - historyIndex];
+    } else if (historyIndex === 1) {
+      historyIndex--;
+      zetsu.innerText = input;
+    } else {
+      zetsu.innerText = input;
+    }
+    // check if input is empty
+    if (zetsu.innerText.toString().trim().length == 0) {
+      cursor.style.display = 'inline-flex';
+    } else {
+      cursor.style.display = 'none';
+      focusAtEnd();
+    }
+  }
+});
 
 // Reset suggestions if all text is deleted at once
 zetsu.addEventListener('keydown', function (e) {
@@ -414,6 +460,7 @@ zetsu.addEventListener('keydown', function (e) {
       history.push(input);
       localStorage.setItem('history', JSON.stringify(history));
       console.log(history);
+      historyIndex = 0;
       clearZetsu();
       let parts = input.split(' ');
       let command = parts[0].toLowerCase();
