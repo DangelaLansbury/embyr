@@ -97,6 +97,32 @@ const commands = {
             return;
           }
         }
+        // Check for inhibitor
+        if (input.includes('inhibitor')) {
+          // Check for TAA
+          if (input.includes('-t')) {
+            // check if what follows -t is a TAA
+            let inputArr = input.split(' ');
+            let inputIndex = inputArr.indexOf('-t');
+            let inputArg = inputArr[inputIndex + 1].toLowerCase();
+            if (inhibitorArgs.includes(inputArg)) {
+              // return success message with TAA
+              let output = createOutputDiv(`CAR successfully expressed to recognize <span class="lilac" style="font-weight: 600">${inputArg.toUpperCase()}</span>`, 'wheat');
+              returnOutput(output, 0);
+              return;
+            } else if (inputArg === undefined) {
+              // return success message with random TAA
+              let output = createOutputDiv(`CAR successfully expressed to recognize <span class="lilac" style="font-weight: 600">${randomReceptor.toUpperCase()}</span>`, 'wheat');
+              returnOutput(output, 0);
+              return;
+            }
+          } else {
+            // return success message with random TAA
+            let output = createOutputDiv(`CAR successfully expressed to recognize <span class="lilac" style="font-weight: 600">${randomReceptor.toUpperCase()}</span>`, 'wheat');
+            returnOutput(output, 0);
+            return;
+          }
+        }
       }
       // return success message
       let output = createOutputDiv(`CAR successfully expressed to recognize <span class="lilac" style="font-weight: 600">${randomReceptor.toUpperCase()}</span>`, 'wheat');
