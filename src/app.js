@@ -191,12 +191,12 @@ zetsu.addEventListener('keydown', function (e) {
 
 // --- SUGGESTIONS ---
 
-const displayDetails = (toDo, title, description) => {
+const displayDetails = (toDo, description) => {
   hideZetsuInit();
   details.innerHTML = '';
   let newDetails = document.createElement('div');
   newDetails.className = 'suggestion-details suggestion';
-  newDetails.innerHTML = `<div class="sweetgrass thicc">${toDo}</div><div class="title thicc">${title}</div><div class="description">${description}</div>`;
+  newDetails.innerHTML = `<div class="sweetgrass thicc">${toDo}</div><div class="description">${description}</div>`;
   details.appendChild(newDetails);
 };
 
@@ -249,7 +249,7 @@ zetsu.addEventListener('input', function () {
         // insert remaining command characters into ghost-input
         let remainingCmd = cmd.substring(inputWords[0].length);
         ghostInput = remainingCmd;
-        displayDetails(commands[cmd].do, commands[cmd].title, commands[cmd].description);
+        displayDetails(commands[cmd].do, commands[cmd].description);
       }
     } else if (inputWords[0].toLowerCase() === cmd && inputWords.length > 1) {
       details.innerHTML = '';
@@ -262,7 +262,7 @@ zetsu.addEventListener('input', function () {
             let remainingCmd = sub.substring(inputWords[1].length);
             ghostInput = remainingCmd;
             let subDetails = subs[sub];
-            displayDetails(subDetails.do, subDetails.title, subDetails.description);
+            displayDetails(subDetails.do, subDetails.description);
           }
         } else if (inputWords[1].toLowerCase() === sub && inputWords.length === 3) {
           details.innerHTML = '';
@@ -275,7 +275,7 @@ zetsu.addEventListener('input', function () {
                 let remainingCmd = op.substring(inputWords[2].length);
                 ghostInput = remainingCmd;
                 let opDetails = ops[op];
-                displayDetails(opDetails.do, opDetails.title, opDetails.description);
+                displayDetails(opDetails.do, opDetails.description);
               }
             }
           }
@@ -367,7 +367,7 @@ zetsu.addEventListener('input', function () {
                               }
                               // Display suggestion details for first suggestion
                               let firstSuggestion = commands[suggestionsArray[0].parentCommand].subCommands[suggestionsArray[0].subCommand].ops[suggestionsArray[0].op];
-                              displayDetails(`<span class="stone">Suggested:</span> ${suggestionsArray[0].command} <span class="stone">(TAB to use)`, firstSuggestion.title, firstSuggestion.description);
+                              displayDetails(`<span class="stone">Suggested:</span> ${suggestionsArray[0].command} <span class="stone">`, firstSuggestion.description);
                             }
                           }
                         }

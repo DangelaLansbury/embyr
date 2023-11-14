@@ -183,6 +183,7 @@
   flex-direction: row;
   justify-content: flex-start;
   align-items: flex-start;
+  margin: 0.5rem 0;
 }
 
 /* ---- SCREEN SIZE HANDLING */

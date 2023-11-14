@@ -31,14 +31,12 @@ function toggleForRun() {
 
 const commands = {
   zetsu: {
-    title: 'Orchestrate T cells',
     do: `zetsu <span class='stone'>[command] [argument]</span>`,
-    description: `Run zetsu commands to manipulate T cells and immune system responses.`,
+    description: `Run zetsu commands to orchestrate T cells and immune system responses.`,
     keywords: [...buildKeywords, ...carKeywords, ...inhibitorKeywords],
     subCommands: {
       build: {
         keywords: [...buildKeywords, ...carKeywords, ...inhibitorKeywords],
-        title: 'Build cell or molecule',
         do: `zetsu build <span class='stone'>[argument]</span>`,
         description: 'Genetically engineer a new killer T cell.',
         ops: {
@@ -46,7 +44,6 @@ const commands = {
             keywords: [...carKeywords],
             acceptedArgs: [...carArgs],
             argFlag: '-t',
-            title: 'Express chimeric antigen receptor',
             do: 'zetsu build car',
             description: `Design T cell to express CAR on cell surface and recognize covert cancer cells.`,
           },
@@ -54,7 +51,6 @@ const commands = {
             keywords: [...inhibitorKeywords],
             acceptedArgs: [...inhibitorArgs],
             argFlag: '-t',
-            title: 'Inhibit Checkpoint',
             do: 'zetsu build inhibitor',
             description: 'Prevent checkpoint proteins from suppressing T cell activity.',
           },
