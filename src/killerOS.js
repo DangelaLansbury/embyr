@@ -38,7 +38,7 @@ const commands = {
       build: {
         keywords: [...buildKeywords, ...carKeywords, ...inhibitorKeywords],
         do: `zetsu build <span class='stone'>[argument]</span>`,
-        description: 'Genetically engineer a new killer T cell.',
+        description: 'Genetically engineer a new killer T cell or molecule.',
         ops: {
           car: {
             keywords: [...carKeywords],
