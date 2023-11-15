@@ -20,13 +20,6 @@ const inhibitorArgs = [...inhibitors];
 let randomReceptor = TAAs[Math.floor(Math.random() * TAAs.length)];
 let randomInhibitor = inhibitors[Math.floor(Math.random() * inhibitors.length)];
 
-// Show/hide toggleHelp + quitOp and running + zetsu
-function toggleForRun() {
-  quitOp.classList.toggle('hidden');
-  running.classList.toggle('hidden');
-  zetsu.classList.toggle('hidden');
-}
-
 // --- COMMANDS ---
 
 const commands = {
