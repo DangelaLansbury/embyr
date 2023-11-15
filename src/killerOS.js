@@ -1,6 +1,5 @@
 // --- DOM DECLARATIONS ---
 let logoBtn = document.querySelector('.logo-container');
-let quitOp = document.querySelector('#quitOp');
 
 // --- KEYWORDS AND ARGUMENTS ---
 
