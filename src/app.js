@@ -362,12 +362,14 @@ zetsu.addEventListener('input', function () {
                               });
                               // Populate suggestions list with new order
                               suggestionsList.innerHTML = '';
-                              if (!zetsu.innerText.startsWith(suggestionsArray[0].command + ' ')) {
+                              if (zetsu.innerText.toLowerCase().trim() !== suggestionsArray[0].command.toLowerCase().trim()) {
                                 suggestionAvailable = suggestionsArray[0].command;
+                                // Display suggestion details for first suggestion
+                                let firstSuggestion = commands[suggestionsArray[0].parentCommand].subCommands[suggestionsArray[0].subCommand].ops[suggestionsArray[0].op];
+                                displayDetails(`<span class="stone">Suggested:</span> ${suggestionsArray[0].command} <span class="stone">`, firstSuggestion.description);
+                              } else {
+                                suggestionAvailable = '';
                               }
-                              // Display suggestion details for first suggestion
-                              let firstSuggestion = commands[suggestionsArray[0].parentCommand].subCommands[suggestionsArray[0].subCommand].ops[suggestionsArray[0].op];
-                              displayDetails(`<span class="stone">Suggested:</span> ${suggestionsArray[0].command} <span class="stone">`, firstSuggestion.description);
                             }
                           }
                         }
@@ -390,6 +392,7 @@ zetsu.addEventListener('keydown', function (e) {
     e.preventDefault();
     if (ghost.innerText !== '') {
       zetsu.innerText += ghost.innerText;
+      suggestionAvailable = '';
       focusAtEnd();
       ghost.innerText = '';
     } else if (suggestionAvailable !== '') {
@@ -456,6 +459,7 @@ zetsu.addEventListener('keydown', function (e) {
 zetsu.addEventListener('keydown', function (e) {
   if (e.key === 'Backspace' && zetsu.innerText.trim().length == 1) {
     clearZetsu();
+    suggestionAvailable = '';
   }
 });
 
