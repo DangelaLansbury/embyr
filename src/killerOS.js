@@ -89,31 +89,31 @@ const commands = {
         if (input.includes('inhibitor')) {
           // Check for TAA
           if (input.includes('-t')) {
-            // check if what follows -t is a TAA
+            // check if what follows -t is an inhibitor
             let inputArr = input.split(' ');
             let inputIndex = inputArr.indexOf('-t');
             let inputArg = inputArr[inputIndex + 1].toLowerCase();
             if (inhibitorArgs.includes(inputArg)) {
-              // return success message with TAA
-              let output = createOutputDiv(`CAR successfully expressed to recognize <span class="lilac" style="font-weight: 600">${inputArg.toUpperCase()}</span>`, 'wheat');
+              // return success message with inhibitor
+              let output = createOutputDiv(`Successfully blocked <span class="lilac" style="font-weight: 600">${inputArg.toUpperCase()}</span> checkpoint protein`, 'wheat');
               returnOutput(output, 0);
               return;
             } else if (inputArg === undefined) {
-              // return success message with random TAA
-              let output = createOutputDiv(`CAR successfully expressed to recognize <span class="lilac" style="font-weight: 600">${randomReceptor.toUpperCase()}</span>`, 'wheat');
+              // return success message with random inhibitor
+              let output = createOutputDiv(`Successfully blocked <span class="lilac" style="font-weight: 600">${randomInhibitor.toUpperCase()}</span> checkpoint protein`, 'wheat');
               returnOutput(output, 0);
               return;
             }
           } else {
-            // return success message with random TAA
-            let output = createOutputDiv(`CAR successfully expressed to recognize <span class="lilac" style="font-weight: 600">${randomReceptor.toUpperCase()}</span>`, 'wheat');
+            // return success message with random inhibitor
+            let output = createOutputDiv(`Successfully blocked <span class="lilac" style="font-weight: 600">${randomInhibitor.toUpperCase()}</span> checkpoint protein`, 'wheat');
             returnOutput(output, 0);
             return;
           }
         }
       }
       // return success message
-      let output = createOutputDiv(`CAR successfully expressed to recognize <span class="lilac" style="font-weight: 600">${randomReceptor.toUpperCase()}</span>`, 'wheat');
+      let output = createOutputDiv(`ZETSU is ready to receive commands.`, 'wheat');
       returnOutput(output, 0);
     },
   },
