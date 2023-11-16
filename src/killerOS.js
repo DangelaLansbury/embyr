@@ -53,7 +53,7 @@ const commands = {
       returnInput(input);
       // Check for help
       if (input.includes('-h') || input.includes('-help')) {
-        let output = createOutputDiv(`TAAs: <span class="lilac" style="font-weight: 600">${TAAs.join(', ').toUpperCase()}</span>`, 'wheat');
+        let output = createOutputDiv(`Inhibitors: <span class="lilac" style="font-weight: 600">${inhibitors.join(', ').toUpperCase()}</span>`, 'wheat');
         returnOutput(output, 0);
         return;
       }
@@ -95,18 +95,18 @@ const commands = {
             let inputArg = inputArr[inputIndex + 1].toLowerCase();
             if (inhibitorArgs.includes(inputArg)) {
               // return success message with inhibitor
-              let output = createOutputDiv(`Successfully blocked <span class="lilac" style="font-weight: 600">${inputArg.toUpperCase()}</span> checkpoint protein`, 'wheat');
+              let output = createOutputDiv(`Successfully blocked <span class="lilac" style="font-weight: 600">${inputArg.toUpperCase()}</span> checkpoint signaling pathway`, 'wheat');
               returnOutput(output, 0);
               return;
             } else if (inputArg === undefined) {
               // return success message with random inhibitor
-              let output = createOutputDiv(`Successfully blocked <span class="lilac" style="font-weight: 600">${randomInhibitor.toUpperCase()}</span> checkpoint protein`, 'wheat');
+              let output = createOutputDiv(`Successfully blocked <span class="lilac" style="font-weight: 600">${randomInhibitor.toUpperCase()}</span> checkpoint signaling pathway`, 'wheat');
               returnOutput(output, 0);
               return;
             }
           } else {
             // return success message with random inhibitor
-            let output = createOutputDiv(`Successfully blocked <span class="lilac" style="font-weight: 600">${randomInhibitor.toUpperCase()}</span> checkpoint protein`, 'wheat');
+            let output = createOutputDiv(`Successfully blocked <span class="lilac" style="font-weight: 600">${randomInhibitor.toUpperCase()}</span> checkpoint signaling pathway`, 'wheat');
             returnOutput(output, 0);
             return;
           }
