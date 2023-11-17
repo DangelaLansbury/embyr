@@ -418,6 +418,17 @@ zetsu.addEventListener('keydown', function (e) {
   }
 });
 
+// Listen for # and display details for suggested command
+zetsu.addEventListener('keydown', function (e) {
+  if (e.key === '#') {
+    e.preventDefault();
+    if (suggestionAvailable !== '') {
+      let firstSuggestion = commands[suggestionsArray[0].parentCommand].subCommands[suggestionsArray[0].subCommand].ops[suggestionsArray[0].op];
+      displayDetails(`<span class="stone">Suggested:</span> ${suggestionsArray[0].command} <span class="stone">`, firstSuggestion.description);
+    }
+  }
+});
+
 // --- POPULATING SUGGESTION DETAILS ---
 
 // Listen for up and down arrow keys to go back through previous commands and insert into zetsu
