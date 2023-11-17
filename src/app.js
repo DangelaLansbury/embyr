@@ -191,6 +191,18 @@ zetsu.addEventListener('keydown', function (e) {
 
 // --- SUGGESTIONS ---
 
+const displayOptions = (toDo) => {
+  hideZetsuInit();
+  details.innerHTML = '';
+  let options = document.createElement('div');
+  options.className = 'suggestion-details suggestion';
+  options.innerHTML = `<div class="sweetgrass thicc">${toDo}</div>
+    <div class="description"><span class="lilac thicc">TAB</span>...Paste command into CLI</div>
+    <div class="description"><span class="lilac thicc">#</span>.....Explain command</div>
+  `;
+  details.appendChild(options);
+};
+
 const displayDetails = (toDo, description) => {
   hideZetsuInit();
   details.innerHTML = '';
@@ -362,11 +374,12 @@ zetsu.addEventListener('input', function () {
                               });
                               // Populate suggestions list with new order
                               suggestionsList.innerHTML = '';
-                              if (zetsu.innerText.toLowerCase().trim() !== suggestionsArray[0].command.toLowerCase().trim()) {
+                              if (zetsu.innerText.toLowerCase() !== suggestionsArray[0].command.toLowerCase() + ' ') {
                                 suggestionAvailable = suggestionsArray[0].command;
                                 // Display suggestion details for first suggestion
-                                let firstSuggestion = commands[suggestionsArray[0].parentCommand].subCommands[suggestionsArray[0].subCommand].ops[suggestionsArray[0].op];
-                                displayDetails(`<span class="stone">Suggested:</span> ${suggestionsArray[0].command} <span class="stone">`, firstSuggestion.description);
+                                // let firstSuggestion = commands[suggestionsArray[0].parentCommand].subCommands[suggestionsArray[0].subCommand].ops[suggestionsArray[0].op];
+                                // displayDetails(`<span class="stone">Suggested:</span> ${suggestionsArray[0].command} <span class="stone">`, firstSuggestion.description);
+                                displayOptions(suggestionsArray[0].command);
                               } else {
                                 suggestionAvailable = '';
                               }
