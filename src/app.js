@@ -37,7 +37,7 @@ window.onload = () => {
   let visited = localStorage.getItem('visited');
   if (visited === null) {
     // Show first time message
-    zetsuInitContent.innerHTML = `Hi there. Welcome to zetsu.<br>Command suggestions and info will appear down here as you type.<br>Not sure what command to run try describing what you want to do and I'll see if I can help.`;
+    zetsuInitContent.innerHTML = `Hi there. Welcome to zetsu.<br>Command suggestions and info will appear down here as you type.<br>Not sure what command to run? Describe what you want to do and I'll try to help.`;
     // Set visited to true
     localStorage.setItem('visited', JSON.stringify(true));
   } else {
@@ -198,12 +198,13 @@ const displayOptions = (toDo) => {
   options.className = 'suggestion-details suggestion';
   options.innerHTML = `<div class="sweetgrass thicc"><span class="stone">Command:</span> ${toDo}</div>
     <div class="description"><span class="lilac thicc">TAB</span>...Paste command into CLI</div>
-    <div class="description"><span class="lilac thicc">#</span>.....Explain command</div>
+    <div class="description"><span class="lilac thicc">@</span>.....Explain command</div>
+    <div class="description"><span class="lilac thicc">#</span>.....Flags and arguments</div>
   `;
   details.appendChild(options);
 };
 
-const displayDetails = (toDo, description) => {
+const displayShort = (toDo, description) => {
   hideZetsuInit();
   details.innerHTML = '';
   let newDetails = document.createElement('div');
@@ -212,13 +213,16 @@ const displayDetails = (toDo, description) => {
   details.appendChild(newDetails);
 };
 
-const displaySuggestionDetails = (toDo, description) => {
+const displayFull = (toDo, description, acceptedArgs, syntax) => {
   hideZetsuInit();
   details.innerHTML = '';
   let newDetails = document.createElement('div');
   newDetails.className = 'suggestion-details suggestion';
-  newDetails.innerHTML = `<div class="sweetgrass thicc">${toDo}</div><div class="description">${description}</div>
-  <div class="description"><span class="lilac thicc">TAB</span>...Paste command into CLI</div>`;
+  newDetails.innerHTML = `<div class="sweetgrass thicc">${toDo}</div>
+  <div class="stone" style="margin-bottom: 0.75rem;"><span class="lilac thicc">TAB</span> to paste command into CLI</div>
+  <div>${description}</div>
+  <div class="honey"><span class="stone">Syntax:</span> ${syntax}</div>
+  <div class="river"><span class="stone">Targets:</span> ${acceptedArgs}</div>`;
   details.appendChild(newDetails);
 };
 
@@ -271,7 +275,7 @@ zetsu.addEventListener('input', function () {
         // insert remaining command characters into ghost-input
         let remainingCmd = cmd.substring(inputWords[0].length);
         ghostInput = remainingCmd;
-        displayDetails(commands[cmd].do, commands[cmd].description);
+        displayShort(commands[cmd].do, commands[cmd].description);
       }
     } else if (inputWords[0].toLowerCase() === cmd && inputWords.length > 1) {
       details.innerHTML = '';
@@ -284,7 +288,7 @@ zetsu.addEventListener('input', function () {
             let remainingCmd = sub.substring(inputWords[1].length);
             ghostInput = remainingCmd;
             let subDetails = subs[sub];
-            displayDetails(subDetails.do, subDetails.description);
+            displayShort(subDetails.do, subDetails.description);
           }
         } else if (inputWords[1].toLowerCase() === sub && inputWords.length === 3) {
           details.innerHTML = '';
@@ -297,7 +301,7 @@ zetsu.addEventListener('input', function () {
                 let remainingCmd = op.substring(inputWords[2].length);
                 ghostInput = remainingCmd;
                 let opDetails = ops[op];
-                displayDetails(opDetails.do, opDetails.description);
+                displayShort(opDetails.do, opDetails.description);
               }
             }
           }
@@ -384,12 +388,17 @@ zetsu.addEventListener('input', function () {
                               });
                               // Populate suggestions list with new order
                               suggestionsList.innerHTML = '';
-                              if (zetsu.innerText.toLowerCase() !== suggestionsArray[0].command.toLowerCase() + ' ') {
+                              if (zetsu.innerText.toLowerCase() !== suggestionsArray[0].command.toLowerCase()) {
                                 suggestionAvailable = suggestionsArray[0].command;
                                 // Display suggestion details for first suggestion
-                                // let firstSuggestion = commands[suggestionsArray[0].parentCommand].subCommands[suggestionsArray[0].subCommand].ops[suggestionsArray[0].op];
-                                // displayDetails(`<span class="stone">Suggested:</span> ${suggestionsArray[0].command} <span class="stone">`, firstSuggestion.description);
-                                displayOptions(suggestionsArray[0].command);
+                                let firstSuggestion = commands[suggestionsArray[0].parentCommand].subCommands[suggestionsArray[0].subCommand].ops[suggestionsArray[0].op];
+                                let acceptedArgs = firstSuggestion.acceptedArgs;
+                                let args = '';
+                                acceptedArgs.forEach((arg) => {
+                                  args += `${arg.toUpperCase()} `;
+                                });
+                                let syntax = firstSuggestion.syntax;
+                                displayFull(`<span class="stone">Command:</span> ${suggestionsArray[0].command}`, firstSuggestion.description, args, syntax);
                               } else {
                                 suggestionAvailable = '';
                               }
@@ -423,18 +432,7 @@ zetsu.addEventListener('keydown', function (e) {
       suggestionAvailable = '';
       ghost.innerText = '';
       focusAtEnd();
-      displayDetails('', '', '');
-    }
-  }
-});
-
-// Listen for # and display details for suggested command
-zetsu.addEventListener('keydown', function (e) {
-  if (e.key === '#') {
-    e.preventDefault();
-    if (suggestionAvailable !== '') {
-      let firstSuggestion = commands[suggestionsArray[0].parentCommand].subCommands[suggestionsArray[0].subCommand].ops[suggestionsArray[0].op];
-      displaySuggestionDetails(`<span class="stone">Command:</span> ${suggestionsArray[0].command}`, firstSuggestion.description);
+      displayShort('', '', '');
     }
   }
 });

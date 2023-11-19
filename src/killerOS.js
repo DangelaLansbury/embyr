@@ -30,19 +30,21 @@ const commands = {
       build: {
         keywords: [...buildKeywords, ...carKeywords, ...inhibitorKeywords],
         do: `zetsu build <span class='stone'>[argument]</span>`,
-        description: 'Genetically engineer a new killer T cell or molecule.',
+        description: 'Genetically engineer new killer T cells or molecules.',
         ops: {
           car: {
             keywords: [...carKeywords],
             acceptedArgs: [...carArgs],
             argFlag: '-t',
+            syntax: `zetsu build car -t [TAA]`,
             do: 'zetsu build car',
-            description: `Design T cell to express CAR on cell surface and recognize covert cancer cells.`,
+            description: `Engineer T cells to express chimeric antigen receptor and recognize tumor-associated antigens (TAAs) on covert cancer cells.`,
           },
           inhibitor: {
             keywords: [...inhibitorKeywords],
             acceptedArgs: [...inhibitorArgs],
             argFlag: '-t',
+            syntax: `zetsu build inhibitor -t [checkpoint]`,
             do: 'zetsu build inhibitor',
             description: 'Prevent checkpoint proteins from suppressing T cell activity.',
           },
