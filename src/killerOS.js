@@ -38,7 +38,7 @@ const commands = {
             argFlag: '-t',
             syntax: `zetsu build car -t [TAA]`,
             do: 'zetsu build car',
-            description: `Engineer T cells to express chimeric antigen receptor and recognize tumor-associated antigens (TAAs) on covert cancer cells.`,
+            description: `Engineer T cells to express chimeric antigen receptors and recognize tumor-associated antigens (TAAs) on covert cancer cells.`,
           },
           inhibitor: {
             keywords: [...inhibitorKeywords],

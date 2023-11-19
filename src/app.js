@@ -37,7 +37,7 @@ window.onload = () => {
   let visited = localStorage.getItem('visited');
   if (visited === null) {
     // Show first time message
-    zetsuInitContent.innerHTML = `Hi there. Welcome to zetsu.<br>Command suggestions and info will appear down here as you type.<br>Not sure what command to run? Describe what you want to do and I'll try to help.`;
+    zetsuInitContent.innerHTML = `Hi there. Welcome to Zetsu, the Command Line Immunity tool.<br>Command suggestions and info will appear down here as you type.<br>Not sure what command to run? Describe what you want to do and I'll try to help.`;
     // Set visited to true
     localStorage.setItem('visited', JSON.stringify(true));
   } else {
@@ -388,7 +388,7 @@ zetsu.addEventListener('input', function () {
                               });
                               // Populate suggestions list with new order
                               suggestionsList.innerHTML = '';
-                              if (zetsu.innerText.toLowerCase() !== suggestionsArray[0].command.toLowerCase()) {
+                              if (suggestionsArray.length > 0) {
                                 suggestionAvailable = suggestionsArray[0].command;
                                 // Display suggestion details for first suggestion
                                 let firstSuggestion = commands[suggestionsArray[0].parentCommand].subCommands[suggestionsArray[0].subCommand].ops[suggestionsArray[0].op];
