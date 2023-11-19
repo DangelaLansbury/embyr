@@ -13,10 +13,10 @@
   width: calc(100% - 5rem);
   border-top: 1px solid var(--soil-lt);
 }
-.zetsu-input-text.cmd::before {
+/* .zetsu-input-text.cmd::before {
   content: 'killa@zetsu:~$';
   color: var(--wheat);
-}
+} */
 .zetsu-input-text {
   display: inline-flex;
   margin: auto 0;
