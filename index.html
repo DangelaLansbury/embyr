@@ -1,89 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Zetsu</title>
-    <link rel="icon" type="image/x-icon" href="public/images/favicon.svg" />
-    <link rel="stylesheet" href="public/css/styles.css" />
-    <link rel="stylesheet" href="public/css/zetsu.css" />
-  </head>
-  <body>
-    <!-- HTML -->
-    <main>
-      <div class="logo-container active-color-1">
-        <div class="logo-text">Zetsu</div>
-        <div class="logo">
-          <img src="public/images/logo.svg" class="logo-svg" alt="logo" />
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zetsu</title>
+  <link rel="icon" type="image/x-icon" href="public/images/favicon.svg" />
+  <link rel="stylesheet" href="public/css/styles.css" />
+  <link rel="stylesheet" href="public/css/zetsu.css" />
+</head>
+
+<body>
+  <!-- HTML -->
+  <main>
+    <div class="logo-container active-color-1">
+      <div class="logo-text">Zetsu</div>
+      <div class="logo">
+        <img src="public/images/logo.svg" class="logo-svg" alt="logo" />
+      </div>
+    </div>
+    <div class="workbook">
+      <div class="workbook-header"></div>
+      <div class="thread-container">
+        <div class="thread"></div>
+        <div class="help-bar">
+          <div class="help-bar-left hidden" id="help1">
+            <div class="help-bar-hint">
+              <div class="help-bar-cmd thicc">&#x2191;/&#x2193;</div>
+              <div class="help-bar-text">history</div>
+            </div>
+            <div class="help-bar-hint">
+              <div class="help-bar-cmd thicc">h</div>
+              <div class="help-bar-text">more help</div>
+            </div>
+          </div>
+          <div class="help-bar-left hidden" id="help2">
+            <div class="help-bar-hint">
+              <div class="help-bar-cmd thicc">r</div>
+              <div class="help-bar-text">reset</div>
+            </div>
+          </div>
+          <div class="help-bar-right">
+            <div class="help-bar-hint hidden" id="quitOp">
+              <div class="help-bar-cmd thicc">q</div>
+              <div class="help-bar-text">quit</div>
+            </div>
+            <div class="help-bar-hint">
+              <div class="help-bar-cmd thicc">?</div>
+              <div class="help-bar-text">toggle help</div>
+            </div>
+          </div>
+        </div>
+        <div class="zetsu-input">
+          <div class="moniker wheat"></div>
+          <div class="zetsu-input-text" contenteditable="true" spellcheck="false" autocomplete="off"></div>
+          <div class="cursor"></div>
+          <div class="ghost-input stone"></div>
         </div>
       </div>
-      <div class="workbook">
-        <div class="workbook-header"></div>
-        <div class="thread-container">
-          <div class="thread"></div>
-          <div class="help-bar">
-            <div class="help-bar-left hidden" id="help1">
-              <div class="help-bar-hint">
-                <div class="help-bar-cmd thicc">tab</div>
-                <div class="help-bar-text">use suggested</div>
-              </div>
-              <div class="help-bar-hint">
-                <div class="help-bar-cmd thicc">&#x2191;/&#x2193;</div>
-                <div class="help-bar-text">history</div>
+      <div class="zetsu-container">
+        <div class="zetsu-helper hidden">
+          <div class="suggestions-container">
+            <div class="suggestions-list-container hidden">
+              <div class="suggestions-list"></div>
+            </div>
+            <div class="details-container">
+              <div class="details">
+                <div class="details-name"></div>
+                <div class="details-desc"></div>
+                <div class="details-syntax"></div>
+                <div class="details-args-accepted"></div>
               </div>
             </div>
-            <div class="help-bar-left hidden" id="help2">
-              <div class="help-bar-hint">
-                <div class="help-bar-cmd thicc">r</div>
-                <div class="help-bar-text">reset</div>
-              </div>
-              <div class="help-bar-hint">
-                <div class="help-bar-cmd thicc">h</div>
-                <div class="help-bar-text">more help</div>
-              </div>
-            </div>
-            <div class="help-bar-right">
-              <div class="help-bar-hint hidden" id="quitOp">
-                <div class="help-bar-cmd thicc">q</div>
-                <div class="help-bar-text">quit</div>
-              </div>
-              <div class="help-bar-hint">
-                <div class="help-bar-cmd thicc">?</div>
-                <div class="help-bar-text">toggle help</div>
-              </div>
-            </div>
-          </div>
-          <div class="zetsu-input">
-            <div class="moniker thicc sweetgrass"></div>
-            <div class="zetsu-input-text" contenteditable="true" spellcheck="false" autocomplete="off"></div>
-            <div class="cursor"></div>
-            <div class="ghost-input stone"></div>
           </div>
         </div>
-        <div class="zetsu-container">
-          <div class="zetsu-helper hidden">
-            <div class="suggestions-container">
-              <div class="suggestions-list-container hidden">
-                <div class="suggestions-list"></div>
-              </div>
-              <div class="details-container">
-                <div class="details">
-                  <div class="details-name"></div>
-                  <div class="details-desc"></div>
-                  <div class="details-syntax"></div>
-                  <div class="details-args-accepted"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="zetsu-init">
-            <div class="zetsu-init-content xSmall stone"></div>
-          </div>
+        <div class="zetsu-init">
+          <div class="zetsu-init-content xSmall stone"></div>
         </div>
       </div>
-    </main>
-    <script src="src/killerOS.js" type="application/javascript"></script>
-    <script src="src/app.js" type="application/javascript"></script>
-  </body>
+    </div>
+  </main>
+  <script src="src/killerOS.js" type="application/javascript"></script>
+  <script src="src/app.js" type="application/javascript"></script>
+</body>
+
 </html>

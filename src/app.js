@@ -196,7 +196,7 @@ const displayOptions = (toDo) => {
   details.innerHTML = '';
   let options = document.createElement('div');
   options.className = 'suggestion-details suggestion';
-  options.innerHTML = `<div class="sweetgrass thicc">${toDo}</div>
+  options.innerHTML = `<div class="sweetgrass thicc"><span class="stone">Command:</span> ${toDo}</div>
     <div class="description"><span class="lilac thicc">TAB</span>...Paste command into CLI</div>
     <div class="description"><span class="lilac thicc">#</span>.....Explain command</div>
   `;
@@ -209,6 +209,16 @@ const displayDetails = (toDo, description) => {
   let newDetails = document.createElement('div');
   newDetails.className = 'suggestion-details suggestion';
   newDetails.innerHTML = `<div class="sweetgrass thicc">${toDo}</div><div class="description">${description}</div>`;
+  details.appendChild(newDetails);
+};
+
+const displaySuggestionDetails = (toDo, description) => {
+  hideZetsuInit();
+  details.innerHTML = '';
+  let newDetails = document.createElement('div');
+  newDetails.className = 'suggestion-details suggestion';
+  newDetails.innerHTML = `<div class="sweetgrass thicc">${toDo}</div><div class="description">${description}</div>
+  <div class="description"><span class="lilac thicc">TAB</span>...Paste command into CLI</div>`;
   details.appendChild(newDetails);
 };
 
@@ -424,7 +434,7 @@ zetsu.addEventListener('keydown', function (e) {
     e.preventDefault();
     if (suggestionAvailable !== '') {
       let firstSuggestion = commands[suggestionsArray[0].parentCommand].subCommands[suggestionsArray[0].subCommand].ops[suggestionsArray[0].op];
-      displayDetails(`<span class="stone">Suggested:</span> ${suggestionsArray[0].command} <span class="stone">`, firstSuggestion.description);
+      displaySuggestionDetails(`<span class="stone">Command:</span> ${suggestionsArray[0].command}`, firstSuggestion.description);
     }
   }
 });
