@@ -10,6 +10,7 @@ let help2 = document.querySelector('#help2'); // Help container for second set o
 let zetsuContainer = document.querySelector('.zetsu-container'); // Full Zetsu container for input, suggestions, and details
 let zetsuInit = document.querySelector('.zetsu-init'); // Zetsu init container
 let zetsuInitContent = document.querySelector('.zetsu-init-content'); // Zetsu init text
+let standardInitMsg = `Command suggestions and info will appear here.`;
 let firstTime = document.querySelector('#firstTime'); // First time hint
 let zetsuHelper = document.querySelector('.zetsu-helper'); // Zetsu suggestions and description container
 // Zetsu input
@@ -37,12 +38,12 @@ window.onload = () => {
   let visited = localStorage.getItem('visited');
   if (visited === null) {
     // Show first time message
-    zetsuInitContent.innerHTML = `Hi there. Welcome to Zetsu, the Command Line Immunity tool.<br>Command suggestions and info will appear down here as you type.<br>Not sure what command to run? Describe what you want to do and I'll try to help.`;
+    zetsuInitContent.innerHTML = `Hi there. This is Zetsu, a CLI for managing immune systems.<br>Not sure what to run? Describe what you want to do, and I'll suggest commands down here.`;
     // Set visited to true
     localStorage.setItem('visited', JSON.stringify(true));
   } else {
     // Show standard init message
-    zetsuInitContent.innerHTML = `Command suggestions and info will appear here.`;
+    zetsuInitContent.innerHTML = standardInitMsg;
   }
   // Check if user has history
   let history = localStorage.getItem('history');
@@ -117,19 +118,20 @@ const hideZetsuInit = () => {
 };
 
 const showZetsuInit = () => {
+  zetsuInitContent.innerHTML = standardInitMsg;
   zetsuInit.classList.remove('hidden');
   zetsuHelper.classList.add('hidden');
 };
 
-const toggleZetsuInit = () => {
-  if (details.innerHTML === '') {
-    if (!zetsuInit.classList.contains('hidden')) {
-      hideZetsuInit();
-    }
-  } else {
-    showZetsuInit();
-  }
-};
+// const toggleZetsuInit = () => {
+//   if (details.innerHTML === '') {
+//     if (!zetsuInit.classList.contains('hidden')) {
+//       hideZetsuInit();
+//     }
+//   } else {
+//     showZetsuInit();
+//   }
+// };
 
 // --- OUTPUTS ---
 
@@ -190,19 +192,6 @@ zetsu.addEventListener('keydown', function (e) {
 });
 
 // --- SUGGESTIONS ---
-
-const displayOptions = (toDo) => {
-  hideZetsuInit();
-  details.innerHTML = '';
-  let options = document.createElement('div');
-  options.className = 'suggestion-details suggestion';
-  options.innerHTML = `<div class="sweetgrass thicc"><span class="stone">Command:</span> ${toDo}</div>
-    <div class="description"><span class="lilac thicc">TAB</span>...Paste command into CLI</div>
-    <div class="description"><span class="lilac thicc">@</span>.....Explain command</div>
-    <div class="description"><span class="lilac thicc">#</span>.....Flags and arguments</div>
-  `;
-  details.appendChild(options);
-};
 
 const displayShort = (toDo, description) => {
   hideZetsuInit();
@@ -416,6 +405,10 @@ zetsu.addEventListener('input', function () {
       }
     }
   }
+  // If there is nothing to suggest, show init message
+  if (suggestionsArray.length === 0 && details.innerHTML === '') {
+    showZetsuInit();
+  }
 });
 
 // Listen for tab and whatever's in ghost-input to input, or if there's a suggestion replace the input with the suggested command
@@ -504,6 +497,7 @@ const clearZetsu = () => {
   cursor.style.display = 'inline-flex';
   details.innerHTML = '';
   suggestionAvailable = '';
+  showZetsuInit();
 };
 
 // Listening for command and executing function when user presses enter

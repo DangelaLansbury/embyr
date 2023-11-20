@@ -196,8 +196,8 @@ main {
   align-items: flex-start;
   justify-content: flex-end;
   height: 88%;
-  width: 64%;
-  max-width: 64%;
+  width: 60%;
+  max-width: 60%;
   margin: auto;
   background-color: var(--soil-dk);
   border-radius: 16px;
@@ -347,7 +347,7 @@ main {
   cursor: pointer;
   position: absolute;
   top: 6%;
-  right: 18%;
+  right: 20%;
   display: flex;
   flex-direction: row;
   align-items: center;
