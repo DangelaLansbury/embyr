@@ -3,21 +3,114 @@ let logoBtn = document.querySelector('.logo-container');
 
 // --- KEYWORDS AND ARGUMENTS ---
 
-// Biologics
-let TAAs = ['a-folate', 'cd19', 'cd20', 'cd22', 'cd30', 'cd33', 'egfr', 'gd2', 'her2', 'l1cam'];
-let inhibitors = ['cd80', 'pd-l1', 'pd-l2', 'ctla-4', 'pd-1'];
+// BIOLOGY
+
+// Types of stem cells
+let stemCells = ['ESC', 'somatic', 'iPSC'];
+// All types of cells
+let allCells = [
+  'T cell',
+  'B cell',
+  'NK cell',
+  'macrophage',
+  'neutrophil',
+  'eosinophil',
+  'basophil',
+  'mast cell',
+  'dendritic cell',
+  'monocyte',
+  'erythrocyte',
+  'megakaryocyte',
+  'platelet',
+  'fibroblast',
+  'osteoblast',
+  'osteoclast',
+  'osteocyte',
+  'chondrocyte',
+  'chondroblast',
+  'chondroclast',
+  'chondrocyte',
+  'chondroblast',
+  'chondroclast',
+  'chondrocyte',
+  'chondroblast',
+  'chondroclast',
+  'chondrocyte',
+  'chondroblast',
+  'chondroclast',
+  'chondrocyte',
+  'chondroblast',
+  'chondroclast',
+  'chondrocyte',
+  'chondroblast',
+  'chondroclast',
+  'chondrocyte',
+  'chondroblast',
+  'chondroclast',
+  'chondrocyte',
+  'chondroblast',
+  'chondroclast',
+];
+
+// let TAAs = ['a-folate', 'cd19', 'cd20', 'cd22', 'cd30', 'cd33', 'egfr', 'gd2', 'her2', 'l1cam'];
+// let inhibitors = ['cd80', 'pd-l1', 'pd-l2', 'ctla-4', 'pd-1'];
 
 // build
 const buildKeywords = ['make', 'build', 'new', 'construct', 'engineer', 'manufacture'];
-// car
-const carKeywords = ['car', 'express', 'hunt', 'find', 'receptor', 'protein', 'molecule', 'chimeric', 'antigen', 'show', 'display', 'unmask', 'unveil', 'reveal', ...TAAs];
-const carArgs = [...TAAs];
-// inhibit
-const inhibitorKeywords = ['inhibit', 'block', 'hide', 'mask', 'conceal', 'cover', 'prevent', 'stop', 'checkpoint', 'suppress', 'regulate', 'regulator', ...inhibitors];
-const inhibitorArgs = [...inhibitors];
+// ESC
+const escKeywords = [
+  'esc',
+  'embryonic',
+  'embryo',
+  'pluripotent',
+  'pluripotency',
+  'totipotent',
+  'totipotency',
+  'blastocyst',
+  'blastula',
+  'blastomere',
+  'blastomeres',
+  'blastocysts',
+  'blastulas',
+  'blastomere',
+  'blastomeres',
+  'blastocysts',
+  'blastulas',
+  'blastomere',
+  'blastomeres',
+  'blastocysts',
+  'blastulas',
+  'blastomere',
+  'blastomeres',
+  'blastocysts',
+  'blastulas',
+  'blastomere',
+  'blastomeres',
+  'blastocysts',
+  'blastulas',
+  'blastomere',
+  'blastomeres',
+  'blastocysts',
+  'blastulas',
+  'blastomere',
+  'blastomeres',
+  'blastocysts',
+  'blastulas',
+  'blastomere',
+  'blastomeres',
+  'blastocysts',
+  'blastulas',
+];
+const escArgs = [...stemCells];
+// // car
+// const carKeywords = ['car', 'express', 'hunt', 'find', 'receptor', 'protein', 'molecule', 'chimeric', 'antigen', 'show', 'display', 'unmask', 'unveil', 'reveal', ...TAAs];
+// const carArgs = [...TAAs];
+// // inhibit
+// const inhibitorKeywords = ['inhibit', 'block', 'hide', 'mask', 'conceal', 'cover', 'prevent', 'stop', 'checkpoint', 'suppress', 'regulate', 'regulator', ...inhibitors];
+// const inhibitorArgs = [...inhibitors];
 
-let randomReceptor = TAAs[Math.floor(Math.random() * TAAs.length)];
-let randomInhibitor = inhibitors[Math.floor(Math.random() * inhibitors.length)];
+// let randomReceptor = TAAs[Math.floor(Math.random() * TAAs.length)];
+// let randomInhibitor = inhibitors[Math.floor(Math.random() * inhibitors.length)];
 
 // --- COMMANDS ---
 
@@ -25,28 +118,20 @@ const commands = {
   zetsu: {
     do: `zetsu <span class='stone'>[command] [argument]</span>`,
     description: `Run zetsu commands to orchestrate T cells and immune system responses.`,
-    keywords: [...buildKeywords, ...carKeywords, ...inhibitorKeywords],
+    keywords: [...buildKeywords, ...escKeywords],
     subCommands: {
       build: {
-        keywords: [...buildKeywords, ...carKeywords, ...inhibitorKeywords],
+        keywords: [...buildKeywords, ...escKeywords],
         do: `zetsu build <span class='stone'>[argument]</span>`,
         description: 'Genetically engineer new killer T cells or molecules.',
         ops: {
-          car: {
-            keywords: [...carKeywords],
-            acceptedArgs: [...carArgs],
+          esc: {
+            keywords: [...escKeywords],
+            acceptedArgs: [...allCells],
             argFlag: '-t',
-            syntax: `zetsu build car -t [TAA]`,
-            do: 'zetsu build car',
-            description: `Engineer T cells to express chimeric antigen receptors and recognize tumor-associated antigens (TAAs) on covert cancer cells.`,
-          },
-          inhibitor: {
-            keywords: [...inhibitorKeywords],
-            acceptedArgs: [...inhibitorArgs],
-            argFlag: '-t',
-            syntax: `zetsu build inhibitor -t [checkpoint]`,
-            do: 'zetsu build inhibitor',
-            description: 'Prevent checkpoint proteins from suppressing T cell activity.',
+            syntax: `zetsu build esc -t [cell type]`,
+            do: 'zetsu build esc',
+            description: `Engineer embryonic stem cells to become a specific type of cell.`,
           },
         },
       },

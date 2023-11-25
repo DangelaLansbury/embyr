@@ -38,7 +38,7 @@ window.onload = () => {
   let visited = localStorage.getItem('visited');
   if (visited === null) {
     // Show first time message
-    zetsuInitContent.innerHTML = `Hi there. This is Zetsu, a CLI for managing immune systems.<br>Not sure what to run? Describe what you want to do, and I'll suggest commands down here.`;
+    zetsuInitContent.innerHTML = `Hi there. This is Zetsu, a CLI for orchestrating stem cells.<br>Not sure what to run? Describe what you want to do, and I'll suggest commands down here.`;
     // Set visited to true
     localStorage.setItem('visited', JSON.stringify(true));
   } else {
