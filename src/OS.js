@@ -8,49 +8,7 @@ let logoBtn = document.querySelector('.logo-container');
 // Types of stem cells
 let stemCells = ['ESC', 'somatic', 'iPSC'];
 // All types of cells
-let allCells = [
-  'T cell',
-  'B cell',
-  'NK cell',
-  'macrophage',
-  'neutrophil',
-  'eosinophil',
-  'basophil',
-  'mast cell',
-  'dendritic cell',
-  'monocyte',
-  'erythrocyte',
-  'megakaryocyte',
-  'platelet',
-  'fibroblast',
-  'osteoblast',
-  'osteoclast',
-  'osteocyte',
-  'chondrocyte',
-  'chondroblast',
-  'chondroclast',
-  'chondrocyte',
-  'chondroblast',
-  'chondroclast',
-  'chondrocyte',
-  'chondroblast',
-  'chondroclast',
-  'chondrocyte',
-  'chondroblast',
-  'chondroclast',
-  'chondrocyte',
-  'chondroblast',
-  'chondroclast',
-  'chondrocyte',
-  'chondroblast',
-  'chondroclast',
-  'chondrocyte',
-  'chondroblast',
-  'chondroclast',
-  'chondrocyte',
-  'chondroblast',
-  'chondroclast',
-];
+let allCells = ['epithelial', 'connective-tissue', 'muscle', 'nerve', 'blood'];
 
 // let TAAs = ['a-folate', 'cd19', 'cd20', 'cd22', 'cd30', 'cd33', 'egfr', 'gd2', 'her2', 'l1cam'];
 // let inhibitors = ['cd80', 'pd-l1', 'pd-l2', 'ctla-4', 'pd-1'];
@@ -58,49 +16,7 @@ let allCells = [
 // build
 const buildKeywords = ['make', 'build', 'new', 'construct', 'engineer', 'manufacture'];
 // ESC
-const escKeywords = [
-  'esc',
-  'embryonic',
-  'embryo',
-  'pluripotent',
-  'pluripotency',
-  'totipotent',
-  'totipotency',
-  'blastocyst',
-  'blastula',
-  'blastomere',
-  'blastomeres',
-  'blastocysts',
-  'blastulas',
-  'blastomere',
-  'blastomeres',
-  'blastocysts',
-  'blastulas',
-  'blastomere',
-  'blastomeres',
-  'blastocysts',
-  'blastulas',
-  'blastomere',
-  'blastomeres',
-  'blastocysts',
-  'blastulas',
-  'blastomere',
-  'blastomeres',
-  'blastocysts',
-  'blastulas',
-  'blastomere',
-  'blastomeres',
-  'blastocysts',
-  'blastulas',
-  'blastomere',
-  'blastomeres',
-  'blastocysts',
-  'blastulas',
-  'blastomere',
-  'blastomeres',
-  'blastocysts',
-  'blastulas',
-];
+const escKeywords = ['any', 'esc', 'embryonic', 'embryo', 'pluripotent', 'pluripotency', 'totipotent', 'totipotency', 'blastocyst', 'blastula', 'blastomere'];
 const escArgs = [...stemCells];
 // // car
 // const carKeywords = ['car', 'express', 'hunt', 'find', 'receptor', 'protein', 'molecule', 'chimeric', 'antigen', 'show', 'display', 'unmask', 'unveil', 'reveal', ...TAAs];

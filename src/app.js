@@ -123,16 +123,6 @@ const showZetsuInit = () => {
   zetsuHelper.classList.add('hidden');
 };
 
-// const toggleZetsuInit = () => {
-//   if (details.innerHTML === '') {
-//     if (!zetsuInit.classList.contains('hidden')) {
-//       hideZetsuInit();
-//     }
-//   } else {
-//     showZetsuInit();
-//   }
-// };
-
 // --- OUTPUTS ---
 
 const createOutputDiv = (text, classParam) => {
@@ -384,7 +374,7 @@ zetsu.addEventListener('input', function () {
                                 let acceptedArgs = firstSuggestion.acceptedArgs;
                                 let args = '';
                                 acceptedArgs.forEach((arg) => {
-                                  args += `${arg.toUpperCase()} `;
+                                  args += `${arg} `;
                                 });
                                 let syntax = firstSuggestion.syntax;
                                 displayFull(`<span class="stone">Command:</span> ${suggestionsArray[0].command}`, firstSuggestion.description, args, syntax);
