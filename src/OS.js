@@ -6,47 +6,36 @@ let logoBtn = document.querySelector('.logo-container');
 // BIOLOGY
 
 // Types of stem cells
-let stemCells = ['ESC', 'somatic', 'iPSC'];
+const stemCells = ['esc', 'somatic', 'ipsc'];
 // All types of cells
-let allCells = ['epithelial', 'connective-tissue', 'muscle', 'nerve', 'blood'];
+const allCells = ['epithelial', 'conn-tissue', 'muscle', 'nerve', 'blood'];
+let randomCell = allCells[Math.floor(Math.random() * allCells.length)];
 
-// let TAAs = ['a-folate', 'cd19', 'cd20', 'cd22', 'cd30', 'cd33', 'egfr', 'gd2', 'her2', 'l1cam'];
-// let inhibitors = ['cd80', 'pd-l1', 'pd-l2', 'ctla-4', 'pd-1'];
-
-// build
-const buildKeywords = ['make', 'build', 'new', 'construct', 'engineer', 'manufacture'];
+// make
+const makeKeywords = ['make', 'make', 'new', 'construct', 'engineer', 'manufacture'];
 // ESC
-const escKeywords = ['any', 'esc', 'embryonic', 'embryo', 'pluripotent', 'pluripotency', 'totipotent', 'totipotency', 'blastocyst', 'blastula', 'blastomere'];
-const escArgs = [...stemCells];
-// // car
-// const carKeywords = ['car', 'express', 'hunt', 'find', 'receptor', 'protein', 'molecule', 'chimeric', 'antigen', 'show', 'display', 'unmask', 'unveil', 'reveal', ...TAAs];
-// const carArgs = [...TAAs];
-// // inhibit
-// const inhibitorKeywords = ['inhibit', 'block', 'hide', 'mask', 'conceal', 'cover', 'prevent', 'stop', 'checkpoint', 'suppress', 'regulate', 'regulator', ...inhibitors];
-// const inhibitorArgs = [...inhibitors];
-
-// let randomReceptor = TAAs[Math.floor(Math.random() * TAAs.length)];
-// let randomInhibitor = inhibitors[Math.floor(Math.random() * inhibitors.length)];
+const escKeywords = ['any', 'esc', 'embryonic', 'embryo', 'pluripotent', 'pluripotency', 'totipotent', 'totipotency', 'blastocyst', 'blastula', 'blastomere', ...allCells];
+const escArgs = [...allCells];
 
 // --- COMMANDS ---
 
 const commands = {
   zetsu: {
     do: `zetsu <span class='stone'>[command] [argument]</span>`,
-    description: `Run zetsu commands to orchestrate T cells and immune system responses.`,
-    keywords: [...buildKeywords, ...escKeywords],
+    description: `Run zetsu commands to orchestrate stem cells.`,
+    keywords: [...makeKeywords, ...escKeywords],
     subCommands: {
-      build: {
-        keywords: [...buildKeywords, ...escKeywords],
-        do: `zetsu build <span class='stone'>[argument]</span>`,
-        description: 'Genetically engineer new killer T cells or molecules.',
+      make: {
+        keywords: [...makeKeywords, ...escKeywords],
+        do: `zetsu make <span class='stone'>[argument]</span>`,
+        description: 'Engineer new cells or molecules.',
         ops: {
           esc: {
             keywords: [...escKeywords],
-            acceptedArgs: [...allCells],
+            acceptedArgs: [...escArgs],
             argFlag: '-t',
-            syntax: `zetsu build esc -t [cell type]`,
-            do: 'zetsu build esc',
+            syntax: `zetsu make esc -t [cell type]`,
+            do: 'zetsu make esc',
             description: `Engineer embryonic stem cells to become a specific type of cell.`,
           },
         },
@@ -56,60 +45,34 @@ const commands = {
       returnInput(input);
       // Check for help
       if (input.includes('-h') || input.includes('-help')) {
-        let output = createOutputDiv(`Inhibitors: <span class="lilac" style="font-weight: 600">${inhibitors.join(', ').toUpperCase()}</span>`, 'wheat');
+        let output = createOutputDiv(`Here's some help...`, 'wheat');
         returnOutput(output, 0);
         return;
       }
-      // Check for build
-      if (input.includes('build')) {
-        // Check for car
-        if (input.includes('car')) {
-          // Check for TAA
+      // Check for make
+      if (input.includes('make')) {
+        // Check for ESC
+        if (input.includes('esc')) {
+          // Check for cell type
           if (input.includes('-t')) {
-            // check if what follows -t is a TAA
+            // check if what follows -t is a cell type
             let inputArr = input.split(' ');
             let inputIndex = inputArr.indexOf('-t');
             let inputArg = inputArr[inputIndex + 1].toLowerCase();
-            if (carArgs.includes(inputArg)) {
-              // return success message with TAA
-              let output = createOutputDiv(`CAR successfully expressed to recognize <span class="lilac" style="font-weight: 600">${inputArg.toUpperCase()}</span>`, 'wheat');
+            if (escArgs.includes(inputArg)) {
+              // return success message with cell type
+              let output = createOutputDiv(`You've successfully made a <span class="lilac" style="font-weight: 600">${inputArg}</span> cell`, 'wheat thicc');
               returnOutput(output, 0);
               return;
             } else if (inputArg === undefined) {
-              // return success message with random TAA
-              let output = createOutputDiv(`CAR successfully expressed to recognize <span class="lilac" style="font-weight: 600">${randomReceptor.toUpperCase()}</span>`, 'wheat');
+              // return success message with random cell
+              let output = createOutputDiv(`You've successfully made a <span class="lilac" style="font-weight: 600">${randomCell}</span> cell`, 'wheat thicc');
               returnOutput(output, 0);
               return;
             }
           } else {
-            // return success message with random TAA
-            let output = createOutputDiv(`CAR successfully expressed to recognize <span class="lilac" style="font-weight: 600">${randomReceptor.toUpperCase()}</span>`, 'wheat');
-            returnOutput(output, 0);
-            return;
-          }
-        }
-        // Check for inhibitor
-        if (input.includes('inhibitor')) {
-          // Check for TAA
-          if (input.includes('-t')) {
-            // check if what follows -t is an inhibitor
-            let inputArr = input.split(' ');
-            let inputIndex = inputArr.indexOf('-t');
-            let inputArg = inputArr[inputIndex + 1].toLowerCase();
-            if (inhibitorArgs.includes(inputArg)) {
-              // return success message with inhibitor
-              let output = createOutputDiv(`Successfully blocked <span class="lilac" style="font-weight: 600">${inputArg.toUpperCase()}</span> checkpoint signaling pathway`, 'wheat');
-              returnOutput(output, 0);
-              return;
-            } else if (inputArg === undefined) {
-              // return success message with random inhibitor
-              let output = createOutputDiv(`Successfully blocked <span class="lilac" style="font-weight: 600">${randomInhibitor.toUpperCase()}</span> checkpoint signaling pathway`, 'wheat');
-              returnOutput(output, 0);
-              return;
-            }
-          } else {
-            // return success message with random inhibitor
-            let output = createOutputDiv(`Successfully blocked <span class="lilac" style="font-weight: 600">${randomInhibitor.toUpperCase()}</span> checkpoint signaling pathway`, 'wheat');
+            // return success message with random cell
+            let output = createOutputDiv(`You've successfully made a <span class="lilac" style="font-weight: 600">${randomCell}</span> cell`, 'wheat thicc');
             returnOutput(output, 0);
             return;
           }

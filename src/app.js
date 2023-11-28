@@ -333,7 +333,7 @@ zetsu.addEventListener('input', function () {
                               argument = arg;
                               // check if op has an argFlag
                               if (ops[op].argFlag !== undefined) {
-                                toDo += ` ${ops[op].argFlag} ${arg.toUpperCase()}`;
+                                toDo += ` ${ops[op].argFlag} ${arg}`;
                               } else {
                                 toDo += ` ${arg}`;
                               }
@@ -395,10 +395,10 @@ zetsu.addEventListener('input', function () {
       }
     }
   }
-  // If there is nothing to suggest, show init message
-  if (suggestionsArray.length === 0 && details.innerHTML === '') {
-    showZetsuInit();
-  }
+  // // If there is nothing to suggest, show init message
+  // if (suggestionsArray.length === 0 && details.innerHTML === '') {
+  //   showZetsuInit();
+  // }
 });
 
 // Listen for tab and whatever's in ghost-input to input, or if there's a suggestion replace the input with the suggested command
