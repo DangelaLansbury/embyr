@@ -52,7 +52,7 @@ window.onload = () => {
   } else {
     history = [];
   }
-  moniker.innerText = 'killa@zetsu:~$';
+  moniker.innerText = 'chai@zetsu:~$';
   // Focus on zetsu
   zetsu.focus();
 };

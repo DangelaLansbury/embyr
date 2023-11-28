@@ -8,7 +8,7 @@ let logoBtn = document.querySelector('.logo-container');
 // Types of stem cells
 const stemCells = ['esc', 'somatic', 'ipsc'];
 // All types of cells
-const allCells = ['epithelial', 'conn-tissue', 'muscle', 'nerve', 'blood'];
+const allCells = ['epithelial', 'connective', 'muscle', 'nerve', 'blood'];
 let randomCell = allCells[Math.floor(Math.random() * allCells.length)];
 
 // make
@@ -33,8 +33,8 @@ const commands = {
           esc: {
             keywords: [...escKeywords],
             acceptedArgs: [...escArgs],
-            argFlag: '-t',
-            syntax: `zetsu make esc -t [cell type]`,
+            argFlag: '>',
+            syntax: `zetsu make esc > [cell type]`,
             do: 'zetsu make esc',
             description: `Engineer embryonic stem cells to become a specific type of cell.`,
           },
@@ -54,10 +54,10 @@ const commands = {
         // Check for ESC
         if (input.includes('esc')) {
           // Check for cell type
-          if (input.includes('-t')) {
+          if (input.includes('>')) {
             // check if what follows -t is a cell type
             let inputArr = input.split(' ');
-            let inputIndex = inputArr.indexOf('-t');
+            let inputIndex = inputArr.indexOf('>');
             let inputArg = inputArr[inputIndex + 1].toLowerCase();
             if (escArgs.includes(inputArg)) {
               // return success message with cell type
