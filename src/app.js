@@ -374,7 +374,11 @@ zetsu.addEventListener('input', function () {
                                 let acceptedArgs = firstSuggestion.acceptedArgs;
                                 let args = '';
                                 acceptedArgs.forEach((arg) => {
-                                  args += `${arg} `;
+                                  args += `${arg}, `;
+                                  // if last arg, remove comma
+                                  if (arg === acceptedArgs[acceptedArgs.length - 1]) {
+                                    args = args.slice(0, -2);
+                                  }
                                 });
                                 let syntax = firstSuggestion.syntax;
                                 displayFull(`<span class="stone">Command:</span> ${suggestionsArray[0].command}`, firstSuggestion.description, args, syntax);
@@ -395,10 +399,10 @@ zetsu.addEventListener('input', function () {
       }
     }
   }
-  // // If there is nothing to suggest, show init message
-  // if (suggestionsArray.length === 0 && details.innerHTML === '') {
-  //   showZetsuInit();
-  // }
+  // If there is nothing to suggest, show init message
+  if (suggestionsArray.length === 0 && details.innerHTML === '') {
+    showZetsuInit();
+  }
 });
 
 // Listen for tab and whatever's in ghost-input to input, or if there's a suggestion replace the input with the suggested command
