@@ -201,7 +201,7 @@ const displayFull = (toDo, description, acceptedArgs, syntax) => {
   <div class="stone" style="margin-bottom: 0.75rem;"><span class="lilac thicc">TAB</span> to paste command into CLI</div>
   <div>${description}</div>
   <div class="honey"><span class="stone">Syntax:</span> ${syntax}</div>
-  <div class="river"><span class="stone">Targets:</span> ${acceptedArgs}</div>`;
+  <div class="river"><span class="stone">Modifiers:</span> ${acceptedArgs}</div>`;
   details.appendChild(newDetails);
 };
 

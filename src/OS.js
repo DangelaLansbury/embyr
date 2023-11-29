@@ -13,9 +13,40 @@ let randomCell = allCells[Math.floor(Math.random() * allCells.length)];
 
 // make
 const makeKeywords = ['make', 'make', 'new', 'construct', 'engineer', 'manufacture'];
-// ESC
-const escKeywords = ['any', 'esc', 'embryonic', 'embryo', 'pluripotent', 'pluripotency', 'totipotent', 'totipotency', 'blastocyst', 'blastula', 'blastomere', ...allCells];
-const escArgs = [...allCells];
+// blood
+const bldKeywords = [
+  'blood',
+  'hematopoietic',
+  'hematopoiesis',
+  'hematopoietic stem cell',
+  'hematopoietic stem cells',
+  'hematopoietic stem-cell',
+  'hematopoietic stem-cells',
+  'hematopoietic stemcell',
+  'hematopoietic stemcells',
+  'hematopoietic stem-cell',
+  'hematopoietic stem-cells',
+  'hematopoietic stemcell',
+  'hematopoietic stemcells',
+  'hematopoietic stem-cell',
+  'hematopoietic stem-cells',
+  'hematopoietic stemcell',
+  'hematopoietic stemcells',
+  'hematopoietic stem-cell',
+  'hematopoietic stem-cells',
+  'hematopoietic stemcell',
+  'hematopoietic stemcells',
+  'hematopoietic stem-cell',
+  'hematopoietic stem-cells',
+  'hematopoietic stemcell',
+  'hematopoietic stemcells',
+  'hematopoietic stem-cell',
+  'hematopoietic stem-cells',
+  'hematopoietic stemcell',
+  'hematopoietic stemcells',
+  ...stemCells,
+];
+const bldArgs = [...stemCells];
 
 // --- COMMANDS ---
 
@@ -23,20 +54,20 @@ const commands = {
   zetsu: {
     do: `zetsu <span class='stone'>[command] [argument]</span>`,
     description: `Run zetsu commands to orchestrate stem cells.`,
-    keywords: [...makeKeywords, ...escKeywords],
+    keywords: [...makeKeywords, ...bldKeywords],
     subCommands: {
       make: {
-        keywords: [...makeKeywords, ...escKeywords],
+        keywords: [...makeKeywords, ...bldKeywords],
         do: `zetsu make <span class='stone'>[argument]</span>`,
         description: 'Engineer new cells or molecules.',
         ops: {
-          esc: {
-            keywords: [...escKeywords],
-            acceptedArgs: [...escArgs],
-            argFlag: '>',
-            syntax: `zetsu make esc > [cell type]`,
-            do: 'zetsu make esc',
-            description: `Engineer embryonic stem cells to become a specific type of cell.`,
+          bld: {
+            keywords: [...bldKeywords],
+            acceptedArgs: [...bldArgs],
+            argFlag: '-t',
+            syntax: `zetsu make bld -t [stem cell type]`,
+            do: 'zetsu make bld',
+            description: `Engineer a new blood cell`,
           },
         },
       },
@@ -51,28 +82,28 @@ const commands = {
       }
       // Check for make
       if (input.includes('make')) {
-        // Check for ESC
-        if (input.includes('esc')) {
+        // Check for bld
+        if (input.includes('bld')) {
           // Check for cell type
-          if (input.includes('>')) {
+          if (input.includes('-t')) {
             // check if what follows -t is a cell type
             let inputArr = input.split(' ');
-            let inputIndex = inputArr.indexOf('>');
+            let inputIndex = inputArr.indexOf('-t');
             let inputArg = inputArr[inputIndex + 1].toLowerCase();
-            if (escArgs.includes(inputArg)) {
+            if (bldArgs.includes(inputArg)) {
               // return success message with cell type
-              let output = createOutputDiv(`You've successfully made a <span class="lilac" style="font-weight: 600">${inputArg}</span> cell`, 'wheat thicc');
+              let output = createOutputDiv(`You've successfully made a blood cell from a <span class="lilac" style="font-weight: 600">${inputArg}</span> cell`, 'wheat thicc');
               returnOutput(output, 0);
               return;
             } else if (inputArg === undefined) {
               // return success message with random cell
-              let output = createOutputDiv(`You've successfully made a <span class="lilac" style="font-weight: 600">${randomCell}</span> cell`, 'wheat thicc');
+              let output = createOutputDiv(`You've successfully made a blood cell from a <span class="lilac" style="font-weight: 600">multipotent</span> stem cell`, 'wheat thicc');
               returnOutput(output, 0);
               return;
             }
           } else {
             // return success message with random cell
-            let output = createOutputDiv(`You've successfully made a <span class="lilac" style="font-weight: 600">${randomCell}</span> cell`, 'wheat thicc');
+            let output = createOutputDiv(`You've successfully made a blood cell from a <span class="lilac" style="font-weight: 600">multipotent</span> cell`, 'wheat thicc');
             returnOutput(output, 0);
             return;
           }
