@@ -51,22 +51,22 @@ const bldArgs = [...stemCells];
 // --- COMMANDS ---
 
 const commands = {
-  zetsu: {
-    do: `zetsu <span class='stone'>[command] [argument]</span>`,
-    description: `Run zetsu commands to orchestrate stem cells.`,
+  embyr: {
+    do: `embyr <span class='stone'>[command] [argument]</span>`,
+    description: `Run embyr commands to orchestrate stem cells.`,
     keywords: [...makeKeywords, ...bldKeywords],
     subCommands: {
       make: {
         keywords: [...makeKeywords, ...bldKeywords],
-        do: `zetsu make <span class='stone'>[argument]</span>`,
+        do: `embyr make <span class='stone'>[argument]</span>`,
         description: 'Engineer new cells or molecules.',
         ops: {
           bld: {
             keywords: [...bldKeywords],
             acceptedArgs: [...bldArgs],
             argFlag: '-t',
-            syntax: `zetsu make bld -t [stem cell type]`,
-            do: 'zetsu make bld',
+            syntax: `embyr make bld -t [stem cell type]`,
+            do: 'embyr make bld',
             description: `Engineer a new blood cell`,
           },
         },
@@ -110,7 +110,7 @@ const commands = {
         }
       }
       // return success message
-      let output = createOutputDiv(`ZETSU is ready to receive commands.`, 'wheat');
+      let output = createOutputDiv(`embyr is ready to receive commands.`, 'wheat');
       returnOutput(output, 0);
     },
   },
@@ -138,8 +138,8 @@ function cycleActiveColor() {
   }
   logoBtn.classList.remove(currentClass);
   logoBtn.classList.add(nextClass);
-  zetsu.focus();
-  if (zetsu.innerText.toString().trim().length > 0) {
+  embyr.focus();
+  if (embyr.innerText.toString().trim().length > 0) {
     focusAtEnd();
   }
 }

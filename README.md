@@ -1,7 +1,7 @@
-# Zetsu
+# Embyr
 
-Command Line Immunity.
+A glitzy command line for cell engineering.
 
 ## User Guide
 
-A glitzy command line tool for orchestrating Killer T Cells.
+Some tips for getting the most out of Embyr.

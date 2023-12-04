@@ -6,20 +6,20 @@ let workbook = document.querySelector('.workbook'); // Main container
 let thread = document.querySelector('.thread'); // Thread
 let help1 = document.querySelector('#help1'); // Help container for first set of commands
 let help2 = document.querySelector('#help2'); // Help container for second set of commands
-// Zetsu components
-let zetsuContainer = document.querySelector('.zetsu-container'); // Full Zetsu container for input, suggestions, and details
-let zetsuInit = document.querySelector('.zetsu-init'); // Zetsu init container
-let zetsuInitContent = document.querySelector('.zetsu-init-content'); // Zetsu init text
+// embyr components
+let embyrContainer = document.querySelector('.embyr-container'); // Full embyr container for input, suggestions, and details
+let embyrInit = document.querySelector('.embyr-init'); // embyr init container
+let embyrInitContent = document.querySelector('.embyr-init-content'); // embyr init text
 let standardInitMsg = `Command suggestions and info will appear here.`;
 let firstTime = document.querySelector('#firstTime'); // First time hint
-let zetsuHelper = document.querySelector('.zetsu-helper'); // Zetsu suggestions and description container
-// Zetsu input
+let embyrHelper = document.querySelector('.embyr-helper'); // embyr suggestions and description container
+// embyr input
 let moniker = document.querySelector('.moniker'); // User moniker
-let zetsu = document.querySelector('.zetsu-input-text'); // Zetsu input field
-let cursor = document.querySelector('.cursor'); // Zetsu input fake cursor
-let ghost = document.querySelector('.ghost-input'); // Zetsu input ghost text
-let running = document.querySelector('.running'); // Zetsu running indicator
-let history = []; // Zetsu input history
+let embyr = document.querySelector('.embyr-input-text'); // embyr input field
+let cursor = document.querySelector('.cursor'); // embyr input fake cursor
+let ghost = document.querySelector('.ghost-input'); // embyr input ghost text
+let running = document.querySelector('.running'); // embyr running indicator
+let history = []; // embyr input history
 // Suggestions and suggestion details
 let suggestionsContainer = document.querySelector('.suggestions-container');
 let suggestionsListContainer = document.querySelector('.suggestions-list-container');
@@ -38,12 +38,12 @@ window.onload = () => {
   let visited = localStorage.getItem('visited');
   if (visited === null) {
     // Show first time message
-    zetsuInitContent.innerHTML = `Hi there. This is Zetsu, a CLI for orchestrating stem cells.<br>Not sure what to run? Describe what you want to do, and I'll suggest commands down here.`;
+    embyrInitContent.innerHTML = `Hi there. This is embyr, a CLI for orchestrating stem cells.<br>Not sure what to run? Describe what you want to do, and I'll suggest commands down here.`;
     // Set visited to true
     localStorage.setItem('visited', JSON.stringify(true));
   } else {
     // Show standard init message
-    zetsuInitContent.innerHTML = standardInitMsg;
+    embyrInitContent.innerHTML = standardInitMsg;
   }
   // Check if user has history
   let history = localStorage.getItem('history');
@@ -52,16 +52,16 @@ window.onload = () => {
   } else {
     history = [];
   }
-  moniker.innerText = 'chai@zetsu:~$';
-  // Focus on zetsu
-  zetsu.focus();
+  moniker.innerText = 'chai@embyr:~$';
+  // Focus on embyr
+  embyr.focus();
 };
 
 const focusAtEnd = () => {
-  if (zetsu.innerText.toString().trim().length > 0) {
+  if (embyr.innerText.toString().trim().length > 0) {
     let range = document.createRange();
     let sel = window.getSelection();
-    range.setStart(zetsu.childNodes[0], zetsu.innerText.length);
+    range.setStart(embyr.childNodes[0], embyr.innerText.length);
     range.collapse(true);
     sel.removeAllRanges();
     sel.addRange(range);
@@ -70,12 +70,12 @@ const focusAtEnd = () => {
 
 // Listening for click and focusing at end of editor
 workbook.addEventListener('click', function (e) {
-  // Focus on zetsu if target is not thread text
+  // Focus on embyr if target is not thread text
   if (!e.target.classList.contains('thread-text')) {
-    zetsu.focus();
+    embyr.focus();
   }
-  // Set cursor at end of editor if target is not zetsu
-  if (e.target !== zetsu) {
+  // Set cursor at end of editor if target is not embyr
+  if (e.target !== embyr) {
     focusAtEnd();
   }
 });
@@ -83,13 +83,13 @@ workbook.addEventListener('click', function (e) {
 // --- CURSOR ---
 
 // Hide cursor if input loses focus
-zetsu.addEventListener('blur', function (e) {
+embyr.addEventListener('blur', function (e) {
   cursor.style.display = 'none';
 });
 
 // Show cursor if input gains focus
-zetsu.addEventListener('focus', function (e) {
-  if (zetsu.innerText.toString().trim().length == 0) {
+embyr.addEventListener('focus', function (e) {
+  if (embyr.innerText.toString().trim().length == 0) {
     cursor.style.display = 'inline-flex';
   }
 });
@@ -111,16 +111,16 @@ const returnNullAndHelp = (command, delay) => {
 
 // --- SUGGESTIONS ---
 
-// toggle zetsu helper display between init and suggestions if there are suggestions
-const hideZetsuInit = () => {
-  zetsuInit.classList.add('hidden');
-  zetsuHelper.classList.remove('hidden');
+// toggle embyr helper display between init and suggestions if there are suggestions
+const hideembyrInit = () => {
+  embyrInit.classList.add('hidden');
+  embyrHelper.classList.remove('hidden');
 };
 
-const showZetsuInit = () => {
-  zetsuInitContent.innerHTML = standardInitMsg;
-  zetsuInit.classList.remove('hidden');
-  zetsuHelper.classList.add('hidden');
+const showembyrInit = () => {
+  embyrInitContent.innerHTML = standardInitMsg;
+  embyrInit.classList.remove('hidden');
+  embyrHelper.classList.add('hidden');
 };
 
 // --- OUTPUTS ---
@@ -175,8 +175,8 @@ window.addEventListener('keydown', function (e) {
 });
 
 // Disable spacebar if input is empty
-zetsu.addEventListener('keydown', function (e) {
-  if (e.key === ' ' && zetsu.innerText.toString().trim().length == 0) {
+embyr.addEventListener('keydown', function (e) {
+  if (e.key === ' ' && embyr.innerText.toString().trim().length == 0) {
     e.preventDefault();
   }
 });
@@ -184,7 +184,7 @@ zetsu.addEventListener('keydown', function (e) {
 // --- SUGGESTIONS ---
 
 const displayShort = (toDo, description) => {
-  hideZetsuInit();
+  hideembyrInit();
   details.innerHTML = '';
   let newDetails = document.createElement('div');
   newDetails.className = 'suggestion-details suggestion';
@@ -193,7 +193,7 @@ const displayShort = (toDo, description) => {
 };
 
 const displayFull = (toDo, description, acceptedArgs, syntax) => {
-  hideZetsuInit();
+  hideembyrInit();
   details.innerHTML = '';
   let newDetails = document.createElement('div');
   newDetails.className = 'suggestion-details suggestion';
@@ -231,7 +231,7 @@ const levenshteinDistance = (str1, str2) => {
 let input = '';
 let suggestionsArray = [];
 let suggestionAvailable = '';
-zetsu.addEventListener('input', function () {
+embyr.addEventListener('input', function () {
   input = this.innerText;
   // Check if input is empty
   if (input !== '') {
@@ -401,21 +401,21 @@ zetsu.addEventListener('input', function () {
   }
   // If there is nothing to suggest, show init message
   if (suggestionsArray.length === 0 && details.innerHTML === '') {
-    showZetsuInit();
+    showembyrInit();
   }
 });
 
 // Listen for tab and whatever's in ghost-input to input, or if there's a suggestion replace the input with the suggested command
-zetsu.addEventListener('keydown', function (e) {
+embyr.addEventListener('keydown', function (e) {
   if (e.key === 'Tab') {
     e.preventDefault();
     if (ghost.innerText !== '') {
-      zetsu.innerText += ghost.innerText;
+      embyr.innerText += ghost.innerText;
       suggestionAvailable = '';
       focusAtEnd();
       ghost.innerText = '';
     } else if (suggestionAvailable !== '') {
-      zetsu.innerText = suggestionAvailable;
+      embyr.innerText = suggestionAvailable;
       suggestionAvailable = '';
       ghost.innerText = '';
       focusAtEnd();
@@ -426,9 +426,9 @@ zetsu.addEventListener('keydown', function (e) {
 
 // --- POPULATING SUGGESTION DETAILS ---
 
-// Listen for up and down arrow keys to go back through previous commands and insert into zetsu
+// Listen for up and down arrow keys to go back through previous commands and insert into embyr
 let historyIndex = 0;
-zetsu.addEventListener('keydown', function (e) {
+embyr.addEventListener('keydown', function (e) {
   if (e.key === 'ArrowUp') {
     if (history.length === 0) {
       return;
@@ -436,15 +436,15 @@ zetsu.addEventListener('keydown', function (e) {
     e.preventDefault();
     if (historyIndex < history.length) {
       historyIndex++;
-      zetsu.innerText = history[history.length - historyIndex];
+      embyr.innerText = history[history.length - historyIndex];
     } else if (historyIndex === history.length) {
       historyIndex = 0;
-      zetsu.innerText = input;
+      embyr.innerText = input;
     } else {
-      zetsu.innerText = input;
+      embyr.innerText = input;
     }
     // check if input is empty
-    if (zetsu.innerText.toString().trim().length == 0) {
+    if (embyr.innerText.toString().trim().length == 0) {
       cursor.style.display = 'inline-flex';
     } else {
       cursor.style.display = 'none';
@@ -457,15 +457,15 @@ zetsu.addEventListener('keydown', function (e) {
     e.preventDefault();
     if (historyIndex > 1) {
       historyIndex--;
-      zetsu.innerText = history[history.length - historyIndex];
+      embyr.innerText = history[history.length - historyIndex];
     } else if (historyIndex === 1) {
       historyIndex--;
-      zetsu.innerText = input;
+      embyr.innerText = input;
     } else {
-      zetsu.innerText = input;
+      embyr.innerText = input;
     }
     // check if input is empty
-    if (zetsu.innerText.toString().trim().length == 0) {
+    if (embyr.innerText.toString().trim().length == 0) {
       cursor.style.display = 'inline-flex';
     } else {
       cursor.style.display = 'none';
@@ -475,37 +475,37 @@ zetsu.addEventListener('keydown', function (e) {
 });
 
 // Reset suggestions if all text is deleted at once
-zetsu.addEventListener('keydown', function (e) {
-  if (e.key === 'Backspace' && zetsu.innerText.trim().length == 1) {
-    clearZetsu();
+embyr.addEventListener('keydown', function (e) {
+  if (e.key === 'Backspace' && embyr.innerText.trim().length == 1) {
+    clearembyr();
     suggestionAvailable = '';
   }
 });
 
 // Clear editor if user presses enter, refocus on editor, and show fake cursor
-const clearZetsu = () => {
+const clearembyr = () => {
   input = '';
-  zetsu.innerText = '';
+  embyr.innerText = '';
   ghost.innerText = '';
-  zetsu.focus();
+  embyr.focus();
   cursor.style.display = 'inline-flex';
   details.innerHTML = '';
   suggestionAvailable = '';
-  showZetsuInit();
+  showembyrInit();
 };
 
 // Listening for command and executing function when user presses enter
-zetsu.addEventListener('keydown', function (e) {
+embyr.addEventListener('keydown', function (e) {
   if (e.keyCode === 13) {
     e.preventDefault();
-    let input = zetsu.innerText.trim();
+    let input = embyr.innerText.trim();
     // Execute commands and return output
     if (input !== '') {
       history.push(input);
       localStorage.setItem('history', JSON.stringify(history));
       console.log(history);
       historyIndex = 0;
-      clearZetsu();
+      clearembyr();
       let parts = input.split(' ');
       let command = parts[0].toLowerCase();
       if (commands[command]) {
