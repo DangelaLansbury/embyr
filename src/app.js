@@ -52,7 +52,7 @@ window.onload = () => {
   } else {
     history = [];
   }
-  moniker.innerText = 'chai@embyr:~$';
+  moniker.innerText = 'neo@embyr:~$';
   // Focus on embyr
   embyr.focus();
 };
