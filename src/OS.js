@@ -40,6 +40,15 @@ const tissueKeywords = [
   'chromosome',
   'chromosomes',
   'chromatin',
+  'skin',
+  'hair',
+  'nail',
+  'bone',
+  'cartilage',
+  'fat',
+  'adipose',
+  'blood',
+  'brain',
   ...tissues,
 ];
 const tissueArgs = [...tissues];
