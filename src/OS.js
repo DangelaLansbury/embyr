@@ -161,18 +161,18 @@ const commands = {
             let inputArg = input.split('--')[1].split(' ')[0];
             if (tissueArgs.includes(inputArg)) {
               // return success message with tissue type
-              let output = createOutputDiv(`<span class="lilac" style="font-weight: 600">success</span> with a type specified`, 'wheat thicc');
+              let output = createOutputDiv(`<span class="lilac thicc" style="font-weight: 600">success</span> with a type specified`, 'wheat');
               returnOutput(output, 0);
               return;
             } else if (inputArg === undefined) {
               // return success message with random tissue
-              let output = createOutputDiv(`<span class="lilac" style="font-weight: 600">success</span> with no known type specified`, 'wheat thicc');
+              let output = createOutputDiv(`<span class="lilac thicc" style="font-weight: 600">success</span> with no known type specified`, 'wheat');
               returnOutput(output, 0);
               return;
             }
           } else {
             // return success message with random tissue
-            let output = createOutputDiv(`<span class="lilac" style="font-weight: 600">success</span> with no type included`, 'wheat thicc');
+            let output = createOutputDiv(`<span class="lilac thicc" style="font-weight: 600">success</span> with no type included`, 'wheat');
             returnOutput(output, 0);
             return;
           }
@@ -188,18 +188,18 @@ const commands = {
             let inputArg = input.split('--')[1].split(' ')[0];
             if (disorderArgs.includes(inputArg)) {
               // return success message with disorder type
-              let output = createOutputDiv(`<span class="lilac" style="font-weight: 600">success</span> with a type specified`, 'wheat thicc');
+              let output = createOutputDiv(`<span class="lilac thicc" style="font-weight: 600">success</span> with a type specified`, 'wheat');
               returnOutput(output, 0);
               return;
             } else if (inputArg === undefined) {
               // return success message with random disorder
-              let output = createOutputDiv(`<span class="lilac" style="font-weight: 600">success</span> with no known type specified`, 'wheat thicc');
+              let output = createOutputDiv(`<span class="lilac thicc" style="font-weight: 600">success</span> with no known type specified`, 'wheat');
               returnOutput(output, 0);
               return;
             }
           } else {
             // return success message with random disorder
-            let output = createOutputDiv(`<span class="lilac" style="font-weight: 600">success</span> with no type included`, 'wheat thicc');
+            let output = createOutputDiv(`<span class="lilac thicc" style="font-weight: 600">success</span> with no type included`, 'wheat');
             returnOutput(output, 0);
             return;
           }
