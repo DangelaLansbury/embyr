@@ -10,43 +10,90 @@ const stemCells = ['esc', 'somatic', 'ipsc'];
 // All types of cells
 const allCells = ['epithelial', 'connective', 'muscle', 'nerve', 'blood'];
 let randomCell = allCells[Math.floor(Math.random() * allCells.length)];
+// Tissue types
+const tissues = ['epithelial', 'connective', 'muscle', 'nerve'];
+// Disorder types
+const disorders = ['cancer', 'infection', 'injury', 'degenerative', 'autoimmune'];
 
 // make
 const makeKeywords = ['make', 'make', 'new', 'construct', 'engineer', 'manufacture'];
-// blood
-const bldKeywords = [
-  'blood',
-  'hematopoietic',
-  'hematopoiesis',
-  'hematopoietic stem cell',
-  'hematopoietic stem cells',
-  'hematopoietic stem-cell',
-  'hematopoietic stem-cells',
-  'hematopoietic stemcell',
-  'hematopoietic stemcells',
-  'hematopoietic stem-cell',
-  'hematopoietic stem-cells',
-  'hematopoietic stemcell',
-  'hematopoietic stemcells',
-  'hematopoietic stem-cell',
-  'hematopoietic stem-cells',
-  'hematopoietic stemcell',
-  'hematopoietic stemcells',
-  'hematopoietic stem-cell',
-  'hematopoietic stem-cells',
-  'hematopoietic stemcell',
-  'hematopoietic stemcells',
-  'hematopoietic stem-cell',
-  'hematopoietic stem-cells',
-  'hematopoietic stemcell',
-  'hematopoietic stemcells',
-  'hematopoietic stem-cell',
-  'hematopoietic stem-cells',
-  'hematopoietic stemcell',
-  'hematopoietic stemcells',
-  ...stemCells,
+// tissue
+const tissueKeywords = [
+  'tissue',
+  'tissues',
+  'organ',
+  'organs',
+  'organism',
+  'organisms',
+  'body',
+  'bodies',
+  'cell',
+  'cells',
+  'molecule',
+  'molecules',
+  'protein',
+  'proteins',
+  'rna',
+  'dna',
+  'gene',
+  'genes',
+  'chromosome',
+  'chromosomes',
+  'chromatin',
+  ...tissues,
 ];
-const bldArgs = [...stemCells];
+const tissueArgs = [...tissues];
+
+// fix
+const fixKeywords = [
+  'fix',
+  'repair',
+  'heal',
+  'cure',
+  'treat',
+  'restore',
+  'regenerate',
+  'rejuvenate',
+  'renew',
+  'replenish',
+  'rebuild',
+  'reconstruct',
+  'reform',
+  'reconstitute',
+  'reestablish',
+  'reinstate',
+  'reinvigorate',
+  'reanimate',
+  'reawaken',
+  'rekindle',
+  'recharge',
+  'reenergize',
+  'reignite',
+  'reintegrate',
+];
+// disorder
+const disorderKeywords = [
+  'disorder',
+  'disorders',
+  'disease',
+  'diseases',
+  'illness',
+  'illnesses',
+  'sickness',
+  'sicknesses',
+  'infection',
+  'infections',
+  'injury',
+  'injuries',
+  'degenerative',
+  'degeneratives',
+  'autoimmune',
+  'autoimmunes',
+  'cancer',
+  'cancers',
+  ...disorders,
+];
+const disorderArgs = [...disorders];
 
 // --- COMMANDS ---
 
@@ -54,20 +101,35 @@ const commands = {
   embyr: {
     do: `embyr <span class='stone'>[command] [argument]</span>`,
     description: `Run embyr commands to orchestrate stem cells.`,
-    keywords: [...makeKeywords, ...bldKeywords],
+    keywords: [...makeKeywords, ...tissueKeywords],
     subCommands: {
       make: {
-        keywords: [...makeKeywords, ...bldKeywords],
+        keywords: [...makeKeywords, ...tissueKeywords],
         do: `embyr make <span class='stone'>[argument]</span>`,
         description: 'Engineer new cells or molecules.',
         ops: {
-          bld: {
-            keywords: [...bldKeywords],
-            acceptedArgs: [...bldArgs],
+          tissue: {
+            keywords: [...tissueKeywords],
+            acceptedArgs: [...tissueArgs],
             argFlag: '-t',
-            syntax: `embyr make bld -t [stem cell type]`,
-            do: 'embyr make bld',
-            description: `Engineer a new blood cell`,
+            syntax: `embyr make tissue --[tissue type]`,
+            do: 'embyr make tissue',
+            description: `Engineer new tissue cells`,
+          },
+        },
+      },
+      fix: {
+        keywords: [...fixKeywords, ...disorderKeywords],
+        do: `embyr fix <span class='stone'>[argument]</span>`,
+        description: 'Repair damaged cells or molecules.',
+        ops: {
+          disorder: {
+            keywords: [...disorderKeywords],
+            acceptedArgs: [...disorderArgs],
+            argFlag: '-d',
+            syntax: `embyr fix disorder --[disorder type]`,
+            do: 'embyr fix disorder',
+            description: `Treat a disorder`,
           },
         },
       },
@@ -82,28 +144,53 @@ const commands = {
       }
       // Check for make
       if (input.includes('make')) {
-        // Check for bld
-        if (input.includes('bld')) {
+        // Check for tissue
+        if (input.includes('tissue')) {
           // Check for cell type
-          if (input.includes('-t')) {
-            // check if what follows -t is a cell type
-            let inputArr = input.split(' ');
-            let inputIndex = inputArr.indexOf('-t');
-            let inputArg = inputArr[inputIndex + 1].toLowerCase();
-            if (bldArgs.includes(inputArg)) {
-              // return success message with cell type
-              let output = createOutputDiv(`You've successfully made a blood cell from a <span class="lilac" style="font-weight: 600">${inputArg}</span> cell`, 'wheat thicc');
+          if (input.includes('--')) {
+            // check if the word that starts with -- is a tissue type
+            let inputArg = input.split('--')[1].split(' ')[0];
+            if (tissueArgs.includes(inputArg)) {
+              // return success message with tissue type
+              let output = createOutputDiv(`<span class="lilac" style="font-weight: 600">success</span> with a type specified`, 'wheat thicc');
               returnOutput(output, 0);
               return;
             } else if (inputArg === undefined) {
-              // return success message with random cell
-              let output = createOutputDiv(`You've successfully made a blood cell from a <span class="lilac" style="font-weight: 600">multipotent</span> stem cell`, 'wheat thicc');
+              // return success message with random tissue
+              let output = createOutputDiv(`<span class="lilac" style="font-weight: 600">success</span> with no known type specified`, 'wheat thicc');
               returnOutput(output, 0);
               return;
             }
           } else {
-            // return success message with random cell
-            let output = createOutputDiv(`You've successfully made a blood cell from a <span class="lilac" style="font-weight: 600">multipotent</span> cell`, 'wheat thicc');
+            // return success message with random tissue
+            let output = createOutputDiv(`<span class="lilac" style="font-weight: 600">success</span> with no type included`, 'wheat thicc');
+            returnOutput(output, 0);
+            return;
+          }
+        }
+      }
+      // Check for fix
+      if (input.includes('fix')) {
+        // Check for disorder
+        if (input.includes('disorder')) {
+          // Check for disorder type
+          if (input.includes('--')) {
+            // check if the word that starts with -- is a disorder type
+            let inputArg = input.split('--')[1].split(' ')[0];
+            if (disorderArgs.includes(inputArg)) {
+              // return success message with disorder type
+              let output = createOutputDiv(`<span class="lilac" style="font-weight: 600">success</span> with a type specified`, 'wheat thicc');
+              returnOutput(output, 0);
+              return;
+            } else if (inputArg === undefined) {
+              // return success message with random disorder
+              let output = createOutputDiv(`<span class="lilac" style="font-weight: 600">success</span> with no known type specified`, 'wheat thicc');
+              returnOutput(output, 0);
+              return;
+            }
+          } else {
+            // return success message with random disorder
+            let output = createOutputDiv(`<span class="lilac" style="font-weight: 600">success</span> with no type included`, 'wheat thicc');
             returnOutput(output, 0);
             return;
           }
