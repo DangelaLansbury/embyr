@@ -333,7 +333,7 @@ embyr.addEventListener('input', function () {
                               argument = arg;
                               // check if op has an argFlag
                               if (ops[op].argFlag !== undefined) {
-                                toDo += ` ${ops[op].argFlag} ${arg}`;
+                                toDo += ` ${ops[op].argFlag}${arg}`;
                               } else {
                                 toDo += ` ${arg}`;
                               }

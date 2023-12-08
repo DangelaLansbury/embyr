@@ -101,7 +101,7 @@ const commands = {
   embyr: {
     do: `embyr <span class='stone'>[command] [argument]</span>`,
     description: `Run embyr commands to orchestrate stem cells.`,
-    keywords: [...makeKeywords, ...tissueKeywords],
+    keywords: [...makeKeywords, ...tissueKeywords, ...fixKeywords, ...disorderKeywords],
     subCommands: {
       make: {
         keywords: [...makeKeywords, ...tissueKeywords],
@@ -126,7 +126,7 @@ const commands = {
           disorder: {
             keywords: [...disorderKeywords],
             acceptedArgs: [...disorderArgs],
-            argFlag: '-d',
+            argFlag: '--',
             syntax: `embyr fix disorder --[disorder type]`,
             do: 'embyr fix disorder',
             description: `Treat a disorder`,
