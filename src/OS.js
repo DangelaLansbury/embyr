@@ -9,11 +9,12 @@ let logoBtn = document.querySelector('.logo-container');
 const stemCells = ['esc', 'somatic', 'ipsc'];
 // All types of cells
 const allCells = ['epithelial', 'connective', 'muscle', 'nerve', 'blood'];
-let randomCell = allCells[Math.floor(Math.random() * allCells.length)];
 // Tissue types
 const tissues = ['epithelial', 'connective', 'muscle', 'nerve'];
+const randomTissue = tissues[Math.floor(Math.random() * tissues.length)];
 // Disorder types
 const disorders = ['cancer', 'infection', 'injury', 'degenerative', 'autoimmune'];
+const randomDisorder = disorders[Math.floor(Math.random() * disorders.length)];
 
 // make
 const makeKeywords = ['make', 'make', 'new', 'construct', 'engineer', 'manufacture'];
@@ -52,6 +53,37 @@ const tissueKeywords = [
   ...tissues,
 ];
 const tissueArgs = [...tissues];
+// tissue outputs
+const epithelialOutputs = [
+  {
+    step: '0',
+    text: `Collect epithelial cells from a donor.`,
+  },
+  {
+    step: '1',
+    text: `Reprogram the cells to become pluripotent stem cells.`,
+  },
+  {
+    step: '2',
+    text: `Grow the cells in a lab.`,
+  },
+  {
+    step: '3',
+    text: `Use the cells to create new epithelial tissue.`,
+  },
+  {
+    step: '4',
+    text: `Implant the tissue into the patient.`,
+  },
+  {
+    step: '5',
+    text: `Wait for the tissue to integrate with the patient's body.`,
+  },
+  {
+    step: '6',
+    text: `Success! The patient's epithelial tissue has been repaired.`,
+  },
+];
 
 // fix
 const fixKeywords = [
@@ -120,7 +152,7 @@ const commands = {
           tissue: {
             keywords: [...tissueKeywords],
             acceptedArgs: [...tissueArgs],
-            argFlag: '-t',
+            argFlag: '--',
             syntax: `embyr make tissue --[tissue type]`,
             do: 'embyr make tissue',
             description: `Engineer new tissue cells`,
@@ -151,59 +183,69 @@ const commands = {
         returnOutput(output, 0);
         return;
       }
+      let command = '';
+      let arg = '';
+      let argFlag = '';
       // Check for make
       if (input.includes('make')) {
+        command = 'make';
         // Check for tissue
         if (input.includes('tissue')) {
+          arg = 'tissue';
           // Check for cell type
           if (input.includes('--')) {
             // check if the word that starts with -- is a tissue type
             let inputArg = input.split('--')[1].split(' ')[0];
             if (tissueArgs.includes(inputArg)) {
-              // return success message with tissue type
-              let output = createOutputDiv(`<span class="lilac thicc" style="font-weight: 600">success</span> with a type specified`, 'wheat');
-              returnOutput(output, 0);
-              return;
+              argFlag = inputArg;
             } else if (inputArg === undefined) {
-              // return success message with random tissue
-              let output = createOutputDiv(`<span class="lilac thicc" style="font-weight: 600">success</span> with no known type specified`, 'wheat');
+              // return error message
+              let output = createOutputDiv(`Please specify a tissue type.`, 'wheat');
               returnOutput(output, 0);
-              return;
             }
           } else {
             // return success message with random tissue
-            let output = createOutputDiv(`<span class="lilac thicc" style="font-weight: 600">success</span> with no type included`, 'wheat');
-            returnOutput(output, 0);
-            return;
+            argFlag = randomTissue;
           }
         }
       }
       // Check for fix
       if (input.includes('fix')) {
+        command = 'fix';
         // Check for disorder
         if (input.includes('disorder')) {
+          arg = 'disorder';
           // Check for disorder type
           if (input.includes('--')) {
             // check if the word that starts with -- is a disorder type
             let inputArg = input.split('--')[1].split(' ')[0];
             if (disorderArgs.includes(inputArg)) {
-              // return success message with disorder type
-              let output = createOutputDiv(`<span class="lilac thicc" style="font-weight: 600">success</span> with a type specified`, 'wheat');
-              returnOutput(output, 0);
-              return;
+              argFlag = inputArg;
             } else if (inputArg === undefined) {
-              // return success message with random disorder
-              let output = createOutputDiv(`<span class="lilac thicc" style="font-weight: 600">success</span> with no known type specified`, 'wheat');
+              // return error message
+              let output = createOutputDiv(`Please specify a disorder type.`, 'wheat');
               returnOutput(output, 0);
-              return;
             }
           } else {
             // return success message with random disorder
-            let output = createOutputDiv(`<span class="lilac thicc" style="font-weight: 600">success</span> with no type included`, 'wheat');
-            returnOutput(output, 0);
-            return;
+            argFlag = randomDisorder;
           }
         }
+      }
+      // If command and arg are defined, run the command and return outputs accordingly
+      if (command !== '' && arg !== '' && argFlag !== '') {
+        // return success message with argFlag
+        let output = createOutputDiv(`embyr is working on ${argFlag}...`, 'wheat');
+        returnOutput(output, 0);
+        const outputToReturn = argFlag + 'Outputs';
+        // return a new output for each step in the output array
+        eval(outputToReturn).forEach((output) => {
+          setTimeout(() => {
+            let outputDiv = createOutputDiv(output.text, 'wheat');
+            returnOutput(outputDiv, 0);
+          }, outputDelay[output.step]);
+        });
+        return;
       }
       // return success message
       let output = createOutputDiv(`embyr is ready to receive commands.`, 'wheat');
