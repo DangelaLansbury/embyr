@@ -11,10 +11,14 @@ const stemCells = ['esc', 'somatic', 'ipsc'];
 const allCells = ['epithelial', 'connective', 'muscle', 'nerve', 'blood'];
 // Tissue types
 const tissues = ['epithelial', 'connective', 'muscle', 'nerve'];
-const randomTissue = tissues[Math.floor(Math.random() * tissues.length)];
+function getRandomTissue() {
+  return tissues[Math.floor(Math.random() * tissues.length)];
+}
 // Disorder types
-const disorders = ['cancer', 'infection', 'injury', 'degenerative', 'autoimmune'];
-const randomDisorder = disorders[Math.floor(Math.random() * disorders.length)];
+const disorders = ['infection', 'injury', 'degenerative', 'autoimmune'];
+function getRandomDisorder() {
+  return disorders[Math.floor(Math.random() * disorders.length)];
+}
 
 // make
 const makeKeywords = ['make', 'make', 'new', 'construct', 'engineer', 'manufacture'];
@@ -84,6 +88,96 @@ const epithelialOutputs = [
     text: `Success! The patient's epithelial tissue has been repaired.`,
   },
 ];
+const connectiveOutputs = [
+  {
+    step: '0',
+    text: `Collect connective cells from a donor.`,
+  },
+  {
+    step: '1',
+    text: `Reprogram the cells to become pluripotent stem cells.`,
+  },
+  {
+    step: '2',
+    text: `Grow the cells in a lab.`,
+  },
+  {
+    step: '3',
+    text: `Use the cells to create new connective tissue.`,
+  },
+  {
+    step: '4',
+    text: `Implant the tissue into the patient.`,
+  },
+  {
+    step: '5',
+    text: `Wait for the tissue to integrate with the patient's body.`,
+  },
+  {
+    step: '6',
+    text: `Success! The patient's connective tissue has been repaired.`,
+  },
+];
+const muscleOutputs = [
+  {
+    step: '0',
+    text: `Collect muscle cells from a donor.`,
+  },
+  {
+    step: '1',
+    text: `Reprogram the cells to become pluripotent stem cells.`,
+  },
+  {
+    step: '2',
+    text: `Grow the cells in a lab.`,
+  },
+  {
+    step: '3',
+    text: `Use the cells to create new muscle tissue.`,
+  },
+  {
+    step: '4',
+    text: `Implant the tissue into the patient.`,
+  },
+  {
+    step: '5',
+    text: `Wait for the tissue to integrate with the patient's body.`,
+  },
+  {
+    step: '6',
+    text: `Success! The patient's muscle tissue has been repaired.`,
+  },
+];
+const nerveOutputs = [
+  {
+    step: '0',
+    text: `Collect nerve cells from a donor.`,
+  },
+  {
+    step: '1',
+    text: `Reprogram the cells to become pluripotent stem cells.`,
+  },
+  {
+    step: '2',
+    text: `Grow the cells in a lab.`,
+  },
+  {
+    step: '3',
+    text: `Use the cells to create new nerve tissue.`,
+  },
+  {
+    step: '4',
+    text: `Implant the tissue into the patient.`,
+  },
+  {
+    step: '5',
+    text: `Wait for the tissue to integrate with the patient's body.`,
+  },
+  {
+    step: '6',
+    text: `Success! The patient's nerve tissue has been repaired.`,
+  },
+];
 
 // fix
 const fixKeywords = [
@@ -135,6 +229,127 @@ const disorderKeywords = [
   ...disorders,
 ];
 const disorderArgs = [...disorders];
+// disorder outputs
+const infectionOutputs = [
+  {
+    step: '0',
+    text: `Collect infection cells from the patient.`,
+  },
+  {
+    step: '1',
+    text: `Reprogram the cells to become pluripotent stem cells.`,
+  },
+  {
+    step: '2',
+    text: `Grow the cells in a lab.`,
+  },
+  {
+    step: '3',
+    text: `Use the cells to create new infection tissue.`,
+  },
+  {
+    step: '4',
+    text: `Implant the tissue into the patient.`,
+  },
+  {
+    step: '5',
+    text: `Wait for the tissue to integrate with the patient's body.`,
+  },
+  {
+    step: '6',
+    text: `Success! The patient's infection has been cured.`,
+  },
+];
+const injuryOutputs = [
+  {
+    step: '0',
+    text: `Collect injury cells from the patient.`,
+  },
+  {
+    step: '1',
+    text: `Reprogram the cells to become pluripotent stem cells.`,
+  },
+  {
+    step: '2',
+    text: `Grow the cells in a lab.`,
+  },
+  {
+    step: '3',
+    text: `Use the cells to create new injury tissue.`,
+  },
+  {
+    step: '4',
+    text: `Implant the tissue into the patient.`,
+  },
+  {
+    step: '5',
+    text: `Wait for the tissue to integrate with the patient's body.`,
+  },
+  {
+    step: '6',
+    text: `Success! The patient's injury has been cured.`,
+  },
+];
+const degenerativeOutputs = [
+  {
+    step: '0',
+    text: `Collect degenerative cells from the patient.`,
+  },
+  {
+    step: '1',
+    text: `Reprogram the cells to become pluripotent stem cells.`,
+  },
+  {
+    step: '2',
+    text: `Grow the cells in a lab.`,
+  },
+  {
+    step: '3',
+    text: `Use the cells to create new degenerative tissue.`,
+  },
+  {
+    step: '4',
+    text: `Implant the tissue into the patient.`,
+  },
+  {
+    step: '5',
+    text: `Wait for the tissue to integrate with the patient's body.`,
+  },
+  {
+    step: '6',
+    text: `Success! The patient's degenerative disease has been cured.`,
+  },
+];
+const autoimmuneOutputs = [
+  {
+    step: '0',
+    text: `Collect autoimmune cells from the patient.`,
+  },
+  {
+    step: '1',
+    text: `Reprogram the cells to become pluripotent stem cells.`,
+  },
+  {
+    step: '2',
+    text: `Grow the cells in a lab.`,
+  },
+  {
+    step: '3',
+    text: `Use the cells to create new autoimmune tissue.`,
+  },
+  {
+    step: '4',
+    text: `Implant the tissue into the patient.`,
+  },
+  {
+    step: '5',
+    text: `Wait for the tissue to integrate with the patient's body.`,
+  },
+  {
+    step: '6',
+    text: `Success! The patient's autoimmune disease has been cured.`,
+  },
+];
 
 // --- COMMANDS ---
 
@@ -205,7 +420,7 @@ const commands = {
             }
           } else {
             // return success message with random tissue
-            argFlag = randomTissue;
+            argFlag = getRandomTissue();
           }
         }
       }
@@ -228,7 +443,7 @@ const commands = {
             }
           } else {
             // return success message with random disorder
-            argFlag = randomDisorder;
+            argFlag = getRandomDisorder();
           }
         }
       }
