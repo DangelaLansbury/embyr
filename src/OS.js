@@ -463,7 +463,7 @@ const commands = {
         return;
       }
       // return success message
-      let output = createOutputDiv(`embyr is ready to receive commands.`, 'wheat');
+      let output = createOutputDiv(`Sorry, I don't understand. Please describe what you'd like to do and maybe I can help.`, 'wheat');
       returnOutput(output, 0);
     },
   },
