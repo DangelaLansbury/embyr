@@ -112,12 +112,12 @@ const returnNullAndHelp = (command, delay) => {
 // --- SUGGESTIONS ---
 
 // toggle embyr helper display between init and suggestions if there are suggestions
-const hideembyrInit = () => {
+const hideEmbyrInit = () => {
   embyrInit.classList.add('hidden');
   embyrHelper.classList.remove('hidden');
 };
 
-const showembyrInit = () => {
+const showEmbyrInit = () => {
   embyrInitContent.innerHTML = standardInitMsg;
   embyrInit.classList.remove('hidden');
   embyrHelper.classList.add('hidden');
@@ -184,7 +184,7 @@ embyr.addEventListener('keydown', function (e) {
 // --- SUGGESTIONS ---
 
 const displayShort = (toDo, description) => {
-  hideembyrInit();
+  hideEmbyrInit();
   details.innerHTML = '';
   let newDetails = document.createElement('div');
   newDetails.className = 'suggestion-details suggestion';
@@ -193,7 +193,7 @@ const displayShort = (toDo, description) => {
 };
 
 const displayFull = (toDo, description, acceptedArgs, syntax) => {
-  hideembyrInit();
+  hideEmbyrInit();
   details.innerHTML = '';
   let newDetails = document.createElement('div');
   newDetails.className = 'suggestion-details suggestion';
@@ -401,7 +401,7 @@ embyr.addEventListener('input', function () {
   }
   // If there is nothing to suggest, show init message
   if (suggestionsArray.length === 0 && details.innerHTML === '') {
-    showembyrInit();
+    showEmbyrInit();
   }
 });
 
@@ -477,13 +477,13 @@ embyr.addEventListener('keydown', function (e) {
 // Reset suggestions if all text is deleted at once
 embyr.addEventListener('keydown', function (e) {
   if (e.key === 'Backspace' && embyr.innerText.trim().length == 1) {
-    clearembyr();
+    clearEmbyr();
     suggestionAvailable = '';
   }
 });
 
 // Clear editor if user presses enter, refocus on editor, and show fake cursor
-const clearembyr = () => {
+const clearEmbyr = () => {
   input = '';
   embyr.innerText = '';
   ghost.innerText = '';
@@ -491,7 +491,7 @@ const clearembyr = () => {
   cursor.style.display = 'inline-flex';
   details.innerHTML = '';
   suggestionAvailable = '';
-  showembyrInit();
+  showEmbyrInit();
 };
 
 // Listening for command and executing function when user presses enter
@@ -505,7 +505,7 @@ embyr.addEventListener('keydown', function (e) {
       localStorage.setItem('history', JSON.stringify(history));
       console.log(history);
       historyIndex = 0;
-      clearembyr();
+      clearEmbyr();
       let parts = input.split(' ');
       let command = parts[0].toLowerCase();
       if (commands[command]) {
