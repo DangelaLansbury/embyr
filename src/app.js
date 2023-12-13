@@ -200,8 +200,8 @@ const displayFull = (toDo, description, acceptedArgs, syntax) => {
   newDetails.innerHTML = `<div class="sweetgrass thicc">${toDo}</div>
   <div class="stone" style="margin-bottom: 0.75rem;"><span class="lilac thicc">TAB</span> to paste command into CLI</div>
   <div>${description}</div>
-  <div class="honey"><span class="stone">Syntax:</span> ${syntax}</div>
-  <div class="river"><span class="stone">Modifiers:</span> ${acceptedArgs}</div>`;
+  <div class="honey"><span class="stone">Syntax:</span> ${syntax}</div>`;
+  // <div class="river"><span class="stone">Modifiers:</span> ${acceptedArgs}</div>`;
   details.appendChild(newDetails);
 };
 
