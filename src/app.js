@@ -324,22 +324,24 @@ embyr.addEventListener('input', function () {
                           let argument = '';
                           // check if input contains any accepted arguments
                           let acceptedArgs = ops[op].acceptedArgs;
-                          acceptedArgs.forEach((arg) => {
-                            // remove hyphens and slashes from input word and argument
-                            let argCheckInput = inputWords[i].replace(/-/g, '').replace(/\//g, '');
-                            let argCheckArg = arg.replace(/-/g, '').replace(/\//g, '');
-                            // if input word matches argument, add argument to command
-                            if (argCheckInput.toLowerCase() === argCheckArg.toLowerCase()) {
-                              argument = arg;
-                              // check if op has an argFlag
-                              if (ops[op].argFlag !== undefined) {
-                                toDo += ` ${ops[op].argFlag}${arg}`;
-                              } else {
-                                toDo += ` ${arg}`;
+                          // fuzzy search input and acceptedArgs
+                          for (let i = 0; i < inputWords.length; i++) {
+                            for (let j = 0; j < acceptedArgs.length; j++) {
+                              let levDist = levenshteinDistance(inputWords[i].replace(/-/g, '').replace(/\//g, ''), acceptedArgs[j].replace(/-/g, '').replace(/\//g, ''));
+                              let similarity = 1 - levDist / Math.max(inputWords[i].length, acceptedArgs[j].length);
+                              if (similarity > 0.75) {
+                                arg = acceptedArgs[j];
+                                // check if op has an argFlag
+                                if (ops[op].argFlag !== undefined) {
+                                  toDo += ` ${ops[op].argFlag}${arg}`;
+                                } else {
+                                  toDo += ` ${arg}`;
+                                }
+                                similarity++;
                               }
-                              similarity++;
                             }
-                          });
+                          }
+                          // Check if suggestion has already been suggested
                           let alreadySuggested = false;
                           for (let k = 0; k < suggestionsArray.length; k++) {
                             // check suggestions array for existing suggestion
