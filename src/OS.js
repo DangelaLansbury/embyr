@@ -15,7 +15,7 @@ function getRandomTissue() {
   return tissues[Math.floor(Math.random() * tissues.length)];
 }
 // Disorder types
-const disorders = ['infection', 'injury', 'degenerative', 'autoimmune'];
+const disorders = ['cancer', 'infection', 'injury', 'degenerative', 'autoimmune'];
 function getRandomDisorder() {
   return disorders[Math.floor(Math.random() * disorders.length)];
 }
@@ -212,14 +212,18 @@ const disorderKeywords = [
   'disorders',
   'disease',
   'diseases',
+  'ill',
   'illness',
   'illnesses',
+  'sick',
   'sickness',
   'sicknesses',
   'infection',
+  'infect',
   'infections',
   'injury',
   'injuries',
+  'degen',
   'degenerative',
   'degeneratives',
   'autoimmune',
@@ -348,6 +352,36 @@ const autoimmuneOutputs = [
   {
     step: '6',
     text: `Success! The patient's autoimmune disease has been cured.`,
+  },
+];
+const cancerOutputs = [
+  {
+    step: '0',
+    text: `Collect cancer cells from the patient.`,
+  },
+  {
+    step: '1',
+    text: `Reprogram the cells to become pluripotent stem cells.`,
+  },
+  {
+    step: '2',
+    text: `Grow the cells in a lab.`,
+  },
+  {
+    step: '3',
+    text: `Use the cells to create new cancer tissue.`,
+  },
+  {
+    step: '4',
+    text: `Implant the tissue into the patient.`,
+  },
+  {
+    step: '5',
+    text: `Wait for the tissue to integrate with the patient's body.`,
+  },
+  {
+    step: '6',
+    text: `Success! The patient's cancer has been cured.`,
   },
 ];
 
