@@ -484,7 +484,7 @@ const commands = {
       // If command and arg are defined, run the command and return outputs accordingly
       if (command !== '' && arg !== '' && argFlag !== '') {
         // return success message with argFlag
-        let output = createOutputDiv(`embyr is working on ${argFlag}...`, 'wheat');
+        let output = createOutputDiv(`embyr is working on it...`, 'wheat');
         returnOutput(output, 0);
         const outputToReturn = argFlag + 'Outputs';
         // return a new output for each step in the output array
