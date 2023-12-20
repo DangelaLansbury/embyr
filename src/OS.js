@@ -58,6 +58,34 @@ const tissueKeywords = [
 ];
 const tissueArgs = [...tissues];
 // tissue outputs
+const regenTissueOutputs = [
+  {
+    step: '0',
+    text: `Initiate <span class='thicc lilac'>regenerative medicine</span> protocol.`,
+  },
+  {
+    step: '1',
+    text: `<span class='thicc honey'>Mechanism:</span> Stem cells can be programmed to differentiate into specific cell types. For instance, embryonic stem cells or induced pluripotent stem cells (iPSCs) can be used to generate heart muscle cells, nerve cells, or pancreatic cells.`,
+  },
+  {
+    step: '2',
+    text: `<span class='thicc swamp'>Applications:</span> This ability is harnessed to replace damaged or diseased cells in the body. For example, in patients with heart disease, stem cells can be used to generate healthy heart muscle cells that are then transplanted into the patient's heart. This can potentially restore function to damaged areas of the heart.`,
+  },
+];
+const newTissueOutputs = [
+  {
+    step: '0',
+    text: `Initiate <span class='thicc lilac'>tissue engineering</span> protocol.`,
+  },
+  {
+    step: '1',
+    text: `<span class='thicc honey'>Process:</span> This involves creating biological tissues in the lab using a combination of stem cells, scaffolds, and bioreactors. The stem cells are placed on a scaffold that mimics the structure of the tissue to be grown.`,
+  },
+  {
+    step: '2',
+    text: `<span class='thicc swamp'>Applications:</span> Tissues such as skin, blood vessels, or even organs can be grown and then transplanted into patients. For example, engineered skin grafts for burn victims.`,
+  },
+];
 const epithelialOutputs = [
   {
     step: '0',
@@ -65,7 +93,9 @@ const epithelialOutputs = [
   },
   {
     step: '1',
-    text: `Reprogram the cells to become pluripotent stem cells.`,
+    text: `1. **Regenerative Medicine:**
+    - **Mechanism:** Stem cells can be programmed to differentiate into specific cell types. For instance, embryonic stem cells or induced pluripotent stem cells (iPSCs) can be used to generate heart muscle cells, nerve cells, or pancreatic cells.
+    - **Applications:** This ability is harnessed to replace damaged or diseased cells in the body. For example, in patients with heart disease, stem cells can be used to generate healthy heart muscle cells that are then transplanted into the patient's heart. This can potentially restore function to damaged areas of the heart.`,
   },
   {
     step: '2',
@@ -435,6 +465,7 @@ const commands = {
       let command = '';
       let arg = '';
       let argFlag = '';
+      let outputsToDisplay = '';
       // Check for make
       if (input.includes('make')) {
         command = 'make';
@@ -456,6 +487,7 @@ const commands = {
             // return success message with random tissue
             argFlag = getRandomTissue();
           }
+          outputsToDisplay = 'newTissueOutputs';
         }
       }
       // Check for fix
@@ -480,15 +512,16 @@ const commands = {
             argFlag = getRandomDisorder();
           }
         }
+        outputsToDisplay = 'regenTissueOutputs';
       }
       // If command and arg are defined, run the command and return outputs accordingly
       if (command !== '' && arg !== '' && argFlag !== '') {
         // return success message with argFlag
         let output = createOutputDiv(`embyr is working on it...`, 'wheat');
         returnOutput(output, 0);
-        const outputToReturn = argFlag + 'Outputs';
+        // const outputToReturn = argFlag + 'Outputs';
         // return a new output for each step in the output array
-        eval(outputToReturn).forEach((output) => {
+        eval(outputsToDisplay).forEach((output) => {
           setTimeout(() => {
             let outputDiv = createOutputDiv(output.text, 'wheat');
             returnOutput(outputDiv, 0);
