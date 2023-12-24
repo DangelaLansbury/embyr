@@ -57,7 +57,7 @@ const tissueKeywords = [
   ...tissues,
 ];
 const tissueArgs = [...tissues];
-// tissue outputs
+// tissue outputs - regenerative medicine
 const regenTissueOutputs = [
   {
     step: '0',
@@ -72,6 +72,7 @@ const regenTissueOutputs = [
     text: `<span class='thicc swamp'>Applications:</span> This ability is harnessed to replace damaged or diseased cells in the body. For example, in patients with heart disease, stem cells can be used to generate healthy heart muscle cells that are then transplanted into the patient's heart. This can potentially restore function to damaged areas of the heart.`,
   },
 ];
+// tissue outputs - tissue engineering
 const newTissueOutputs = [
   {
     step: '0',
@@ -86,128 +87,127 @@ const newTissueOutputs = [
     text: `<span class='thicc swamp'>Applications:</span> Tissues such as skin, blood vessels, or even organs can be grown and then transplanted into patients. For example, engineered skin grafts for burn victims.`,
   },
 ];
-const epithelialOutputs = [
-  {
-    step: '0',
-    text: `Collect epithelial cells from a donor.`,
-  },
-  {
-    step: '1',
-    text: `1. **Regenerative Medicine:**
-    - **Mechanism:** Stem cells can be programmed to differentiate into specific cell types. For instance, embryonic stem cells or induced pluripotent stem cells (iPSCs) can be used to generate heart muscle cells, nerve cells, or pancreatic cells.
-    - **Applications:** This ability is harnessed to replace damaged or diseased cells in the body. For example, in patients with heart disease, stem cells can be used to generate healthy heart muscle cells that are then transplanted into the patient's heart. This can potentially restore function to damaged areas of the heart.`,
-  },
-  {
-    step: '2',
-    text: `Grow the cells in a lab.`,
-  },
-  {
-    step: '3',
-    text: `Use the cells to create new epithelial tissue.`,
-  },
-  {
-    step: '4',
-    text: `Implant the tissue into the patient.`,
-  },
-  {
-    step: '5',
-    text: `Wait for the tissue to integrate with the patient's body.`,
-  },
-  {
-    step: '6',
-    text: `Success! The patient's epithelial tissue has been repaired.`,
-  },
-];
-const connectiveOutputs = [
-  {
-    step: '0',
-    text: `Collect connective cells from a donor.`,
-  },
-  {
-    step: '1',
-    text: `Reprogram the cells to become pluripotent stem cells.`,
-  },
-  {
-    step: '2',
-    text: `Grow the cells in a lab.`,
-  },
-  {
-    step: '3',
-    text: `Use the cells to create new connective tissue.`,
-  },
-  {
-    step: '4',
-    text: `Implant the tissue into the patient.`,
-  },
-  {
-    step: '5',
-    text: `Wait for the tissue to integrate with the patient's body.`,
-  },
-  {
-    step: '6',
-    text: `Success! The patient's connective tissue has been repaired.`,
-  },
-];
-const muscleOutputs = [
-  {
-    step: '0',
-    text: `Collect muscle cells from a donor.`,
-  },
-  {
-    step: '1',
-    text: `Reprogram the cells to become pluripotent stem cells.`,
-  },
-  {
-    step: '2',
-    text: `Grow the cells in a lab.`,
-  },
-  {
-    step: '3',
-    text: `Use the cells to create new muscle tissue.`,
-  },
-  {
-    step: '4',
-    text: `Implant the tissue into the patient.`,
-  },
-  {
-    step: '5',
-    text: `Wait for the tissue to integrate with the patient's body.`,
-  },
-  {
-    step: '6',
-    text: `Success! The patient's muscle tissue has been repaired.`,
-  },
-];
-const nerveOutputs = [
-  {
-    step: '0',
-    text: `Collect nerve cells from a donor.`,
-  },
-  {
-    step: '1',
-    text: `Reprogram the cells to become pluripotent stem cells.`,
-  },
-  {
-    step: '2',
-    text: `Grow the cells in a lab.`,
-  },
-  {
-    step: '3',
-    text: `Use the cells to create new nerve tissue.`,
-  },
-  {
-    step: '4',
-    text: `Implant the tissue into the patient.`,
-  },
-  {
-    step: '5',
-    text: `Wait for the tissue to integrate with the patient's body.`,
-  },
-  {
-    step: '6',
-    text: `Success! The patient's nerve tissue has been repaired.`,
-  },
-];
+
+// const epithelialOutputs = [
+//   {
+//     step: '0',
+//     text: `Collect epithelial cells from a donor.`,
+//   },
+//   {
+//     step: '1',
+//     text: `Reprogram the cells to become pluripotent stem cells.`,
+//   },
+//   {
+//     step: '2',
+//     text: `Grow the cells in a lab.`,
+//   },
+//   {
+//     step: '3',
+//     text: `Use the cells to create new epithelial tissue.`,
+//   },
+//   {
+//     step: '4',
+//     text: `Implant the tissue into the patient.`,
+//   },
+//   {
+//     step: '5',
+//     text: `Wait for the tissue to integrate with the patient's body.`,
+//   },
+//   {
+//     step: '6',
+//     text: `Success! The patient's epithelial tissue has been repaired.`,
+//   },
+// ];
+// const connectiveOutputs = [
+//   {
+//     step: '0',
+//     text: `Collect connective cells from a donor.`,
+//   },
+//   {
+//     step: '1',
+//     text: `Reprogram the cells to become pluripotent stem cells.`,
+//   },
+//   {
+//     step: '2',
+//     text: `Grow the cells in a lab.`,
+//   },
+//   {
+//     step: '3',
+//     text: `Use the cells to create new connective tissue.`,
+//   },
+//   {
+//     step: '4',
+//     text: `Implant the tissue into the patient.`,
+//   },
+//   {
+//     step: '5',
+//     text: `Wait for the tissue to integrate with the patient's body.`,
+//   },
+//   {
+//     step: '6',
+//     text: `Success! The patient's connective tissue has been repaired.`,
+//   },
+// ];
+// const muscleOutputs = [
+//   {
+//     step: '0',
+//     text: `Collect muscle cells from a donor.`,
+//   },
+//   {
+//     step: '1',
+//     text: `Reprogram the cells to become pluripotent stem cells.`,
+//   },
+//   {
+//     step: '2',
+//     text: `Grow the cells in a lab.`,
+//   },
+//   {
+//     step: '3',
+//     text: `Use the cells to create new muscle tissue.`,
+//   },
+//   {
+//     step: '4',
+//     text: `Implant the tissue into the patient.`,
+//   },
+//   {
+//     step: '5',
+//     text: `Wait for the tissue to integrate with the patient's body.`,
+//   },
+//   {
+//     step: '6',
+//     text: `Success! The patient's muscle tissue has been repaired.`,
+//   },
+// ];
+// const nerveOutputs = [
+//   {
+//     step: '0',
+//     text: `Collect nerve cells from a donor.`,
+//   },
+//   {
+//     step: '1',
+//     text: `Reprogram the cells to become pluripotent stem cells.`,
+//   },
+//   {
+//     step: '2',
+//     text: `Grow the cells in a lab.`,
+//   },
+//   {
+//     step: '3',
+//     text: `Use the cells to create new nerve tissue.`,
+//   },
+//   {
+//     step: '4',
+//     text: `Implant the tissue into the patient.`,
+//   },
+//   {
+//     step: '5',
+//     text: `Wait for the tissue to integrate with the patient's body.`,
+//   },
+//   {
+//     step: '6',
+//     text: `Success! The patient's nerve tissue has been repaired.`,
+//   },
+// ];
 
 // fix
 const fixKeywords = [
@@ -263,157 +263,172 @@ const disorderKeywords = [
   ...disorders,
 ];
 const disorderArgs = [...disorders];
-// disorder outputs
-const infectionOutputs = [
+// disorder outputs - gene therapy
+const geneOutputs = [
   {
     step: '0',
-    text: `Collect infection cells from the patient.`,
+    text: `Initiate <span class='thicc lilac'>gene therapy</span> protocol.`,
   },
   {
     step: '1',
-    text: `Reprogram the cells to become pluripotent stem cells.`,
+    text: `<span class='thicc honey'>Approach:</span> In gene therapy, defective genes that cause disease are replaced or repaired. Stem cells can be engineered to carry healthy copies of these genes. These modified stem cells are then reintroduced into the patient.`,
   },
   {
     step: '2',
-    text: `Grow the cells in a lab.`,
-  },
-  {
-    step: '3',
-    text: `Use the cells to create new infection tissue.`,
-  },
-  {
-    step: '4',
-    text: `Implant the tissue into the patient.`,
-  },
-  {
-    step: '5',
-    text: `Wait for the tissue to integrate with the patient's body.`,
-  },
-  {
-    step: '6',
-    text: `Success! The patient's infection has been cured.`,
+    text: `<span class='thicc swamp'>Example:</span> For genetic blood disorders like sickle cell anemia, stem cells from the patient's bone marrow can be extracted, genetically corrected in the lab, and then reinfused back into the patient.`,
   },
 ];
-const injuryOutputs = [
-  {
-    step: '0',
-    text: `Collect injury cells from the patient.`,
-  },
-  {
-    step: '1',
-    text: `Reprogram the cells to become pluripotent stem cells.`,
-  },
-  {
-    step: '2',
-    text: `Grow the cells in a lab.`,
-  },
-  {
-    step: '3',
-    text: `Use the cells to create new injury tissue.`,
-  },
-  {
-    step: '4',
-    text: `Implant the tissue into the patient.`,
-  },
-  {
-    step: '5',
-    text: `Wait for the tissue to integrate with the patient's body.`,
-  },
-  {
-    step: '6',
-    text: `Success! The patient's injury has been cured.`,
-  },
-];
-const degenerativeOutputs = [
-  {
-    step: '0',
-    text: `Collect degenerative cells from the patient.`,
-  },
-  {
-    step: '1',
-    text: `Reprogram the cells to become pluripotent stem cells.`,
-  },
-  {
-    step: '2',
-    text: `Grow the cells in a lab.`,
-  },
-  {
-    step: '3',
-    text: `Use the cells to create new degenerative tissue.`,
-  },
-  {
-    step: '4',
-    text: `Implant the tissue into the patient.`,
-  },
-  {
-    step: '5',
-    text: `Wait for the tissue to integrate with the patient's body.`,
-  },
-  {
-    step: '6',
-    text: `Success! The patient's degenerative disease has been cured.`,
-  },
-];
-const autoimmuneOutputs = [
-  {
-    step: '0',
-    text: `Collect autoimmune cells from the patient.`,
-  },
-  {
-    step: '1',
-    text: `Reprogram the cells to become pluripotent stem cells.`,
-  },
-  {
-    step: '2',
-    text: `Grow the cells in a lab.`,
-  },
-  {
-    step: '3',
-    text: `Use the cells to create new autoimmune tissue.`,
-  },
-  {
-    step: '4',
-    text: `Implant the tissue into the patient.`,
-  },
-  {
-    step: '5',
-    text: `Wait for the tissue to integrate with the patient's body.`,
-  },
-  {
-    step: '6',
-    text: `Success! The patient's autoimmune disease has been cured.`,
-  },
-];
-const cancerOutputs = [
-  {
-    step: '0',
-    text: `Collect cancer cells from the patient.`,
-  },
-  {
-    step: '1',
-    text: `Reprogram the cells to become pluripotent stem cells.`,
-  },
-  {
-    step: '2',
-    text: `Grow the cells in a lab.`,
-  },
-  {
-    step: '3',
-    text: `Use the cells to create new cancer tissue.`,
-  },
-  {
-    step: '4',
-    text: `Implant the tissue into the patient.`,
-  },
-  {
-    step: '5',
-    text: `Wait for the tissue to integrate with the patient's body.`,
-  },
-  {
-    step: '6',
-    text: `Success! The patient's cancer has been cured.`,
-  },
-];
+
+// const infectionOutputs = [
+//   {
+//     step: '0',
+//     text: `Collect infection cells from the patient.`,
+//   },
+//   {
+//     step: '1',
+//     text: `Reprogram the cells to become pluripotent stem cells.`,
+//   },
+//   {
+//     step: '2',
+//     text: `Grow the cells in a lab.`,
+//   },
+//   {
+//     step: '3',
+//     text: `Use the cells to create new infection tissue.`,
+//   },
+//   {
+//     step: '4',
+//     text: `Implant the tissue into the patient.`,
+//   },
+//   {
+//     step: '5',
+//     text: `Wait for the tissue to integrate with the patient's body.`,
+//   },
+//   {
+//     step: '6',
+//     text: `Success! The patient's infection has been cured.`,
+//   },
+// ];
+// const injuryOutputs = [
+//   {
+//     step: '0',
+//     text: `Collect injury cells from the patient.`,
+//   },
+//   {
+//     step: '1',
+//     text: `Reprogram the cells to become pluripotent stem cells.`,
+//   },
+//   {
+//     step: '2',
+//     text: `Grow the cells in a lab.`,
+//   },
+//   {
+//     step: '3',
+//     text: `Use the cells to create new injury tissue.`,
+//   },
+//   {
+//     step: '4',
+//     text: `Implant the tissue into the patient.`,
+//   },
+//   {
+//     step: '5',
+//     text: `Wait for the tissue to integrate with the patient's body.`,
+//   },
+//   {
+//     step: '6',
+//     text: `Success! The patient's injury has been cured.`,
+//   },
+// ];
+// const degenerativeOutputs = [
+//   {
+//     step: '0',
+//     text: `Collect degenerative cells from the patient.`,
+//   },
+//   {
+//     step: '1',
+//     text: `Reprogram the cells to become pluripotent stem cells.`,
+//   },
+//   {
+//     step: '2',
+//     text: `Grow the cells in a lab.`,
+//   },
+//   {
+//     step: '3',
+//     text: `Use the cells to create new degenerative tissue.`,
+//   },
+//   {
+//     step: '4',
+//     text: `Implant the tissue into the patient.`,
+//   },
+//   {
+//     step: '5',
+//     text: `Wait for the tissue to integrate with the patient's body.`,
+//   },
+//   {
+//     step: '6',
+//     text: `Success! The patient's degenerative disease has been cured.`,
+//   },
+// ];
+// const autoimmuneOutputs = [
+//   {
+//     step: '0',
+//     text: `Collect autoimmune cells from the patient.`,
+//   },
+//   {
+//     step: '1',
+//     text: `Reprogram the cells to become pluripotent stem cells.`,
+//   },
+//   {
+//     step: '2',
+//     text: `Grow the cells in a lab.`,
+//   },
+//   {
+//     step: '3',
+//     text: `Use the cells to create new autoimmune tissue.`,
+//   },
+//   {
+//     step: '4',
+//     text: `Implant the tissue into the patient.`,
+//   },
+//   {
+//     step: '5',
+//     text: `Wait for the tissue to integrate with the patient's body.`,
+//   },
+//   {
+//     step: '6',
+//     text: `Success! The patient's autoimmune disease has been cured.`,
+//   },
+// ];
+// const cancerOutputs = [
+//   {
+//     step: '0',
+//     text: `Collect cancer cells from the patient.`,
+//   },
+//   {
+//     step: '1',
+//     text: `Reprogram the cells to become pluripotent stem cells.`,
+//   },
+//   {
+//     step: '2',
+//     text: `Grow the cells in a lab.`,
+//   },
+//   {
+//     step: '3',
+//     text: `Use the cells to create new cancer tissue.`,
+//   },
+//   {
+//     step: '4',
+//     text: `Implant the tissue into the patient.`,
+//   },
+//   {
+//     step: '5',
+//     text: `Wait for the tissue to integrate with the patient's body.`,
+//   },
+//   {
+//     step: '6',
+//     text: `Success! The patient's cancer has been cured.`,
+//   },
+// ];
 
 // --- COMMANDS ---
 
