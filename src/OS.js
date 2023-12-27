@@ -7,8 +7,6 @@ let logoBtn = document.querySelector('.logo-container');
 
 // Types of stem cells
 const stemCells = ['esc', 'somatic', 'ipsc'];
-// All types of cells
-const allCells = ['epithelial', 'connective', 'muscle', 'nerve', 'blood'];
 // Tissue types
 const tissues = ['epithelial', 'connective', 'muscle', 'nerve'];
 function getRandomTissue() {
@@ -61,7 +59,7 @@ const tissueArgs = [...tissues];
 const newTissueOutputs = [
   {
     step: '0',
-    text: `Initiate <span class='thicc lilac'>tissue engineering</span> protocol.`,
+    text: `Run <span class='thicc lilac'>tissue engineering</span> protocol...`,
   },
   {
     step: '1',
@@ -131,7 +129,7 @@ const disorderArgs = [...disorders];
 const geneOutputs = [
   {
     step: '0',
-    text: `Initiate <span class='thicc lilac'>gene therapy</span> protocol.`,
+    text: `Run <span class='thicc lilac'>gene therapy</span> protocol...`,
   },
   {
     step: '1',
@@ -146,7 +144,7 @@ const geneOutputs = [
 const regenTissueOutputs = [
   {
     step: '0',
-    text: `Initiate <span class='thicc lilac'>regenerative medicine</span> protocol.`,
+    text: `Run <span class='thicc lilac'>regenerative medicine</span> protocol...`,
   },
   {
     step: '1',
@@ -178,6 +176,49 @@ const commands = {
             syntax: `embyr make tissue --[tissue type]`,
             do: 'embyr make tissue',
             description: `Engineer new tissue cells`,
+            exe: function runMakeTissue(input) {
+              // Check for help
+              if (input.includes('-h') || input.includes('-help')) {
+                let output = createOutputDiv(`Here's some help...`, 'wheat');
+                returnOutput(output, 0);
+                return;
+              }
+              let arg = '';
+              let argFlag = '';
+              // Check for tissue
+              if (input.includes('tissue')) {
+                arg = 'tissue';
+                // Check for cell type
+                if (input.includes('--')) {
+                  // check if the word that starts with -- is a tissue type
+                  let inputArg = input.split('--')[1].split(' ')[0];
+                  if (tissueArgs.includes(inputArg)) {
+                    argFlag = inputArg;
+                  } else if (inputArg === undefined) {
+                    // return error message
+                    let output = createOutputDiv(`Please specify a tissue type.`, 'wheat');
+                    returnOutput(output, 0);
+                  }
+                } else {
+                  // return success message with random tissue
+                  argFlag = getRandomTissue();
+                }
+              }
+              // If arg and argFlag are defined, run the command and return outputs accordingly
+              if (arg !== '' && argFlag !== '') {
+                // return a new output for each step in the output array
+                newTissueOutputs.forEach((output) => {
+                  setTimeout(() => {
+                    let outputDiv = createOutputDiv(output.text, 'wheat');
+                    returnOutput(outputDiv, 0);
+                  }, outputDelay[output.step]);
+                });
+                return;
+              }
+              // return success message
+              let output = createOutputDiv(`Sorry, I don't understand. Please describe what you'd like to do and maybe I can help.`, 'wheat');
+              returnOutput(output, 0);
+            },
           },
         },
       },
@@ -193,92 +234,162 @@ const commands = {
             syntax: `embyr fix disorder --[disorder type]`,
             do: 'embyr fix disorder',
             description: `Treat a disorder`,
+            exe: function runFixDisorder(input) {
+              // Check for help
+              if (input.includes('-h') || input.includes('-help')) {
+                let output = createOutputDiv(`Here's some help...`, 'wheat');
+                returnOutput(output, 0);
+                return;
+              }
+              let arg = '';
+              let argFlag = '';
+              // Check for disorder
+              if (input.includes('disorder')) {
+                arg = 'disorder';
+                // Check for disorder type
+                if (input.includes('--')) {
+                  // check if the word that starts with -- is a disorder type
+                  let inputArg = input.split('--')[1].split(' ')[0];
+                  if (disorderArgs.includes(inputArg)) {
+                    argFlag = inputArg;
+                  } else if (inputArg === undefined) {
+                    // return error message
+                    let output = createOutputDiv(`Please specify a disorder type.`, 'wheat');
+                    returnOutput(output, 0);
+                  }
+                } else {
+                  // return success message with random disorder
+                  argFlag = getRandomDisorder();
+                }
+              }
+              // If arg and argFlag are defined, run the command and return outputs accordingly
+              if (arg !== '' && argFlag !== '') {
+                // return a new output for each step in the output array
+                if (argFlag === 'cancer' || argFlag === 'infection' || argFlag === 'injury' || argFlag === 'autoimmune') {
+                  geneOutputs.forEach((output) => {
+                    setTimeout(() => {
+                      let outputDiv = createOutputDiv(output.text, 'wheat');
+                      returnOutput(outputDiv, 0);
+                    }, outputDelay[output.step]);
+                  });
+                } else if (argFlag === 'degenerative') {
+                  regenTissueOutputs.forEach((output) => {
+                    setTimeout(() => {
+                      let outputDiv = createOutputDiv(output.text, 'wheat');
+                      returnOutput(outputDiv, 0);
+                    }, outputDelay[output.step]);
+                  });
+                }
+                return;
+              }
+              // return success message
+              let output = createOutputDiv(`Sorry, I don't understand. Please describe what you'd like to do and maybe I can help.`, 'wheat');
+              returnOutput(output, 0);
+            },
           },
         },
       },
     },
     run: (input) => {
       returnInput(input);
-      // Check for help
-      if (input.includes('-h') || input.includes('-help')) {
-        let output = createOutputDiv(`Here's some help...`, 'wheat');
+      // Separate input into array of words
+      let inputArray = input.split(' ');
+      // Check if second word is a subcommand
+      if (inputArray[1] in commands.embyr.subCommands) {
+        // Check if third word is an operation
+        if (inputArray[2] in commands.embyr.subCommands[inputArray[1]].ops) {
+          // run the operation's exe
+          commands.embyr.subCommands[inputArray[1]].ops[inputArray[2]].exe(input);
+          return;
+        } else {
+          // Return error message
+          let output = createOutputDiv(`Please specify a valid operation.`, 'wheat');
+          returnOutput(output, 0);
+          return;
+        }
+      } else {
+        // Return error message
+        let output = createOutputDiv(`Sorry, I don't understand. Please describe what you'd like to do and maybe I can help.`, 'wheat');
         returnOutput(output, 0);
-        return;
       }
-      let command = '';
-      let arg = '';
-      let argFlag = '';
-      let outputsToDisplay = '';
-      // Check for make
-      if (input.includes('make')) {
-        command = 'make';
-        // Check for tissue
-        if (input.includes('tissue')) {
-          arg = 'tissue';
-          // Check for cell type
-          if (input.includes('--')) {
-            // check if the word that starts with -- is a tissue type
-            let inputArg = input.split('--')[1].split(' ')[0];
-            if (tissueArgs.includes(inputArg)) {
-              argFlag = inputArg;
-            } else if (inputArg === undefined) {
-              // return error message
-              let output = createOutputDiv(`Please specify a tissue type.`, 'wheat');
-              returnOutput(output, 0);
-            }
-          } else {
-            // return success message with random tissue
-            argFlag = getRandomTissue();
-          }
-          outputsToDisplay = 'newTissueOutputs';
-        }
-      }
-      // Check for fix
-      if (input.includes('fix')) {
-        command = 'fix';
-        // Check for disorder
-        if (input.includes('disorder')) {
-          arg = 'disorder';
-          // Check for disorder type
-          if (input.includes('--')) {
-            // check if the word that starts with -- is a disorder type
-            let inputArg = input.split('--')[1].split(' ')[0];
-            if (disorderArgs.includes(inputArg)) {
-              argFlag = inputArg;
-            } else if (inputArg === undefined) {
-              // return error message
-              let output = createOutputDiv(`Please specify a disorder type.`, 'wheat');
-              returnOutput(output, 0);
-            }
-          } else {
-            // return success message with random disorder
-            argFlag = getRandomDisorder();
-          }
-        }
-        if (argFlag === 'cancer' || argFlag === 'infection' || argFlag === 'injury' || argFlag === 'autoimmune') {
-          outputsToDisplay = 'geneOutputs';
-        } else if (argFlag === 'degenerative') {
-          outputsToDisplay = 'regenTissueOutputs';
-        }
-      }
-      // If command and arg are defined, run the command and return outputs accordingly
-      if (command !== '' && arg !== '' && argFlag !== '') {
-        // return success message with argFlag
-        let output = createOutputDiv(`embyr is working on it...`, 'wheat');
-        returnOutput(output, 0);
-        // const outputToReturn = argFlag + 'Outputs';
-        // return a new output for each step in the output array
-        eval(outputsToDisplay).forEach((output) => {
-          setTimeout(() => {
-            let outputDiv = createOutputDiv(output.text, 'wheat');
-            returnOutput(outputDiv, 0);
-          }, outputDelay[output.step]);
-        });
-        return;
-      }
-      // return success message
-      let output = createOutputDiv(`Sorry, I don't understand. Please describe what you'd like to do and maybe I can help.`, 'wheat');
-      returnOutput(output, 0);
+      // // Check for help
+      // if (input.includes('-h') || input.includes('-help')) {
+      //   let output = createOutputDiv(`Here's some help...`, 'wheat');
+      //   returnOutput(output, 0);
+      //   return;
+      // }
+      // let command = '';
+      // let arg = '';
+      // let argFlag = '';
+      // let outputsToDisplay = '';
+      // // Check for make
+      // if (input.includes('make')) {
+      //   command = 'make';
+      //   // Check for tissue
+      //   if (input.includes('tissue')) {
+      //     arg = 'tissue';
+      //     // Check for cell type
+      //     if (input.includes('--')) {
+      //       // check if the word that starts with -- is a tissue type
+      //       let inputArg = input.split('--')[1].split(' ')[0];
+      //       if (tissueArgs.includes(inputArg)) {
+      //         argFlag = inputArg;
+      //       } else if (inputArg === undefined) {
+      //         // return error message
+      //         let output = createOutputDiv(`Please specify a tissue type.`, 'wheat');
+      //         returnOutput(output, 0);
+      //       }
+      //     } else {
+      //       // return success message with random tissue
+      //       argFlag = getRandomTissue();
+      //     }
+      //     outputsToDisplay = 'newTissueOutputs';
+      //   }
+      // }
+      // // Check for fix
+      // if (input.includes('fix')) {
+      //   command = 'fix';
+      //   // Check for disorder
+      //   if (input.includes('disorder')) {
+      //     arg = 'disorder';
+      //     // Check for disorder type
+      //     if (input.includes('--')) {
+      //       // check if the word that starts with -- is a disorder type
+      //       let inputArg = input.split('--')[1].split(' ')[0];
+      //       if (disorderArgs.includes(inputArg)) {
+      //         argFlag = inputArg;
+      //       } else if (inputArg === undefined) {
+      //         // return error message
+      //         let output = createOutputDiv(`Please specify a disorder type.`, 'wheat');
+      //         returnOutput(output, 0);
+      //       }
+      //     } else {
+      //       // return success message with random disorder
+      //       argFlag = getRandomDisorder();
+      //     }
+      //   }
+      //   if (argFlag === 'cancer' || argFlag === 'infection' || argFlag === 'injury' || argFlag === 'autoimmune') {
+      //     outputsToDisplay = 'geneOutputs';
+      //   } else if (argFlag === 'degenerative') {
+      //     outputsToDisplay = 'regenTissueOutputs';
+      //   }
+      // }
+      // // If command and arg are defined, run the command and return outputs accordingly
+      // if (command !== '' && arg !== '' && argFlag !== '') {
+      //   // return success message with argFlag
+      //   let output = createOutputDiv(`working on it...`, 'stone');
+      //   returnOutput(output, 0);
+      //   // const outputToReturn = argFlag + 'Outputs';
+      //   // return a new output for each step in the output array
+      //   eval(outputsToDisplay).forEach((output) => {
+      //     setTimeout(() => {
+      //       let outputDiv = createOutputDiv(output.text, 'wheat');
+      //       returnOutput(outputDiv, 0);
+      //     }, outputDelay[output.step]);
+      //   });
+      //   return;
+      // }
+      // return confused message
     },
   },
 };
