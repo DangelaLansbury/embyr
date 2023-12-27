@@ -63,11 +63,20 @@ const newTissueOutputs = [
   },
   {
     step: '1',
-    text: `<span class='thicc honey'>Process:</span> This involves creating biological tissues in the lab using a combination of stem cells, scaffolds, and bioreactors. The stem cells are placed on a scaffold that mimics the structure of the tissue to be grown.`,
+    text: `<span class='thicc honey'>Extract</span> stem cells from patient's body.`,
   },
   {
     step: '2',
-    text: `<span class='thicc swamp'>Applications:</span> Tissues such as skin, blood vessels, or even organs can be grown and then transplanted into patients. For example, engineered skin grafts for burn victims.`,
+    text: `<span class='thicc swamp'>Engineer </span> stem cells to differentiate into the desired cell type.`,
+    // This involves creating biological tissues in the lab using a combination of stem cells, scaffolds, and bioreactors. The stem cells are placed on a scaffold that mimics the structure of the tissue to be grown. The bioreactor provides the cells with the necessary nutrients and growth factors to grow and differentiate into the desired cell type.
+  },
+  {
+    step: '3',
+    text: `<span class='thicc clay'>Grow</span> engineered tissue in bioreactor.`,
+  },
+  {
+    step: '4',
+    text: `<span class='thicc river'>Transplant</span> engineered tissue into patient.`,
   },
 ];
 
@@ -164,18 +173,18 @@ const commands = {
     description: `Run embyr commands to orchestrate stem cells.`,
     keywords: [...makeKeywords, ...tissueKeywords, ...fixKeywords, ...disorderKeywords],
     subCommands: {
-      make: {
+      mt: {
         keywords: [...makeKeywords, ...tissueKeywords],
-        do: `embyr make <span class='stone'>[argument]</span>`,
-        description: 'Engineer new cells or molecules.',
+        do: `embyr mt <span class='stone'>[tissue type]</span>`,
+        description: 'Engineer new tissue cells or molecules.',
         ops: {
-          tissue: {
+          neuro: {
             keywords: [...tissueKeywords],
             acceptedArgs: [...tissueArgs],
             argFlag: '--',
-            syntax: `embyr make tissue --[tissue type]`,
-            do: 'embyr make tissue',
-            description: `Engineer new tissue cells`,
+            syntax: `embyr mt neurons --[tissue type]`,
+            do: 'embyr mt neuro',
+            description: `Engineer new neuronal cells`,
             exe: function runMakeTissue(input) {
               // Check for help
               if (input.includes('-h') || input.includes('-help')) {
@@ -186,8 +195,8 @@ const commands = {
               let arg = '';
               let argFlag = '';
               // Check for tissue
-              if (input.includes('tissue')) {
-                arg = 'tissue';
+              if (input.includes('neuro')) {
+                arg = 'neuro';
                 // Check for cell type
                 if (input.includes('--')) {
                   // check if the word that starts with -- is a tissue type
@@ -222,17 +231,17 @@ const commands = {
           },
         },
       },
-      fix: {
+      fd: {
         keywords: [...fixKeywords, ...disorderKeywords],
-        do: `embyr fix <span class='stone'>[argument]</span>`,
-        description: 'Repair damaged cells or molecules.',
+        do: `embyr fd <span class='stone'>[disorder type]</span>`,
+        description: 'Engineer stem cells to treat a disorder.',
         ops: {
-          disorder: {
+          cancer: {
             keywords: [...disorderKeywords],
             acceptedArgs: [...disorderArgs],
             argFlag: '--',
-            syntax: `embyr fix disorder --[disorder type]`,
-            do: 'embyr fix disorder',
+            syntax: `embyr fd cancer --[disorder type]`,
+            do: 'embyr fd cancer',
             description: `Treat a disorder`,
             exe: function runFixDisorder(input) {
               // Check for help
@@ -244,8 +253,8 @@ const commands = {
               let arg = '';
               let argFlag = '';
               // Check for disorder
-              if (input.includes('disorder')) {
-                arg = 'disorder';
+              if (input.includes('cancer')) {
+                arg = 'cancer';
                 // Check for disorder type
                 if (input.includes('--')) {
                   // check if the word that starts with -- is a disorder type
