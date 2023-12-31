@@ -209,7 +209,7 @@ const displayShort = (toDo, description) => {
   details.appendChild(newDetails);
 };
 
-const displayFull = (toDo, description, acceptedArgs, syntax) => {
+const displayFull = (toDo, description, syntax) => {
   hideEmbyrInit();
   details.innerHTML = '';
   let newDetails = document.createElement('div');
@@ -218,7 +218,6 @@ const displayFull = (toDo, description, acceptedArgs, syntax) => {
   <div class="stone" style="margin-bottom: 0.75rem;"><span class="lilac thicc">TAB</span> to paste command into CLI</div>
   <div>${description}</div>
   <div class="honey"><span class="stone">Syntax:</span> ${syntax}</div>`;
-  // <div class="river"><span class="stone">Modifiers:</span> ${acceptedArgs}</div>`;
   details.appendChild(newDetails);
 };
 
@@ -338,7 +337,6 @@ embyr.addEventListener('input', function () {
                         let similarity = 1 - levDist / Math.max(inputWords[i].length, opsKeywords[j].length);
                         if (similarity > 0.75) {
                           let toDo = ops[op].do;
-                          let argument = '';
                           // Check if suggestion has already been suggested
                           let alreadySuggested = false;
                           for (let k = 0; k < suggestionsArray.length; k++) {
@@ -354,7 +352,6 @@ embyr.addEventListener('input', function () {
                               parentCommand: cmd,
                               subCommand: sub,
                               op: op,
-                              argument: argument,
                               similarity: similarity,
                             };
                             suggestionsArray.push(suggestion);
@@ -371,17 +368,49 @@ embyr.addEventListener('input', function () {
                                 suggestionAvailable = suggestionsArray[0].command;
                                 // Display suggestion details for first suggestion
                                 let firstSuggestion = commands[suggestionsArray[0].parentCommand].subCommands[suggestionsArray[0].subCommand].ops[suggestionsArray[0].op];
-                                let acceptedArgs = firstSuggestion.acceptedArgs;
-                                let args = '';
-                                acceptedArgs.forEach((arg) => {
-                                  args += `${arg}, `;
-                                  // if last arg, remove comma
-                                  if (arg === acceptedArgs[acceptedArgs.length - 1]) {
-                                    args = args.slice(0, -2);
-                                  }
-                                });
                                 let syntax = firstSuggestion.syntax;
-                                displayFull(`<span class="stone">Command:</span> ${suggestionsArray[0].command}`, firstSuggestion.description, args, syntax);
+                                displayFull(`<span class="stone">Command:</span> ${suggestionsArray[0].command}`, firstSuggestion.description, syntax);
+                              } else {
+                                suggestionAvailable = '';
+                              }
+                            }
+                          }
+                        } else {
+                          // Suggest the subcommand if there are no matching ops
+                          let toDo = subs[sub].do;
+                          // Check if suggestion has already been suggested
+                          let alreadySuggested = false;
+                          for (let k = 0; k < suggestionsArray.length; k++) {
+                            // check suggestions array for existing suggestion
+                            if (suggestionsArray[k].command.toLowerCase() === toDo.toLowerCase()) {
+                              alreadySuggested = true;
+                            }
+                          }
+                          // Add suggestion to suggestions array if it hasn't already been suggested
+                          if (!alreadySuggested) {
+                            let suggestion = {
+                              command: toDo,
+                              parentCommand: cmd,
+                              subCommand: sub,
+                              op: '',
+                              similarity: similarity,
+                            };
+                            suggestionsArray.push(suggestion);
+                            // Reorder suggestions in order of similarity
+                            if (suggestionsArray.length > 0) {
+                              suggestionsArray.sort((a, b) => {
+                                const nameA = a.similarity;
+                                const nameB = b.similarity;
+                                return nameB - nameA;
+                              });
+                              // Populate suggestions list with new order
+                              suggestionsList.innerHTML = '';
+                              if (suggestionsArray.length > 0) {
+                                suggestionAvailable = suggestionsArray[0].command;
+                                // Display suggestion details for first suggestion
+                                let firstSuggestion = commands[suggestionsArray[0].parentCommand].subCommands[suggestionsArray[0].subCommand];
+                                let syntax = firstSuggestion.syntax;
+                                displayFull(`<span class="stone">Command:</span> ${suggestionsArray[0].command}`, firstSuggestion.description, syntax);
                               } else {
                                 suggestionAvailable = '';
                               }
@@ -518,50 +547,3 @@ embyr.addEventListener('keydown', function (e) {
     }
   }
 });
-
-// Bonsai thing
-// HTML:
-// <div class="hidden" id="bonsaiContainer"></div>
-// CSS:
-// #bonsaiContainer {
-//   font-family: 'Courier New', monospace;
-//   position: relative;
-//   width: 400px;
-//   height: 400px;
-//   background-color: #1e1e1e;
-// }
-// .char {
-//   position: absolute;
-//   transition: opacity 0.2s;
-// }
-// // JS:
-// const bonsaiData = [
-//   [' ', ' ', ' ', '#', ' ', ' ', ' '],
-//   [' ', ' ', '/', '|', '\\', ' ', ' '],
-//   [' ', '/', ' ', '|', ' ', '\\', ' '],
-//   ['/', ' ', ' ', '|', ' ', ' ', '\\'],
-// ];
-
-// const container = document.getElementById('bonsaiContainer');
-// container.classList.remove('hidden');
-// const charWidth = 20;
-// const charHeight = 20;
-
-// let delay = 0;
-// for (let y = 0; y < bonsaiData.length; y++) {
-//   for (let x = 0; x < bonsaiData[y].length; x++) {
-//     const char = bonsaiData[y][x];
-//     const charDiv = document.createElement('div');
-//     charDiv.classList.add('char');
-//     charDiv.style.left = x * charWidth + 'px';
-//     charDiv.style.top = y * charHeight + 'px';
-//     charDiv.style.opacity = 0;
-//     charDiv.textContent = char;
-//     container.appendChild(charDiv);
-
-//     setTimeout(() => {
-//       charDiv.style.opacity = 1;
-//     }, delay);
-//     delay += 50; // Increase for slower animation
-//   }
-// }

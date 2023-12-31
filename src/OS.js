@@ -175,14 +175,15 @@ const commands = {
     subCommands: {
       mt: {
         keywords: [...makeKeywords, ...tissueKeywords],
-        do: `embyr mt <span class='stone'>[tissue type]</span>`,
+        do: `embyr mt <span class='stone'>[tissue]</span>`,
         description: 'Engineer new tissue cells or molecules.',
+        syntax: `embyr mt [type of tissue]`,
         ops: {
           neuro: {
             keywords: [...tissueKeywords],
             acceptedArgs: [...tissueArgs],
             argFlag: '--',
-            syntax: `embyr mt neuro --[tissue type]`,
+            syntax: `embyr mt neuro --[modifier]`,
             do: 'embyr mt neuro',
             description: `Engineer new neuronal cells`,
             exe: function runMakeTissue(input) {
@@ -233,14 +234,15 @@ const commands = {
       },
       fd: {
         keywords: [...fixKeywords, ...disorderKeywords],
-        do: `embyr fd <span class='stone'>[disorder type]</span>`,
+        do: `embyr fd <span class='stone'>[disorder]</span>`,
         description: 'Engineer stem cells to treat a disorder.',
+        syntax: `embyr fd [type of disorder]`,
         ops: {
           cancer: {
             keywords: [...disorderKeywords],
             acceptedArgs: [...disorderArgs],
             argFlag: '--',
-            syntax: `embyr fd cancer --[disorder type]`,
+            syntax: `embyr fd cancer --[modifier]`,
             do: 'embyr fd cancer',
             description: `Use stem cells for personalized cancer treatments.`,
             exe: function runFixDisorder(input) {
