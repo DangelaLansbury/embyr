@@ -193,41 +193,14 @@ const commands = {
                 returnOutput(output, 0);
                 return;
               }
-              let arg = '';
-              let argFlag = '';
-              // Check for tissue
-              if (input.includes('neuro')) {
-                arg = 'neuro';
-                // Check for cell type
-                if (input.includes('--')) {
-                  // check if the word that starts with -- is a tissue type
-                  let inputArg = input.split('--')[1].split(' ')[0];
-                  if (tissueArgs.includes(inputArg)) {
-                    argFlag = inputArg;
-                  } else if (inputArg === undefined) {
-                    // return error message
-                    let output = createOutputDiv(`Please specify a tissue type.`, 'wheat');
-                    returnOutput(output, 0);
-                  }
-                } else {
-                  // return success message with random tissue
-                  argFlag = getRandomTissue();
-                }
-              }
-              // If arg and argFlag are defined, run the command and return outputs accordingly
-              if (arg !== '' && argFlag !== '') {
-                // return a new output for each step in the output array
-                newTissueOutputs.forEach((output) => {
-                  setTimeout(() => {
-                    let outputDiv = createOutputDiv(output.text, 'wheat');
-                    returnOutput(outputDiv, 0);
-                  }, outputDelay[output.step]);
-                });
-                return;
-              }
-              // return success message
-              let output = createOutputDiv(`Sorry, I don't understand. Please describe what you'd like to do and maybe I can help.`, 'wheat');
-              returnOutput(output, 0);
+              // return a new output for each step in the output array
+              newTissueOutputs.forEach((output) => {
+                setTimeout(() => {
+                  let outputDiv = createOutputDiv(output.text, 'wheat');
+                  returnOutput(outputDiv, 0);
+                }, outputDelay[output.step]);
+              });
+              return;
             },
           },
         },
@@ -252,50 +225,13 @@ const commands = {
                 returnOutput(output, 0);
                 return;
               }
-              let arg = '';
-              let argFlag = '';
-              // Check for disorder
-              if (input.includes('cancer')) {
-                arg = 'cancer';
-                // Check for disorder type
-                if (input.includes('--')) {
-                  // check if the word that starts with -- is a disorder type
-                  let inputArg = input.split('--')[1].split(' ')[0];
-                  if (disorderArgs.includes(inputArg)) {
-                    argFlag = inputArg;
-                  } else if (inputArg === undefined) {
-                    // return error message
-                    let output = createOutputDiv(`Please specify a disorder type.`, 'wheat');
-                    returnOutput(output, 0);
-                  }
-                } else {
-                  // return success message with random disorder
-                  argFlag = getRandomDisorder();
-                }
-              }
-              // If arg and argFlag are defined, run the command and return outputs accordingly
-              if (arg !== '' && argFlag !== '') {
-                // return a new output for each step in the output array
-                if (argFlag === 'cancer' || argFlag === 'infection' || argFlag === 'injury' || argFlag === 'autoimmune') {
-                  geneOutputs.forEach((output) => {
-                    setTimeout(() => {
-                      let outputDiv = createOutputDiv(output.text, 'wheat');
-                      returnOutput(outputDiv, 0);
-                    }, outputDelay[output.step]);
-                  });
-                } else if (argFlag === 'degenerative') {
-                  regenTissueOutputs.forEach((output) => {
-                    setTimeout(() => {
-                      let outputDiv = createOutputDiv(output.text, 'wheat');
-                      returnOutput(outputDiv, 0);
-                    }, outputDelay[output.step]);
-                  });
-                }
-                return;
-              }
-              // return success message
-              let output = createOutputDiv(`Sorry, I don't understand. Please describe what you'd like to do and maybe I can help.`, 'wheat');
-              returnOutput(output, 0);
+              geneOutputs.forEach((output) => {
+                setTimeout(() => {
+                  let outputDiv = createOutputDiv(output.text, 'wheat');
+                  returnOutput(outputDiv, 0);
+                }, outputDelay[output.step]);
+              });
+              return;
             },
           },
         },

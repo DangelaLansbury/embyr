@@ -40,8 +40,8 @@ const historyHint = `<div class="help-bar-hint">
   </div>`;
 
 const helpHint = `<div class="help-bar-hint">
-    <div class="help-bar-cmd thicc">h</div>
-    <div class="help-bar-text">more help</div>
+    <div class="help-bar-cmd thicc">help</div>
+    <div class="help-bar-text">more info</div>
   </div>`;
 
 // --- FOCUS ON EDITOR ---
