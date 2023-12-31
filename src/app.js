@@ -31,6 +31,19 @@ let detailsDescription = document.querySelector('.details-desc');
 let detailsArguments = document.querySelector('.details-args-accepted');
 let detailsSyntax = document.querySelector('.details-syntax');
 
+// --- HELP BAR ---
+
+// Help bar hints
+const historyHint = `<div class="help-bar-hint">
+    <div class="help-bar-cmd thicc">&#x2191;/&#x2193;</div>
+    <div class="help-bar-text">history</div>
+  </div>`;
+
+const helpHint = `<div class="help-bar-hint">
+    <div class="help-bar-cmd thicc">h</div>
+    <div class="help-bar-text">more help</div>
+  </div>`;
+
 // --- FOCUS ON EDITOR ---
 
 window.onload = () => {
@@ -52,6 +65,10 @@ window.onload = () => {
   } else {
     history = [];
   }
+  // Set default help bar hints
+  help1.innerHTML = historyHint;
+  help2.innerHTML = helpHint;
+  // Set default moniker
   moniker.innerText = 'neo@embyr:~$';
   // Focus on embyr
   embyr.focus();
