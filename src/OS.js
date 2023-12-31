@@ -182,7 +182,7 @@ const commands = {
             keywords: [...tissueKeywords],
             acceptedArgs: [...tissueArgs],
             argFlag: '--',
-            syntax: `embyr mt neurons --[tissue type]`,
+            syntax: `embyr mt neuro --[tissue type]`,
             do: 'embyr mt neuro',
             description: `Engineer new neuronal cells`,
             exe: function runMakeTissue(input) {
@@ -242,7 +242,7 @@ const commands = {
             argFlag: '--',
             syntax: `embyr fd cancer --[disorder type]`,
             do: 'embyr fd cancer',
-            description: `Treat a disorder`,
+            description: `Use stem cells for personalized cancer treatments.`,
             exe: function runFixDisorder(input) {
               // Check for help
               if (input.includes('-h') || input.includes('-help')) {
