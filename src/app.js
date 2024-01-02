@@ -44,6 +44,16 @@ const helpHint = `<div class="help-bar-hint">
     <div class="help-bar-text">more info</div>
   </div>`;
 
+const quitHint = `<div class="help-bar-hint">
+    <div class="help-bar-cmd thicc">q</div>
+    <div class="help-bar-text">quit</div>
+  </div>`;
+
+const bannerHint = `<div class="help-bar-hint">
+    <div class="help-bar-cmd thicc">banner</div>
+    <div class="help-bar-text">show banner</div>
+  </div>`;
+
 // --- FOCUS ON EDITOR ---
 
 window.onload = () => {
