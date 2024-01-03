@@ -54,6 +54,16 @@ const bannerHint = `<div class="help-bar-hint">
     <div class="help-bar-text">show banner</div>
   </div>`;
 
+const explainHint = `<div class="help-bar-hint">
+    <div class="help-bar-cmd thicc">--exp</div>
+    <div class="help-bar-text">explains op info</div>
+  </div>`;
+
+const introHint = `<div class="help-bar-hint">
+    <div class="help-bar-cmd thicc">intro</div>
+    <div class="help-bar-text">embyr guide</div>
+  </div>`;
+
 // --- FOCUS ON EDITOR ---
 
 window.onload = () => {
@@ -76,8 +86,8 @@ window.onload = () => {
     history = [];
   }
   // Set default help bar hints
-  help1.innerHTML = historyHint;
-  help2.innerHTML = helpHint;
+  help1.innerHTML = introHint + helpHint;
+  help2.innerHTML = bannerHint;
   // Set default moniker
   moniker.innerText = 'neo@embyr:~$';
   // Focus on embyr
