@@ -229,10 +229,10 @@ const displayFull = (toDo, description, syntax) => {
   details.innerHTML = '';
   let newDetails = document.createElement('div');
   newDetails.className = 'suggestion-details suggestion';
-  newDetails.innerHTML = `<div class="sweetgrass thicc">${toDo}</div>
-  <div class="stone" style="margin-bottom: 0.75rem;"><span class="lilac thicc">TAB</span> to paste command into CLI</div>
+  newDetails.innerHTML = `<div class="sweetgrass thicc"><span class="stone regular">Command:</span> ${toDo}</div>
+  <div class="stone" style="margin-bottom: 0.75rem;"><span class="lilac thicc">TAB</span> to paste command into command line</div>
   <div>${description}</div>
-  <div class="honey"><span class="stone">Syntax:</span> ${syntax}</div>`;
+  <div class="honey"><span class="stone">Explanation:</span> ${syntax}</div>`;
   details.appendChild(newDetails);
 };
 
@@ -384,7 +384,7 @@ embyr.addEventListener('input', function () {
                                 // Display suggestion details for first suggestion
                                 let firstSuggestion = commands[suggestionsArray[0].parentCommand].subCommands[suggestionsArray[0].subCommand].ops[suggestionsArray[0].op];
                                 let syntax = firstSuggestion.syntax;
-                                displayFull(`<span class="stone">Command:</span> ${suggestionsArray[0].command}`, firstSuggestion.description, syntax);
+                                displayFull(`${suggestionsArray[0].command}`, firstSuggestion.description, syntax);
                               } else {
                                 suggestionAvailable = '';
                               }
@@ -425,7 +425,7 @@ embyr.addEventListener('input', function () {
                                 // Display suggestion details for first suggestion
                                 let firstSuggestion = commands[suggestionsArray[0].parentCommand].subCommands[suggestionsArray[0].subCommand];
                                 let syntax = firstSuggestion.syntax;
-                                displayFull(`<span class="stone">Command:</span> ${suggestionsArray[0].command}`, firstSuggestion.description, syntax);
+                                displayFull(`${suggestionsArray[0].command}`, firstSuggestion.description, syntax);
                               } else {
                                 suggestionAvailable = '';
                               }
