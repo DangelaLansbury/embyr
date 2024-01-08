@@ -5,7 +5,6 @@ let workbook = document.querySelector('.workbook'); // Main container
 // Terminal components
 let thread = document.querySelector('.thread'); // Thread
 let help1 = document.querySelector('#help1'); // Help container for first set of commands
-let help2 = document.querySelector('#help2'); // Help container for second set of commands
 // embyr components
 let embyrContainer = document.querySelector('.embyr-container'); // Full embyr container for input, suggestions, and details
 let embyrInit = document.querySelector('.embyr-init'); // embyr init container
@@ -87,7 +86,6 @@ window.onload = () => {
   }
   // Set default help bar hints
   help1.innerHTML = introHint + helpHint;
-  help2.innerHTML = bannerHint;
   // Set default moniker
   moniker.innerText = 'neo@embyr:~$';
   // Focus on embyr
@@ -200,13 +198,10 @@ const outputDelay = [200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000, 220
 window.addEventListener('keydown', function (e) {
   if (e.key === '?') {
     e.preventDefault();
-    if (help1.classList.contains('hidden') && help2.classList.contains('hidden')) {
+    if (help1.classList.contains('hidden')) {
       help1.classList.remove('hidden');
-    } else if (!help1.classList.contains('hidden') && help2.classList.contains('hidden')) {
+    } else if (!help1.classList.contains('hidden')) {
       help1.classList.add('hidden');
-      help2.classList.remove('hidden');
-    } else if (help1.classList.contains('hidden') && !help2.classList.contains('hidden')) {
-      help2.classList.add('hidden');
     }
   }
 });

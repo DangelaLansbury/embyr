@@ -291,7 +291,7 @@ main {
   height: 100%;
   margin-left: 2.5rem;
 }
-#help1::before {
+/* #help1::before {
   content: '1/2';
   color: var(--soil-x-lt);
   margin-right: 1rem;
@@ -305,7 +305,7 @@ main {
   content: '2/2';
   color: var(--soil-x-lt);
   margin-right: 1rem;
-}
+} */
 .help-bar-right {
   display: flex;
   flex-direction: row;
