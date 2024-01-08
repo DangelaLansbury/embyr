@@ -437,7 +437,7 @@ embyr.addEventListener('input', function () {
     }
   }
   // If there is a suggestion available, show tab hint
-  if (suggestionAvailable !== '') {
+  if (suggestionAvailable !== '' || ghostInput !== '') {
     help1.innerHTML = tabHint;
   } else {
     if (history.length === 0) {
@@ -526,6 +526,11 @@ embyr.addEventListener('keydown', function (e) {
   if (e.key === 'Backspace' && embyr.innerText.trim().length == 1) {
     clearEmbyr();
     suggestionAvailable = '';
+    if (history.length === 0) {
+      help1.innerHTML = initHints;
+    } else {
+      help1.innerHTML = defaultHints;
+    }
   }
 });
 

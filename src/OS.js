@@ -181,7 +181,6 @@ const commands = {
         ops: {
           neuro: {
             keywords: [...tissueKeywords],
-            acceptedArgs: [...tissueArgs],
             argFlag: '--',
             syntax: `embyr mt neuro --[modifier]`,
             do: 'embyr mt neuro',
@@ -213,7 +212,6 @@ const commands = {
         ops: {
           cancer: {
             keywords: [...disorderKeywords],
-            acceptedArgs: [...disorderArgs],
             argFlag: '--',
             syntax: `embyr fd cancer --[modifier]`,
             do: 'embyr fd cancer',
