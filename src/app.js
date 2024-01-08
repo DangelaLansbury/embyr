@@ -48,20 +48,14 @@ const quitHint = `<div class="help-bar-hint">
     <div class="help-bar-text">quit</div>
   </div>`;
 
-const bannerHint = `<div class="help-bar-hint">
-    <div class="help-bar-cmd thicc">banner</div>
-    <div class="help-bar-text">show banner</div>
+const tabHint = `<div class="help-bar-hint">
+    <div class="help-bar-cmd thicc">tab</div>
+    <div class="help-bar-text">autocomplete</div>
   </div>`;
 
-const explainHint = `<div class="help-bar-hint">
-    <div class="help-bar-cmd thicc">--exp</div>
-    <div class="help-bar-text">explains op info</div>
-  </div>`;
+const initHints = helpHint;
 
-const introHint = `<div class="help-bar-hint">
-    <div class="help-bar-cmd thicc">intro</div>
-    <div class="help-bar-text">embyr guide</div>
-  </div>`;
+const defaultHints = historyHint + helpHint;
 
 // --- FOCUS ON EDITOR ---
 
@@ -85,7 +79,7 @@ window.onload = () => {
     history = [];
   }
   // Set default help bar hints
-  help1.innerHTML = introHint + helpHint;
+  help1.innerHTML = initHints;
   // Set default moniker
   moniker.innerText = 'neo@embyr:~$';
   // Focus on embyr
@@ -441,6 +435,16 @@ embyr.addEventListener('input', function () {
           }
         }
       }
+    }
+  }
+  // If there is a suggestion available, show tab hint
+  if (suggestionAvailable !== '') {
+    help1.innerHTML = tabHint;
+  } else {
+    if (history.length === 0) {
+      help1.innerHTML = initHints;
+    } else {
+      help1.innerHTML = defaultHints;
     }
   }
   // If there is nothing to suggest, show init message
