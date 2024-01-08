@@ -222,8 +222,8 @@ const displayFull = (toDo, description, syntax) => {
   details.innerHTML = '';
   let newDetails = document.createElement('div');
   newDetails.className = 'suggestion-details suggestion';
-  newDetails.innerHTML = `<div class="sweetgrass thicc"><span class="stone regular">Command:</span> ${toDo}</div>
-  <div class="stone" style="margin-bottom: 0.75rem;"><span class="lilac thicc">TAB</span> to paste command into command line</div>
+  newDetails.innerHTML = `<div><span class="stone regular">Command:</span> <span class="sweetgrass thicc">${toDo}</span></div>
+  <div class="soil-x-lt regular" style="margin-bottom: 0.75rem;"><span class="lilac thicc">TAB&rarr;</span> to paste into command line</div>
   <div>${description}</div>
   <div class="honey"><span class="stone">Explanation:</span> ${syntax}</div>`;
   details.appendChild(newDetails);
@@ -543,6 +543,7 @@ const clearEmbyr = () => {
   cursor.style.display = 'inline-flex';
   details.innerHTML = '';
   suggestionAvailable = '';
+  help1.innerHTML = defaultHints;
   showEmbyrInit();
 };
 
