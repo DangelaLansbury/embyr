@@ -39,7 +39,7 @@ const historyHint = `<div class="help-bar-hint">
   </div>`;
 
 const helpHint = `<div class="help-bar-hint">
-    <div class="help-bar-cmd thicc">help</div>
+    <div class="help-bar-cmd thicc">'help'</div>
     <div class="help-bar-text">more info</div>
   </div>`;
 
@@ -54,7 +54,6 @@ const tabHint = `<div class="help-bar-hint">
   </div>`;
 
 const initHints = helpHint;
-
 const defaultHints = historyHint + helpHint;
 
 // --- FOCUS ON EDITOR ---
