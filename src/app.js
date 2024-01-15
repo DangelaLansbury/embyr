@@ -461,12 +461,14 @@ embyr.addEventListener('keydown', function (e) {
       suggestionAvailable = '';
       focusAtEnd();
       ghost.innerText = '';
+      help1.innerHTML = defaultHints;
     } else if (suggestionAvailable !== '') {
       embyr.innerText = suggestionAvailable;
       suggestionAvailable = '';
       ghost.innerText = '';
       focusAtEnd();
       displayShort('', '', '');
+      help1.innerHTML = defaultHints;
     }
   }
 });
