@@ -1,3 +1,74 @@
+const targetPhrase = 'There is so much room in a person there should be more of us in here.';
+let scrambledPhrase = generateRandomString(targetPhrase.length);
+let replacedPositions = new Set();
+let phraseToReplace = '';
+
+function generateRandomString(length) {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_+=~`[]{}|;:,.<>/?';
+  return Array.from({ length }, () => characters.charAt(Math.floor(Math.random() * characters.length))).join('');
+}
+
+function updateDisplay() {
+  let displayString = '';
+  for (let i = 0; i < scrambledPhrase.length; i++) {
+    const charClass = replacedPositions.has(i) ? 'wheat' : 'stone';
+    displayString += `<span class="${charClass}">${scrambledPhrase[i]}</span>`;
+  }
+  document.querySelector('.scramble-text').innerHTML = displayString;
+}
+
+let isScrambling = false;
+
+function startScrambling() {
+  if (isScrambling) return; // Prevents restarting if already scrambling
+  isScrambling = true;
+
+  // Reset the initial state if necessary
+  scrambledPhrase = generateRandomString(targetPhrase.length);
+  replacedPositions.clear();
+
+  // Start the scramble interval
+  const interval = setInterval(scramble, 100); // Adjust the interval as needed
+
+  function scramble() {
+    if (scrambledPhrase === targetPhrase) {
+      clearInterval(interval); // Stop the animation
+      return;
+    }
+
+    // Decide whether to replace a new character or revert an existing one
+    if (Math.random() < 0.1 && replacedPositions.size > 0) {
+      // 10% chance to revert
+      const positionsArray = Array.from(replacedPositions);
+      const randomIndex = positionsArray[Math.floor(Math.random() * positionsArray.length)];
+      replacedPositions.delete(randomIndex);
+
+      const scrambleArray = scrambledPhrase.split('');
+      scrambleArray[randomIndex] = generateRandomString(1);
+      scrambledPhrase = scrambleArray.join('');
+    } else {
+      let randomIndex;
+      do {
+        randomIndex = Math.floor(Math.random() * targetPhrase.length);
+      } while (replacedPositions.has(randomIndex));
+
+      replacedPositions.add(randomIndex);
+
+      const scrambleArray = scrambledPhrase.split('');
+      scrambleArray[randomIndex] = targetPhrase[randomIndex];
+      scrambledPhrase = scrambleArray.join('');
+    }
+
+    if (scrambledPhrase === targetPhrase) {
+      clearInterval(interval); // Stop the animation
+    }
+
+    updateDisplay(); // Update the display
+  }
+}
+
+// const interval = setInterval(scramble, 100); // Adjust the interval as needed
+
 // --- DOM DECLARATIONS ---
 let logoBtn = document.querySelector('.logo-container');
 
@@ -80,98 +151,13 @@ const newTissueOutputs = [
   },
 ];
 
-// fix
-const fixKeywords = [
-  'fix',
-  'repair',
-  'heal',
-  'cure',
-  'treat',
-  'restore',
-  'regenerate',
-  'rejuvenate',
-  'renew',
-  'replenish',
-  'rebuild',
-  'reconstruct',
-  'reform',
-  'reconstitute',
-  'reestablish',
-  'reinstate',
-  'reinvigorate',
-  'reanimate',
-  'reawaken',
-  'rekindle',
-  'recharge',
-  'reenergize',
-  'reignite',
-  'reintegrate',
-];
-// disorder
-const disorderKeywords = [
-  'disorder',
-  'disorders',
-  'disease',
-  'diseases',
-  'ill',
-  'illness',
-  'illnesses',
-  'sick',
-  'sickness',
-  'sicknesses',
-  'infection',
-  'infect',
-  'infections',
-  'injury',
-  'injuries',
-  'degen',
-  'degenerative',
-  'degeneratives',
-  'autoimmune',
-  'autoimmunes',
-  'cancer',
-  'cancers',
-  ...disorders,
-];
-const disorderArgs = [...disorders];
-// disorder outputs - gene therapy
-const geneOutputs = [
-  {
-    step: '0',
-    text: `Run <span class='thicc lilac'>gene therapy</span> protocol...`,
-  },
-  {
-    step: '1',
-    text: `<span class='thicc honey'>Approach:</span> In gene therapy, defective genes that cause disease are replaced or repaired. Stem cells can be engineered to carry healthy copies of these genes. These modified stem cells are then reintroduced into the patient.`,
-  },
-  {
-    step: '2',
-    text: `<span class='thicc swamp'>Example:</span> For genetic blood disorders like sickle cell anemia, stem cells from the patient's bone marrow can be extracted, genetically corrected in the lab, and then reinfused back into the patient.`,
-  },
-];
-// disorder outputs - regenerative medicine
-const regenTissueOutputs = [
-  {
-    step: '0',
-    text: `Run <span class='thicc lilac'>regenerative medicine</span> protocol...`,
-  },
-  {
-    step: '1',
-    text: `<span class='thicc honey'>Mechanism:</span> Stem cells can be programmed to differentiate into specific cell types. For instance, embryonic stem cells or induced pluripotent stem cells (iPSCs) can be used to generate heart muscle cells, nerve cells, or pancreatic cells.`,
-  },
-  {
-    step: '2',
-    text: `<span class='thicc swamp'>Applications:</span> This ability is harnessed to replace damaged or diseased cells in the body. For example, in patients with heart disease, stem cells can be used to generate healthy heart muscle cells that are then transplanted into the patient's heart. This can potentially restore function to damaged areas of the heart.`,
-  },
-];
-
 // --- COMMANDS ---
 
 const commands = {
   embyr: {
     do: `embyr <span class='stone'>[command] [argument]</span>`,
     description: `Run embyr make commands to orchestrate stem cells.`,
-    keywords: [...makeKeywords, ...tissueKeywords, ...fixKeywords, ...disorderKeywords],
+    keywords: [...makeKeywords, ...tissueKeywords],
     subCommands: {
       make: {
         keywords: [...makeKeywords, ...tissueKeywords],
@@ -192,13 +178,18 @@ const commands = {
                 returnOutput(output, 0);
                 return;
               }
-              // return a new output for each step in the output array
-              newTissueOutputs.forEach((output) => {
-                setTimeout(() => {
-                  let outputDiv = createOutputDiv(output.text, 'wheat');
-                  returnOutput(outputDiv, 0);
-                }, outputDelay[output.step]);
-              });
+              // // return a new output for each step in the output array
+              // newTissueOutputs.forEach((output) => {
+              //   setTimeout(() => {
+              //     let outputDiv = createOutputDiv(output.text, 'wheat');
+              //     returnOutput(outputDiv, 0);
+              //   }, outputDelay[output.step]);
+              // });
+
+              let output = createOutputDiv(``, 'scramble-text');
+              returnOutput(output, 0);
+              startScrambling();
+
               return;
             },
           },
