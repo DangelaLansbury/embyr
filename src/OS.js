@@ -170,20 +170,20 @@ const regenTissueOutputs = [
 const commands = {
   embyr: {
     do: `embyr <span class='stone'>[command] [argument]</span>`,
-    description: `Run embyr commands to orchestrate stem cells.`,
+    description: `Run embyr make commands to orchestrate stem cells.`,
     keywords: [...makeKeywords, ...tissueKeywords, ...fixKeywords, ...disorderKeywords],
     subCommands: {
-      mt: {
+      make: {
         keywords: [...makeKeywords, ...tissueKeywords],
-        do: `embyr mt <span class='stone'>[tissue]</span>`,
+        do: `embyr make`,
         description: 'Engineer new tissue cells or molecules.',
         syntax: `embyr mt [type of tissue]`,
         ops: {
           neuro: {
             keywords: [...tissueKeywords],
             argFlag: '--',
-            syntax: `embyr mt neuro --[modifier]`,
-            do: 'embyr mt neuro',
+            syntax: `embyr make neuro --[modifier]`,
+            do: 'embyr make neuro',
             description: `Engineer new neuronal cells`,
             exe: function runMakeTissue(input) {
               // Check for help
@@ -204,36 +204,36 @@ const commands = {
           },
         },
       },
-      fd: {
-        keywords: [...fixKeywords, ...disorderKeywords],
-        do: `embyr fd <span class='stone'>[disorder]</span>`,
-        description: 'Engineer stem cells to treat a disorder.',
-        syntax: `embyr fd [type of disorder]`,
-        ops: {
-          cancer: {
-            keywords: [...disorderKeywords],
-            argFlag: '--',
-            syntax: `embyr fd cancer --[modifier]`,
-            do: 'embyr fd cancer',
-            description: `Use stem cells for personalized cancer treatments.`,
-            exe: function runFixDisorder(input) {
-              // Check for help
-              if (input.includes('-h') || input.includes('-help')) {
-                let output = createOutputDiv(`Here's some help...`, 'wheat');
-                returnOutput(output, 0);
-                return;
-              }
-              geneOutputs.forEach((output) => {
-                setTimeout(() => {
-                  let outputDiv = createOutputDiv(output.text, 'wheat');
-                  returnOutput(outputDiv, 0);
-                }, outputDelay[output.step]);
-              });
-              return;
-            },
-          },
-        },
-      },
+      // fd: {
+      //   keywords: [...fixKeywords, ...disorderKeywords],
+      //   do: `embyr fd`,
+      //   description: 'Engineer stem cells to treat a disorder.',
+      //   syntax: `embyr fd [type of disorder]`,
+      //   ops: {
+      //     cancer: {
+      //       keywords: [...disorderKeywords],
+      //       argFlag: '--',
+      //       syntax: `embyr fd cancer --[modifier]`,
+      //       do: 'embyr fd cancer',
+      //       description: `Use stem cells for personalized cancer treatments.`,
+      //       exe: function runFixDisorder(input) {
+      //         // Check for help
+      //         if (input.includes('-h') || input.includes('-help')) {
+      //           let output = createOutputDiv(`Here's some help...`, 'wheat');
+      //           returnOutput(output, 0);
+      //           return;
+      //         }
+      //         geneOutputs.forEach((output) => {
+      //           setTimeout(() => {
+      //             let outputDiv = createOutputDiv(output.text, 'wheat');
+      //             returnOutput(outputDiv, 0);
+      //           }, outputDelay[output.step]);
+      //         });
+      //         return;
+      //       },
+      //     },
+      //   },
+      // },
     },
     run: (input) => {
       returnInput(input);

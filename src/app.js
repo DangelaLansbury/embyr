@@ -14,6 +14,7 @@ let firstTime = document.querySelector('#firstTime'); // First time hint
 let embyrHelper = document.querySelector('.embyr-helper'); // embyr suggestions and description container
 // embyr input
 let moniker = document.querySelector('.moniker'); // User moniker
+const defaultMoniker = 'embryoniq';
 let embyr = document.querySelector('.embyr-input-text'); // embyr input field
 let cursor = document.querySelector('.cursor'); // embyr input fake cursor
 let ghost = document.querySelector('.ghost-input'); // embyr input ghost text
@@ -80,7 +81,7 @@ window.onload = () => {
   // Set default help bar hints
   help1.innerHTML = initHints;
   // Set default moniker
-  moniker.innerText = 'neo@embyr:~$';
+  moniker.innerHTML = `<span class="lilac thicc">${defaultMoniker}</span><span class="river regular">@blast</span> <span class="lilac regular">~</span> $`;
   // Focus on embyr
   embyr.focus();
 };
