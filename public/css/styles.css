@@ -254,22 +254,6 @@ main {
   max-width: 90%;
   margin: 0.25rem 0 0 0;
 }
-.thread-text::before {
-  margin-right: 0.5rem;
-}
-.thread-text.running::after {
-  content: '...';
-  font-weight: 700;
-  color: var(--river);
-}
-.thread-text.done::before {
-  content: 'Done';
-  color: var(--swamp);
-}
-.thread-text.error::before {
-  content: 'Error';
-  color: var(--clay);
-}
 /* help bar */
 .help-bar {
   display: flex;
@@ -291,21 +275,6 @@ main {
   height: 100%;
   margin-left: 2.5rem;
 }
-/* #help1::before {
-  content: '1/2';
-  color: var(--soil-x-lt);
-  margin-right: 1rem;
-}
-#help1::after {
-  content: '...';
-  color: var(--soil-x-lt);
-  font-size: 0.75rem;
-}
-#help2::before {
-  content: '2/2';
-  color: var(--soil-x-lt);
-  margin-right: 1rem;
-} */
 .help-bar-right {
   display: flex;
   flex-direction: row;
@@ -328,11 +297,6 @@ main {
   justify-content: center;
   margin-right: 0.625rem;
   color: var(--stone);
-}
-.hotkey {
-  padding: 0 0.375rem;
-  border-radius: 0.25rem;
-  border: 1px solid var(--soil-x-lt);
 }
 .help-bar-text {
   display: inline-flex;

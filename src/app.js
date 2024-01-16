@@ -4,7 +4,7 @@
 let workbook = document.querySelector('.workbook'); // Main container
 // Terminal components
 let thread = document.querySelector('.thread'); // Thread
-let help1 = document.querySelector('#help1'); // Help container for first set of commands
+let help = document.querySelector('#help'); // Help container for first set of commands
 // embyr components
 let embyrContainer = document.querySelector('.embyr-container'); // Full embyr container for input, suggestions, and details
 let embyrInit = document.querySelector('.embyr-init'); // embyr init container
@@ -79,7 +79,7 @@ window.onload = () => {
     history = [];
   }
   // Set default help bar hints
-  help1.innerHTML = initHints;
+  help.innerHTML = initHints;
   // Set default moniker
   moniker.innerHTML = `<span class="lilac thicc">${defaultMoniker}</span><span class="river regular">@blast</span> <span class="lilac regular">~</span> $`;
   // Focus on embyr
@@ -192,10 +192,10 @@ const outputDelay = [200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000, 220
 window.addEventListener('keydown', function (e) {
   if (e.key === '?') {
     e.preventDefault();
-    if (help1.classList.contains('hidden')) {
-      help1.classList.remove('hidden');
-    } else if (!help1.classList.contains('hidden')) {
-      help1.classList.add('hidden');
+    if (help.classList.contains('hidden')) {
+      help.classList.remove('hidden');
+    } else if (!help.classList.contains('hidden')) {
+      help.classList.add('hidden');
     }
   }
 });
@@ -439,12 +439,12 @@ embyr.addEventListener('input', function () {
   }
   // If there is a suggestion available, show tab hint
   if (suggestionAvailable !== '' || ghostInput !== '') {
-    help1.innerHTML = tabHint;
+    help.innerHTML = tabHint;
   } else {
     if (history.length === 0) {
-      help1.innerHTML = initHints;
+      help.innerHTML = initHints;
     } else {
-      help1.innerHTML = defaultHints;
+      help.innerHTML = defaultHints;
     }
   }
   // If there is nothing to suggest, show init message
@@ -462,14 +462,14 @@ embyr.addEventListener('keydown', function (e) {
       suggestionAvailable = '';
       focusAtEnd();
       ghost.innerText = '';
-      help1.innerHTML = defaultHints;
+      help.innerHTML = defaultHints;
     } else if (suggestionAvailable !== '') {
       embyr.innerText = suggestionAvailable;
       suggestionAvailable = '';
       ghost.innerText = '';
       focusAtEnd();
       displayShort('', '', '');
-      help1.innerHTML = defaultHints;
+      help.innerHTML = defaultHints;
     }
   }
 });
@@ -530,9 +530,9 @@ embyr.addEventListener('keydown', function (e) {
     clearEmbyr();
     suggestionAvailable = '';
     if (history.length === 0) {
-      help1.innerHTML = initHints;
+      help.innerHTML = initHints;
     } else {
-      help1.innerHTML = defaultHints;
+      help.innerHTML = defaultHints;
     }
   }
 });
@@ -546,7 +546,7 @@ const clearEmbyr = () => {
   cursor.style.display = 'inline-flex';
   details.innerHTML = '';
   suggestionAvailable = '';
-  help1.innerHTML = defaultHints;
+  help.innerHTML = defaultHints;
   showEmbyrInit();
 };
 
