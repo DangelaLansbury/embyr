@@ -1,4 +1,4 @@
-const targetPhrase = 'There is so much room in a person there should be more of us in here.';
+let targetPhrase = '';
 let scrambledPhrase = generateRandomString(targetPhrase.length);
 let replacedPositions = new Set();
 let phraseToReplace = '';
@@ -61,6 +61,7 @@ function startScrambling() {
 
     if (scrambledPhrase === targetPhrase) {
       clearInterval(interval); // Stop the animation
+      isScrambling = false;
     }
 
     updateDisplay(); // Update the display
@@ -150,6 +151,24 @@ const newTissueOutputs = [
     text: `<span class='thicc river'>Transplant</span> engineered tissue into patient.`,
   },
 ];
+const testOutputs = [
+  {
+    step: '0',
+    text: `Run <span class='thicc lilac'>test</span> protocol...`,
+  },
+  {
+    step: '1',
+    text: `<span class='thicc honey'>Do something</span> super cool.`,
+  },
+  {
+    step: '2',
+    text: `<span class='thicc swamp'>Do something else</span> super cool.`,
+  },
+  {
+    step: '3',
+    text: `<span class='thicc clay'>Wrap up</span> another awesome operation.`,
+  },
+];
 
 // --- COMMANDS ---
 
@@ -178,18 +197,33 @@ const commands = {
                 returnOutput(output, 0);
                 return;
               }
-              // // return a new output for each step in the output array
-              // newTissueOutputs.forEach((output) => {
-              //   setTimeout(() => {
-              //     let outputDiv = createOutputDiv(output.text, 'wheat');
-              //     returnOutput(outputDiv, 0);
-              //   }, outputDelay[output.step]);
-              // });
-
-              let output = createOutputDiv(``, 'scramble-text');
-              returnOutput(output, 0);
-              startScrambling();
-
+              function prepareScramble() {
+                targetPhrase = 'There is so much room in a person there should be more of us in here.';
+                let output = createOutputDiv(``, 'scramble-text');
+                returnOutput(output, 0);
+                startScrambling();
+              }
+              // return test output steps with a promise and then start scrambling
+              function returnSteps(outputSteps) {
+                return new Promise((resolve, reject) => {
+                  const outputStepsLength = outputSteps.length;
+                  setTimeout(() => {
+                    outputSteps.forEach((output) => {
+                      setTimeout(() => {
+                        let outputDiv = createOutputDiv(output.text, 'wheat');
+                        returnOutput(outputDiv, 0);
+                      }, outputDelay[output.step]);
+                    });
+                  }, 0);
+                  resolve(outputStepsLength);
+                });
+              }
+              returnSteps(testOutputs).then((outputStepsLength) => {
+                setTimeout(() => {
+                  thread.innerHTML = '';
+                  prepareScramble();
+                }, outputDelay[outputStepsLength + 2]);
+              });
               return;
             },
           },
