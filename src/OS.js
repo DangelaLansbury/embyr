@@ -4,9 +4,10 @@ let replacedPositions = new Set();
 let phraseToReplace = '';
 
 function generateRandomString(length) {
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_+=~`[]{}|;:,.<>/?';
+  const characters = '0123456789!@#$%^&*()-_+=~`[]{}|;:,.<>/?';
   return Array.from({ length }, () => characters.charAt(Math.floor(Math.random() * characters.length))).join('');
 }
+// ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789
 
 function updateDisplay() {
   let displayString = '';
@@ -178,17 +179,17 @@ const commands = {
     description: `Run embyr make commands to orchestrate stem cells.`,
     keywords: [...makeKeywords, ...tissueKeywords],
     subCommands: {
-      make: {
+      mk: {
         keywords: [...makeKeywords, ...tissueKeywords],
-        do: `embyr make`,
+        do: `embyr mk`,
         description: 'Engineer new tissue cells or molecules.',
-        syntax: `embyr mt [type of tissue]`,
+        syntax: `embyr mk [type of tissue]`,
         ops: {
           neuro: {
             keywords: [...tissueKeywords],
             argFlag: '--',
             syntax: `embyr make neuro --[modifier]`,
-            do: 'embyr make neuro',
+            do: 'embyr mk neuro',
             description: `Engineer new neuronal cells`,
             exe: function runMakeTissue(input) {
               // Check for help
@@ -222,7 +223,7 @@ const commands = {
                 setTimeout(() => {
                   thread.innerHTML = '';
                   prepareScramble();
-                }, outputDelay[outputStepsLength + 2]);
+                }, outputDelay[outputStepsLength + 4]);
               });
               return;
             },

@@ -14,7 +14,7 @@ let firstTime = document.querySelector('#firstTime'); // First time hint
 let embyrHelper = document.querySelector('.embyr-helper'); // embyr suggestions and description container
 // embyr input
 let moniker = document.querySelector('.moniker'); // User moniker
-const defaultMoniker = 'embryoniq';
+const defaultMoniker = 'dolly';
 let embyr = document.querySelector('.embyr-input-text'); // embyr input field
 let cursor = document.querySelector('.cursor'); // embyr input fake cursor
 let ghost = document.querySelector('.ghost-input'); // embyr input ghost text
