@@ -1,7 +1,7 @@
-let targetPhrase = '';
-let scrambledPhrase = generateRandomString(targetPhrase.length);
-let replacedPositions = new Set();
-let phraseToReplace = '';
+// let targetPhrase = '';
+// let scrambledPhrase = '';
+// let replacedPositions = new Set();
+// let phraseToReplace = '';
 
 function generateRandomString(length) {
   const characters = '0123456789!@#$%^&*()-_+=~`[]{}|;:,.<>/?';
@@ -9,27 +9,25 @@ function generateRandomString(length) {
 }
 // ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789
 
-function updateDisplay() {
-  let displayString = '';
-  for (let i = 0; i < scrambledPhrase.length; i++) {
-    const charClass = replacedPositions.has(i) ? 'wheat' : 'stone';
-    displayString += `<span class="${charClass}">${scrambledPhrase[i]}</span>`;
-  }
-  document.querySelector('.scramble-text').innerHTML = displayString;
-}
-
-let isScrambling = false;
-
-function startScrambling() {
-  if (isScrambling) return; // Prevents restarting if already scrambling
-  isScrambling = true;
+function startScrambling(phrase, scrambleTarget) {
+  let targetPhrase = phrase;
+  let replacedPositions = new Set();
 
   // Reset the initial state if necessary
-  scrambledPhrase = generateRandomString(targetPhrase.length);
+  let scrambledPhrase = generateRandomString(targetPhrase.length);
   replacedPositions.clear();
 
+  function updateDisplay() {
+    let displayString = '';
+    for (let i = 0; i < scrambledPhrase.length; i++) {
+      const charClass = replacedPositions.has(i) ? 'wheat' : 'stone';
+      displayString += `<span class="${charClass}">${scrambledPhrase[i]}</span>`;
+    }
+    document.querySelector(`#${scrambleTarget}`).innerHTML = displayString;
+  }
+
   // Start the scramble interval
-  const interval = setInterval(scramble, 100); // Adjust the interval as needed
+  const interval = setInterval(scramble, 80); // Adjust the interval as needed
 
   function scramble() {
     if (scrambledPhrase === targetPhrase) {
@@ -62,7 +60,6 @@ function startScrambling() {
 
     if (scrambledPhrase === targetPhrase) {
       clearInterval(interval); // Stop the animation
-      isScrambling = false;
     }
 
     updateDisplay(); // Update the display
@@ -199,10 +196,16 @@ const commands = {
                 return;
               }
               function prepareScramble() {
-                targetPhrase = 'There is so much room in a person there should be more of us in here.';
+                let phrase = 'There is so much room in a person there should be more of us in here.';
                 let output = createOutputDiv(``, 'scramble-text');
+                output.id = 'scramble1';
                 returnOutput(output, 0);
-                startScrambling();
+                startScrambling(phrase, 'scramble1');
+                let phrase2 = 'Something must come of this.';
+                let output2 = createOutputDiv(``, 'scramble-text2');
+                output2.id = 'scramble2';
+                returnOutput(output2, 0);
+                startScrambling(phrase2, 'scramble2');
               }
               // return test output steps with a promise and then start scrambling
               function returnSteps(outputSteps) {

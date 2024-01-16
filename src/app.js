@@ -81,7 +81,7 @@ window.onload = () => {
   // Set default help bar hints
   help.innerHTML = initHints;
   // Set default moniker
-  moniker.innerHTML = `<span class="lilac thicc">${defaultMoniker}</span><span class="river regular">@blast</span> <span class="lilac regular">~</span> $`;
+  moniker.innerHTML = `<span class="lilac thicc">${defaultMoniker}</span><span class="river regular">@embyr</span> <span class="lilac regular">~</span> $`;
   // Focus on embyr
   embyr.focus();
 };
