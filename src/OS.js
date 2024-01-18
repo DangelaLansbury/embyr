@@ -1,15 +1,10 @@
-// let targetPhrase = '';
-// let scrambledPhrase = '';
-// let replacedPositions = new Set();
-// let phraseToReplace = '';
-
 function generateRandomString(length) {
   const characters = '0123456789!@#$%^&*()-_+=~`[]{}|;:,.<>/?';
   return Array.from({ length }, () => characters.charAt(Math.floor(Math.random() * characters.length))).join('');
 }
 // ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789
 
-function startScrambling(phrase, scrambleTarget) {
+function handleScrambling(phrase, scrambleTarget) {
   let targetPhrase = phrase;
   let replacedPositions = new Set();
 
@@ -171,23 +166,23 @@ const testOutputs = [
 // --- COMMANDS ---
 
 const commands = {
-  embyr: {
-    do: `embyr <span class='stone'>[command] [argument]</span>`,
-    description: `Run embyr make commands to orchestrate stem cells.`,
+  esc: {
+    do: `esc <span class='stone'>[command] [argument]</span>`,
+    description: `Run esc make commands to orchestrate stem cells.`,
     keywords: [...makeKeywords, ...tissueKeywords],
     subCommands: {
-      mk: {
+      new: {
         keywords: [...makeKeywords, ...tissueKeywords],
-        do: `embyr mk`,
+        do: `esc new`,
         description: 'Engineer new tissue cells or molecules.',
-        syntax: `embyr mk [type of tissue]`,
+        syntax: `esc new [type of tissue]`,
         ops: {
-          neuro: {
+          cell: {
             keywords: [...tissueKeywords],
             argFlag: '--',
-            syntax: `embyr make neuro --[modifier]`,
-            do: 'embyr mk neuro',
-            description: `Engineer new neuronal cells`,
+            syntax: `esc make cell --[modifier]`,
+            do: 'esc new cell',
+            description: `Engineer new cells`,
             exe: function runMakeTissue(input) {
               // Check for help
               if (input.includes('-h') || input.includes('-help')) {
@@ -200,12 +195,12 @@ const commands = {
                 let output = createOutputDiv(``, 'scramble-text');
                 output.id = 'scramble1';
                 returnOutput(output, 0);
-                startScrambling(phrase, 'scramble1');
+                handleScrambling(phrase, 'scramble1');
                 let phrase2 = 'Something must come of this.';
                 let output2 = createOutputDiv(``, 'scramble-text2');
                 output2.id = 'scramble2';
                 returnOutput(output2, 0);
-                startScrambling(phrase2, 'scramble2');
+                handleScrambling(phrase2, 'scramble2');
               }
               // return test output steps with a promise and then start scrambling
               function returnSteps(outputSteps) {
@@ -235,15 +230,15 @@ const commands = {
       },
       // fd: {
       //   keywords: [...fixKeywords, ...disorderKeywords],
-      //   do: `embyr fd`,
+      //   do: `esc fd`,
       //   description: 'Engineer stem cells to treat a disorder.',
-      //   syntax: `embyr fd [type of disorder]`,
+      //   syntax: `esc fd [type of disorder]`,
       //   ops: {
       //     cancer: {
       //       keywords: [...disorderKeywords],
       //       argFlag: '--',
-      //       syntax: `embyr fd cancer --[modifier]`,
-      //       do: 'embyr fd cancer',
+      //       syntax: `esc fd cancer --[modifier]`,
+      //       do: 'esc fd cancer',
       //       description: `Use stem cells for personalized cancer treatments.`,
       //       exe: function runFixDisorder(input) {
       //         // Check for help
@@ -269,11 +264,11 @@ const commands = {
       // Separate input into array of words
       let inputArray = input.split(' ');
       // Check if second word is a subcommand
-      if (inputArray[1] in commands.embyr.subCommands) {
+      if (inputArray[1] in commands.esc.subCommands) {
         // Check if third word is an operation
-        if (inputArray[2] in commands.embyr.subCommands[inputArray[1]].ops) {
+        if (inputArray[2] in commands.esc.subCommands[inputArray[1]].ops) {
           // run the operation's exe
-          commands.embyr.subCommands[inputArray[1]].ops[inputArray[2]].exe(input);
+          commands.esc.subCommands[inputArray[1]].ops[inputArray[2]].exe(input);
           return;
         } else {
           // Return error message
