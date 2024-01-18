@@ -40,7 +40,7 @@ const historyHint = `<div class="help-bar-hint">
   </div>`;
 
 const helpHint = `<div class="help-bar-hint">
-    <div class="help-bar-cmd thicc">'help'</div>
+    <div class="help-bar-cmd thicc">h</div>
     <div class="help-bar-text">more info</div>
   </div>`;
 
@@ -69,7 +69,7 @@ window.onload = () => {
     localStorage.setItem('visited', JSON.stringify(true));
   } else {
     // Show standard init message
-    embyrInitContent.innerHTML = standardInitMsg;
+    embyrInitContent.innerHTML = '';
   }
   // Check if user has history
   let history = localStorage.getItem('history');
@@ -147,7 +147,7 @@ const hideEmbyrInit = () => {
 };
 
 const showEmbyrInit = () => {
-  embyrInitContent.innerHTML = standardInitMsg;
+  // embyrInitContent.innerHTML = standardInitMsg;
   embyrInit.classList.remove('hidden');
   embyrHelper.classList.add('hidden');
 };
