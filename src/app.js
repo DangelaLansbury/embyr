@@ -54,7 +54,6 @@ const tabHint = `<div class="help-bar-hint">
     <div class="help-bar-text">autocomplete</div>
   </div>`;
 
-const initHints = helpHint;
 const defaultHints = historyHint + helpHint;
 
 // --- FOCUS ON EDITOR ---
@@ -78,8 +77,6 @@ window.onload = () => {
   } else {
     history = [];
   }
-  // Set default help bar hints
-  help.innerHTML = initHints;
   // Set default moniker
   moniker.innerHTML = `<span class="lilac thicc">${defaultMoniker}</span><span class="river regular">@embyr</span> <span class="lilac regular">~</span> $`;
   // Focus on embyr
@@ -442,7 +439,7 @@ embyr.addEventListener('input', function () {
     help.innerHTML = tabHint;
   } else {
     if (history.length === 0) {
-      help.innerHTML = initHints;
+      help.innerHTML = '';
     } else {
       help.innerHTML = defaultHints;
     }
@@ -529,7 +526,7 @@ embyr.addEventListener('keydown', function (e) {
     clearEmbyr();
     suggestionAvailable = '';
     if (history.length === 0) {
-      help.innerHTML = initHints;
+      help.innerHTML = '';
     } else {
       help.innerHTML = defaultHints;
     }
