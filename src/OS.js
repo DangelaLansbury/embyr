@@ -136,7 +136,7 @@ const testOutputs = [
 
 const commands = {
   esc: {
-    do: `esc <span class='stone'>[command] [argument]</span>`,
+    do: `esc`,
     description: `Run esc commands to orchestrate embryonic stem cells.`,
     keywords: [...newKeywords, ...cellKeywords],
     subCommands: {
@@ -148,10 +148,9 @@ const commands = {
         ops: {
           cell: {
             keywords: [...cellKeywords],
-            argFlag: '--',
-            syntax: `esc make cell --[modifier]`,
             do: 'esc new cell',
             description: `Become a new cell.`,
+            syntax: `esc make cell --[modifier]`,
             exe: function runMakeTissue(input) {
               // Check for help
               if (input.includes('-h') || input.includes('-help')) {

@@ -223,8 +223,8 @@ const displayFull = (toDo, description, syntax) => {
   details.innerHTML = '';
   let newDetails = document.createElement('div');
   newDetails.className = 'suggestion-details suggestion';
-  newDetails.innerHTML = `<div><span class="stone regular">Command:</span> <span class="sweetgrass thicc">${toDo}</span></div>
-  <div class="soil-x-lt regular" style="margin-bottom: 0.75rem;"><span class="lilac thicc">TAB&rarr;</span> to paste into command line</div>
+  newDetails.innerHTML = `<div style="margin-bottom: 0.5rem;"><span class="sweetgrass thicc">${toDo}</span></div>
+  
   <div>${description}</div>
   <div class="honey"><span class="stone">Explanation:</span> ${syntax}</div>`;
   details.appendChild(newDetails);
@@ -373,7 +373,7 @@ embyr.addEventListener('input', function () {
                               });
                               // Populate suggestions list with new order
                               suggestionsList.innerHTML = '';
-                              if (suggestionsArray.length > 0) {
+                              if (suggestionsArray.length > 0 && !embyr.innerText.toString().trim().startsWith(suggestionsArray[0].command)) {
                                 suggestionAvailable = suggestionsArray[0].command;
                                 // Display suggestion details for first suggestion
                                 let firstSuggestion = commands[suggestionsArray[0].parentCommand].subCommands[suggestionsArray[0].subCommand].ops[suggestionsArray[0].op];
@@ -414,7 +414,7 @@ embyr.addEventListener('input', function () {
                               });
                               // Populate suggestions list with new order
                               suggestionsList.innerHTML = '';
-                              if (suggestionsArray.length > 0) {
+                              if (suggestionsArray.length > 0 && !embyr.innerText.toString().trim().startsWith(suggestionsArray[0].command)) {
                                 suggestionAvailable = suggestionsArray[0].command;
                                 // Display suggestion details for first suggestion
                                 let firstSuggestion = commands[suggestionsArray[0].parentCommand].subCommands[suggestionsArray[0].subCommand];
