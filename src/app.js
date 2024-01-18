@@ -13,12 +13,12 @@ let standardInitMsg = `Command suggestions and info will appear here.`;
 let firstTime = document.querySelector('#firstTime'); // First time hint
 let embyrHelper = document.querySelector('.embyr-helper'); // embyr suggestions and description container
 // embyr input
+let embyrInputContainer = document.querySelector('.embyr-input'); // embyr input container
 let moniker = document.querySelector('.moniker'); // User moniker
 const defaultMoniker = 'dolly';
 let embyr = document.querySelector('.embyr-input-text'); // embyr input field
 let cursor = document.querySelector('.cursor'); // embyr input fake cursor
 let ghost = document.querySelector('.ghost-input'); // embyr input ghost text
-let running = document.querySelector('.running'); // embyr running indicator
 let history = []; // embyr input history
 // Suggestions and suggestion details
 let suggestionsContainer = document.querySelector('.suggestions-container');
@@ -184,7 +184,7 @@ const returnInput = (input) => {
   returnOutput(output, 0);
 };
 
-const outputDelay = [200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000, 2200, 2400];
+const outputDelay = 200;
 
 // --- ADDING EVENT LISTENERS ---
 
@@ -468,7 +468,6 @@ embyr.addEventListener('keydown', function (e) {
       suggestionAvailable = '';
       ghost.innerText = '';
       focusAtEnd();
-      displayShort('', '', '');
       help.innerHTML = defaultHints;
     }
   }
@@ -550,6 +549,11 @@ const clearEmbyr = () => {
   showEmbyrInit();
 };
 
+// Clear a thread and rest embyr input field
+const clearThread = () => {
+  thread.innerHTML = '';
+};
+
 // Listening for command and executing function when user presses enter
 embyr.addEventListener('keydown', function (e) {
   if (e.keyCode === 13) {
@@ -569,7 +573,7 @@ embyr.addEventListener('keydown', function (e) {
         commands[command].run(input);
       } else {
         returnInput(input);
-        returnNullAndHelp(command, outputDelay[0]);
+        returnNullAndHelp(command, outputDelay);
       }
     }
   }

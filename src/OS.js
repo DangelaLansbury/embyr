@@ -25,7 +25,7 @@ function handleScrambling(phrase, scrambleTarget) {
   const interval = setInterval(scramble, 200); // Adjust the interval as needed
 
   function scramble() {
-    if (scrambledPhrase === targetPhrase) {
+    if (scrambledPhrase === targetPhrase || !opRunning) {
       clearInterval(interval); // Stop the animation
       return;
     }
@@ -134,6 +134,8 @@ const testOutputs = [
 
 // --- COMMANDS ---
 
+let opRunning = false;
+
 const commands = {
   esc: {
     do: `esc`,
@@ -158,6 +160,10 @@ const commands = {
                 returnOutput(output, 0);
                 return;
               }
+              // Hide input while running
+              embyrInputContainer.style.visibility = 'hidden';
+              help.innerHTML = quitHint;
+              opRunning = true;
               function prepareScramble() {
                 let phrase = `------&&&&&------`;
                 let output = createOutputDiv(``, 'scramble-text stone');
@@ -177,24 +183,22 @@ const commands = {
               }
               // return test output steps with a promise and then start scrambling
               function returnSteps(outputSteps) {
-                return new Promise((resolve, reject) => {
+                return new Promise((resolve) => {
                   const outputStepsLength = outputSteps.length;
+                  outputSteps.forEach((output) => {
+                    setTimeout(() => {
+                      let outputDiv = createOutputDiv(output.text, 'wheat');
+                      returnOutput(outputDiv, 0);
+                    }, outputDelay * output.step);
+                  });
                   setTimeout(() => {
-                    outputSteps.forEach((output) => {
-                      setTimeout(() => {
-                        let outputDiv = createOutputDiv(output.text, 'wheat');
-                        returnOutput(outputDiv, 0);
-                      }, outputDelay[output.step]);
-                    });
-                  }, 0);
-                  resolve(outputStepsLength);
+                    resolve();
+                  }, outputDelay * (outputStepsLength + 2));
                 });
               }
-              returnSteps(testOutputs).then((outputStepsLength) => {
-                setTimeout(() => {
-                  thread.innerHTML = '';
-                  prepareScramble();
-                }, outputDelay[outputStepsLength + 4]);
+              returnSteps(testOutputs).then(() => {
+                thread.innerHTML = '';
+                prepareScramble();
               });
               return;
             },
@@ -227,6 +231,21 @@ const commands = {
     },
   },
 };
+
+// listen for "q" and reset if op is running
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'q' && opRunning) {
+    e.preventDefault();
+    opRunning = false;
+    clearThread();
+    // If embyr is invisible, show it
+    if (embyrInputContainer.style.visibility === 'hidden') {
+      embyrInputContainer.style.visibility = 'visible';
+    }
+    clearEmbyr();
+    help.innerHTML = defaultHints;
+  }
+});
 
 function cycleActiveColor() {
   let currentClass = logoBtn.classList[1];
