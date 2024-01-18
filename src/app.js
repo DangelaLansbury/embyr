@@ -324,7 +324,7 @@ embyr.addEventListener('input', function () {
       for (let j = 0; j < keywords.length; j++) {
         let levDist = levenshteinDistance(inputWords[i].replace(/-/g, '').replace(/\//g, ''), keywords[j].replace(/-/g, '').replace(/\//g, ''));
         let similarity = 1 - levDist / Math.max(inputWords[i].length, keywords[j].length);
-        if (similarity > 0.75) {
+        if (similarity > 0.74) {
           // Search through subcommands object for each command
           let subs = commands[cmd].subCommands;
           for (let sub in subs) {
@@ -335,7 +335,7 @@ embyr.addEventListener('input', function () {
               for (let j = 0; j < subKeywords.length; j++) {
                 let levDist = levenshteinDistance(inputWords[i].replace(/-/g, '').replace(/\//g, ''), subKeywords[j].replace(/-/g, '').replace(/\//g, ''));
                 let similarity = 1 - levDist / Math.max(inputWords[i].length, subKeywords[j].length);
-                if (similarity > 0.75) {
+                if (similarity > 0.74) {
                   // Search through ops object for each command
                   for (let op in ops) {
                     let opsKeywords = ops[op].keywords;
@@ -344,7 +344,7 @@ embyr.addEventListener('input', function () {
                         // Fuzzy search input and opsKeywords
                         let levDist = levenshteinDistance(inputWords[i].replace(/-/g, '').replace(/\//g, ''), opsKeywords[j].replace(/-/g, '').replace(/\//g, ''));
                         let similarity = 1 - levDist / Math.max(inputWords[i].length, opsKeywords[j].length);
-                        if (similarity > 0.75) {
+                        if (similarity > 0.74) {
                           let toDo = ops[op].do;
                           // Check if suggestion has already been suggested
                           let alreadySuggested = false;

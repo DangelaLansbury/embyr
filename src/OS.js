@@ -1,15 +1,15 @@
 function generateRandomString(length) {
-  const characters = '0123456789!@#$%^&*()-_+=~`[]{}|;:,.<>/?';
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_+=~`[]{}|;:,.<>/?';
   return Array.from({ length }, () => characters.charAt(Math.floor(Math.random() * characters.length))).join('');
 }
-// ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789
+// ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_+=~`[]{}|;:,.<>/?
 
 function handleScrambling(phrase, scrambleTarget) {
   let targetPhrase = phrase;
   let replacedPositions = new Set();
 
-  // Reset the initial state if necessary
   let scrambledPhrase = generateRandomString(targetPhrase.length);
+  // Reset the initial state if necessary
   replacedPositions.clear();
 
   function updateDisplay() {
@@ -22,7 +22,7 @@ function handleScrambling(phrase, scrambleTarget) {
   }
 
   // Start the scramble interval
-  const interval = setInterval(scramble, 80); // Adjust the interval as needed
+  const interval = setInterval(scramble, 200); // Adjust the interval as needed
 
   function scramble() {
     if (scrambledPhrase === targetPhrase) {
@@ -72,78 +72,47 @@ let logoBtn = document.querySelector('.logo-container');
 
 // Types of stem cells
 const stemCells = ['esc', 'somatic', 'ipsc'];
-// Tissue types
-const tissues = ['epithelial', 'connective', 'muscle', 'nerve'];
-function getRandomTissue() {
-  return tissues[Math.floor(Math.random() * tissues.length)];
-}
-// Disorder types
-const disorders = ['cancer', 'infection', 'injury', 'degenerative', 'autoimmune'];
-function getRandomDisorder() {
-  return disorders[Math.floor(Math.random() * disorders.length)];
-}
-
-// make
-const makeKeywords = ['make', 'make', 'new', 'construct', 'engineer', 'manufacture'];
-// tissue
-const tissueKeywords = [
-  'tissue',
-  'tissues',
-  'organ',
-  'organs',
-  'organism',
-  'organisms',
-  'body',
-  'bodies',
-  'cell',
-  'cells',
-  'molecule',
-  'molecules',
-  'protein',
-  'proteins',
-  'rna',
-  'dna',
-  'gene',
-  'genes',
-  'chromosome',
-  'chromosomes',
-  'chromatin',
-  'skin',
-  'hair',
-  'nail',
-  'bone',
-  'cartilage',
-  'fat',
-  'adipose',
+// Types of cells
+const cells = [
+  'neural',
+  'cardiomyocyte',
+  'heart',
+  'cardiac',
+  'hepatocytes',
+  'liver',
+  'hepatic',
+  'pancreatic',
+  'pancreas',
+  'beta',
+  'islet',
+  'beta-islet',
   'blood',
-  'brain',
-  ...tissues,
+  'platelet',
+  'epithelial',
+  'skin',
+  'bone',
+  'osteoblasts',
+  'cartilage',
+  'chondrocytes',
+  'muscle',
+  'myoblasts',
+  'skeletal',
+  'adipose',
+  'fat',
+  'adipocytes',
+  'fibroblasts',
+  'germ',
+  'gametes',
+  'sperm',
+  'egg',
+  'oocyte',
 ];
-const tissueArgs = [...tissues];
-// make outputs - tissue engineering
-const newTissueOutputs = [
-  {
-    step: '0',
-    text: `Run <span class='thicc lilac'>tissue engineering</span> protocol...`,
-  },
-  {
-    step: '1',
-    text: `<span class='thicc honey'>Extract</span> stem cells from patient's body.`,
-  },
-  {
-    step: '2',
-    text: `<span class='thicc swamp'>Engineer </span> stem cells to differentiate into the desired cell type.`,
-    // This involves creating biological tissues in the lab using a combination of stem cells, scaffolds, and bioreactors. The stem cells are placed on a scaffold that mimics the structure of the tissue to be grown. The bioreactor provides the cells with the necessary nutrients and growth factors to grow and differentiate into the desired cell type.
-  },
-  {
-    step: '3',
-    text: `<span class='thicc clay'>Grow</span> engineered tissue in bioreactor.`,
-  },
-  {
-    step: '4',
-    text: `<span class='thicc river'>Transplant</span> engineered tissue into patient.`,
-  },
-];
+
+// new
+const newKeywords = ['make', 'construct', 'engineer', 'manufacture', 'build', 'create', 'synthesize', 'grow', 'generate', 'produce', 'develop', 'form', 'originate', 'assemble'];
+// tissue
+const cellKeywords = ['cell', 'cells', 'cellular', 'cellulars', ...cells];
+// test outputs
 const testOutputs = [
   {
     step: '0',
@@ -168,21 +137,21 @@ const testOutputs = [
 const commands = {
   esc: {
     do: `esc <span class='stone'>[command] [argument]</span>`,
-    description: `Run esc make commands to orchestrate stem cells.`,
-    keywords: [...makeKeywords, ...tissueKeywords],
+    description: `Run esc commands to orchestrate embryonic stem cells.`,
+    keywords: [...newKeywords, ...cellKeywords],
     subCommands: {
       new: {
-        keywords: [...makeKeywords, ...tissueKeywords],
+        keywords: [...newKeywords, ...cellKeywords],
         do: `esc new`,
-        description: 'Engineer new tissue cells or molecules.',
-        syntax: `esc new [type of tissue]`,
+        description: 'Become a new cell, tissue, organ, or organism.',
+        syntax: `esc new [argument]`,
         ops: {
           cell: {
-            keywords: [...tissueKeywords],
+            keywords: [...cellKeywords],
             argFlag: '--',
             syntax: `esc make cell --[modifier]`,
             do: 'esc new cell',
-            description: `Engineer new cells`,
+            description: `Become a new cell.`,
             exe: function runMakeTissue(input) {
               // Check for help
               if (input.includes('-h') || input.includes('-help')) {
@@ -191,16 +160,21 @@ const commands = {
                 return;
               }
               function prepareScramble() {
-                let phrase = 'There is so much room in a person there should be more of us in here.';
-                let output = createOutputDiv(``, 'scramble-text');
+                let phrase = `------&&&&&------`;
+                let output = createOutputDiv(``, 'scramble-text stone');
                 output.id = 'scramble1';
                 returnOutput(output, 0);
-                handleScrambling(phrase, 'scramble1');
-                let phrase2 = 'Something must come of this.';
-                let output2 = createOutputDiv(``, 'scramble-text2');
+                let phrase2 = `----&&&&&&&&&----`;
+                let output2 = createOutputDiv(``, 'scramble-text stone');
                 output2.id = 'scramble2';
                 returnOutput(output2, 0);
+                let phrase3 = `-------&&&-------`;
+                let output3 = createOutputDiv(``, 'scramble-text stone');
+                output3.id = 'scramble3';
+                returnOutput(output3, 0);
+                handleScrambling(phrase, 'scramble1');
                 handleScrambling(phrase2, 'scramble2');
+                handleScrambling(phrase3, 'scramble3');
               }
               // return test output steps with a promise and then start scrambling
               function returnSteps(outputSteps) {
@@ -228,36 +202,6 @@ const commands = {
           },
         },
       },
-      // fd: {
-      //   keywords: [...fixKeywords, ...disorderKeywords],
-      //   do: `esc fd`,
-      //   description: 'Engineer stem cells to treat a disorder.',
-      //   syntax: `esc fd [type of disorder]`,
-      //   ops: {
-      //     cancer: {
-      //       keywords: [...disorderKeywords],
-      //       argFlag: '--',
-      //       syntax: `esc fd cancer --[modifier]`,
-      //       do: 'esc fd cancer',
-      //       description: `Use stem cells for personalized cancer treatments.`,
-      //       exe: function runFixDisorder(input) {
-      //         // Check for help
-      //         if (input.includes('-h') || input.includes('-help')) {
-      //           let output = createOutputDiv(`Here's some help...`, 'wheat');
-      //           returnOutput(output, 0);
-      //           return;
-      //         }
-      //         geneOutputs.forEach((output) => {
-      //           setTimeout(() => {
-      //             let outputDiv = createOutputDiv(output.text, 'wheat');
-      //             returnOutput(outputDiv, 0);
-      //           }, outputDelay[output.step]);
-      //         });
-      //         return;
-      //       },
-      //     },
-      //   },
-      // },
     },
     run: (input) => {
       returnInput(input);
@@ -281,84 +225,6 @@ const commands = {
         let output = createOutputDiv(`Sorry, I don't understand. Please describe what you'd like to do and maybe I can help.`, 'wheat');
         returnOutput(output, 0);
       }
-      // // Check for help
-      // if (input.includes('-h') || input.includes('-help')) {
-      //   let output = createOutputDiv(`Here's some help...`, 'wheat');
-      //   returnOutput(output, 0);
-      //   return;
-      // }
-      // let command = '';
-      // let arg = '';
-      // let argFlag = '';
-      // let outputsToDisplay = '';
-      // // Check for make
-      // if (input.includes('make')) {
-      //   command = 'make';
-      //   // Check for tissue
-      //   if (input.includes('tissue')) {
-      //     arg = 'tissue';
-      //     // Check for cell type
-      //     if (input.includes('--')) {
-      //       // check if the word that starts with -- is a tissue type
-      //       let inputArg = input.split('--')[1].split(' ')[0];
-      //       if (tissueArgs.includes(inputArg)) {
-      //         argFlag = inputArg;
-      //       } else if (inputArg === undefined) {
-      //         // return error message
-      //         let output = createOutputDiv(`Please specify a tissue type.`, 'wheat');
-      //         returnOutput(output, 0);
-      //       }
-      //     } else {
-      //       // return success message with random tissue
-      //       argFlag = getRandomTissue();
-      //     }
-      //     outputsToDisplay = 'newTissueOutputs';
-      //   }
-      // }
-      // // Check for fix
-      // if (input.includes('fix')) {
-      //   command = 'fix';
-      //   // Check for disorder
-      //   if (input.includes('disorder')) {
-      //     arg = 'disorder';
-      //     // Check for disorder type
-      //     if (input.includes('--')) {
-      //       // check if the word that starts with -- is a disorder type
-      //       let inputArg = input.split('--')[1].split(' ')[0];
-      //       if (disorderArgs.includes(inputArg)) {
-      //         argFlag = inputArg;
-      //       } else if (inputArg === undefined) {
-      //         // return error message
-      //         let output = createOutputDiv(`Please specify a disorder type.`, 'wheat');
-      //         returnOutput(output, 0);
-      //       }
-      //     } else {
-      //       // return success message with random disorder
-      //       argFlag = getRandomDisorder();
-      //     }
-      //   }
-      //   if (argFlag === 'cancer' || argFlag === 'infection' || argFlag === 'injury' || argFlag === 'autoimmune') {
-      //     outputsToDisplay = 'geneOutputs';
-      //   } else if (argFlag === 'degenerative') {
-      //     outputsToDisplay = 'regenTissueOutputs';
-      //   }
-      // }
-      // // If command and arg are defined, run the command and return outputs accordingly
-      // if (command !== '' && arg !== '' && argFlag !== '') {
-      //   // return success message with argFlag
-      //   let output = createOutputDiv(`working on it...`, 'stone');
-      //   returnOutput(output, 0);
-      //   // const outputToReturn = argFlag + 'Outputs';
-      //   // return a new output for each step in the output array
-      //   eval(outputsToDisplay).forEach((output) => {
-      //     setTimeout(() => {
-      //       let outputDiv = createOutputDiv(output.text, 'wheat');
-      //       returnOutput(outputDiv, 0);
-      //     }, outputDelay[output.step]);
-      //   });
-      //   return;
-      // }
-      // return confused message
     },
   },
 };

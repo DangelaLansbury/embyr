@@ -1,5 +1,11 @@
 /* ---- embyr ---- */
 /* ---- INPUT ---- */
+.icon-sheep {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 0.5rem;
+}
 .moniker {
   margin-right: 0.75rem;
 }
@@ -55,32 +61,6 @@
   }
   100% {
     opacity: 0;
-  }
-}
-.running {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  height: 1.5rem;
-  min-height: 1.5rem;
-  min-width: 0.25rem;
-}
-.running-spinner {
-  border: 2px solid var(--soil-dk);
-  border-top: 2px solid var(--sweetgrass);
-  border-radius: 50%;
-  width: var(--mediumSize);
-  height: var(--mediumSize);
-  animation: spin 0.5s linear infinite;
-  margin-right: 0.5rem;
-}
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
   }
 }
 /* ---- COPILOT ---- */
