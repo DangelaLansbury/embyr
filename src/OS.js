@@ -71,7 +71,7 @@ const testOutputs = [
 
 // --- COMMANDS ---
 
-let currDir = '/';
+let currDir = `~`;
 let opRunning = false;
 
 // executables
@@ -160,7 +160,8 @@ const commands = {
           } else {
             returnInput(inputArray);
             // Return error message
-            let output = createOutputDiv(`Something went wrong. Expected a valid argument or no argument at all.`, 'wheat');
+            let failingArg = inputArray[escIdx + 1];
+            let output = createOutputDiv(`Something went wrong. <span class="honey">${failingArg}</span> is not a valid argument.`, 'wheat');
             returnOutput(output, 0);
             return;
           }

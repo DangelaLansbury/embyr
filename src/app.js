@@ -14,8 +14,8 @@ let firstTime = document.querySelector('#firstTime'); // First time hint
 let embyrHelper = document.querySelector('.embyr-helper'); // embyr suggestions and description container
 // embyr input
 let embyrInputContainer = document.querySelector('.embyr-input'); // embyr input container
-let moniker = document.querySelector('.moniker'); // User moniker
-const defaultMoniker = 'ashman';
+let path = document.querySelector('.path'); // Path container
+const defaultUser = 'ashman'; // Default display name
 let embyr = document.querySelector('.embyr-input-text'); // embyr input field
 let cursor = document.querySelector('.cursor'); // embyr input fake cursor
 let ghost = document.querySelector('.ghost-input'); // embyr input ghost text
@@ -30,6 +30,12 @@ let detailsName = document.querySelector('.details-name');
 let detailsDescription = document.querySelector('.details-desc');
 let detailsArguments = document.querySelector('.details-args-accepted');
 let detailsSyntax = document.querySelector('.details-syntax');
+
+// --- PATH ---
+
+function updatePath() {
+  path.innerHTML = `<span class="lilac thicc">${defaultUser}</span><span class="river regular">@embyr</span> ${currDir}</span> <span class="sweetgrass">$</span>`; // Username and current directory
+}
 
 // --- HELP BAR ---
 
@@ -77,8 +83,7 @@ window.onload = () => {
   } else {
     history = [];
   }
-  // Set default moniker
-  moniker.innerHTML = `<span class="lilac thicc">${defaultMoniker}</span><span class="river regular">@embyr</span> <span class="lilac regular">~</span> $`;
+  updatePath();
   // Focus on embyr
   embyr.focus();
 };
@@ -270,7 +275,7 @@ embyr.addEventListener('input', function () {
   // Ghost input
   let ghostInput = '';
   for (let cmd in commands) {
-    if (currDir !== '/') {
+    if (currDir !== '~') {
       // if currDir and cmd are not the same, skip
       if (currDir !== cmd) {
         continue;
