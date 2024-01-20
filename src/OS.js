@@ -69,74 +69,59 @@ const testOutputs = [
   },
 ];
 
-// Scrambler (probably won't use this)
-function generateRandomString(length) {
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_+=~`[]{}|;:,.<>/?';
-  return Array.from({ length }, () => characters.charAt(Math.floor(Math.random() * characters.length))).join('');
-}
-// ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_+=~`[]{}|;:,.<>/?
-
-function handleScrambling(phrase, scrambleTarget) {
-  let targetPhrase = phrase;
-  let replacedPositions = new Set();
-
-  let scrambledPhrase = generateRandomString(targetPhrase.length);
-  // Reset the initial state if necessary
-  replacedPositions.clear();
-
-  function updateDisplay() {
-    let displayString = '';
-    for (let i = 0; i < scrambledPhrase.length; i++) {
-      const charClass = replacedPositions.has(i) ? 'wheat' : 'stone';
-      displayString += `<span class="${charClass}">${scrambledPhrase[i]}</span>`;
-    }
-    document.querySelector(`#${scrambleTarget}`).innerHTML = displayString;
-  }
-
-  // Start the scramble interval
-  const interval = setInterval(scramble, 200); // Adjust the interval as needed
-
-  function scramble() {
-    if (scrambledPhrase === targetPhrase || !opRunning) {
-      clearInterval(interval); // Stop the animation
-      return;
-    }
-
-    // Decide whether to replace a new character or revert an existing one
-    if (Math.random() < 0.1 && replacedPositions.size > 0) {
-      // 10% chance to revert
-      const positionsArray = Array.from(replacedPositions);
-      const randomIndex = positionsArray[Math.floor(Math.random() * positionsArray.length)];
-      replacedPositions.delete(randomIndex);
-
-      const scrambleArray = scrambledPhrase.split('');
-      scrambleArray[randomIndex] = generateRandomString(1);
-      scrambledPhrase = scrambleArray.join('');
-    } else {
-      let randomIndex;
-      do {
-        randomIndex = Math.floor(Math.random() * targetPhrase.length);
-      } while (replacedPositions.has(randomIndex));
-
-      replacedPositions.add(randomIndex);
-
-      const scrambleArray = scrambledPhrase.split('');
-      scrambleArray[randomIndex] = targetPhrase[randomIndex];
-      scrambledPhrase = scrambleArray.join('');
-    }
-
-    if (scrambledPhrase === targetPhrase) {
-      clearInterval(interval); // Stop the animation
-    }
-
-    updateDisplay(); // Update the display
-  }
-}
-
 // --- COMMANDS ---
 
 let currDir = '/';
 let opRunning = false;
+
+// executables
+function runMakeTissue(input) {
+  // Check for help
+  if (input.includes('-h') || input.includes('-help')) {
+    let output = createOutputDiv(`Here's some help...`, 'wheat');
+    returnOutput(output, 0);
+    return;
+  }
+  // Hide input while running
+  embyrInputContainer.style.visibility = 'hidden';
+  help.innerHTML = quitHint;
+  opRunning = true;
+  // return test output steps with a promise and then start scrambling
+  function returnSteps(outputSteps) {
+    return new Promise((resolve) => {
+      const outputStepsLength = outputSteps.length;
+      outputSteps.forEach((output) => {
+        setTimeout(() => {
+          let outputDiv = createOutputDiv(output.text, 'wheat');
+          returnOutput(outputDiv, 0);
+        }, outputDelay * output.step);
+      });
+      setTimeout(() => {
+        resolve();
+      }, outputDelay * (outputStepsLength + 2));
+    });
+  }
+  returnSteps(testOutputs).then(() => {
+    thread.innerHTML = '';
+    let outputDiv = createOutputDiv('Woo! It worked!', 'wheat');
+    returnOutput(outputDiv, 0);
+  });
+  return;
+}
+
+function runNew(input) {
+  returnInput(input);
+  let output = createOutputDiv(`You ran a new command with no arguments. Cool.`, 'wheat');
+  returnOutput(output, 0);
+  return;
+}
+
+function runEsc(input) {
+  returnInput(input);
+  let output = createOutputDiv(`You ran esc with no arguments. Cool.`, 'wheat');
+  returnOutput(output, 0);
+  return;
+}
 
 const commands = {
   esc: {
@@ -155,140 +140,45 @@ const commands = {
             do: 'esc new cell',
             description: `Become a new cell.`,
             syntax: `esc make cell --[modifier]`,
-            exe: function runMakeTissue(input) {
-              // Check for help
-              if (input.includes('-h') || input.includes('-help')) {
-                let output = createOutputDiv(`Here's some help...`, 'wheat');
-                returnOutput(output, 0);
-                return;
-              }
-              // Hide input while running
-              embyrInputContainer.style.visibility = 'hidden';
-              help.innerHTML = quitHint;
-              opRunning = true;
-              function prepareScramble() {
-                let phrase = `------&&&&&------`;
-                let output = createOutputDiv(``, 'scramble-text stone');
-                output.id = 'scramble1';
-                returnOutput(output, 0);
-                let phrase2 = `----&&&&&&&&&----`;
-                let output2 = createOutputDiv(``, 'scramble-text stone');
-                output2.id = 'scramble2';
-                returnOutput(output2, 0);
-                let phrase3 = `-------&&&-------`;
-                let output3 = createOutputDiv(``, 'scramble-text stone');
-                output3.id = 'scramble3';
-                returnOutput(output3, 0);
-                handleScrambling(phrase, 'scramble1');
-                handleScrambling(phrase2, 'scramble2');
-                handleScrambling(phrase3, 'scramble3');
-              }
-              // return test output steps with a promise and then start scrambling
-              function returnSteps(outputSteps) {
-                return new Promise((resolve) => {
-                  const outputStepsLength = outputSteps.length;
-                  outputSteps.forEach((output) => {
-                    setTimeout(() => {
-                      let outputDiv = createOutputDiv(output.text, 'wheat');
-                      returnOutput(outputDiv, 0);
-                    }, outputDelay * output.step);
-                  });
-                  setTimeout(() => {
-                    resolve();
-                  }, outputDelay * (outputStepsLength + 2));
-                });
-              }
-              returnSteps(testOutputs).then(() => {
-                thread.innerHTML = '';
-                prepareScramble();
-              });
-              return;
-            },
+            exe: runMakeTissue,
           },
         },
-      },
-      kg: {
-        keywords: [...newKeywords, ...cellKeywords],
-        do: `kg new`,
-        description: 'Become a new cell, tissue, organ, or organism.',
-        syntax: `esc new [argument]`,
-        ops: {
-          cell: {
-            keywords: [...cellKeywords],
-            do: 'esc new cell',
-            description: `Become a new cell.`,
-            syntax: `esc make cell --[modifier]`,
-            exe: function runMakeTissue(input) {
-              // Check for help
-              if (input.includes('-h') || input.includes('-help')) {
-                let output = createOutputDiv(`Here's some help...`, 'wheat');
-                returnOutput(output, 0);
-                return;
-              }
-              // Hide input while running
-              embyrInputContainer.style.visibility = 'hidden';
-              help.innerHTML = quitHint;
-              opRunning = true;
-              function prepareScramble() {
-                let phrase = `------&&&&&------`;
-                let output = createOutputDiv(``, 'scramble-text stone');
-                output.id = 'scramble1';
-                returnOutput(output, 0);
-                let phrase2 = `----&&&&&&&&&----`;
-                let output2 = createOutputDiv(``, 'scramble-text stone');
-                output2.id = 'scramble2';
-                returnOutput(output2, 0);
-                let phrase3 = `-------&&&-------`;
-                let output3 = createOutputDiv(``, 'scramble-text stone');
-                output3.id = 'scramble3';
-                returnOutput(output3, 0);
-                handleScrambling(phrase, 'scramble1');
-                handleScrambling(phrase2, 'scramble2');
-                handleScrambling(phrase3, 'scramble3');
-              }
-              // return test output steps with a promise and then start scrambling
-              function returnSteps(outputSteps) {
-                return new Promise((resolve) => {
-                  const outputStepsLength = outputSteps.length;
-                  outputSteps.forEach((output) => {
-                    setTimeout(() => {
-                      let outputDiv = createOutputDiv(output.text, 'wheat');
-                      returnOutput(outputDiv, 0);
-                    }, outputDelay * output.step);
-                  });
-                  setTimeout(() => {
-                    resolve();
-                  }, outputDelay * (outputStepsLength + 2));
-                });
-              }
-              returnSteps(testOutputs).then(() => {
-                thread.innerHTML = '';
-                prepareScramble();
-              });
-              return;
-            },
-          },
+        run: (input) => {
+          // Separate input into array of words
+          let inputArray = input.split(' ');
+          // Find index of 'new' in inputArray
+          let newIdx = inputArray.indexOf('new');
+          // Check if 'new' is the last word and if not check if the next word is in ops
+          if (newIdx === inputArray.length - 1) {
+            runNew(input);
+          } else if (inputArray[newIdx + 1] in commands.esc.subCommands.new.ops) {
+            // run the operation's exe
+            commands.esc.subCommands.new.ops[inputArray[newIdx + 1]].exe(input);
+            return;
+          } else {
+            returnInput(input);
+            // Return error message
+            let output = createOutputDiv(`Please specify a valid operation.`, 'wheat');
+            returnOutput(output, 0);
+            return;
+          }
         },
       },
     },
     run: (input) => {
-      returnInput(input);
       // Separate input into array of words
       let inputArray = input.split(' ');
-      // Check if second word is a subcommand
-      if (inputArray[1] in commands.esc.subCommands) {
-        // Check if third word is an operation
-        if (inputArray[2] in commands.esc.subCommands[inputArray[1]].ops) {
-          // run the operation's exe
-          commands.esc.subCommands[inputArray[1]].ops[inputArray[2]].exe(input);
-          return;
-        } else {
-          // Return error message
-          let output = createOutputDiv(`Please specify a valid operation.`, 'wheat');
-          returnOutput(output, 0);
-          return;
-        }
+      // Find index of 'esc' in inputArray
+      let escIdx = inputArray.indexOf('esc');
+      // Check if 'esc' is the last word and if not check if the next word is in subCommands
+      if (escIdx === inputArray.length - 1) {
+        runEsc(input);
+      } else if (inputArray[escIdx + 1] in commands.esc.subCommands) {
+        // run the subCommand's run
+        commands.esc.subCommands[inputArray[escIdx + 1]].run(input);
+        return;
       } else {
+        returnInput(input);
         // Return error message
         let output = createOutputDiv(`Sorry, I don't understand. Please describe what you'd like to do and maybe I can help.`, 'wheat');
         returnOutput(output, 0);

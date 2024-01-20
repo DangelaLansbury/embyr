@@ -15,7 +15,7 @@ let embyrHelper = document.querySelector('.embyr-helper'); // embyr suggestions 
 // embyr input
 let embyrInputContainer = document.querySelector('.embyr-input'); // embyr input container
 let moniker = document.querySelector('.moniker'); // User moniker
-const defaultMoniker = 'dolly';
+const defaultMoniker = 'ashman';
 let embyr = document.querySelector('.embyr-input-text'); // embyr input field
 let cursor = document.querySelector('.cursor'); // embyr input fake cursor
 let ghost = document.querySelector('.ghost-input'); // embyr input ghost text
@@ -269,24 +269,24 @@ embyr.addEventListener('input', function () {
   let inputWords = input.split(' ');
   // Ghost input
   let ghostInput = '';
-  let cmdsToParse = commands;
-  if (currDir !== '/') {
-    cmdsToParse = commands[currDir].subCommands;
-  } else {
-    cmdsToParse = commands;
-  }
-  for (let cmd in cmdsToParse.subCommands) {
+  // let cmdsToParse = commands;
+  // if (currDir !== '/') {
+  //   cmdsToParse = commands[currDir].subCommands;
+  // } else {
+  //   cmdsToParse = commands;
+  // }
+  for (let cmd in commands) {
     // Check if command starts with input
     if (inputWords[0].toLowerCase() !== cmd && inputWords.length === 1) {
       if (cmd.startsWith(inputWords[0].toLowerCase()) && inputWords[0]) {
         // insert remaining command characters into ghost-input
         let remainingCmd = cmd.substring(inputWords[0].length);
         ghostInput = remainingCmd;
-        displayShort(cmdsToParse[cmd].do, cmdsToParse[cmd].description);
+        displayShort(commands[cmd].do, commands[cmd].description);
       }
     } else if (inputWords[0].toLowerCase() === cmd && inputWords.length > 1) {
       details.innerHTML = '';
-      let subs = cmdsToParse[cmd].subCommands;
+      let subs = commands[cmd].subCommands;
       for (let sub in subs) {
         // Check if subCommand starts with input
         if (inputWords[1].toLowerCase() !== sub && inputWords.length === 2) {
@@ -380,8 +380,7 @@ embyr.addEventListener('input', function () {
                                 suggestionAvailable = suggestionsArray[0].command;
                                 // Display suggestion details for first suggestion
                                 let firstSuggestion = commands[suggestionsArray[0].parentCommand].subCommands[suggestionsArray[0].subCommand].ops[suggestionsArray[0].op];
-                                let syntax = firstSuggestion.syntax;
-                                displayFull(`${suggestionsArray[0].command}`, firstSuggestion.description, syntax);
+                                displayShort(`${suggestionsArray[0].command}`, firstSuggestion.description);
                               } else {
                                 suggestionAvailable = '';
                               }
@@ -421,8 +420,7 @@ embyr.addEventListener('input', function () {
                                 suggestionAvailable = suggestionsArray[0].command;
                                 // Display suggestion details for first suggestion
                                 let firstSuggestion = commands[suggestionsArray[0].parentCommand].subCommands[suggestionsArray[0].subCommand];
-                                let syntax = firstSuggestion.syntax;
-                                displayFull(`${suggestionsArray[0].command}`, firstSuggestion.description, syntax);
+                                displayShort(`${suggestionsArray[0].command}`, firstSuggestion.description);
                               } else {
                                 suggestionAvailable = '';
                               }
