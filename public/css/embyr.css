@@ -175,12 +175,13 @@
     max-width: 80%;
     /* font-size: var(--mediumSize); */
   }
-  .embyr-container {
-    display: none;
+  .details {
+    margin: 1rem 1.25rem 0.5rem;
+    width: calc(100% - 2.5rem);
   }
 }
 /* hide embyr container if window's too small vertically */
-@media only screen and (max-height: 600px) {
+@media only screen and (max-height: 400px) {
   .embyr-container {
     display: none;
   }

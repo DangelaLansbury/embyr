@@ -102,14 +102,26 @@ const focusAtEnd = () => {
   }
 };
 
-workbook.addEventListener('click', function (e) {
-  // Focus on embyr if target is not thread text
-  if (!e.target.classList.contains('thread-text')) {
-    embyr.focus();
-  }
-  // Set cursor at end of editor if target is not embyr
+// workbook.addEventListener('click', function (e) {
+//   // Focus on embyr if target is not thread text
+//   if (!e.target.classList.contains('thread-text')) {
+//     embyr.focus();
+//   }
+//   // Set cursor at end of editor if target is not embyr
+//   if (e.target !== embyr) {
+//     focusAtEnd();
+//   }
+// });
+
+window.addEventListener('mousedown', function (e) {
+  console.log(e.target);
+  // Focus on embyr if target is not thread embyr
   if (e.target !== embyr) {
-    focusAtEnd();
+    e.preventDefault();
+    if (e.target === embyrInputContainer) {
+      embyr.focus();
+      focusAtEnd();
+    }
   }
 });
 
@@ -117,11 +129,7 @@ workbook.addEventListener('click', function (e) {
 
 // Hide cursor if input loses focus
 embyr.addEventListener('blur', function (e) {
-  if (embyr.innerText.toString().trim().length == 0) {
-    cursor.classList.remove('cursor-focus');
-  } else {
-    cursor.style.display = 'none';
-  }
+  cursor.classList.remove('cursor-focus');
 });
 
 // Show cursor if input gains focus
@@ -335,8 +343,7 @@ embyr.addEventListener('input', function () {
   for (let cmd in commands) {
     // check window height
     let currentHeight = window.innerHeight;
-    let currentWidth = window.innerWidth;
-    if (currentHeight < 600 || currentWidth < 600) {
+    if (currentHeight < 400) {
       continue;
     }
     let keywords = commands[cmd].keywords;

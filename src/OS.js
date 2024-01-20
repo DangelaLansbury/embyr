@@ -1,7 +1,7 @@
 // const interval = setInterval(scramble, 100); // Adjust the interval as needed
 
 // --- DOM DECLARATIONS ---
-let logoBtn = document.querySelector('.logo-container');
+const logoBtn = document.querySelector('.logo-container');
 
 // --- KEYWORDS AND ARGUMENTS ---
 
