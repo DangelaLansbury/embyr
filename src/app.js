@@ -269,18 +269,24 @@ embyr.addEventListener('input', function () {
   let inputWords = input.split(' ');
   // Ghost input
   let ghostInput = '';
-  for (let cmd in commands) {
+  let cmdsToParse = commands;
+  if (currDir !== '/') {
+    cmdsToParse = commands[currDir].subCommands;
+  } else {
+    cmdsToParse = commands;
+  }
+  for (let cmd in cmdsToParse.subCommands) {
     // Check if command starts with input
     if (inputWords[0].toLowerCase() !== cmd && inputWords.length === 1) {
       if (cmd.startsWith(inputWords[0].toLowerCase()) && inputWords[0]) {
         // insert remaining command characters into ghost-input
         let remainingCmd = cmd.substring(inputWords[0].length);
         ghostInput = remainingCmd;
-        displayShort(commands[cmd].do, commands[cmd].description);
+        displayShort(cmdsToParse[cmd].do, cmdsToParse[cmd].description);
       }
     } else if (inputWords[0].toLowerCase() === cmd && inputWords.length > 1) {
       details.innerHTML = '';
-      let subs = commands[cmd].subCommands;
+      let subs = cmdsToParse[cmd].subCommands;
       for (let sub in subs) {
         // Check if subCommand starts with input
         if (inputWords[1].toLowerCase() !== sub && inputWords.length === 2) {

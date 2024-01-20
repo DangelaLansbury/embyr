@@ -1,66 +1,3 @@
-function generateRandomString(length) {
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_+=~`[]{}|;:,.<>/?';
-  return Array.from({ length }, () => characters.charAt(Math.floor(Math.random() * characters.length))).join('');
-}
-// ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_+=~`[]{}|;:,.<>/?
-
-function handleScrambling(phrase, scrambleTarget) {
-  let targetPhrase = phrase;
-  let replacedPositions = new Set();
-
-  let scrambledPhrase = generateRandomString(targetPhrase.length);
-  // Reset the initial state if necessary
-  replacedPositions.clear();
-
-  function updateDisplay() {
-    let displayString = '';
-    for (let i = 0; i < scrambledPhrase.length; i++) {
-      const charClass = replacedPositions.has(i) ? 'wheat' : 'stone';
-      displayString += `<span class="${charClass}">${scrambledPhrase[i]}</span>`;
-    }
-    document.querySelector(`#${scrambleTarget}`).innerHTML = displayString;
-  }
-
-  // Start the scramble interval
-  const interval = setInterval(scramble, 200); // Adjust the interval as needed
-
-  function scramble() {
-    if (scrambledPhrase === targetPhrase || !opRunning) {
-      clearInterval(interval); // Stop the animation
-      return;
-    }
-
-    // Decide whether to replace a new character or revert an existing one
-    if (Math.random() < 0.1 && replacedPositions.size > 0) {
-      // 10% chance to revert
-      const positionsArray = Array.from(replacedPositions);
-      const randomIndex = positionsArray[Math.floor(Math.random() * positionsArray.length)];
-      replacedPositions.delete(randomIndex);
-
-      const scrambleArray = scrambledPhrase.split('');
-      scrambleArray[randomIndex] = generateRandomString(1);
-      scrambledPhrase = scrambleArray.join('');
-    } else {
-      let randomIndex;
-      do {
-        randomIndex = Math.floor(Math.random() * targetPhrase.length);
-      } while (replacedPositions.has(randomIndex));
-
-      replacedPositions.add(randomIndex);
-
-      const scrambleArray = scrambledPhrase.split('');
-      scrambleArray[randomIndex] = targetPhrase[randomIndex];
-      scrambledPhrase = scrambleArray.join('');
-    }
-
-    if (scrambledPhrase === targetPhrase) {
-      clearInterval(interval); // Stop the animation
-    }
-
-    updateDisplay(); // Update the display
-  }
-}
-
 // const interval = setInterval(scramble, 100); // Adjust the interval as needed
 
 // --- DOM DECLARATIONS ---
@@ -132,8 +69,73 @@ const testOutputs = [
   },
 ];
 
+// Scrambler (probably won't use this)
+function generateRandomString(length) {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_+=~`[]{}|;:,.<>/?';
+  return Array.from({ length }, () => characters.charAt(Math.floor(Math.random() * characters.length))).join('');
+}
+// ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_+=~`[]{}|;:,.<>/?
+
+function handleScrambling(phrase, scrambleTarget) {
+  let targetPhrase = phrase;
+  let replacedPositions = new Set();
+
+  let scrambledPhrase = generateRandomString(targetPhrase.length);
+  // Reset the initial state if necessary
+  replacedPositions.clear();
+
+  function updateDisplay() {
+    let displayString = '';
+    for (let i = 0; i < scrambledPhrase.length; i++) {
+      const charClass = replacedPositions.has(i) ? 'wheat' : 'stone';
+      displayString += `<span class="${charClass}">${scrambledPhrase[i]}</span>`;
+    }
+    document.querySelector(`#${scrambleTarget}`).innerHTML = displayString;
+  }
+
+  // Start the scramble interval
+  const interval = setInterval(scramble, 200); // Adjust the interval as needed
+
+  function scramble() {
+    if (scrambledPhrase === targetPhrase || !opRunning) {
+      clearInterval(interval); // Stop the animation
+      return;
+    }
+
+    // Decide whether to replace a new character or revert an existing one
+    if (Math.random() < 0.1 && replacedPositions.size > 0) {
+      // 10% chance to revert
+      const positionsArray = Array.from(replacedPositions);
+      const randomIndex = positionsArray[Math.floor(Math.random() * positionsArray.length)];
+      replacedPositions.delete(randomIndex);
+
+      const scrambleArray = scrambledPhrase.split('');
+      scrambleArray[randomIndex] = generateRandomString(1);
+      scrambledPhrase = scrambleArray.join('');
+    } else {
+      let randomIndex;
+      do {
+        randomIndex = Math.floor(Math.random() * targetPhrase.length);
+      } while (replacedPositions.has(randomIndex));
+
+      replacedPositions.add(randomIndex);
+
+      const scrambleArray = scrambledPhrase.split('');
+      scrambleArray[randomIndex] = targetPhrase[randomIndex];
+      scrambledPhrase = scrambleArray.join('');
+    }
+
+    if (scrambledPhrase === targetPhrase) {
+      clearInterval(interval); // Stop the animation
+    }
+
+    updateDisplay(); // Update the display
+  }
+}
+
 // --- COMMANDS ---
 
+let currDir = '/';
 let opRunning = false;
 
 const commands = {
@@ -145,6 +147,69 @@ const commands = {
       new: {
         keywords: [...newKeywords, ...cellKeywords],
         do: `esc new`,
+        description: 'Become a new cell, tissue, organ, or organism.',
+        syntax: `esc new [argument]`,
+        ops: {
+          cell: {
+            keywords: [...cellKeywords],
+            do: 'esc new cell',
+            description: `Become a new cell.`,
+            syntax: `esc make cell --[modifier]`,
+            exe: function runMakeTissue(input) {
+              // Check for help
+              if (input.includes('-h') || input.includes('-help')) {
+                let output = createOutputDiv(`Here's some help...`, 'wheat');
+                returnOutput(output, 0);
+                return;
+              }
+              // Hide input while running
+              embyrInputContainer.style.visibility = 'hidden';
+              help.innerHTML = quitHint;
+              opRunning = true;
+              function prepareScramble() {
+                let phrase = `------&&&&&------`;
+                let output = createOutputDiv(``, 'scramble-text stone');
+                output.id = 'scramble1';
+                returnOutput(output, 0);
+                let phrase2 = `----&&&&&&&&&----`;
+                let output2 = createOutputDiv(``, 'scramble-text stone');
+                output2.id = 'scramble2';
+                returnOutput(output2, 0);
+                let phrase3 = `-------&&&-------`;
+                let output3 = createOutputDiv(``, 'scramble-text stone');
+                output3.id = 'scramble3';
+                returnOutput(output3, 0);
+                handleScrambling(phrase, 'scramble1');
+                handleScrambling(phrase2, 'scramble2');
+                handleScrambling(phrase3, 'scramble3');
+              }
+              // return test output steps with a promise and then start scrambling
+              function returnSteps(outputSteps) {
+                return new Promise((resolve) => {
+                  const outputStepsLength = outputSteps.length;
+                  outputSteps.forEach((output) => {
+                    setTimeout(() => {
+                      let outputDiv = createOutputDiv(output.text, 'wheat');
+                      returnOutput(outputDiv, 0);
+                    }, outputDelay * output.step);
+                  });
+                  setTimeout(() => {
+                    resolve();
+                  }, outputDelay * (outputStepsLength + 2));
+                });
+              }
+              returnSteps(testOutputs).then(() => {
+                thread.innerHTML = '';
+                prepareScramble();
+              });
+              return;
+            },
+          },
+        },
+      },
+      kg: {
+        keywords: [...newKeywords, ...cellKeywords],
+        do: `kg new`,
         description: 'Become a new cell, tissue, organ, or organism.',
         syntax: `esc new [argument]`,
         ops: {
