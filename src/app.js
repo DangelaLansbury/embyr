@@ -1,5 +1,8 @@
 // --- DOM VARIABLES ---
 
+// Window size
+let windowHeight = window.innerHeight;
+let windowWidth = window.innerWidth;
 // Workbook components
 let workbook = document.querySelector('.workbook'); // Main container
 // Terminal components
@@ -15,7 +18,7 @@ let embyrHelper = document.querySelector('.embyr-helper'); // embyr suggestions 
 // embyr input
 let embyrInputContainer = document.querySelector('.embyr-input'); // embyr input container
 let path = document.querySelector('.path'); // Path container
-const defaultUser = 'ashman'; // Default display name
+const defaultUser = 'grove'; // Default display name
 let embyr = document.querySelector('.embyr-input-text'); // embyr input field
 let cursor = document.querySelector('.cursor'); // embyr input fake cursor
 let ghost = document.querySelector('.ghost-input'); // embyr input ghost text
@@ -34,7 +37,7 @@ let detailsSyntax = document.querySelector('.details-syntax');
 // --- PATH ---
 
 function updatePath() {
-  path.innerHTML = `<span class="lilac thicc">${defaultUser}</span><span class="river regular">@embyr</span> ${currDir}</span> <span class="sweetgrass">$</span>`; // Username and current directory
+  path.innerHTML = `<span class="lilac thicc">${defaultUser}</span><span class="river thicc">@embyr</span> <span class="wheat">${currDir}</span></span>`;
 }
 
 // --- HELP BAR ---
@@ -99,7 +102,6 @@ const focusAtEnd = () => {
   }
 };
 
-// Listening for click and focusing at end of editor
 workbook.addEventListener('click', function (e) {
   // Focus on embyr if target is not thread text
   if (!e.target.classList.contains('thread-text')) {
@@ -115,13 +117,18 @@ workbook.addEventListener('click', function (e) {
 
 // Hide cursor if input loses focus
 embyr.addEventListener('blur', function (e) {
-  cursor.style.display = 'none';
+  if (embyr.innerText.toString().trim().length == 0) {
+    cursor.classList.remove('cursor-focus');
+  } else {
+    cursor.style.display = 'none';
+  }
 });
 
 // Show cursor if input gains focus
 embyr.addEventListener('focus', function (e) {
   if (embyr.innerText.toString().trim().length == 0) {
     cursor.style.display = 'inline-flex';
+    cursor.classList.add('cursor-focus');
   }
 });
 
@@ -326,6 +333,12 @@ embyr.addEventListener('input', function () {
   suggestions = document.querySelectorAll('.suggestion');
   suggestionsArray = [];
   for (let cmd in commands) {
+    // check window height
+    let currentHeight = window.innerHeight;
+    let currentWidth = window.innerWidth;
+    if (currentHeight < 600 || currentWidth < 600) {
+      continue;
+    }
     let keywords = commands[cmd].keywords;
     // Fuzzy search input and keywords
     for (let i = 0; i < inputWords.length; i++) {
@@ -469,7 +482,7 @@ embyr.addEventListener('keydown', function (e) {
       focusAtEnd();
       ghost.innerText = '';
       help.innerHTML = defaultHints;
-    } else if (suggestionAvailable !== '') {
+    } else if (suggestionAvailable !== '' && ghost.innerText === '') {
       embyr.innerText = suggestionAvailable;
       suggestionAvailable = '';
       ghost.innerText = '';

@@ -1,7 +1,7 @@
 /* ---- embyr ---- */
 /* ---- INPUT ---- */
 .path {
-  margin-right: 0.75rem;
+  margin-right: 0.5rem;
 }
 .embyr-input {
   display: flex;
@@ -22,6 +22,11 @@
   white-space: pre-wrap;
   caret-color: var(--sweetgrass);
 }
+.embyr-input-text::before {
+  content: '$';
+  color: var(--sweetgrass);
+  margin-right: 0.625rem;
+}
 .embyr-input-text:focus {
   border: none;
   outline: none;
@@ -30,27 +35,32 @@
   caret-color: transparent;
 }
 .cursor {
+  box-sizing: border-box;
+  border: 1px solid var(--sweetgrass);
   display: inline-flex;
-  width: 0.563rem;
+  width: 0.525rem;
   height: 1rem;
-  background-color: var(--sweetgrass);
-  animation: blink 1s infinite;
+  background-color: none;
   margin: auto 0;
   z-index: 1;
   position: relative;
-  left: -0.125rem;
+  /* left: -0.05rem; */
+}
+.cursor.cursor-focus {
+  animation: blink 0.8s infinite;
+  background-color: var(--sweetgrass);
 }
 @keyframes blink {
   0% {
     opacity: 0;
   }
-  20% {
+  15% {
     opacity: 0;
   }
   50% {
     opacity: 1;
   }
-  80% {
+  85% {
     opacity: 1;
   }
   100% {
@@ -153,13 +163,16 @@
 /* ---- SCREEN SIZE HANDLING */
 @media only screen and (max-width: 600px) {
   .embyr-input {
-    margin-top: 1rem;
-    padding: 1.25rem 1.25rem;
+    margin-top: 0.5rem;
+    padding: 0.5rem 1.25rem 1.25rem;
     width: calc(100% - 2.5rem);
+  }
+  .path {
+    display: none;
   }
   .embyr-input-text {
     max-width: 80%;
-    font-size: var(--mediumSize);
+    /* font-size: var(--mediumSize); */
   }
   .embyr-container {
     display: none;

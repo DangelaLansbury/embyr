@@ -158,9 +158,10 @@ const commands = {
             commands.esc.subCommands.new.ops[inputArray[newIdx + 1]].run(inputArray);
             return;
           } else {
-            returnInput(inputArray);
+            let input = inputArray.join(' ');
+            returnInput(input);
             // Return error message
-            let failingArg = inputArray[escIdx + 1];
+            let failingArg = inputArray[newIdx + 1];
             let output = createOutputDiv(`Something went wrong. <span class="honey">${failingArg}</span> is not a valid argument.`, 'wheat');
             returnOutput(output, 0);
             return;
@@ -170,7 +171,7 @@ const commands = {
     },
     run: (input) => {
       // Separate input into array of words
-      let inputArray = input.split(' ');
+      let inputArray = input.toString().split(' ');
       // Find index of 'esc' in inputArray
       let escIdx = inputArray.indexOf('esc');
       // Check if 'esc' is the last word and if not check if the next word is in subCommands
@@ -186,6 +187,33 @@ const commands = {
         let failingArg = inputArray[escIdx + 1];
         let output = createOutputDiv(`Something went wrong. <span class="honey">${failingArg}</span> is not a valid argument.`, 'wheat');
         returnOutput(output, 0);
+      }
+    },
+  },
+  clear: {
+    name: 'clear',
+    keywords: ['clear', 'cls', 'clr', 'clean', 'purge', 'erase', 'wipe', 'reset'],
+    do: `clear`,
+    description: `Clear the terminal.`,
+    run: (input) => {
+      inputArray = input.toString().split(' '); // Separate input into array of words
+      let clrIdx = inputArray.indexOf('clear');
+      // Check if 'clear' is the last word and if not check if the next word is in ops
+      if (clrIdx === inputArray.length - 1) {
+        clearEmbyr();
+        return;
+      } else if (inputArray[clrIdx + 1] === '.') {
+        history = [];
+        clearEmbyr();
+        return;
+      } else {
+        let input = inputArray.join(' ');
+        returnInput(input);
+        // Return error message
+        let failingArg = inputArray[clrIdx + 1];
+        let output = createOutputDiv(`Something went wrong. <span class="honey">${failingArg}</span> is not a valid argument.`, 'wheat');
+        returnOutput(output, 0);
+        return;
       }
     },
   },
