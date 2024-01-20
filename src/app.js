@@ -269,13 +269,13 @@ embyr.addEventListener('input', function () {
   let inputWords = input.split(' ');
   // Ghost input
   let ghostInput = '';
-  // let cmdsToParse = commands;
-  // if (currDir !== '/') {
-  //   cmdsToParse = commands[currDir].subCommands;
-  // } else {
-  //   cmdsToParse = commands;
-  // }
   for (let cmd in commands) {
+    if (currDir !== '/') {
+      // if currDir and cmd are not the same, skip
+      if (currDir !== cmd) {
+        continue;
+      }
+    }
     // Check if command starts with input
     if (inputWords[0].toLowerCase() !== cmd && inputWords.length === 1) {
       if (cmd.startsWith(inputWords[0].toLowerCase()) && inputWords[0]) {
