@@ -75,7 +75,8 @@ let currDir = '/';
 let opRunning = false;
 
 // executables
-function runMakeTissue(input) {
+function runMakeTissue(inputArray) {
+  let input = inputArray.join(' ');
   // Check for help
   if (input.includes('-h') || input.includes('-help')) {
     let output = createOutputDiv(`Here's some help...`, 'wheat');
@@ -86,7 +87,6 @@ function runMakeTissue(input) {
   embyrInputContainer.style.visibility = 'hidden';
   help.innerHTML = quitHint;
   opRunning = true;
-  // return test output steps with a promise and then start scrambling
   function returnSteps(outputSteps) {
     return new Promise((resolve) => {
       const outputStepsLength = outputSteps.length;
@@ -109,14 +109,16 @@ function runMakeTissue(input) {
   return;
 }
 
-function runNew(input) {
+function runNew(inputArray) {
+  let input = inputArray.join(' ');
   returnInput(input);
   let output = createOutputDiv(`You ran a new command with no arguments. Cool.`, 'wheat');
   returnOutput(output, 0);
   return;
 }
 
-function runEsc(input) {
+function runEsc(inputArray) {
+  let input = inputArray.join(' ');
   returnInput(input);
   let output = createOutputDiv(`You ran esc with no arguments. Cool.`, 'wheat');
   returnOutput(output, 0);
@@ -125,40 +127,40 @@ function runEsc(input) {
 
 const commands = {
   esc: {
+    name: 'esc',
+    keywords: [...newKeywords, ...cellKeywords],
     do: `esc`,
     description: `Run esc commands to orchestrate embryonic stem cells.`,
-    keywords: [...newKeywords, ...cellKeywords],
     subCommands: {
       new: {
+        name: 'new',
         keywords: [...newKeywords, ...cellKeywords],
         do: `esc new`,
         description: 'Become a new cell, tissue, organ, or organism.',
-        syntax: `esc new [argument]`,
         ops: {
           cell: {
             keywords: [...cellKeywords],
             do: 'esc new cell',
             description: `Become a new cell.`,
-            syntax: `esc make cell --[modifier]`,
-            exe: runMakeTissue,
+            run: (inputArray) => {
+              runMakeTissue(inputArray);
+            },
           },
         },
-        run: (input) => {
-          // Separate input into array of words
-          let inputArray = input.split(' ');
+        run: (inputArray) => {
           // Find index of 'new' in inputArray
           let newIdx = inputArray.indexOf('new');
           // Check if 'new' is the last word and if not check if the next word is in ops
           if (newIdx === inputArray.length - 1) {
-            runNew(input);
+            runNew(inputArray);
           } else if (inputArray[newIdx + 1] in commands.esc.subCommands.new.ops) {
             // run the operation's exe
-            commands.esc.subCommands.new.ops[inputArray[newIdx + 1]].exe(input);
+            commands.esc.subCommands.new.ops[inputArray[newIdx + 1]].run(inputArray);
             return;
           } else {
-            returnInput(input);
+            returnInput(inputArray);
             // Return error message
-            let output = createOutputDiv(`Please specify a valid operation.`, 'wheat');
+            let output = createOutputDiv(`Something went wrong. Expected a valid argument or no argument at all.`, 'wheat');
             returnOutput(output, 0);
             return;
           }
@@ -172,15 +174,16 @@ const commands = {
       let escIdx = inputArray.indexOf('esc');
       // Check if 'esc' is the last word and if not check if the next word is in subCommands
       if (escIdx === inputArray.length - 1) {
-        runEsc(input);
+        runEsc(inputArray);
       } else if (inputArray[escIdx + 1] in commands.esc.subCommands) {
         // run the subCommand's run
-        commands.esc.subCommands[inputArray[escIdx + 1]].run(input);
+        commands.esc.subCommands[inputArray[escIdx + 1]].run(inputArray);
         return;
       } else {
-        returnInput(input);
+        returnInput(inputArray);
         // Return error message
-        let output = createOutputDiv(`Sorry, I don't understand. Please describe what you'd like to do and maybe I can help.`, 'wheat');
+        let failingArg = inputArray[escIdx + 1];
+        let output = createOutputDiv(`Something went wrong. <span class="honey">${failingArg}</span> is not a valid argument.`, 'wheat');
         returnOutput(output, 0);
       }
     },
