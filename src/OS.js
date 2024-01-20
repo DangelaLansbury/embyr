@@ -83,8 +83,10 @@ function runMakeTissue(inputArray) {
     returnOutput(output, 0);
     return;
   }
-  // Hide input while running
-  embyrInputContainer.style.visibility = 'hidden';
+  // Hide path while running
+  path.style.display = 'none';
+  // Set emby contenteditable to false
+  embyr.setAttribute('contenteditable', 'false');
   help.innerHTML = quitHint;
   opRunning = true;
   function returnSteps(outputSteps) {
@@ -226,8 +228,10 @@ document.addEventListener('keydown', (e) => {
     opRunning = false;
     clearThread();
     // If embyr is invisible, show it
-    if (embyrInputContainer.style.visibility === 'hidden') {
-      embyrInputContainer.style.visibility = 'visible';
+    if (path.style.display === 'none') {
+      path.style.display = 'inline-block';
+      embyr.setAttribute('contenteditable', 'true');
+      embyr.focus();
     }
     clearEmbyr();
     help.innerHTML = defaultHints;

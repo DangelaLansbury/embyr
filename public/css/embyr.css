@@ -1,7 +1,13 @@
 /* ---- embyr ---- */
 /* ---- INPUT ---- */
 .path {
+  display: inline-block;
   margin-right: 0.5rem;
+}
+.path::after {
+  content: '$';
+  color: var(--sweetgrass);
+  margin-left: 0.5rem;
 }
 .embyr-input {
   display: flex;
@@ -22,11 +28,6 @@
   white-space: pre-wrap;
   caret-color: var(--sweetgrass);
 }
-.embyr-input-text::before {
-  content: '$';
-  color: var(--sweetgrass);
-  margin-right: 0.625rem;
-}
 .embyr-input-text:focus {
   border: none;
   outline: none;
@@ -44,7 +45,7 @@
   margin: auto 0;
   z-index: 1;
   position: relative;
-  /* left: -0.05rem; */
+  left: -0.125rem;
 }
 .cursor.cursor-focus {
   animation: blink 0.8s infinite;
