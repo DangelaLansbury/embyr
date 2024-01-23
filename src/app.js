@@ -270,6 +270,7 @@ embyr.addEventListener('input', function () {
     cursor.style.display = 'none';
   } else {
     cursor.style.display = 'inline-flex';
+    cursor.classList.add('cursor-focus');
   }
   // Clear suggestions and details
   suggestionsList.innerHTML = '';
