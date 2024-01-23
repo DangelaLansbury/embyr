@@ -86,6 +86,7 @@ window.onload = () => {
   } else {
     history = [];
   }
+  help.innerHTML = helpHint;
   updatePath();
   // Focus on embyr
   embyr.focus();
@@ -101,17 +102,6 @@ const focusAtEnd = () => {
     sel.addRange(range);
   }
 };
-
-// workbook.addEventListener('click', function (e) {
-//   // Focus on embyr if target is not thread text
-//   if (!e.target.classList.contains('thread-text')) {
-//     embyr.focus();
-//   }
-//   // Set cursor at end of editor if target is not embyr
-//   if (e.target !== embyr) {
-//     focusAtEnd();
-//   }
-// });
 
 window.addEventListener('mousedown', function (e) {
   console.log(e.target);
@@ -468,7 +458,7 @@ embyr.addEventListener('input', function () {
     help.innerHTML = tabHint;
   } else {
     if (history.length === 0) {
-      help.innerHTML = '';
+      help.innerHTML = helpHint;
     } else {
       help.innerHTML = defaultHints;
     }
@@ -555,7 +545,7 @@ embyr.addEventListener('keydown', function (e) {
     clearEmbyr();
     suggestionAvailable = '';
     if (history.length === 0) {
-      help.innerHTML = '';
+      help.innerHTML = helpHint;
     } else {
       help.innerHTML = defaultHints;
     }
