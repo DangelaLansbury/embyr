@@ -89,8 +89,10 @@ window.onload = () => {
   help.innerHTML = helpHint;
   updatePath();
   // Focus on embyr
-  embyr.focus();
+  embyrFocus();
 };
+
+// --- FOCUS HANDLING ---
 
 const focusAtEnd = () => {
   if (embyr.innerText.toString().trim().length > 0) {
@@ -103,19 +105,21 @@ const focusAtEnd = () => {
   }
 };
 
+const embyrFocus = () => {
+  embyr.focus();
+  focusAtEnd();
+};
+
 window.addEventListener('mousedown', function (e) {
   console.log(e.target);
   // Focus on embyr if target is not thread embyr
   if (e.target !== embyr) {
     e.preventDefault();
     if (e.target === embyrInputContainer) {
-      embyr.focus();
-      focusAtEnd();
+      embyrFocus();
     }
   }
 });
-
-// --- CURSOR ---
 
 // Hide cursor if input loses focus
 embyr.addEventListener('blur', function (e) {
@@ -545,6 +549,8 @@ embyr.addEventListener('keydown', function (e) {
   if (e.key === 'Backspace' && embyr.innerText.trim().length == 1) {
     clearEmbyr();
     suggestionAvailable = '';
+    cursor.style.display = 'inline-flex';
+    cursor.classList.add('cursor-focus');
     if (history.length === 0) {
       help.innerHTML = helpHint;
     } else {
@@ -558,7 +564,7 @@ const clearEmbyr = () => {
   input = '';
   embyr.innerText = '';
   ghost.innerText = '';
-  embyr.focus();
+  embyrFocus();
   cursor.style.display = 'inline-flex';
   details.innerHTML = '';
   suggestionAvailable = '';

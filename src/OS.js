@@ -184,7 +184,7 @@ const commands = {
         commands.esc.subCommands[inputArray[escIdx + 1]].run(inputArray);
         return;
       } else {
-        returnInput(inputArray);
+        returnInput(input);
         // Return error message
         let failingArg = inputArray[escIdx + 1];
         let output = createOutputDiv(`Something went wrong. <span class="honey">${failingArg}</span> is not a valid argument.`, 'wheat');
@@ -231,7 +231,7 @@ document.addEventListener('keydown', (e) => {
     if (path.style.display === 'none') {
       path.style.display = 'inline-block';
       embyr.setAttribute('contenteditable', 'true');
-      embyr.focus();
+      embyrFocus();
     }
     clearEmbyr();
     help.innerHTML = defaultHints;
@@ -260,7 +260,7 @@ function cycleActiveColor() {
   }
   logoBtn.classList.remove(currentClass);
   logoBtn.classList.add(nextClass);
-  embyr.focus();
+  embyrFocus();
   if (embyr.innerText.toString().trim().length > 0) {
     focusAtEnd();
   }
