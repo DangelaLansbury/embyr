@@ -59,13 +59,18 @@ const quitHint = `<div class="help-bar-hint">
   </div>`;
 
 const suggestHint = `<div class="help-bar-hint">
-    <div class="help-bar-cmd thicc">:_</div>
+    <div class="help-bar-cmd thicc">/_</div>
     <div class="help-bar-text">suggest</div>
   </div>`;
 
 const tabHint = `<div class="help-bar-hint">
     <div class="help-bar-cmd thicc">tab</div>
     <div class="help-bar-text">autocomplete</div>
+  </div>`;
+
+const enterHint = `<div class="help-bar-hint">
+    <div class="help-bar-cmd thicc">return</div>
+    <div class="help-bar-text">run op</div>
   </div>`;
 
 const initHints = suggestHint + helpHint;
@@ -340,7 +345,7 @@ embyr.addEventListener('input', function () {
   // Suggestions
   suggestions = document.querySelectorAll('.suggestion');
   suggestionsArray = [];
-  if (input.startsWith(':')) {
+  if (input.startsWith('/')) {
     for (let cmd in commands) {
       // check window height
       let currentHeight = window.innerHeight;
@@ -496,7 +501,7 @@ embyr.addEventListener('keydown', function (e) {
       suggestionAvailable = '';
       ghost.innerText = '';
       focusAtEnd();
-      help.innerHTML = defaultHints;
+      help.innerHTML = enterHint;
     }
   }
 });
