@@ -18,7 +18,7 @@ let embyrHelper = document.querySelector('.embyr-helper'); // embyr suggestions 
 // embyr input
 let embyrInputContainer = document.querySelector('.embyr-input'); // embyr input container
 let path = document.querySelector('.path'); // Path container
-const defaultUser = 'grove'; // Default display name
+const defaultUser = 'neo'; // Default display name
 let embyr = document.querySelector('.embyr-input-text'); // embyr input field
 let cursor = document.querySelector('.cursor'); // embyr input fake cursor
 let ghost = document.querySelector('.ghost-input'); // embyr input ghost text
