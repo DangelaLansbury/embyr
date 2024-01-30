@@ -169,6 +169,19 @@ const commands = {
             return;
           }
         },
+        runLint: (inputArray) => {
+          // Find index of 'new' in inputArray
+          let newIdx = inputArray.indexOf('new');
+          // Check if 'new' is the last word and if not check if the next word is in ops
+          if (newIdx === inputArray.length - 1) {
+            return true;
+          } else if (inputArray[newIdx + 1] in commands.esc.subCommands.new.ops) {
+            // run the operation's exe
+            return true;
+          } else {
+            return false;
+          }
+        },
       },
     },
     run: (input) => {
@@ -189,6 +202,22 @@ const commands = {
         let failingArg = inputArray[escIdx + 1];
         let output = createOutputDiv(`Something went wrong. <span class="honey">${failingArg}</span> is not a valid argument.`, 'wheat');
         returnOutput(output, 0);
+      }
+    },
+    runLint: (input) => {
+      // Separate input into array of words
+      let inputArray = input.toString().split(' ');
+      // Find index of 'esc' in inputArray
+      let escIdx = inputArray.indexOf('esc');
+      // Check if 'esc' is the last word and if not check if the next word is in subCommands
+      if (escIdx === inputArray.length - 1) {
+        return true;
+      } else if (inputArray[escIdx + 1] in commands.esc.subCommands) {
+        // run the subCommand's run
+        commands.esc.subCommands[inputArray[escIdx + 1]].runLint(inputArray);
+        return true;
+      } else {
+        return false;
       }
     },
   },
@@ -218,7 +247,41 @@ const commands = {
         return;
       }
     },
+    runLint: (input) => {
+      inputArray = input.toString().split(' '); // Separate input into array of words
+      let clrIdx = inputArray.indexOf('clear');
+      // Check if 'clear' is the last word and if not check if the next word is in ops
+      if (clrIdx === inputArray.length - 1) {
+        return true;
+      } else if (inputArray[clrIdx + 1] === '.') {
+        return true;
+      } else {
+        return false;
+      }
+    },
   },
+};
+
+const lintCommands = () => {
+  // Get input
+  let input = embyr.innerText.toString().trim();
+  // Separate input into array of words
+  let inputArray = input.split(' ');
+  // Find index of first word in inputArray
+  let firstWord = inputArray[0];
+  // Check if first word is in commands
+  if (firstWord in commands) {
+    // if that returns true, display the command's description
+    if (commands[firstWord].runLint(input)) {
+      displayShort(input, 'No errors detected.');
+    } else {
+      displayShort(input, 'Command not found.');
+    }
+    return;
+  } else {
+    displayShort(input, 'Command not found.');
+    return;
+  }
 };
 
 // listen for "q" and reset if op is running

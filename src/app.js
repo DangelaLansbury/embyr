@@ -469,6 +469,19 @@ embyr.addEventListener('input', function () {
         }
       }
     }
+  } else {
+    // Live linting: check if input matches any commands
+    const possibleCommands = [];
+    for (let cmd in commands) {
+      // check window height
+      let currentHeight = window.innerHeight;
+      if (currentHeight < 400) {
+        continue;
+      }
+      if (ghostInput === '' && suggestionAvailable === '') {
+        lintCommands();
+      }
+    }
   }
   // If there is a suggestion available, show tab hint
   if (suggestionAvailable !== '' || ghostInput !== '') {
