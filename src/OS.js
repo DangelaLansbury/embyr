@@ -273,7 +273,7 @@ const lintCommands = () => {
   if (firstWord in commands) {
     // if that returns true, display the command's description
     if (commands[firstWord].runLint(input)) {
-      displayShort(input, 'No errors detected.');
+      displayShort(input, 'No errors detected. Send it baby!');
     } else {
       displayShort(input, 'Command not found.');
     }
