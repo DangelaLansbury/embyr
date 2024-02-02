@@ -475,7 +475,7 @@ embyr.addEventListener('input', function () {
     for (let cmd in commands) {
       // check window height
       let currentHeight = window.innerHeight;
-      if (currentHeight < 400) {
+      if (currentHeight < 400 || input.length < 3) {
         continue;
       }
       if (ghostInput === '' && suggestionAvailable === '') {
