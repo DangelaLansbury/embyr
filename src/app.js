@@ -83,7 +83,7 @@ window.onload = () => {
   let visited = localStorage.getItem('visited');
   if (visited === null) {
     // Show first time message
-    embyrInitContent.innerHTML = `Hi there. This is embyr, a CLI for orchestrating stem cells.<br>Not sure what to run? Try describing what you'd like to do.`;
+    embyrInitContent.innerHTML = `Hi there. This is embyr, a CLI for orchestrating stem cells.<br>Not sure what to run? Type "/" and describe what you'd like to do.`;
     // Set visited to true
     localStorage.setItem('visited', JSON.stringify(true));
   } else {
