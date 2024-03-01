@@ -128,21 +128,21 @@ function runEsc(inputArray) {
 }
 
 const commands = {
-  esc: {
-    name: 'esc',
+  git: {
+    name: 'git',
     keywords: [...newKeywords, ...cellKeywords],
-    do: `esc`,
-    description: `Run esc commands to orchestrate embryonic stem cells.`,
+    do: `git`,
+    description: `Run git commands to orchestrate embryonic stem cells.`,
     subCommands: {
       new: {
         name: 'new',
         keywords: [...newKeywords, ...cellKeywords],
-        do: `esc new`,
+        do: `git new`,
         description: 'Become a new cell, tissue, organ, or organism.',
         ops: {
           cell: {
             keywords: [...cellKeywords],
-            do: 'esc new cell',
+            do: 'git new cell',
             description: `Become a new cell.`,
             run: (inputArray) => {
               runMakeTissue(inputArray);
@@ -155,9 +155,9 @@ const commands = {
           // Check if 'new' is the last word and if not check if the next word is in ops
           if (newIdx === inputArray.length - 1) {
             runNew(inputArray);
-          } else if (inputArray[newIdx + 1] in commands.esc.subCommands.new.ops) {
+          } else if (inputArray[newIdx + 1] in commands.git.subCommands.new.ops) {
             // run the operation's exe
-            commands.esc.subCommands.new.ops[inputArray[newIdx + 1]].run(inputArray);
+            commands.git.subCommands.new.ops[inputArray[newIdx + 1]].run(inputArray);
             return;
           } else {
             let input = inputArray.join(' ');
@@ -175,7 +175,7 @@ const commands = {
           // Check if 'new' is the last word and if not check if the next word is in ops
           if (newIdx === inputArray.length - 1) {
             return true;
-          } else if (inputArray[newIdx + 1] in commands.esc.subCommands.new.ops) {
+          } else if (inputArray[newIdx + 1] in commands.git.subCommands.new.ops) {
             // run the operation's exe
             return true;
           } else {
@@ -187,19 +187,19 @@ const commands = {
     run: (input) => {
       // Separate input into array of words
       let inputArray = input.toString().split(' ');
-      // Find index of 'esc' in inputArray
-      let escIdx = inputArray.indexOf('esc');
-      // Check if 'esc' is the last word and if not check if the next word is in subCommands
-      if (escIdx === inputArray.length - 1) {
-        runEsc(inputArray);
-      } else if (inputArray[escIdx + 1] in commands.esc.subCommands) {
+      // Find index of 'git' in inputArray
+      let gitIdx = inputArray.indexOf('git');
+      // Check if 'git' is the last word and if not check if the next word is in subCommands
+      if (gitIdx === inputArray.length - 1) {
+        runGit(inputArray);
+      } else if (inputArray[gitIdx + 1] in commands.git.subCommands) {
         // run the subCommand's run
-        commands.esc.subCommands[inputArray[escIdx + 1]].run(inputArray);
+        commands.git.subCommands[inputArray[gitIdx + 1]].run(inputArray);
         return;
       } else {
         returnInput(input);
         // Return error message
-        let failingArg = inputArray[escIdx + 1];
+        let failingArg = inputArray[gitIdx + 1];
         let output = createOutputDiv(`Something went wrong. <span class="honey">${failingArg}</span> is not a valid argument.`, 'wheat');
         returnOutput(output, 0);
       }
@@ -207,14 +207,14 @@ const commands = {
     runLint: (input) => {
       // Separate input into array of words
       let inputArray = input.toString().split(' ');
-      // Find index of 'esc' in inputArray
-      let escIdx = inputArray.indexOf('esc');
-      // Check if 'esc' is the last word and if not check if the next word is in subCommands
-      if (escIdx === inputArray.length - 1) {
+      // Find index of 'git' in inputArray
+      let gitIdx = inputArray.indexOf('git');
+      // Check if 'git' is the last word and if not check if the next word is in subCommands
+      if (gitIdx === inputArray.length - 1) {
         return true;
-      } else if (inputArray[escIdx + 1] in commands.esc.subCommands) {
+      } else if (inputArray[gitIdx + 1] in commands.git.subCommands) {
         // run the subCommand's run
-        commands.esc.subCommands[inputArray[escIdx + 1]].runLint(inputArray);
+        commands.git.subCommands[inputArray[gitIdx + 1]].runLint(inputArray);
         return true;
       } else {
         return false;
