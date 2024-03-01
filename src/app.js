@@ -508,7 +508,11 @@ embyr.addEventListener('keydown', function (e) {
       suggestionAvailable = '';
       focusAtEnd();
       ghost.innerText = '';
-      help.innerHTML = defaultHints;
+      if (history.length === 0) {
+        help.innerHTML = initHints;
+      } else {
+        help.innerHTML = defaultHints;
+      }
     } else if (suggestionAvailable !== '' && ghost.innerText === '') {
       embyr.innerText = suggestionAvailable;
       suggestionAvailable = '';
