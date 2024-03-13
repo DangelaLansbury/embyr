@@ -262,18 +262,23 @@ const commands = {
   },
 };
 
-const lintCommands = () => {
+const lintCommands = (command) => {
   // Get input
   let input = embyr.innerText.toString().trim();
   // Separate input into array of words
   let inputArray = input.split(' ');
   // Find index of first word in inputArray
   let firstWord = inputArray[0];
+  let secondWord = inputArray[1];
+  let thirdWord = inputArray[2];
   // Check if first word is in commands
   if (firstWord in commands) {
     // if that returns true, display the command's description
     if (commands[firstWord].runLint(input)) {
-      displayShort(input, 'No errors detected. Send it baby!');
+      displayShort(input, `No errors detected: ${commands[firstWord].description}`);
+      if (secondWord in commands[firstWord].subCommands) {
+        displayShort(input, `No errors detected: ${commands[firstWord].subCommands[secondWord].description}`);
+      }
     } else {
       displayShort(input, 'Command not found.');
     }
