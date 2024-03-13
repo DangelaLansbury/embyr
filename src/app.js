@@ -12,7 +12,7 @@ let help = document.querySelector('#help'); // Help container for first set of c
 let embyrContainer = document.querySelector('.embyr-container'); // Full embyr container for input, suggestions, and details
 let embyrInit = document.querySelector('.embyr-init'); // embyr init container
 let embyrInitContent = document.querySelector('.embyr-init-content'); // embyr init text
-let standardInitMsg = `Linter output and command suggestions will appear down here.`;
+let standardInitMsg = `Linter checks and command suggestions will appear down here.`;
 let firstTime = document.querySelector('#firstTime'); // First time hint
 let embyrHelper = document.querySelector('.embyr-helper'); // embyr suggestions and description container
 // embyr input
