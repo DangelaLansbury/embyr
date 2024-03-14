@@ -133,17 +133,20 @@ const commands = {
     keywords: [...newKeywords, ...cellKeywords],
     do: `git`,
     description: `Run git commands to orchestrate embryonic stem cells.`,
+    preview: `The git command is used to track and manage changes in the embryonic stem cell's lineage and form.`,
     subCommands: {
       new: {
         name: 'new',
         keywords: [...newKeywords, ...cellKeywords],
         do: `git new`,
-        description: 'Become a new cell, tissue, organ, or organism.',
+        description: `Become a new cell, tissue, organ, or organism.`,
+        preview: `The new command is used to create a new cell, tissue, organ, or organism.`,
         ops: {
           cell: {
             keywords: [...cellKeywords],
             do: 'git new cell',
             description: `Become a new cell.`,
+            preview: `The cell command is used to create a new cell.`,
             run: (inputArray) => {
               runMakeTissue(inputArray);
             },
@@ -270,14 +273,13 @@ const lintCommands = (command) => {
   // Find index of first word in inputArray
   let firstWord = inputArray[0];
   let secondWord = inputArray[1];
-  let thirdWord = inputArray[2];
   // Check if first word is in commands
   if (firstWord in commands) {
     // if that returns true, display the command's description
     if (commands[firstWord].runLint(input)) {
-      displayShort(input, `No errors detected: ${commands[firstWord].description}`);
+      displayShort(input, `No errors detected: ${commands[firstWord].preview}`);
       if (secondWord in commands[firstWord].subCommands) {
-        displayShort(input, `No errors detected: ${commands[firstWord].subCommands[secondWord].description}`);
+        displayShort(input, `No errors detected: ${commands[firstWord].subCommands[secondWord].preview}`);
       }
     } else {
       displayShort(input, 'Command not found.');
