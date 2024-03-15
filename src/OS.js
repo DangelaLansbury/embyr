@@ -5,6 +5,39 @@ const logoBtn = document.querySelector('.logo-container');
 
 // --- KEYWORDS AND ARGUMENTS ---
 
+// Git commands
+
+const gitKeywords = [
+  'git',
+  'track',
+  'manage',
+  'change',
+  'lineage',
+  'form',
+  'create',
+  'new',
+  'become',
+  'cell',
+  'tissue',
+  'organ',
+  'organism',
+  'clone',
+  'copy',
+  'duplicate',
+  'replicate',
+  'reproduce',
+  'renew',
+  'regenerate',
+  'rebuild',
+  'reconstruct',
+  'reform',
+  'redevelop',
+  'reformulate',
+  'reoriginate',
+  'resynthesize',
+  'regrow',
+];
+
 // BIOLOGY
 
 // Types of stem cells
@@ -130,14 +163,14 @@ function runEsc(inputArray) {
 const commands = {
   git: {
     name: 'git',
-    keywords: [...newKeywords, ...cellKeywords],
+    keywords: [...gitKeywords, ...newKeywords, ...cellKeywords],
     do: `git`,
     description: `Run git commands to orchestrate embryonic stem cells.`,
     preview: `The git command is used to track and manage changes in the embryonic stem cell's lineage and form.`,
     subCommands: {
       new: {
         name: 'new',
-        keywords: [...newKeywords, ...cellKeywords],
+        keywords: [...gitKeywords, ...newKeywords, ...cellKeywords],
         do: `git new`,
         description: `Become a new cell, tissue, organ, or organism.`,
         preview: `The new command is used to create a new cell, tissue, organ, or organism.`,
