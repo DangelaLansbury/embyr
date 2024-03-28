@@ -10,8 +10,6 @@ let thread = document.querySelector('.thread'); // Thread
 let help = document.querySelector('#help'); // Help container for first set of commands
 // embyr components
 let embyrContainer = document.querySelector('.embyr-container'); // Full embyr container for input, suggestions, and details
-let embyrInit = document.querySelector('.embyr-init'); // embyr init container
-let embyrInitContent = document.querySelector('.embyr-init-content'); // embyr init text
 let standardInitMsg = `Linter checks and command suggestions will appear down here.`;
 let firstTime = document.querySelector('#firstTime'); // First time hint
 let embyrHelper = document.querySelector('.embyr-helper'); // embyr suggestions and description container
@@ -82,13 +80,8 @@ window.onload = () => {
   // Check if user has visited before
   let visited = localStorage.getItem('visited');
   if (visited === null) {
-    // Show first time message
-    embyrInitContent.innerHTML = `Hi there. This is embyr, a CLI for orchestrating stem cells.<br>Not sure what to run? Type "/" and describe what you'd like to do.`;
     // Set visited to true
     localStorage.setItem('visited', JSON.stringify(true));
-  } else {
-    // Show standard init message
-    embyrInitContent.innerHTML = standardInitMsg;
   }
   // Check if user has history
   let history = localStorage.getItem('history');
@@ -159,20 +152,6 @@ const returnNullAndHelp = (command, delay) => {
   returnOutput(createOutputDiv(helpThread, 'wheat'), delay);
 };
 
-// --- SUGGESTIONS ---
-
-// toggle embyr helper display between init and suggestions if there are suggestions
-const hideEmbyrInit = () => {
-  embyrInit.classList.add('hidden');
-  embyrHelper.classList.remove('hidden');
-};
-
-const showEmbyrInit = () => {
-  embyrInitContent.innerHTML = standardInitMsg;
-  embyrInit.classList.remove('hidden');
-  embyrHelper.classList.add('hidden');
-};
-
 // --- OUTPUTS ---
 
 const createOutputDiv = (text, classParam) => {
@@ -231,23 +210,10 @@ embyr.addEventListener('keydown', function (e) {
 // --- SUGGESTIONS ---
 
 const displayShort = (toDo, description) => {
-  hideEmbyrInit();
   details.innerHTML = '';
   let newDetails = document.createElement('div');
   newDetails.className = 'suggestion-details suggestion';
   newDetails.innerHTML = `<div class="sweetgrass thicc">${toDo}</div><div class="description">${description}</div>`;
-  details.appendChild(newDetails);
-};
-
-const displayFull = (toDo, description, syntax) => {
-  hideEmbyrInit();
-  details.innerHTML = '';
-  let newDetails = document.createElement('div');
-  newDetails.className = 'suggestion-details suggestion';
-  newDetails.innerHTML = `<div style="margin-bottom: 0.5rem;"><span class="sweetgrass thicc">${toDo}</span></div>
-  
-  <div>${description}</div>
-  <div class="honey"><span class="stone">Explanation:</span> ${syntax}</div>`;
   details.appendChild(newDetails);
 };
 
@@ -495,7 +461,6 @@ embyr.addEventListener('input', function () {
   }
   // If there is nothing to suggest, show init message
   if (suggestionsArray.length === 0 && details.innerHTML === '') {
-    showEmbyrInit();
   }
 });
 
@@ -598,7 +563,6 @@ const clearEmbyr = () => {
   details.innerHTML = '';
   suggestionAvailable = '';
   help.innerHTML = defaultHints;
-  showEmbyrInit();
 };
 
 // Clear a thread and rest embyr input field
