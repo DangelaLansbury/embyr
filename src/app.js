@@ -10,8 +10,6 @@ let thread = document.querySelector('.thread'); // Thread
 let help = document.querySelector('#help'); // Help container for first set of commands
 // embyr components
 let embyrContainer = document.querySelector('.embyr-container'); // Full embyr container for input, suggestions, and details
-let standardInitMsg = `Linter checks and command suggestions will appear down here.`;
-let firstTime = document.querySelector('#firstTime'); // First time hint
 let embyrHelper = document.querySelector('.embyr-helper'); // embyr suggestions and description container
 // embyr input
 let embyrInputContainer = document.querySelector('.embyr-input'); // embyr input container
@@ -27,10 +25,6 @@ let suggestionsListContainer = document.querySelector('.suggestions-list-contain
 let suggestionsList = document.querySelector('.suggestions-list');
 let suggestions = document.querySelectorAll('.suggestion');
 let details = document.querySelector('.details');
-let detailsName = document.querySelector('.details-name');
-let detailsDescription = document.querySelector('.details-desc');
-let detailsArguments = document.querySelector('.details-args-accepted');
-let detailsSyntax = document.querySelector('.details-syntax');
 
 // --- PATH ---
 
