@@ -118,12 +118,12 @@ window.addEventListener('mousedown', function (e) {
   }
 });
 
-// Hide cursor if input loses focus
+// Show no-focus cursor
 embyr.addEventListener('blur', function (e) {
   cursor.classList.remove('cursor-focus');
 });
 
-// Show cursor if input gains focus
+// Show in-focus cursor
 embyr.addEventListener('focus', function (e) {
   if (embyr.innerText.toString().trim().length == 0) {
     cursor.style.display = 'inline-flex';
@@ -431,7 +431,6 @@ embyr.addEventListener('input', function () {
     }
   } else {
     // Live linting: check if input matches any commands
-    const possibleCommands = [];
     for (let cmd in commands) {
       // check window height
       let currentHeight = window.innerHeight;
@@ -458,7 +457,7 @@ embyr.addEventListener('input', function () {
   }
 });
 
-// Listen for tab and whatever's in ghost-input to input, or if there's a suggestion replace the input with the suggested command
+// Listen for tab and add whatever's in ghost-input, or replace the input with a suggested command
 embyr.addEventListener('keydown', function (e) {
   if (e.key === 'Tab') {
     e.preventDefault();
