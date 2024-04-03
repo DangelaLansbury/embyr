@@ -306,6 +306,7 @@ const lintCommands = (command) => {
   // Find index of first word in inputArray
   let firstWord = inputArray[0];
   let secondWord = inputArray[1];
+  let thirdWord = inputArray[2];
   // Check if first word is in commands
   if (firstWord in commands) {
     // if that returns true, display the command's description
@@ -313,6 +314,9 @@ const lintCommands = (command) => {
       displayShort(input, `No errors detected: ${commands[firstWord].preview}`);
       if (secondWord in commands[firstWord].subCommands) {
         displayShort(input, `No errors detected: ${commands[firstWord].subCommands[secondWord].preview}`);
+        if (thirdWord in commands[firstWord].subCommands[secondWord].ops) {
+          displayShort(input, `No errors detected: ${commands[firstWord].subCommands[secondWord].ops[thirdWord].preview}`);
+        }
       }
     } else {
       displayShort(input, 'Command not found.');

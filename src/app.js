@@ -434,10 +434,10 @@ embyr.addEventListener('input', function () {
     for (let cmd in commands) {
       // check window height
       let currentHeight = window.innerHeight;
-      if (currentHeight < 400 || input.length < 3) {
+      if (currentHeight < 400) {
         continue;
       }
-      if (ghostInput === '' && suggestionAvailable === '') {
+      if (ghostInput === '' && suggestionAvailable === '' && inputWords.length >= 1) {
         lintCommands();
       }
     }
@@ -451,9 +451,6 @@ embyr.addEventListener('input', function () {
     } else {
       help.innerHTML = defaultHints;
     }
-  }
-  // If there is nothing to suggest, show init message
-  if (suggestionsArray.length === 0 && details.innerHTML === '') {
   }
 });
 
