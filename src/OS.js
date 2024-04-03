@@ -166,20 +166,20 @@ const commands = {
     keywords: [...gitKeywords, ...newKeywords, ...cellKeywords],
     do: `git`,
     description: `The <span class="lilac thicc inline-command"> git </span> command is used to track and manage changes in the embryonic stem cell's lineage and form.`,
-    preview: `The <span class="lilac thicc inline-command"> git </span> command is used to track and manage changes in the embryonic stem cell's lineage and form.`,
+    preview: `Expected an argument after <span class="lilac thicc inline-command"> git </span>.`,
     subCommands: {
       new: {
         name: 'new',
         keywords: [...gitKeywords, ...newKeywords, ...cellKeywords],
         do: `git new`,
         description: `The <span class="lilac thicc inline-command"> new </span> command is used to create a new cell, tissue, organ, or organism.`,
-        preview: `The <span class="lilac thicc inline-command">new</span> command is used to create a new cell, tissue, organ, or organism.`,
+        preview: `Expected an argument after <span class="lilac thicc inline-command"> new </span>.`,
         ops: {
           cell: {
             keywords: [...cellKeywords],
             do: 'git new cell',
             description: `The <span class="lilac thicc inline-command">cell</span> command is used to create a new cell.`,
-            preview: `The <span class="lilac thicc inline-command">cell</span> command is used to create a new cell.`,
+            preview: `Woo! It worked.`,
             run: (inputArray) => {
               runMakeTissue(inputArray);
             },
