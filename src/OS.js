@@ -5,10 +5,10 @@ const logoBtn = document.querySelector('.logo-container');
 
 // --- KEYWORDS AND ARGUMENTS ---
 
-// Git commands
+// make commands
 
-const gitKeywords = [
-  'git',
+const makeKeywords = [
+  'make',
   'track',
   'manage',
   'change',
@@ -161,23 +161,23 @@ function runEsc(inputArray) {
 }
 
 const commands = {
-  git: {
-    name: 'git',
-    keywords: [...gitKeywords, ...newKeywords, ...cellKeywords],
-    do: `git`,
-    description: `The <span class="lilac thicc inline-command"> git </span> command is used to track and manage changes in the embryonic stem cell's lineage and form.`,
-    preview: `Expected an argument after <span class="lilac thicc inline-command"> git </span>.`,
+  make: {
+    name: 'make',
+    keywords: [...makeKeywords, ...newKeywords, ...cellKeywords],
+    do: `make`,
+    description: `The <span class="lilac thicc inline-command"> make </span> command is used to track and manage changes in the embryonic stem cell's lineage and form.`,
+    preview: `Expected an argument after <span class="lilac thicc inline-command"> make </span>.`,
     subCommands: {
       new: {
         name: 'new',
-        keywords: [...gitKeywords, ...newKeywords, ...cellKeywords],
-        do: `git new`,
+        keywords: [...makeKeywords, ...newKeywords, ...cellKeywords],
+        do: `make new`,
         description: `The <span class="lilac thicc inline-command"> new </span> command is used to create a new cell, tissue, organ, or organism.`,
         preview: `Expected an argument after <span class="lilac thicc inline-command"> new </span>.`,
         ops: {
           cell: {
             keywords: [...cellKeywords],
-            do: 'git new cell',
+            do: 'make new cell',
             description: `The <span class="lilac thicc inline-command">cell</span> command is used to create a new cell.`,
             preview: `Woo! It worked.`,
             run: (inputArray) => {
@@ -191,9 +191,9 @@ const commands = {
           // Check if 'new' is the last word and if not check if the next word is in ops
           if (newIdx === inputArray.length - 1) {
             runNew(inputArray);
-          } else if (inputArray[newIdx + 1] in commands.git.subCommands.new.ops) {
+          } else if (inputArray[newIdx + 1] in commands.make.subCommands.new.ops) {
             // run the operation's exe
-            commands.git.subCommands.new.ops[inputArray[newIdx + 1]].run(inputArray);
+            commands.make.subCommands.new.ops[inputArray[newIdx + 1]].run(inputArray);
             return;
           } else {
             let input = inputArray.join(' ');
@@ -211,7 +211,7 @@ const commands = {
           // Check if 'new' is the last word and if not check if the next word is in ops
           if (newIdx === inputArray.length - 1) {
             return true;
-          } else if (inputArray[newIdx + 1] in commands.git.subCommands.new.ops) {
+          } else if (inputArray[newIdx + 1] in commands.make.subCommands.new.ops) {
             // run the operation's exe
             return true;
           } else {
@@ -223,19 +223,19 @@ const commands = {
     run: (input) => {
       // Separate input into array of words
       let inputArray = input.toString().split(' ');
-      // Find index of 'git' in inputArray
-      let gitIdx = inputArray.indexOf('git');
-      // Check if 'git' is the last word and if not check if the next word is in subCommands
-      if (gitIdx === inputArray.length - 1) {
-        runGit(inputArray);
-      } else if (inputArray[gitIdx + 1] in commands.git.subCommands) {
+      // Find index of 'make' in inputArray
+      let makeIdx = inputArray.indexOf('make');
+      // Check if 'make' is the last word and if not check if the next word is in subCommands
+      if (makeIdx === inputArray.length - 1) {
+        runmake(inputArray);
+      } else if (inputArray[makeIdx + 1] in commands.make.subCommands) {
         // run the subCommand's run
-        commands.git.subCommands[inputArray[gitIdx + 1]].run(inputArray);
+        commands.make.subCommands[inputArray[makeIdx + 1]].run(inputArray);
         return;
       } else {
         returnInput(input);
         // Return error message
-        let failingArg = inputArray[gitIdx + 1];
+        let failingArg = inputArray[makeIdx + 1];
         let output = createOutputDiv(`Something went wrong. <span class="honey">${failingArg}</span> is not a valid argument.`, 'wheat');
         returnOutput(output, 0);
       }
@@ -243,14 +243,14 @@ const commands = {
     runLint: (input) => {
       // Separate input into array of words
       let inputArray = input.toString().split(' ');
-      // Find index of 'git' in inputArray
-      let gitIdx = inputArray.indexOf('git');
-      // Check if 'git' is the last word and if not check if the next word is in subCommands
-      if (gitIdx === inputArray.length - 1) {
+      // Find index of 'make' in inputArray
+      let makeIdx = inputArray.indexOf('make');
+      // Check if 'make' is the last word and if not check if the next word is in subCommands
+      if (makeIdx === inputArray.length - 1) {
         return true;
-      } else if (inputArray[gitIdx + 1] in commands.git.subCommands) {
+      } else if (inputArray[makeIdx + 1] in commands.make.subCommands) {
         // run the subCommand's run
-        commands.git.subCommands[inputArray[gitIdx + 1]].runLint(inputArray);
+        commands.make.subCommands[inputArray[makeIdx + 1]].runLint(inputArray);
         return true;
       } else {
         return false;
