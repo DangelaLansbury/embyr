@@ -4,11 +4,6 @@
   display: inline-block;
   margin-right: 0.5rem;
 }
-.path::after {
-  content: '$';
-  color: var(--sweetgrass);
-  margin-left: 0.5rem;
-}
 .embyr-input {
   display: flex;
   flex-direction: row;

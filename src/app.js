@@ -85,7 +85,7 @@ window.onload = () => {
     history = [];
   }
   help.innerHTML = initHints;
-  updatePath();
+  path.innerHTML = `<span class="sweetgrass thicc">></span>`;
   // Focus on embyr
   embyrFocus();
 };
