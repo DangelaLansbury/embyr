@@ -85,7 +85,7 @@ window.onload = () => {
     history = [];
   }
   help.innerHTML = initHints;
-  updatePath();
+  path.innerHTML = `<span class="sweetgrass thicc">></span>`;
   // Focus on embyr
   embyrFocus();
 };
@@ -319,112 +319,145 @@ embyr.addEventListener('input', function () {
           let levDist = levenshteinDistance(inputWords[i].replace(/-/g, '').replace(/\//g, ''), keywords[j].replace(/-/g, '').replace(/\//g, ''));
           let similarity = 1 - levDist / Math.max(inputWords[i].length, keywords[j].length);
           if (similarity > 0.74) {
-            // Search through subcommands object for each command
-            let subs = commands[cmd].subCommands;
-            for (let sub in subs) {
-              let ops = subs[sub].ops;
-              let subKeywords = subs[sub].keywords;
-              // Fuzzy search input and subKeywords
-              for (let i = 0; i < inputWords.length; i++) {
-                for (let j = 0; j < subKeywords.length; j++) {
-                  let levDist = levenshteinDistance(inputWords[i].replace(/-/g, '').replace(/\//g, ''), subKeywords[j].replace(/-/g, '').replace(/\//g, ''));
-                  let similarity = 1 - levDist / Math.max(inputWords[i].length, subKeywords[j].length);
-                  if (similarity > 0.74) {
-                    // Search through ops object for each command
-                    for (let op in ops) {
-                      let opsKeywords = ops[op].keywords;
-                      for (let i = 0; i < inputWords.length; i++) {
-                        for (let j = 0; j < opsKeywords.length; j++) {
-                          // Fuzzy search input and opsKeywords
-                          let levDist = levenshteinDistance(inputWords[i].replace(/-/g, '').replace(/\//g, ''), opsKeywords[j].replace(/-/g, '').replace(/\//g, ''));
-                          let similarity = 1 - levDist / Math.max(inputWords[i].length, opsKeywords[j].length);
-                          if (similarity > 0.74) {
-                            let toDo = ops[op].do;
-                            // Check if suggestion has already been suggested
-                            let alreadySuggested = false;
-                            for (let k = 0; k < suggestionsArray.length; k++) {
-                              // check suggestions array for existing suggestion
-                              if (suggestionsArray[k].command.toLowerCase() === toDo.toLowerCase()) {
-                                alreadySuggested = true;
-                              }
-                            }
-                            // Add suggestion to suggestions array if it hasn't already been suggested
-                            if (!alreadySuggested) {
-                              let suggestion = {
-                                command: toDo,
-                                parentCommand: cmd,
-                                subCommand: sub,
-                                op: op,
-                                similarity: similarity,
-                              };
-                              suggestionsArray.push(suggestion);
-                              // Reorder suggestions in order of similarity
-                              if (suggestionsArray.length > 0) {
-                                suggestionsArray.sort((a, b) => {
-                                  const nameA = a.similarity;
-                                  const nameB = b.similarity;
-                                  return nameB - nameA;
-                                });
-                                // Populate suggestions list with new order
-                                suggestionsList.innerHTML = '';
-                                if (suggestionsArray.length > 0 && !embyr.innerText.toString().trim().startsWith(suggestionsArray[0].command)) {
-                                  suggestionAvailable = suggestionsArray[0].command;
-                                  // Display suggestion details for first suggestion
-                                  let firstSuggestion = commands[suggestionsArray[0].parentCommand].subCommands[suggestionsArray[0].subCommand].ops[suggestionsArray[0].op];
-                                  displayShort(`${suggestionsArray[0].command}`, firstSuggestion.description);
-                                } else {
-                                  suggestionAvailable = '';
-                                }
-                              }
-                            }
-                          } else {
-                            // Suggest the subcommand if there are no matching ops
-                            let toDo = subs[sub].do;
-                            // Check if suggestion has already been suggested
-                            let alreadySuggested = false;
-                            for (let k = 0; k < suggestionsArray.length; k++) {
-                              // check suggestions array for existing suggestion
-                              if (suggestionsArray[k].command.toLowerCase() === toDo.toLowerCase()) {
-                                alreadySuggested = true;
-                              }
-                            }
-                            // Add suggestion to suggestions array if it hasn't already been suggested
-                            if (!alreadySuggested) {
-                              let suggestion = {
-                                command: toDo,
-                                parentCommand: cmd,
-                                subCommand: sub,
-                                op: '',
-                                similarity: similarity,
-                              };
-                              suggestionsArray.push(suggestion);
-                              // Reorder suggestions in order of similarity
-                              if (suggestionsArray.length > 0) {
-                                suggestionsArray.sort((a, b) => {
-                                  const nameA = a.similarity;
-                                  const nameB = b.similarity;
-                                  return nameB - nameA;
-                                });
-                                // Populate suggestions list with new order
-                                suggestionsList.innerHTML = '';
-                                if (suggestionsArray.length > 0 && !embyr.innerText.toString().trim().startsWith(suggestionsArray[0].command)) {
-                                  suggestionAvailable = suggestionsArray[0].command;
-                                  // Display suggestion details for first suggestion
-                                  let firstSuggestion = commands[suggestionsArray[0].parentCommand].subCommands[suggestionsArray[0].subCommand];
-                                  displayShort(`${suggestionsArray[0].command}`, firstSuggestion.description);
-                                } else {
-                                  suggestionAvailable = '';
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
+            let alreadySuggested = false;
+            for (let k = 0; k < suggestionsArray.length; k++) {
+              // check suggestions array for existing suggestion
+              if (suggestionsArray[k].command.toLowerCase() === toDo.toLowerCase()) {
+                alreadySuggested = true;
+              }
+            }
+            // Add suggestion to suggestions array if it hasn't already been suggested
+            if (!alreadySuggested) {
+              let suggestion = {
+                command: cmd,
+                similarity: similarity,
+              };
+              suggestionsArray.push(suggestion);
+              // Reorder suggestions in order of similarity
+              if (suggestionsArray.length > 0) {
+                suggestionsArray.sort((a, b) => {
+                  const nameA = a.similarity;
+                  const nameB = b.similarity;
+                  return nameB - nameA;
+                });
+                // Populate suggestions list with new order
+                suggestionsList.innerHTML = '';
+                if (suggestionsArray.length > 0 && !embyr.innerText.toString().trim().startsWith(suggestionsArray[0].command)) {
+                  suggestionAvailable = suggestionsArray[0].command;
+                  // Display suggestion details for first suggestion
+                  let firstSuggestion = commands[suggestionsArray[0].command];
+                  displayShort(firstSuggestion.name, firstSuggestion.description);
+                } else {
+                  suggestionAvailable = '';
                 }
               }
             }
+            // // Search through subcommands object for each command
+            // let subs = commands[cmd].subCommands;
+            // for (let sub in subs) {
+            //   let ops = subs[sub].ops;
+            //   let subKeywords = subs[sub].keywords;
+            //   // Fuzzy search input and subKeywords
+            //   for (let i = 0; i < inputWords.length; i++) {
+            //     for (let j = 0; j < subKeywords.length; j++) {
+            //       let levDist = levenshteinDistance(inputWords[i].replace(/-/g, '').replace(/\//g, ''), subKeywords[j].replace(/-/g, '').replace(/\//g, ''));
+            //       let similarity = 1 - levDist / Math.max(inputWords[i].length, subKeywords[j].length);
+            //       if (similarity > 0.74) {
+            //         // Search through ops object for each command
+            //         for (let op in ops) {
+            //           let opsKeywords = ops[op].keywords;
+            //           for (let i = 0; i < inputWords.length; i++) {
+            //             for (let j = 0; j < opsKeywords.length; j++) {
+            //               // Fuzzy search input and opsKeywords
+            //               let levDist = levenshteinDistance(inputWords[i].replace(/-/g, '').replace(/\//g, ''), opsKeywords[j].replace(/-/g, '').replace(/\//g, ''));
+            //               let similarity = 1 - levDist / Math.max(inputWords[i].length, opsKeywords[j].length);
+            //               if (similarity > 0.74) {
+            //                 let toDo = ops[op].do;
+            //                 // Check if suggestion has already been suggested
+            //                 let alreadySuggested = false;
+            //                 for (let k = 0; k < suggestionsArray.length; k++) {
+            //                   // check suggestions array for existing suggestion
+            //                   if (suggestionsArray[k].command.toLowerCase() === toDo.toLowerCase()) {
+            //                     alreadySuggested = true;
+            //                   }
+            //                 }
+            //                 // Add suggestion to suggestions array if it hasn't already been suggested
+            //                 if (!alreadySuggested) {
+            //                   let suggestion = {
+            //                     command: toDo,
+            //                     parentCommand: cmd,
+            //                     subCommand: sub,
+            //                     op: op,
+            //                     similarity: similarity,
+            //                   };
+            //                   suggestionsArray.push(suggestion);
+            //                   // Reorder suggestions in order of similarity
+            //                   if (suggestionsArray.length > 0) {
+            //                     suggestionsArray.sort((a, b) => {
+            //                       const nameA = a.similarity;
+            //                       const nameB = b.similarity;
+            //                       return nameB - nameA;
+            //                     });
+            //                     // Populate suggestions list with new order
+            //                     suggestionsList.innerHTML = '';
+            //                     if (suggestionsArray.length > 0 && !embyr.innerText.toString().trim().startsWith(suggestionsArray[0].command)) {
+            //                       suggestionAvailable = suggestionsArray[0].command;
+            //                       // Display suggestion details for first suggestion
+            //                       let firstSuggestion = commands[suggestionsArray[0].parentCommand].subCommands[suggestionsArray[0].subCommand].ops[suggestionsArray[0].op];
+            //                       displayShort(`${suggestionsArray[0].command}`, firstSuggestion.description);
+            //                     } else {
+            //                       suggestionAvailable = '';
+            //                     }
+            //                   }
+            //                 }
+            //               } else {
+            //                 // Suggest the subcommand if there are no matching ops
+            //                 let toDo = subs[sub].do;
+            //                 // Check if suggestion has already been suggested
+            //                 let alreadySuggested = false;
+            //                 for (let k = 0; k < suggestionsArray.length; k++) {
+            //                   // check suggestions array for existing suggestion
+            //                   if (suggestionsArray[k].command.toLowerCase() === toDo.toLowerCase()) {
+            //                     alreadySuggested = true;
+            //                   }
+            //                 }
+            //                 // Add suggestion to suggestions array if it hasn't already been suggested
+            //                 if (!alreadySuggested) {
+            //                   let suggestion = {
+            //                     command: toDo,
+            //                     parentCommand: cmd,
+            //                     subCommand: sub,
+            //                     op: '',
+            //                     similarity: similarity,
+            //                   };
+            //                   suggestionsArray.push(suggestion);
+            //                   // Reorder suggestions in order of similarity
+            //                   if (suggestionsArray.length > 0) {
+            //                     suggestionsArray.sort((a, b) => {
+            //                       const nameA = a.similarity;
+            //                       const nameB = b.similarity;
+            //                       return nameB - nameA;
+            //                     });
+            //                     // Populate suggestions list with new order
+            //                     suggestionsList.innerHTML = '';
+            //                     if (suggestionsArray.length > 0 && !embyr.innerText.toString().trim().startsWith(suggestionsArray[0].command)) {
+            //                       suggestionAvailable = suggestionsArray[0].command;
+            //                       // Display suggestion details for first suggestion
+            //                       let firstSuggestion = commands[suggestionsArray[0].parentCommand].subCommands[suggestionsArray[0].subCommand];
+            //                       displayShort(`${suggestionsArray[0].command}`, firstSuggestion.description);
+            //                     } else {
+            //                       suggestionAvailable = '';
+            //                     }
+            //                   }
+            //                 }
+            //               }
+            //             }
+            //           }
+            //         }
+            //       }
+            //     }
+            //   }
+            // }
           }
         }
       }
