@@ -1,5 +1,3 @@
-// const interval = setInterval(scramble, 100); // Adjust the interval as needed
-
 // --- DOM DECLARATIONS ---
 const logoBtn = document.querySelector('.logo-container');
 
@@ -118,7 +116,7 @@ function runMakeTissue(inputArray) {
   }
   // Hide path while running
   path.style.display = 'none';
-  // Set emby contenteditable to false
+  // Set embyr contenteditable to false
   embyr.setAttribute('contenteditable', 'false');
   help.innerHTML = quitHint;
   opRunning = true;
@@ -297,6 +295,8 @@ const commands = {
     },
   },
 };
+
+const commonOps = {};
 
 const lintCommands = (command) => {
   // Get input
