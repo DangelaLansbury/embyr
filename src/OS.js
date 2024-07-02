@@ -158,6 +158,96 @@ function runEsc(inputArray) {
   return;
 }
 
+const typesOfCoffeeBeans = [
+  'arabica',
+  'robusta',
+  'liberica',
+  'excelsa',
+  'catimor',
+  'catuai',
+  'caturra',
+  'mundo novo',
+  'maragogipe',
+  'geisha',
+  'java',
+  'kona',
+  'sumatra',
+  'yirgacheffe',
+  'sidamo',
+  'guji',
+  'limu',
+  'harrar',
+  'kabeywa',
+  'bukonzo',
+  'blue mountain',
+  'peaberry',
+  'mocha',
+  'monsooned malabar',
+  'toraja',
+  'aceh',
+  'gayo',
+  'lampung',
+  'flores',
+  'bali',
+  'papua',
+  'timor',
+  'sulawesi',
+];
+
+const makeSubCommands = {
+  new: {
+    name: 'new',
+    keywords: [...makeKeywords, ...newKeywords, ...cellKeywords],
+    do: `make new`,
+    description: `The <span class="lilac thicc inline-command"> new </span> command is used to create a new cell, tissue, organ, or organism.`,
+    preview: `Expected an argument after <span class="lilac thicc inline-command"> new </span>.`,
+    ops: {
+      cell: {
+        keywords: [...cellKeywords],
+        do: 'make new cell',
+        description: `The <span class="lilac thicc inline-command">cell</span> command is used to create a new cell.`,
+        preview: `Woo! It worked.`,
+        run: (inputArray) => {
+          runMakeTissue(inputArray);
+        },
+      },
+    },
+    run: (inputArray) => {
+      // Find index of 'new' in inputArray
+      let newIdx = inputArray.indexOf('new');
+      // Check if 'new' is the last word and if not check if the next word is in ops
+      if (newIdx === inputArray.length - 1) {
+        runNew(inputArray);
+      } else if (inputArray[newIdx + 1] in commands.make.subCommands.new.ops) {
+        // run the operation's exe
+        commands.make.subCommands.new.ops[inputArray[newIdx + 1]].run(inputArray);
+        return;
+      } else {
+        let input = inputArray.join(' ');
+        returnInput(input);
+        // Return error message
+        let failingArg = inputArray[newIdx + 1];
+        let output = createOutputDiv(`Something went wrong. <span class="honey">${failingArg}</span> is not a valid argument.`, 'wheat');
+        returnOutput(output, 0);
+        return;
+      }
+    },
+    runLint: (inputArray) => {
+      // Find index of 'new' in inputArray
+      let newIdx = inputArray.indexOf('new');
+      // Check if 'new' is the last word and if not check if the next word is in ops
+      if (newIdx === inputArray.length - 1) {
+        return true;
+      } else if (inputArray[newIdx + 1] in commands.make.subCommands.new.ops) {
+        // run the operation's exe
+        return true;
+      } else {
+        return false;
+      }
+    },
+  },
+};
+
 const commands = {
   make: {
     name: 'make',
@@ -165,59 +255,7 @@ const commands = {
     do: `make`,
     description: `The <span class="lilac thicc inline-command"> make </span> command is used to track and manage changes in the embryonic stem cell's lineage and form.`,
     preview: `Expected an argument after <span class="lilac thicc inline-command"> make </span>.`,
-    subCommands: {
-      new: {
-        name: 'new',
-        keywords: [...makeKeywords, ...newKeywords, ...cellKeywords],
-        do: `make new`,
-        description: `The <span class="lilac thicc inline-command"> new </span> command is used to create a new cell, tissue, organ, or organism.`,
-        preview: `Expected an argument after <span class="lilac thicc inline-command"> new </span>.`,
-        ops: {
-          cell: {
-            keywords: [...cellKeywords],
-            do: 'make new cell',
-            description: `The <span class="lilac thicc inline-command">cell</span> command is used to create a new cell.`,
-            preview: `Woo! It worked.`,
-            run: (inputArray) => {
-              runMakeTissue(inputArray);
-            },
-          },
-        },
-        run: (inputArray) => {
-          // Find index of 'new' in inputArray
-          let newIdx = inputArray.indexOf('new');
-          // Check if 'new' is the last word and if not check if the next word is in ops
-          if (newIdx === inputArray.length - 1) {
-            runNew(inputArray);
-          } else if (inputArray[newIdx + 1] in commands.make.subCommands.new.ops) {
-            // run the operation's exe
-            commands.make.subCommands.new.ops[inputArray[newIdx + 1]].run(inputArray);
-            return;
-          } else {
-            let input = inputArray.join(' ');
-            returnInput(input);
-            // Return error message
-            let failingArg = inputArray[newIdx + 1];
-            let output = createOutputDiv(`Something went wrong. <span class="honey">${failingArg}</span> is not a valid argument.`, 'wheat');
-            returnOutput(output, 0);
-            return;
-          }
-        },
-        runLint: (inputArray) => {
-          // Find index of 'new' in inputArray
-          let newIdx = inputArray.indexOf('new');
-          // Check if 'new' is the last word and if not check if the next word is in ops
-          if (newIdx === inputArray.length - 1) {
-            return true;
-          } else if (inputArray[newIdx + 1] in commands.make.subCommands.new.ops) {
-            // run the operation's exe
-            return true;
-          } else {
-            return false;
-          }
-        },
-      },
-    },
+    subCommands: { ...makeSubCommands },
     run: (input) => {
       // Separate input into array of words
       let inputArray = input.toString().split(' ');
